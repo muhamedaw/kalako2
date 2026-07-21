@@ -11,6 +11,7 @@ import AnswerScreen from '@/components/screens/AnswerScreen'
 import VoteScreen from '@/components/screens/VoteScreen'
 import RoundResults from '@/components/screens/RoundResults'
 import GameOver from '@/components/screens/GameOver'
+import DevAssetPreview from '@/components/screens/DevAssetPreview'
 import { useGameStore } from '@/store/gameStore'
 
 function App() {
@@ -23,6 +24,11 @@ function App() {
     if (joinCode) {
       useGameStore.setState({ pendingJoinCode: joinCode.toUpperCase() })
       setScreen('join')
+      window.history.replaceState({}, '', window.location.pathname)
+    }
+    const dev = params.get('dev')
+    if (dev === 'asset-preview') {
+      setScreen('dev_asset_preview')
       window.history.replaceState({}, '', window.location.pathname)
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
@@ -47,6 +53,8 @@ function App() {
         return <RoundResults key="round_results" />
       case 'game_over':
         return <GameOver key="game_over" />
+      case 'dev_asset_preview':
+        return <DevAssetPreview key="dev" />
       default:
         return <WelcomeScreen key="welcome" />
     }

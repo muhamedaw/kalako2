@@ -58,6 +58,9 @@ function validateSettings(payload: CreateRoomPayload): RoomSettings | { error: s
     answerTimeSeconds,
     roundsCount,
     allowedCategories,
+    familyMode: payload.familyMode !== false,
+    doublePointsRoundEnabled: Boolean(payload.doublePointsRoundEnabled),
+    blindVotingEnabled: Boolean(payload.blindVotingEnabled),
   }
 }
 

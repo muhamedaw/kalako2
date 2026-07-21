@@ -174,3 +174,76 @@ test('reconnect within window restores the player; past the window removes them'
   assert.equal(left.playerId, flakyPlayerId)
   assert.equal(left.room.players.some((p: any) => p.id === flakyPlayerId), false)
 })
+
+test('double-points round, blind voting, and most-deceptive-player aggregation', async (t) => {
+  const { httpServer, port } = await startServer()
+  t.after(() => httpServer.close())
+
+  const url = `http://localhost:${port}`
+  const host = ioClient(url, { transports: ['websocket'] })
+  const p2 = ioClient(url, { transports: ['websocket'] })
+  t.after(() => {
+    host.close()
+    p2.close()
+  })
+  await Promise.all([waitFor(host, 'connect'), waitFor(p2, 'connect')])
+
+  // roundsCount: 1 makes the (randomly-chosen) double-points round deterministic — it can only be round 1.
+  const created = await ackCall(host, 'create_room', {
+    playerName: 'Host',
+    isPrivate: false,
+    answerTimeSeconds: 10,
+    roundsCount: 1,
+    allowedCategories: [],
+    doublePointsRoundEnabled: true,
+    blindVotingEnabled: true,
+  })
+  await ackCall(p2, 'join_room', { roomCode: created.roomCode, playerName: 'P2' })
+
+  const catWaits = [waitFor(host, 'phase_changed'), waitFor(p2, 'phase_changed')]
+  host.emit('start_game')
+  const [catPick] = await Promise.all(catWaits)
+
+  const ansWaits = [waitFor(host, 'phase_changed'), waitFor(p2, 'phase_changed')]
+  host.emit('pick_category', { category: catPick.categoryOptions[0] })
+  const [ansHost] = await Promise.all(ansWaits)
+  assert.equal(ansHost.isDoublePointsRound, true)
+
+  const votingPromise = waitFor(host, 'phase_changed')
+  host.emit('submit_answer', { text: 'HOST_FAKE' })
+  p2.emit('submit_answer', { text: 'P2_FAKE' })
+  const voting = await votingPromise
+  const correctSlot = voting.answers.find((a: any) => !['HOST_FAKE', 'P2_FAKE'].includes(a.text))
+
+  const resultsPromise = waitFor(host, 'phase_changed', 15000)
+  host.emit('submit_vote', { slotId: correctSlot.slotId }) // host guesses correctly
+  p2.emit('submit_vote', { slotId: voting.answers.find((a: any) => a.text === 'HOST_FAKE').slotId }) // p2 fooled by host
+  const results = await resultsPromise
+
+  assert.equal(results.results.wasDoublePoints, true)
+  // Blind voting: per-answer vote counts must not be leaked to clients.
+  for (const a of results.results.answers) {
+    assert.equal(a.votesReceived, undefined)
+    assert.equal(a.pointsAwarded, undefined)
+  }
+  const hostScore = results.room.players.find((p: any) => p.name === 'Host').score
+  assert.equal(hostScore, 4) // (1 correct-guess + 1 fooled-p2) * 2 multiplier
+
+  const gameOver = await waitFor(host, 'phase_changed', 15000)
+  assert.equal(gameOver.phase, 'GAME_OVER')
+  assert.equal(gameOver.mostDeceptivePlayer.name, 'Host')
+  assert.equal(gameOver.mostDeceptivePlayer.timesFooledOthers, 1)
+})
+
+test('family mode filters out adult-rated questions', async () => {
+  const { pickQuestion } = await import('../src/game/questionBank.mts')
+  for (let i = 0; i < 200; i++) {
+    const q = pickQuestion('general', true)
+    assert.equal(q.ageRating, 'family')
+  }
+  const ratings = new Set<string>()
+  for (let i = 0; i < 200; i++) {
+    ratings.add(pickQuestion('general', false).ageRating)
+  }
+  assert.ok(ratings.has('family'))
+})

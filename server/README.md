@@ -44,8 +44,11 @@ LOBBY → CATEGORY_PICK → ANSWERING → VOTING → RESULTS
 ## أحداث Socket.io
 
 **من العميل:**
-- `create_room({ isPrivate, answerTimeSeconds, roundsCount, allowedCategories, playerName }, ack)`
+- `create_room({ isPrivate, answerTimeSeconds, roundsCount, allowedCategories, playerName, familyMode?, doublePointsRoundEnabled?, blindVotingEnabled? }, ack)`
   → `ack({ roomCode, joinUrl, qrCodeDataUrl, playerId, room })` فورًا.
+  - `familyMode` (افتراضي `true`): يستبعد الأسئلة `ageRating: "adult"` من بنك الأسئلة.
+  - `doublePointsRoundEnabled`: جولة واحدة عشوائية بمضاعفة ×2 لكل النقاط المكتسبة فيها (`isDoublePointsRound` عند `ANSWERING`، `wasDoublePoints` عند `RESULTS`).
+  - `blindVotingEnabled`: يخفي عدد الأصوات/النقاط لكل إجابة في `RESULTS` (لا يُبث `votesReceived`/`pointsAwarded`).
 - `join_room({ roomCode, playerName } | { roomCode, playerId }, ack)` — الشكل الثاني لإعادة الانضمام.
 - `start_game()`, `pick_category({ category })` — للمضيف فقط.
 - `submit_answer({ text })` — لا يُبث فورًا، فقط عدّاد تقدّم (`answer_progress`).
@@ -64,6 +67,19 @@ LOBBY → CATEGORY_PICK → ANSWERING → VOTING → RESULTS
 
 - تخمين الإجابة الصحيحة: **+1**
 - عن كل لاعب صوّت لإجابتك الكاذبة: **+1** إضافية (تراكمية)
+
+## الأكثر خداعًا
+
+عند `GAME_OVER`، الحدث يحمل `mostDeceptivePlayer: { id, name, timesFooledOthers } | null` —
+مجموع عدد المرات التي صوّت فيها لاعبون آخرون لإجاباته الكاذبة عبر كل الجولات.
+
+## اختبار الحمل (20 لاعب)
+
+```bash
+node scripts/loadtest.mjs [url]   # افتراضي: http://localhost:4001
+```
+يشغّل غرفة كاملة بـ20 اتصال Socket.io حقيقي (إنشاء→انضمام→بدء→اختيار→إجابة→تصويت→نتائج)
+ويطبع توقيت كل مرحلة. غير جزء من `npm test`.
 
 ## SQLite
 

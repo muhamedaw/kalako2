@@ -91,7 +91,7 @@ export default function ResultsShareCard({ playerName, score, rank, totalPlayers
     ctx.font = '12px Tajawal, sans-serif'
     ctx.fillText(`من أصل ${totalPlayers}`, 108, 260)
 
-    const x0 = 260, y0 = 50
+    const y0 = 50
     ctx.shadowColor = COLORS.primary + '50'
     ctx.shadowBlur = 15
     ctx.fillStyle = COLORS.primary

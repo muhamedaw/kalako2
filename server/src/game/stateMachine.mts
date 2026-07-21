@@ -54,9 +54,13 @@ export function startRound(io: Server, room: RoomState) {
   })
 }
 
+function isDoublePointsRound(room: RoomState): boolean {
+  return !room.isTiebreakerRound && room.doublePointsRound !== null && room.round === room.doublePointsRound
+}
+
 export function beginAnswering(io: Server, room: RoomState, category: string) {
   const chosenCategory = room.categoryOptions.includes(category) ? category : room.categoryOptions[0]
-  room.currentQuestion = pickQuestion(chosenCategory)
+  room.currentQuestion = pickQuestion(chosenCategory, room.settings.familyMode)
   room.phase = 'ANSWERING'
   room.answers.clear()
   room.votes.clear()
@@ -69,6 +73,7 @@ export function beginAnswering(io: Server, room: RoomState, category: string) {
     room: publicRoomView(room),
     question: { category: room.currentQuestion.category, text: room.currentQuestion.text },
     timeSeconds,
+    isDoublePointsRound: isDoublePointsRound(room),
   })
 
   clearTimers(room)
@@ -134,10 +139,14 @@ export function computeResults(io: Server, room: RoomState) {
   room.phase = 'RESULTS'
 
   const { deltas, answerRecords } = computeRoundScoring(room.answers, room.votes)
+  const multiplier = isDoublePointsRound(room) ? 2 : 1
 
   for (const [playerId, delta] of deltas) {
     const player = room.players.get(playerId)
-    if (player) player.score += delta
+    if (player) player.score += delta * multiplier
+  }
+  if (multiplier > 1) {
+    for (const record of answerRecords) record.pointsAwarded *= multiplier
   }
 
   room.history.push({
@@ -150,12 +159,12 @@ export function computeResults(io: Server, room: RoomState) {
   })
 
   const correctAnswerText = room.currentQuestion!.answer
+  const blind = room.settings.blindVotingEnabled
   const revealedAnswers = answerRecords.map((a) => ({
     playerId: a.playerId,
     playerName: room.players.get(a.playerId)?.name ?? '?',
     text: a.text,
-    votesReceived: a.votesReceived,
-    pointsAwarded: a.pointsAwarded,
+    ...(blind ? {} : { votesReceived: a.votesReceived, pointsAwarded: a.pointsAwarded }),
   }))
 
   emitRoom(io, room, 'phase_changed', {
@@ -165,6 +174,7 @@ export function computeResults(io: Server, room: RoomState) {
       correctAnswer: correctAnswerText,
       answers: revealedAnswers,
       scores: publicRoomView(room).players,
+      wasDoublePoints: multiplier > 1,
     },
   })
 
@@ -222,6 +232,27 @@ function startTiebreaker(io: Server, room: RoomState) {
   })
 }
 
+function mostDeceptivePlayer(room: RoomState) {
+  const foolCounts = new Map<string, number>()
+  for (const round of room.history) {
+    for (const answer of round.answers) {
+      foolCounts.set(answer.playerId, (foolCounts.get(answer.playerId) ?? 0) + answer.votesReceived)
+    }
+  }
+  let bestId: string | null = null
+  let bestCount = 0
+  for (const [playerId, count] of foolCounts) {
+    if (count > bestCount) {
+      bestId = playerId
+      bestCount = count
+    }
+  }
+  if (!bestId || bestCount === 0) return null
+  const player = room.players.get(bestId)
+  if (!player) return null
+  return { id: player.id, name: player.name, timesFooledOthers: bestCount }
+}
+
 function endGame(io: Server, room: RoomState) {
   clearTimers(room)
   room.phase = 'GAME_OVER'
@@ -233,6 +264,7 @@ function endGame(io: Server, room: RoomState) {
     phase: room.phase,
     room: publicRoomView(room),
     finalStandings,
+    mostDeceptivePlayer: mostDeceptivePlayer(room),
   })
 
   try {
