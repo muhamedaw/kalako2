@@ -3,12 +3,14 @@ import { motion } from 'framer-motion'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import { useGameStore } from '@/store/gameStore'
+import { useShake } from '@/lib/useShake'
 
 export default function JoinRoom() {
   const { joinRoom, setScreen, pendingJoinCode, serverError, setError } = useGameStore()
   const [playerName, setPlayerName] = useState('')
   const [roomCode, setRoomCode] = useState(pendingJoinCode ?? '')
   const inputRef = useRef<HTMLInputElement>(null)
+  const { shaking, trigger: shake } = useShake()
 
   useEffect(() => {
     if (pendingJoinCode) {
@@ -21,6 +23,10 @@ export default function JoinRoom() {
     const target = !roomCode ? inputRef.current : document.querySelector<HTMLInputElement>('input[name="name"]')
     target?.focus()
   }, [])
+
+  useEffect(() => {
+    if (serverError) shake()
+  }, [serverError, shake])
 
   const handleJoin = () => {
     if (!playerName.trim() || roomCode.trim().length < 4) return
@@ -50,7 +56,7 @@ export default function JoinRoom() {
           الانضمام لغرفة
         </h2>
 
-        <div className="flex flex-col gap-5">
+        <div className={`flex flex-col gap-5 ${shaking ? 'animate-shake' : ''}`}>
           <Input
             name="name"
             label="اسمك"

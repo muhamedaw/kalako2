@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import AnimatedBackground from '@/components/ui/AnimatedBackground'
 import ReconnectingOverlay from '@/components/screens/ReconnectingOverlay'
 import WelcomeScreen from '@/components/screens/WelcomeScreen'
@@ -13,6 +13,17 @@ import RoundResults from '@/components/screens/RoundResults'
 import GameOver from '@/components/screens/GameOver'
 import DevAssetPreview from '@/components/screens/DevAssetPreview'
 import { useGameStore } from '@/store/gameStore'
+
+const pageVariants = {
+  initial: { opacity: 0, y: 12, filter: 'blur(4px)' },
+  animate: { opacity: 1, y: 0, filter: 'blur(0px)' },
+  exit: { opacity: 0, y: -12, filter: 'blur(4px)' },
+}
+
+const pageTransition = {
+  duration: 0.28,
+  ease: [0.25, 0.46, 0.45, 0.94],
+}
 
 function App() {
   const { screen, connect, setScreen } = useGameStore()
@@ -64,7 +75,17 @@ function App() {
     <>
       <AnimatedBackground />
       <AnimatePresence mode="wait">
-        {renderScreen()}
+        <motion.div
+          key={screen}
+          variants={pageVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          transition={pageTransition}
+          className="flex-1 flex flex-col"
+        >
+          {renderScreen()}
+        </motion.div>
       </AnimatePresence>
       <ReconnectingOverlay />
     </>

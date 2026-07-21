@@ -31,18 +31,18 @@ export default function VoteScreen() {
             return (
               <motion.button
                 key={slot.slotId}
-                initial={{ opacity: 0, x: 20 }}
+                initial={{ opacity: 0, x: 24 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.06 }}
+                transition={{ delay: i * 0.06, duration: 0.25 }}
                 whileTap={!submittedVote && !isMyAnswer ? { scale: 0.97 } : undefined}
+                whileHover={!submittedVote && !isMyAnswer ? { scale: 1.01, backgroundColor: 'rgba(255,255,255,0.08)' } : undefined}
                 onClick={() => !submittedVote && !isMyAnswer && submitVote(slot.slotId)}
                 disabled={submittedVote || isMyAnswer}
                 className={`
                   glass p-4 text-center text-lg font-medium
-                  transition-all cursor-pointer
+                  transition-colors cursor-pointer hover-glow
                   ${isMyAnswer ? 'opacity-30 cursor-not-allowed border-primary/20' : ''}
                   ${submittedVote && !isMyAnswer ? 'opacity-50 pointer-events-none' : ''}
-                  ${!submittedVote && !isMyAnswer ? 'hover:bg-white/8' : ''}
                 `}
                 style={{ fontFamily: 'var(--font-heading)' }}
               >
@@ -55,9 +55,9 @@ export default function VoteScreen() {
 
         {submittedVote && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="flex flex-col items-center gap-2"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="flex flex-col items-center gap-2 animate-pulse-success"
           >
             <p className="text-success text-sm font-bold py-2">
               ✓ تم تسجيل تصويتك

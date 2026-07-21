@@ -92,11 +92,11 @@ export default function DevAssetPreview() {
           <div className="flex flex-wrap gap-8 items-center bg-white/5 rounded-2xl p-6 border border-white/10">
             <div className="flex flex-col items-center gap-2">
               <p className="text-white/40 text-sm">With Neon Frame</p>
-              <ThemedQRCode value="https://kalako.app/?join=ABC123" size={120} />
+              <ThemedQRCode value={`${window.location.origin}/?join=ABC123`} size={120} />
             </div>
             <div className="flex flex-col items-center gap-2">
               <p className="text-white/40 text-sm">Small</p>
-              <ThemedQRCode value="https://kalako.app/?join=DEV42" size={80} />
+              <ThemedQRCode value={`${window.location.origin}/?join=DEV42`} size={80} />
             </div>
           </div>
         </section>

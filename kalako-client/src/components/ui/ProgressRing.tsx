@@ -8,20 +8,36 @@ interface ProgressRingProps {
   color?: string
 }
 
+function lerpColor(a: string, b: string, t: number): string {
+  const ah = parseInt(a.replace('#', ''), 16)
+  const bh = parseInt(b.replace('#', ''), 16)
+  const ar = (ah >> 16) & 0xff, ag = (ah >> 8) & 0xff, ab = ah & 0xff
+  const br = (bh >> 16) & 0xff, bg = (bh >> 8) & 0xff, bb = bh & 0xff
+  const rr = Math.round(ar + (br - ar) * t)
+  const rg = Math.round(ag + (bg - ag) * t)
+  const rb = Math.round(ab + (bb - ab) * t)
+  return `#${((rr << 16) | (rg << 8) | rb).toString(16).padStart(6, '0')}`
+}
+
+function getTimerColor(ratio: number): string {
+  if (ratio > 0.5) {
+    return lerpColor('#34E4EA', '#FFB627', 1 - (ratio - 0.5) / 0.5)
+  }
+  return lerpColor('#FFB627', '#FF4444', 1 - ratio / 0.5)
+}
+
 export default function ProgressRing({
   size = 120,
   strokeWidth = 8,
   progress,
   total,
-  color = '#34E4EA',
+  color,
 }: ProgressRingProps) {
   const radius = (size - strokeWidth) / 2
   const circumference = 2 * Math.PI * radius
   const fraction = Math.max(0, Math.min(1, progress / total))
   const offset = circumference * (1 - fraction)
-
-  const warningThreshold = total * 0.3
-  const displayColor = progress <= warningThreshold ? '#FFB627' : color
+  const displayColor = color ?? getTimerColor(fraction)
 
   return (
     <div className="relative inline-flex items-center justify-center" role="timer" aria-label={`${Math.ceil(progress)} ثانية متبقية`}>
@@ -45,15 +61,17 @@ export default function ProgressRing({
           strokeDasharray={circumference}
           animate={{ strokeDashoffset: offset }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
-          style={{ filter: `drop-shadow(0 0 8px ${displayColor}40)` }}
+          style={{ filter: `drop-shadow(0 0 10px ${displayColor}50)` }}
         />
       </svg>
-      <span
+      <motion.span
         className="absolute text-3xl font-bold"
-        style={{ fontFamily: 'var(--font-heading)', color: displayColor }}
+        style={{ fontFamily: 'var(--font-heading)' }}
+        animate={{ color: displayColor }}
+        transition={{ duration: 0.3 }}
       >
         {Math.ceil(progress)}
-      </span>
+      </motion.span>
     </div>
   )
 }

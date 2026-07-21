@@ -19,6 +19,15 @@ const CATEGORIES = [
   { id: 'cooking', label: 'طبخ', emoji: '🍳' },
 ]
 
+const stagger = {
+  animate: { transition: { staggerChildren: 0.05 } },
+}
+const itemIn = {
+  initial: { opacity: 0, y: 10 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.25 },
+}
+
 export default function CreateRoom() {
   const { createRoom, setScreen } = useGameStore()
   const [playerName, setPlayerName] = useState('')
@@ -67,55 +76,68 @@ export default function CreateRoom() {
           إنشاء غرفة
         </h2>
 
-        <div className="flex flex-col gap-5">
-          <Input
-            label="اسمك"
-            placeholder="اكتب اسمك هنا..."
-            value={playerName}
-            onChange={(e) => setPlayerName(e.target.value)}
-            maxLength={20}
-          />
+        <motion.div
+          className="flex flex-col gap-5"
+          variants={stagger}
+          initial="initial"
+          animate="animate"
+        >
+          <motion.div variants={itemIn}>
+            <Input
+              label="اسمك"
+              placeholder="اكتب اسمك هنا..."
+              value={playerName}
+              onChange={(e) => setPlayerName(e.target.value)}
+              maxLength={20}
+            />
+          </motion.div>
 
-          <Toggle
-            checked={isPrivate}
-            onChange={setIsPrivate}
-            label="غرفة خاصة (للمدعوين فقط)"
-          />
+          <motion.div variants={itemIn}>
+            <Toggle
+              checked={isPrivate}
+              onChange={setIsPrivate}
+              label="غرفة خاصة (للمدعوين فقط)"
+            />
+          </motion.div>
 
-          <Select
-            value={answerTime}
-            onChange={setAnswerTime}
-            label="وقت الإجابة"
-            options={[
-              { value: '30', label: '30 ثانية' },
-              { value: '45', label: '45 ثانية' },
-              { value: '60', label: '60 ثانية' },
-              { value: '90', label: '90 ثانية' },
-            ]}
-          />
+          <motion.div variants={itemIn}>
+            <Select
+              value={answerTime}
+              onChange={setAnswerTime}
+              label="وقت الإجابة"
+              options={[
+                { value: '30', label: '30 ثانية' },
+                { value: '45', label: '45 ثانية' },
+                { value: '60', label: '60 ثانية' },
+                { value: '90', label: '90 ثانية' },
+              ]}
+            />
+          </motion.div>
 
-          <Select
-            value={roundCount}
-            onChange={setRoundCount}
-            label="عدد الجولات"
-            options={[
-              { value: '3', label: '3 جولات' },
-              { value: '5', label: '5 جولات' },
-              { value: '7', label: '7 جولات' },
-              { value: '10', label: '10 جولات' },
-            ]}
-          />
+          <motion.div variants={itemIn}>
+            <Select
+              value={roundCount}
+              onChange={setRoundCount}
+              label="عدد الجولات"
+              options={[
+                { value: '3', label: '3 جولات' },
+                { value: '5', label: '5 جولات' },
+                { value: '7', label: '7 جولات' },
+                { value: '10', label: '10 جولات' },
+              ]}
+            />
+          </motion.div>
 
-          <div className="flex flex-col gap-2">
+          <motion.div variants={itemIn} className="flex flex-col gap-2">
             <span className="text-sm font-medium text-white/60">التصنيفات</span>
             <ChipGroup
               items={CATEGORIES}
               selected={selectedCategories}
               onToggle={toggleCategory}
             />
-          </div>
+          </motion.div>
 
-          <div className="flex flex-col gap-4 p-4 rounded-xl bg-white/5 border border-white/10">
+          <motion.div variants={itemIn} className="flex flex-col gap-4 p-4 rounded-xl bg-white/5 border border-white/10">
             <p className="text-sm font-bold text-white/60">خيارات متقدمة</p>
             <div className="flex items-center gap-3">
               <ScoreMultiplier size={32} />
@@ -141,18 +163,20 @@ export default function CreateRoom() {
                 label="جلسة كبار (للبالغين فقط)"
               />
             </div>
-          </div>
+          </motion.div>
 
-          <Button
-            variant="primary"
-            size="lg"
-            fullWidth
-            disabled={!playerName.trim() || selectedCategories.length === 0}
-            onClick={handleCreate}
-          >
-            إنشاء الغرفة
-          </Button>
-        </div>
+          <motion.div variants={itemIn}>
+            <Button
+              variant="primary"
+              size="lg"
+              fullWidth
+              disabled={!playerName.trim() || selectedCategories.length === 0}
+              onClick={handleCreate}
+            >
+              إنشاء الغرفة
+            </Button>
+          </motion.div>
+        </motion.div>
       </motion.div>
     </div>
   )

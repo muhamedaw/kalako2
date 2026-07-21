@@ -11,11 +11,18 @@ export default function ReconnectingOverlay() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
       role="alert"
       aria-live="assertive"
     >
-      <div className="glass-strong p-8 text-center max-w-xs">
+      <motion.div
+        className="glass-strong p-8 text-center max-w-xs"
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+      >
         <div className="animate-pulse-glow mb-4">
           <div className="w-12 h-12 mx-auto rounded-full border-4 border-primary/30 border-t-primary animate-spin" />
         </div>
@@ -25,7 +32,7 @@ export default function ReconnectingOverlay() {
         <p className="text-white/40 text-sm mt-2">
           نحاول الاتصال بالخادم
         </p>
-      </div>
+      </motion.div>
     </motion.div>
   )
 }

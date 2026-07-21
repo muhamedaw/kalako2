@@ -6,6 +6,15 @@ import Avatar from '@/components/brand/Avatar'
 import { useGameStore } from '@/store/gameStore'
 import { useSFX } from '@/components/brand/useSFX'
 
+const stagger = {
+  animate: { transition: { staggerChildren: 0.08 } },
+}
+const itemIn = {
+  initial: { opacity: 0, y: 12 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.3 },
+}
+
 export default function RoundResults() {
   const { roundResults, room, playerId, wasDoublePoints } = useGameStore()
   const sfx = useSFX()
@@ -36,13 +45,23 @@ export default function RoundResults() {
         <GlassCard strong className="w-full">
           <div className="flex flex-col gap-3 text-center">
             <p className="text-white/40 text-xs">الإجابة الصحيحة</p>
-            <div className="p-3 rounded-xl bg-success/10 border border-success/20">
+            <motion.div
+              className="p-3 rounded-xl bg-success/10 border border-success/20"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+            >
               <p className="text-success text-lg font-bold">{roundResults.correctAnswer}</p>
-            </div>
+            </motion.div>
           </div>
         </GlassCard>
 
-        <div className="flex flex-col gap-3">
+        <motion.div
+          className="flex flex-col gap-3"
+          variants={stagger}
+          initial="initial"
+          animate="animate"
+        >
           <p className="text-sm text-white/50 font-bold">الإجابات والتصويت</p>
           {roundResults.answers.map((a, i) => {
             const isCorrect = a.text === roundResults.correctAnswer
@@ -51,9 +70,7 @@ export default function RoundResults() {
             return (
               <motion.div
                 key={a.playerId + i}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.08 }}
+                variants={itemIn}
                 className={`glass p-3 flex items-center gap-3 ${isCorrect ? 'border-success/30 bg-success/5' : ''}`}
               >
                 <div className="flex-shrink-0">
@@ -79,17 +96,23 @@ export default function RoundResults() {
               </motion.div>
             )
           })}
-        </div>
+        </motion.div>
 
         <GlassCard className="w-full">
           <p className="text-sm text-white/50 font-bold text-center mb-3">الترتيب</p>
-          {roundResults.scores.map((p) => (
-            <div key={p.id} className="flex items-center justify-between py-1.5">
+          {roundResults.scores.map((p, i) => (
+            <motion.div
+              key={p.id}
+              initial={{ opacity: 0, x: 12 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3 + i * 0.06 }}
+              className="flex items-center justify-between py-1.5"
+            >
               <span className={`text-sm ${p.id === playerId ? 'text-primary font-bold' : 'text-white/70'}`}>
                 {p.name} {p.id === playerId && '(أنت)'}
               </span>
               <span className="text-sm font-bold text-white/80">{p.score}</span>
-            </div>
+            </motion.div>
           ))}
         </GlassCard>
       </div>

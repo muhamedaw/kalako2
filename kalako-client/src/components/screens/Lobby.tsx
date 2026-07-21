@@ -1,10 +1,20 @@
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 import GlassCard from '@/components/ui/GlassCard'
 import Button from '@/components/ui/Button'
 import { Badge } from '@/components/ui/FormControls'
 import ThemedQRCode from '@/components/brand/ThemedQRCode'
 import Avatar from '@/components/brand/Avatar'
 import { useGameStore } from '@/store/gameStore'
+
+const stagger = {
+  animate: { transition: { staggerChildren: 0.08 } },
+}
+const cardIn = {
+  initial: { opacity: 0, y: 12 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.3 },
+}
 
 export default function Lobby() {
   const { room, playerId, startGame, leaveRoom } = useGameStore()
@@ -45,9 +55,14 @@ export default function Lobby() {
           <div className="flex flex-col items-center gap-4">
             <div className="text-center">
               <p className="text-white/40 text-xs mb-2">كود الغرفة</p>
-              <p className="text-3xl font-black tracking-widest text-primary select-all" dir="ltr">
+              <motion.p
+                className="text-3xl font-black tracking-widest text-primary select-all"
+                dir="ltr"
+                animate={{ scale: [1, 1.02, 1] }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+              >
                 {room.code}
-              </p>
+              </motion.p>
             </div>
 
             <div className="flex gap-2 w-full">
@@ -71,11 +86,20 @@ export default function Lobby() {
                 اللاعبون ({room.players.length})
               </h3>
             </div>
-            <div className="grid grid-cols-4 gap-4">
-              {room.players.map((p) => (
-                <div key={p.id} className="flex flex-col items-center gap-1">
+            <motion.div
+              className="grid grid-cols-4 gap-4"
+              variants={stagger}
+              initial="initial"
+              animate="animate"
+            >
+              {room.players.map((p, idx) => (
+                <motion.div
+                  key={p.id}
+                  variants={cardIn}
+                  className="flex flex-col items-center gap-1"
+                >
                   <div className={`relative ${!p.connected ? 'opacity-30 grayscale' : ''}`}>
-                    <Avatar id={(room.players.indexOf(p) % 16) + 1} state="idle" size={60} />
+                    <Avatar id={(idx % 16) + 1} state="idle" size={60} />
                   </div>
                   <div className="flex items-center gap-1">
                     <span className={`text-xs font-medium truncate max-w-16 ${p.id === playerId ? 'text-primary' : 'text-white/60'}`}>
@@ -85,9 +109,9 @@ export default function Lobby() {
                       <span className="text-[10px] text-warning" aria-label="المضيف">👑</span>
                     )}
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </GlassCard>
 
@@ -109,9 +133,13 @@ export default function Lobby() {
               ابدأ اللعبة ({room.players.length} لاعب{room.players.length > 1 ? 'ين' : ''})
             </Button>
           ) : (
-            <div className="text-center text-white/40 text-sm py-3 animate-pulse">
+            <motion.div
+              className="text-center text-white/40 text-sm py-3"
+              animate={{ opacity: [0.4, 1, 0.4] }}
+              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+            >
               بانتظار المضيف للبدء...
-            </div>
+            </motion.div>
           )}
 
           <Button variant="ghost" size="sm" fullWidth onClick={leaveRoom}>

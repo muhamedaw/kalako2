@@ -118,7 +118,7 @@ export default function AnswerScreen() {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="glass p-6 text-center w-full"
+            className="glass p-6 text-center w-full animate-pulse-success"
           >
             <p className="text-success text-lg font-bold" style={{ fontFamily: 'var(--font-heading)' }}>
               ✓ تم تسجيل إجابتك

@@ -105,11 +105,97 @@ input, textarea, button, select {
   border-radius: 3px;
 }
 
-@keyframes blob {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(30px, -50px) scale(1.1); }
-  50% { transform: translate(-20px, 20px) scale(0.95); }
-  75% { transform: translate(50px, 30px) scale(1.05); }
+/* ─── Animated Gradient Mesh ─── */
+
+.mesh-gradient-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.mesh-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  will-change: transform, opacity;
+}
+
+.mesh-blob-1 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(123,92,250,0.45) 0%, transparent 70%);
+  top: -15%;
+  right: -10%;
+  animation: mesh-drift-1 18s ease-in-out infinite;
+}
+
+.mesh-blob-2 {
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, rgba(255,93,162,0.35) 0%, transparent 70%);
+  bottom: -10%;
+  left: -12%;
+  animation: mesh-drift-2 22s ease-in-out infinite;
+}
+
+.mesh-blob-3 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(52,228,234,0.3) 0%, transparent 70%);
+  top: 40%;
+  left: 30%;
+  animation: mesh-drift-3 25s ease-in-out infinite;
+}
+
+.mesh-blob-4 {
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, rgba(255,182,39,0.2) 0%, transparent 70%);
+  bottom: 20%;
+  right: 20%;
+  animation: mesh-drift-4 20s ease-in-out infinite;
+  opacity: 0.5;
+}
+
+@keyframes mesh-drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+  25% { transform: translate(-60px, 80px) scale(1.15); opacity: 0.65; }
+  50% { transform: translate(40px, 40px) scale(0.9); opacity: 0.4; }
+  75% { transform: translate(-30px, -50px) scale(1.08); opacity: 0.55; }
+}
+
+@keyframes mesh-drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+  30% { transform: translate(70px, -60px) scale(1.1); opacity: 0.55; }
+  60% { transform: translate(-50px, -30px) scale(0.95); opacity: 0.35; }
+  80% { transform: translate(30px, 50px) scale(1.05); opacity: 0.5; }
+}
+
+@keyframes mesh-drift-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.35; }
+  20% { transform: translate(-80px, -40px) scale(1.2); opacity: 0.5; }
+  50% { transform: translate(60px, 70px) scale(0.85); opacity: 0.3; }
+  75% { transform: translate(-40px, 30px) scale(1.1); opacity: 0.45; }
+}
+
+@keyframes mesh-drift-4 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+  35% { transform: translate(50px, -70px) scale(1.15); opacity: 0.45; }
+  65% { transform: translate(-70px, 20px) scale(0.9); opacity: 0.25; }
+}
+
+/* ─── Micro-interactions ─── */
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+@keyframes pulse-success {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(52,228,234,0.5); }
+  50% { transform: scale(1.04); box-shadow: 0 0 20px 4px rgba(52,228,234,0.3); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(52,228,234,0); }
 }
 
 @keyframes pulse-glow {
@@ -122,8 +208,17 @@ input, textarea, button, select {
   50% { transform: translateY(-12px); }
 }
 
-.animate-blob {
-  animation: blob 20s ease-in-out infinite;
+@keyframes ripple-expand {
+  0% { transform: scale(0); opacity: 0.6; }
+  100% { transform: scale(4); opacity: 0; }
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+.animate-pulse-success {
+  animation: pulse-success 0.6s ease-out;
 }
 
 .animate-pulse-glow {
@@ -133,6 +228,33 @@ input, textarea, button, select {
 .animate-float {
   animation: float 4s ease-in-out infinite;
 }
+
+/* Ripple container */
+.ripple-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple-container .ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+  width: 20px;
+  height: 20px;
+  animation: ripple-expand 0.6s ease-out forwards;
+}
+
+/* Hover glow for interactive elements */
+.hover-glow {
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 24px 2px rgba(255,93,162,0.2), 0 0 48px 4px rgba(123,92,250,0.1);
+}
+
+/* ─── Glass ─── */
 
 .glass {
   background: rgba(255, 255, 255, 0.06);
@@ -159,6 +281,27 @@ input, textarea, button, select {
 
 input::placeholder {
   color: rgba(255, 255, 255, 0.35);
+}
+
+/* ─── Reduced motion ─── */
+
+@media (prefers-reduced-motion: reduce) {
+  .mesh-blob,
+  .animate-shake,
+  .animate-pulse-success,
+  .animate-pulse-glow,
+  .animate-float {
+    animation: none !important;
+  }
+
+  .mesh-blob {
+    opacity: 0.35 !important;
+  }
+
+  .ripple {
+    animation: none !important;
+    opacity: 0;
+  }
 }
 
 @media (max-width: 360px) {

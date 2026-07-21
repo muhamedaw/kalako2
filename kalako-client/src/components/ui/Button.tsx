@@ -1,3 +1,4 @@
+import { useCallback, useRef } from 'react'
 import { motion } from 'framer-motion'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -27,15 +28,38 @@ export default function Button({
   fullWidth = false,
   className = '',
   disabled,
+  onClick,
   ...props
 }: ButtonProps) {
+  const containerRef = useRef<HTMLButtonElement>(null)
+
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      const el = containerRef.current
+      if (el) {
+        const rect = el.getBoundingClientRect()
+        const ripple = document.createElement('span')
+        ripple.className = 'ripple'
+        const x = e.clientX - rect.left - 10
+        const y = e.clientY - rect.top - 10
+        ripple.style.left = x + 'px'
+        ripple.style.top = y + 'px'
+        el.appendChild(ripple)
+        setTimeout(() => ripple.remove(), 650)
+      }
+      onClick?.(e)
+    },
+    [onClick],
+  )
+
   return (
     <motion.button
-      whileTap={{ scale: 0.96 }}
-      whileHover={{ scale: 1.02 }}
+      whileTap={disabled ? undefined : { scale: 0.96 }}
+      whileHover={disabled ? undefined : { scale: 1.02 }}
       transition={{ duration: 0.15 }}
+      ref={containerRef}
       className={`
-        font-bold transition-colors cursor-pointer select-none
+        ripple-container font-bold transition-colors cursor-pointer select-none hover-glow
         ${variants[variant]} ${sizes[size]}
         ${fullWidth ? 'w-full' : ''}
         ${disabled ? 'opacity-40 pointer-events-none' : ''}
@@ -43,6 +67,7 @@ export default function Button({
       `}
       style={{ fontFamily: 'var(--font-heading)' }}
       disabled={disabled}
+      onClick={handleClick}
       {...(props as any)}
     >
       {children}

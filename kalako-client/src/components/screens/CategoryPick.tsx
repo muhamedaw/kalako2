@@ -2,6 +2,20 @@ import { motion } from 'framer-motion'
 import { useGameStore } from '@/store/gameStore'
 import { getCategoryLabel, getCategoryEmoji } from '@/types'
 
+const stagger = {
+  animate: {
+    transition: {
+      staggerChildren: 0.06,
+    },
+  },
+}
+
+const cardIn = {
+  initial: { opacity: 0, scale: 0.85, y: 16 },
+  animate: { opacity: 1, scale: 1, y: 0 },
+  transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] },
+}
+
 export default function CategoryPick() {
   const { room, playerId, categoryOptions, pickCategory } = useGameStore()
 
@@ -22,19 +36,22 @@ export default function CategoryPick() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
-          {categoryOptions.map((cat, i) => (
+        <motion.div
+          className="grid grid-cols-2 gap-3"
+          variants={stagger}
+          initial="initial"
+          animate="animate"
+        >
+          {categoryOptions.map((cat) => (
             <motion.button
               key={cat}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: i * 0.05 }}
-              whileTap={{ scale: 0.95 }}
-              whileHover={{ scale: 1.03 }}
+              variants={cardIn}
+              whileTap={isHost ? { scale: 0.93 } : undefined}
+              whileHover={isHost ? { scale: 1.04, boxShadow: '0 0 24px 4px rgba(255,93,162,0.15)' } : undefined}
               onClick={() => isHost && pickCategory(cat)}
               className={`
                 glass p-4 text-center font-bold text-lg cursor-pointer
-                hover:bg-white/8 transition-colors
+                hover:bg-white/8 transition-colors hover-glow
                 ${!isHost ? 'pointer-events-none opacity-50' : ''}
               `}
               style={{ fontFamily: 'var(--font-heading)' }}
@@ -43,7 +60,7 @@ export default function CategoryPick() {
               {getCategoryLabel(cat)}
             </motion.button>
           ))}
-        </div>
+        </motion.div>
       </div>
     </div>
   )
