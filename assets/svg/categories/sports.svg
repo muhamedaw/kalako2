@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img"
+     aria-label="تحدي الإجابات category — sports">
+
+  <defs>
+    <linearGradient id="gradBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#12071F"/>
+      <stop offset="100%" stop-color="#1B0E2E"/>
+    </linearGradient>
+    <linearGradient id="gradPinkPurple" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF5DA2"/>
+      <stop offset="100%" stop-color="#7B5CFA"/>
+    </linearGradient>
+    <linearGradient id="gradPurplePink" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7B5CFA"/>
+      <stop offset="100%" stop-color="#FF5DA2"/>
+    </linearGradient>
+    <radialGradient id="gradCyanPop" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#34E4EA" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#34E4EA" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="gradAmberPop" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#FFB627" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#FFB627" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glowPink" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#FF5DA2" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowPurple" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#7B5CFA" flood-opacity="0.85"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowCyan" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#34E4EA" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowAmber" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#FFB627" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softBlob" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="28" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#7B5CFA" flood-opacity="0.55"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+  </defs>
+  <!-- chip backdrop with gradient — sits on the brand gradient so it works
+       in either bg-deep or elevated surface. -->
+  <rect x="0" y="0" width="512" height="512" rx="44" ry="44"
+        fill="url(#gradBg)" stroke="url(#gradPinkPurple)" stroke-width="6"
+        filter="url(#glowPurple)"/>
+  <!-- inner lavender hairline -->
+  <rect x="14" y="14" width="484" height="484" rx="32" ry="32"
+        fill="none" stroke="#E6DEFF" stroke-opacity="0.18" stroke-width="2"/>
+  <!-- corner accent shape: small chip-tab with category color -->
+  <g filter="url(#glowFf5Da2)">
+    <circle cx="430" cy="82" r="14" fill="#FF5DA2"/>
+  </g>
+  <!-- the semantic glyph -->
+  <g filter="url(#glowPink)">
+    <g transform="translate(256,256)"><circle r="160" fill="#FFFFFF" stroke="#FF5DA2" stroke-width="14"/><polygon points="0,-90 86,-28 54,72 -54,72 -86,-28" fill="#FF5DA2" stroke="#12071F" stroke-width="6"/><g stroke="#12071F" stroke-width="10" stroke-linecap="round" fill="none"><line x1="0" y1="-90" x2="0" y2="-160"/><line x1="86" y1="-28" x2="148" y2="-14"/><line x1="54" y1="72"  x2="100" y2="120"/><line x1="-54" y1="72" x2="-100" y2="120"/><line x1="-86" y1="-28" x2="-148" y2="-14"/></g></g>
+  </g>
+</svg>

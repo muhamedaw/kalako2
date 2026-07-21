@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" role="img"
+     aria-label="تحدي الإجابات loading screen">
+
+<style>
+  @keyframes float-a { 0%,100% { transform: translate(0,0) scale(1) }
+                       50%     { transform: translate(40px,-30px) scale(1.06) } }
+  @keyframes float-b { 0%,100% { transform: translate(0,0) scale(1) }
+                       50%     { transform: translate(-50px,40px) scale(0.95) } }
+  @keyframes float-c { 0%,100% { transform: translate(0,0) scale(1) }
+                       50%     { transform: translate(20px,60px) scale(1.04) } }
+  @keyframes float-d { 0%,100% { transform: translate(0,0) scale(1) }
+                       50%     { transform: translate(-30px,-20px) scale(0.92) } }
+  .blob-a { animation: float-a 14s ease-in-out infinite; }
+  .blob-b { animation: float-b 18s ease-in-out infinite; }
+  .blob-c { animation: float-c 22s ease-in-out infinite; }
+  .blob-d { animation: float-d 16s ease-in-out infinite; }
+
+  @keyframes pulseLogo {
+    0%,100% { transform: scale(1); filter: drop-shadow(0 0 20px #FF5DA2); }
+    50%     { transform: scale(1.06); filter: drop-shadow(0 0 50px #FF5DA2); }
+  }
+  .logo-mark { animation: pulseLogo 1.6s ease-in-out infinite;
+                transform-box: fill-box; transform-origin: center; }
+
+  @keyframes spinSlow { to { transform: rotate(360deg); } }
+  .ring-orbit { animation: spinSlow 6s linear infinite;
+                 transform-box: fill-box; transform-origin: center; }
+
+  @keyframes blink {
+    0%,80%,100% { opacity: 0.35; }
+    40%         { opacity: 1; }
+  }
+  .dot { animation: blink 1.2s ease-in-out infinite; }
+  .dot-1 { animation-delay: 0s; }
+  .dot-2 { animation-delay: 0.18s; }
+  .dot-3 { animation-delay: 0.36s; }
+
+  @keyframes barFill {
+    0%   { transform: scaleX(0); }
+    50%  { transform: scaleX(0.7); }
+    100% { transform: scaleX(1); }
+  }
+  .bar-fill { transform-box: fill-box; transform-origin: left center;
+               animation: barFill 2.4s ease-in-out infinite; }
+</style>
+
+  <defs>
+    <linearGradient id="gradBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#12071F"/>
+      <stop offset="100%" stop-color="#1B0E2E"/>
+    </linearGradient>
+    <linearGradient id="gradPinkPurple" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF5DA2"/>
+      <stop offset="100%" stop-color="#7B5CFA"/>
+    </linearGradient>
+    <linearGradient id="gradPurplePink" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7B5CFA"/>
+      <stop offset="100%" stop-color="#FF5DA2"/>
+    </linearGradient>
+    <radialGradient id="gradCyanPop" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#34E4EA" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#34E4EA" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="gradAmberPop" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#FFB627" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#FFB627" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glowPink" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#FF5DA2" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowPurple" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#7B5CFA" flood-opacity="0.85"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowCyan" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#34E4EA" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowAmber" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#FFB627" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softBlob" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="28" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#7B5CFA" flood-opacity="0.55"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <radialGradient id="gradHaloSplash" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#7B5CFA" stop-opacity="0.55"/>
+      <stop offset="60%" stop-color="#12071F" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gradBar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#FF5DA2"/>
+      <stop offset="50%"  stop-color="#7B5CFA"/>
+      <stop offset="100%" stop-color="#34E4EA"/>
+    </linearGradient>
+
+  </defs>
+  <rect width="1080" height="1920" fill="url(#gradBg)"/>
+  <rect width="1080" height="1920" fill="url(#gradHaloSplash)"/>
+  <!-- floating blobs -->
+  <g filter="url(#softBlob)" opacity="0.6">
+    <ellipse class="blob-a" cx="180"  cy="320"  rx="260" ry="230" fill="#FF5DA2"/>
+    <ellipse class="blob-b" cx="900"  cy="900"  rx="300" ry="280" fill="#7B5CFA"/>
+    <ellipse class="blob-c" cx="220"  cy="1500" rx="320" ry="260" fill="#34E4EA"/>
+    <ellipse class="blob-d" cx="880"  cy="1700" rx="280" ry="220" fill="#FFB627"/>
+  </g>
+
+  <!-- subtle star dust -->
+  <g opacity="0.85">
+    <circle cx="120" cy="780"  r="3"   fill="#FFFFFF"/>
+    <circle cx="320" cy="1200" r="2.5" fill="#FFFFFF"/>
+    <circle cx="780" cy="500"  r="3"   fill="#FFFFFF"/>
+    <circle cx="640" cy="1600" r="2.5" fill="#FFFFFF"/>
+    <circle cx="520" cy="900"  r="2"   fill="#FFFFFF"/>
+    <circle cx="940" cy="1280" r="3"   fill="#FFFFFF"/>
+    <circle cx="260" cy="1700" r="2"   fill="#FFFFFF"/>
+  </g>
+
+  <!-- central mark — bigger, brand-strict                                -->
+  <g transform="translate(540, 820)" class="logo-mark">
+    <circle r="240" fill="url(#gradHaloSplash)"/>
+    <!-- crown -->
+    <g transform="translate(-110,-200)" filter="url(#glowAmber)">
+      <path d="M0,52 L26,0 L52,38 L78,0 L104,52 Z M0,52 L104,52 L104,66 L0,66 Z"
+            fill="#FFB627" stroke="#FFFFFF" stroke-width="3" stroke-linejoin="round"/>
+      <circle cx="26" cy="0"  r="8" fill="#FF5DA2"/>
+      <circle cx="52" cy="25" r="6" fill="#34E4EA"/>
+      <circle cx="78" cy="0"  r="8" fill="#7B5CFA"/>
+    </g>
+    <!-- giant "?" -->
+    <g filter="url(#glowPink)">
+      <text x="0" y="120" text-anchor="middle"
+            font-weight="900" font-size="320" fill="url(#gradPinkPurple)"
+            font-family="Cairo, Tajawal, 'Noto Sans Arabic', system-ui, sans-serif">؟</text>
+    </g>
+    <!-- brand name -->
+    <text x="0" y="260" text-anchor="middle" font-weight="900" font-size="64"
+          fill="#FFFFFF" filter="url(#glowPink)" letter-spacing="-2"
+          font-family="Cairo, Tajawal, 'Noto Sans Arabic', system-ui, sans-serif">تحدي الإجابات</text>
+    <!-- orbit ring -->
+    <circle r="280" fill="none" stroke="#34E4EA" stroke-width="2"
+            stroke-opacity="0.4" class="ring-orbit"
+            stroke-dasharray="6 16"/>
+    <circle cx="280" cy="0" r="6" fill="#34E4EA" filter="url(#glowCyan)"/>
+  </g>
+
+  <!-- 3-dot loader -->
+  <g transform="translate(540,1480)">
+    <circle cx="-44" cy="0" r="12" fill="#FF5DA2"   filter="url(#glowPink)"  class="dot dot-1"/>
+    <circle cx="0"   cy="0" r="12" fill="#7B5CFA" filter="url(#glowPurple)" class="dot dot-2"/>
+    <circle cx="44"  cy="0" r="12" fill="#34E4EA"   filter="url(#glowCyan)"  class="dot dot-3"/>
+  </g>
+
+  <!-- loading text -->
+  <text x="540" y="1560" text-anchor="middle" font-weight="700"
+        font-size="36" fill="#E6DEFF" opacity="0.85"
+        font-family="Cairo, Tajawal, 'Noto Sans Arabic', system-ui, sans-serif">جاري التحميل…</text>
+
+  <!-- progress bar -->
+  <g transform="translate(140,1700)">
+    <rect x="0" y="0"   width="800" height="14" rx="7" fill="#1B0E2E"
+          stroke="#7B5CFA" stroke-width="2" stroke-opacity="0.6"/>
+    <rect x="0" y="0"   width="800" height="14" rx="7" fill="url(#gradBar)"
+          filter="url(#glowPink)" class="bar-fill"/>
+  </g>
+
+  <!-- version / footer -->
+  <text x="540" y="1800" text-anchor="middle" font-weight="600"
+        font-size="24" fill="#FFFFFF" opacity="0.55" font-family="Cairo, Tajawal, 'Noto Sans Arabic', system-ui, sans-serif">kalako.app</text>
+</svg>

@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>تحدي الإجابات — Intro</title>
+<style>
+  html, body { margin:0; padding:0; width:1080px; height:1920px;
+                background:#12071F; overflow:hidden; font-family:'Cairo','Tajawal',
+                'Noto Sans Arabic',system-ui,sans-serif; color:#FFFFFF; }
+  body { display:flex; flex-direction:column; align-items:center; justify-content:center;
+          position:relative; }
+  /* Animated background layer */
+  .bg { position:absolute; inset:0; z-index:0;
+         background:
+            radial-gradient(60% 50% at 20% 25%, #FF5DA233 0%, transparent 60%),
+            radial-gradient(50% 50% at 80% 60%, #7B5CFA33 0%, transparent 60%),
+            radial-gradient(40% 40% at 25% 80%, #34E4EA22 0%, transparent 60%),
+            linear-gradient(180deg, #12071F 0%, #1B0E2E 100%);
+         animation: bgPulse 8s ease-in-out infinite alternate; }
+  @keyframes bgPulse { from{filter:hue-rotate(0deg) brightness(1)} to{filter:hue-rotate(20deg) brightness(1.15)} }
+
+  /* Floating particles */
+  .stars { position:absolute; inset:0; z-index:1; }
+  .stars span { position:absolute; background:#FFFFFF; border-radius:50%; opacity:.9;
+                 animation: twinkle 3s ease-in-out infinite; }
+  @keyframes twinkle { 0%,100%{opacity:.2} 50%{opacity:1} }
+  .stars span:nth-child(1) { left:8%;  top:18%; width:6px;  height:6px;  animation-delay:0s; }
+  .stars span:nth-child(2) { left:80%; top:14%; width:4px;  height:4px;  animation-delay:.6s; }
+  .stars span:nth-child(3) { left:70%; top:38%; width:5px;  height:5px;  animation-delay:1.1s; }
+  .stars span:nth-child(4) { left:14%; top:46%; width:5px;  height:5px;  animation-delay:1.7s; }
+  .stars span:nth-child(5) { left:88%; top:64%; width:4px;  height:4px;  animation-delay:.4s; }
+  .stars span:nth-child(6) { left:18%; top:72%; width:6px;  height:6px;  animation-delay:2.1s; }
+  .stars span:nth-child(7) { left:60%; top:82%; width:3px;  height:3px;  animation-delay:1.4s; }
+
+  /* Logo reveal — phase 0–3 s */
+  .logo-wrap { position:absolute; top:14%; left:50%; transform:translate(-50%,0) scale(.7);
+                opacity:0; animation: logoIn 1.6s cubic-bezier(.2,1.2,.4,1) 0.4s forwards; }
+  @keyframes logoIn {
+    0%   { opacity:0; transform:translate(-50%,0) scale(.6) rotate(-6deg); }
+    60%  { opacity:1; transform:translate(-50%,-4%) scale(1.05) rotate(0deg); }
+    100% { opacity:1; transform:translate(-50%,0) scale(1) rotate(0deg); }
+  }
+  .logo-wrap svg { width:760px; height:auto; }
+  .pulse-glow { animation: pulse 2.4s ease-in-out infinite alternate; }
+  @keyframes pulse {
+    from { filter: drop-shadow(0 0 8px #FF5DA2) drop-shadow(0 0 22px #7B5CFA); }
+    to   { filter: drop-shadow(0 0 18px #FF5DA2) drop-shadow(0 0 44px #7B5CFA66); }
+  }
+
+  /* Tagline */
+  .tagline { position:absolute; top:38%; left:50%; transform:translate(-50%,30px);
+              opacity:0; font-weight:900; font-size:64px; text-align:center;
+              background:linear-gradient(90deg,#FF5DA2,#7B5CFA);
+              -webkit-background-clip:text; background-clip:text; color:transparent;
+              animation: tagIn 1.2s ease-out 1.6s forwards; letter-spacing:-1px; }
+  @keyframes tagIn { to { opacity:1; transform:translate(-50%,0); } }
+  .subline { position:absolute; top:46%; left:50%; transform:translate(-50%,30px);
+              opacity:0; font-size:36px; color:#E6DEFF; text-align:center;
+              animation: tagIn 1.2s ease-out 2.2s forwards; }
+
+  /* Avatars row */
+  .avatars { position:absolute; top:53%; left:50%; transform:translate(-50%,30px);
+              opacity:0; display:flex; gap:32px; direction:ltr;
+              animation: avatarIn 1.0s ease-out 3.4s forwards; }
+  @keyframes avatarIn { to { opacity:1; transform:translate(-50%,0); } }
+  .avatar { width:160px; height:160px; border-radius:40px; overflow:hidden;
+             box-shadow:0 0 24px #7B5CFA55, 0 0 6px #FF5DA233 inset;
+             background:#1B0E2E; animation: bob 4s ease-in-out infinite alternate; }
+  .avatar:nth-child(2) { animation-delay:.6s }
+  .avatar:nth-child(3) { animation-delay:1.2s }
+  .avatar:nth-child(4) { animation-delay:1.8s }
+  .avatar:nth-child(5) { animation-delay:2.4s }
+  @keyframes bob { from { transform:translateY(0); } to { transform:translateY(-14px); } }
+
+  /* CTA button */
+  .cta { position:absolute; top:70%; left:50%; transform:translate(-50%,30px);
+          opacity:0; padding:36px 96px; font-size:64px; font-weight:900; color:#FFFFFF;
+          background:linear-gradient(90deg,#FF5DA2,#7B5CFA);
+          border-radius:28px; box-shadow:0 0 60px #FF5DA2aa, 0 0 120px #7B5CFA66;
+          animation: ctaIn 1.0s cubic-bezier(.2,1.2,.4,1) 6.5s forwards; }
+  @keyframes ctaIn {
+    0%   { opacity:0; transform:translate(-50%,40px) scale(.9); }
+    100% { opacity:1; transform:translate(-50%,0)    scale(1); }
+  }
+  .cta-ring { position:absolute; top:0; left:0; right:0; bottom:0;
+               border-radius:inherit; pointer-events:none;
+               animation: ring 2.4s ease-in-out infinite; }
+  @keyframes ring {
+    0%,100% { box-shadow:0 0 0 0   #FFFFFF00; }
+    50%     { box-shadow:0 0 0 14px #FFFFFF22; }
+  }
+
+  /* Footer + micro line */
+  .microcopy { position:absolute; bottom:6%; left:50%; transform:translateX(-50%);
+                font-size:24px; color:#E6DEFF; opacity:0; letter-spacing:1px;
+                animation: tagIn .9s ease-out 9s forwards; }
+  .tiny { font-size:20px; opacity:.8; }
+
+  /* Fade-out tail */
+  .fadeout { position:absolute; inset:0; background:#12071F; opacity:0;
+              animation: fadeOut 1.2s ease-in 11.0s forwards; z-index:99; }
+  @keyframes fadeOut { to { opacity:1; } }
+</style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="stars"><span></span><span></span><span></span><span></span>
+                     <span></span><span></span><span></span></div>
+
+  <div class="logo-wrap pulse-glow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" role="img"
+     aria-label="تحدي الإجابات — Neon Party trivia game logo">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&amp;family=Tajawal:wght@400;700;900&amp;display=swap');
+    text { font-family: 'Cairo', 'Tajawal', 'Noto Sans Arabic', system-ui, sans-serif; }
+  </style>
+
+  <defs>
+    <linearGradient id="gradBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#12071F"/>
+      <stop offset="100%" stop-color="#1B0E2E"/>
+    </linearGradient>
+    <linearGradient id="gradPinkPurple" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF5DA2"/>
+      <stop offset="100%" stop-color="#7B5CFA"/>
+    </linearGradient>
+    <linearGradient id="gradPurplePink" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7B5CFA"/>
+      <stop offset="100%" stop-color="#FF5DA2"/>
+    </linearGradient>
+    <radialGradient id="gradCyanPop" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#34E4EA" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#34E4EA" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="gradAmberPop" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#FFB627" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#FFB627" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glowPink" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#FF5DA2" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowPurple" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#7B5CFA" flood-opacity="0.85"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowCyan" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#34E4EA" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowAmber" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#FFB627" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softBlob" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="28" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#7B5CFA" flood-opacity="0.55"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <radialGradient id="gradHalo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#7B5CFA" stop-opacity="0.65"/>
+      <stop offset="70%" stop-color="#7B5CFA" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <circle cx="190" cy="180" r="170" fill="url(#gradHalo)"/>
+  <g filter="url(#glowPink)" transform="translate(60,60)">
+    <rect x="0" y="0" width="240" height="240" rx="44" ry="44"
+          fill="url(#gradPurplePink)" stroke="#FF5DA2" stroke-width="2"/>
+    <rect x="10" y="10" width="220" height="220" rx="34" ry="34"
+          fill="none" stroke="#FFFFFF" stroke-opacity="0.12" stroke-width="1"/>
+    <text x="120" y="170" text-anchor="middle" font-family="Cairo, Tajawal, 'Noto Sans Arabic', system-ui, sans-serif"
+          font-weight="900" font-size="180" fill="#FFFFFF" letter-spacing="-6">؟</text>
+    <circle cx="48" cy="56" r="5" fill="#34E4EA" filter="url(#glowCyan)"/>
+    <circle cx="200" cy="200" r="4" fill="#FFB627" filter="url(#glowAmber)"/>
+    <circle cx="56" cy="200" r="3" fill="#FFFFFF" opacity="0.9"/>
+  </g>
+  <g transform="translate(140,30)" filter="url(#glowAmber)">
+    <path d="M0,40 L20,0 L40,30 L60,0 L80,40 Z M0,40 L80,40 L80,52 L0,52 Z"
+          fill="#FFB627" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/>
+    <circle cx="20" cy="0" r="6" fill="#FF5DA2"/>
+    <circle cx="40" cy="20" r="5" fill="#34E4EA"/>
+    <circle cx="60" cy="0" r="6" fill="#7B5CFA"/>
+  </g>
+  <g filter="url(#glowPink)">
+    <text x="380" y="200" font-family="Cairo, Tajawal, 'Noto Sans Arabic', system-ui, sans-serif" font-weight="900"
+          font-size="120" fill="url(#gradPinkPurple)" letter-spacing="-2">
+      تحدي الإجابات
+    </text>
+  </g>
+  <text x="380" y="260" font-family="Cairo, Tajawal, 'Noto Sans Arabic', system-ui, sans-serif" font-weight="600"
+        font-size="34" fill="#E6DEFF" opacity="0.85">
+    لعبة خداع جماعية • Fibbage-style
+  </text>
+  <g filter="url(#glowCyan)">
+    <rect x="380" y="280" width="160" height="6" rx="3" fill="#34E4EA"/>
+  </g>
+  <rect x="550" y="280" width="60" height="6" rx="3" fill="#FF5DA2" opacity="0.7"/>
+</svg></div>
+
+  <div class="tagline">اسحب · اخدع · فز</div>
+  <div class="subline">لعبة خداع جماعية بنكهة عربية</div>
+
+  <div class="avatars">
+    <div class="avatar"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720" role="img"
+     aria-label="تحدي الإجابات player avatar 01">
+
+  <defs>
+    <linearGradient id="gradBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#12071F"/>
+      <stop offset="100%" stop-color="#1B0E2E"/>
+    </linearGradient>
+    <linearGradient id="gradPinkPurple" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF5DA2"/>
+      <stop offset="100%" stop-color="#7B5CFA"/>
+    </linearGradient>
+    <linearGradient id="gradPurplePink" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7B5CFA"/>
+      <stop offset="100%" stop-color="#FF5DA2"/>
+    </linearGradient>
+    <radialGradient id="gradCyanPop" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#34E4EA" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#34E4EA" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="gradAmberPop" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#FFB627" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#FFB627" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glowPink" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#FF5DA2" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowPurple" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#7B5CFA" flood-opacity="0.85"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowCyan" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#34E4EA" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowAmber" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#FFB627" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softBlob" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="28" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#7B5CFA" flood-opacity="0.55"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+  </defs>
+<circle cx="360" cy="370" r="198" fill="none" stroke="#34E4EA" stroke-width="6" opacity="0.85" filter="url(#glowCyan)"/>
+<path d="M200,320 Q180,200 370,170 Q560,200 540,340 L200,330 Z" fill="#FF5DA2" filter="url(#glowPurple)"/><path d="M530,300 Q620,400 580,540 Q530,490 510,360 Z" fill="#FF5DA2" filter="url(#glowPurple)"/>
+
+  <circle cx="360" cy="360" r="180" fill="#F2C9A5"/>
+  <ellipse cx="183.6" cy="370" rx="14" ry="22" fill="#F2C9A5"/>
+  <ellipse cx="536.4" cy="370" rx="14" ry="22" fill="#F2C9A5"/>
+  <ellipse cx="261.0" cy="417.6" rx="28" ry="16" fill="#FF5DA2" opacity="0.45"/>
+  <ellipse cx="459.0" cy="417.6" rx="28" ry="16" fill="#FF5DA2" opacity="0.45"/>
+<path d="M268,337 Q290,325 312,337" stroke="#1B0E2E" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M408,337 Q430,325 452,337" stroke="#1B0E2E" stroke-width="6" fill="none" stroke-linecap="round"/>
+<path d="M320,430 Q360,460 400,430" stroke="#1B0E2E" stroke-width="6" fill="none" stroke-linecap="round"/>
+
+
+</svg></div>
+    <div class="avatar"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720" role="img"
+     aria-label="تحدي الإجابات player avatar 05">
+
+  <defs>
+    <linearGradient id="gradBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#12071F"/>
+      <stop offset="100%" stop-color="#1B0E2E"/>
+    </linearGradient>
+    <linearGradient id="gradPinkPurple" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF5DA2"/>
+      <stop offset="100%" stop-color="#7B5CFA"/>
+    </linearGradient>
+    <linearGradient id="gradPurplePink" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7B5CFA"/>
+      <stop offset="100%" stop-color="#FF5DA2"/>
+    </linearGradient>
+    <radialGradient id="gradCyanPop" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#34E4EA" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#34E4EA" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="gradAmberPop" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#FFB627" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#FFB627" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glowPink" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#FF5DA2" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowPurple" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#7B5CFA" flood-opacity="0.85"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowCyan" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#34E4EA" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowAmber" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#FFB627" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softBlob" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="28" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#7B5CFA" flood-opacity="0.55"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+  </defs>
+<circle cx="360" cy="370" r="198" fill="none" stroke="#34E4EA" stroke-width="6" opacity="0.85" filter="url(#glowCyan)"/>
+<path d="M140,280 Q100,160 360,140 Q620,160 580,280 L580,520 Q360,560 140,520 Z" fill="#FF5DA2" opacity="0.92"/>
+
+  <circle cx="360" cy="360" r="180" fill="#F2C9A5"/>
+  <ellipse cx="183.6" cy="370" rx="14" ry="22" fill="#F2C9A5"/>
+  <ellipse cx="536.4" cy="370" rx="14" ry="22" fill="#F2C9A5"/>
+  <ellipse cx="261.0" cy="417.6" rx="28" ry="16" fill="#FF5DA2" opacity="0.45"/>
+  <ellipse cx="459.0" cy="417.6" rx="28" ry="16" fill="#FF5DA2" opacity="0.45"/>
+<path d="M268,335 Q290,347 312,335" stroke="#1B0E2E" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M408,335 Q430,347 452,335" stroke="#1B0E2E" stroke-width="6" fill="none" stroke-linecap="round"/>
+<path d="M310,430 Q360,480 410,430 Q360,492 310,430" fill="#1B0E2E"/><rect x="320" y="454" width="80" height="14" fill="#FFFFFF"/>
+
+<path d="M190,260 Q160,170 360,170 Q560,170 530,260 L190,260 Z" fill="#FF5DA2" filter="url(#glowPurple)"/><ellipse cx="360" cy="262" rx="170" ry="14" fill="#FF5DA2" stroke="#FFFFFF" stroke-opacity="0.6"/>
+</svg></div>
+    <div class="avatar"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720" role="img"
+     aria-label="تحدي الإجابات player avatar 09">
+
+  <defs>
+    <linearGradient id="gradBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#12071F"/>
+      <stop offset="100%" stop-color="#1B0E2E"/>
+    </linearGradient>
+    <linearGradient id="gradPinkPurple" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF5DA2"/>
+      <stop offset="100%" stop-color="#7B5CFA"/>
+    </linearGradient>
+    <linearGradient id="gradPurplePink" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7B5CFA"/>
+      <stop offset="100%" stop-color="#FF5DA2"/>
+    </linearGradient>
+    <radialGradient id="gradCyanPop" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#34E4EA" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#34E4EA" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="gradAmberPop" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#FFB627" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#FFB627" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glowPink" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#FF5DA2" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowPurple" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#7B5CFA" flood-opacity="0.85"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowCyan" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#34E4EA" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowAmber" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#FFB627" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softBlob" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="28" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#7B5CFA" flood-opacity="0.55"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+  </defs>
+<circle cx="360" cy="370" r="198" fill="none" stroke="#7B5CFA" stroke-width="6" opacity="0.85" filter="url(#glowCyan)"/>
+<path d="M180,330 Q140,160 370,150 Q580,160 560,360 L580,560 L140,560 Z" fill="#FF5DA2" filter="url(#glowPurple)"/><path d="M210,310 Q360,370 510,310 Q490,340 360,355 Q230,340 210,310 Z" fill="#FF5DA2" filter="url(#glowPurple)"/>
+
+  <circle cx="360" cy="360" r="180" fill="#EFC1A0"/>
+  <ellipse cx="183.6" cy="370" rx="14" ry="22" fill="#EFC1A0"/>
+  <ellipse cx="536.4" cy="370" rx="14" ry="22" fill="#EFC1A0"/>
+  <ellipse cx="261.0" cy="417.6" rx="28" ry="16" fill="#FF5DA2" opacity="0.45"/>
+  <ellipse cx="459.0" cy="417.6" rx="28" ry="16" fill="#FF5DA2" opacity="0.45"/>
+<path d="M268,335 Q290,329 312,335" stroke="#1B0E2E" stroke-width="6" fill="none" stroke-linecap="round"/><ellipse cx="430" cy="335" rx="20" ry="22" fill="#FFFFFF"/><circle cx="430" cy="337" r="12" fill="#1B0E2E"/><circle cx="436" cy="331" r="3" fill="#FFFFFF"/>
+<path d="M328,430 Q360,452 392,430" stroke="#1B0E2E" stroke-width="6" fill="none" stroke-linecap="round"/>
+<g stroke="#FFFFFF" stroke-width="3" fill="none" opacity="0.9"><rect x="260" y="309" width="60" height="40" rx="10"/><rect x="400" y="309" width="60" height="40" rx="10"/><line x1="320" y1="329" x2="400" y2="329"/></g>
+
+</svg></div>
+    <div class="avatar"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720" role="img"
+     aria-label="تحدي الإجابات player avatar 12">
+
+  <defs>
+    <linearGradient id="gradBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#12071F"/>
+      <stop offset="100%" stop-color="#1B0E2E"/>
+    </linearGradient>
+    <linearGradient id="gradPinkPurple" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF5DA2"/>
+      <stop offset="100%" stop-color="#7B5CFA"/>
+    </linearGradient>
+    <linearGradient id="gradPurplePink" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7B5CFA"/>
+      <stop offset="100%" stop-color="#FF5DA2"/>
+    </linearGradient>
+    <radialGradient id="gradCyanPop" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#34E4EA" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#34E4EA" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="gradAmberPop" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#FFB627" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#FFB627" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glowPink" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#FF5DA2" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowPurple" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#7B5CFA" flood-opacity="0.85"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowCyan" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#34E4EA" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowAmber" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#FFB627" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softBlob" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="28" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#7B5CFA" flood-opacity="0.55"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+  </defs>
+<circle cx="360" cy="370" r="198" fill="none" stroke="#34E4EA" stroke-width="6" opacity="0.85" filter="url(#glowCyan)"/>
+
+
+  <circle cx="360" cy="360" r="180" fill="#8E5A3C"/>
+  <ellipse cx="183.6" cy="370" rx="14" ry="22" fill="#8E5A3C"/>
+  <ellipse cx="536.4" cy="370" rx="14" ry="22" fill="#8E5A3C"/>
+  <ellipse cx="261.0" cy="417.6" rx="28" ry="16" fill="#FF5DA2" opacity="0.45"/>
+  <ellipse cx="459.0" cy="417.6" rx="28" ry="16" fill="#FF5DA2" opacity="0.45"/>
+<path d="M268,337 Q290,325 312,337" stroke="#1B0E2E" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M408,337 Q430,325 452,337" stroke="#1B0E2E" stroke-width="6" fill="none" stroke-linecap="round"/>
+<path d="M320,430 Q360,460 400,430" stroke="#1B0E2E" stroke-width="6" fill="none" stroke-linecap="round"/>
+
+<path d="M190,260 Q160,170 360,170 Q560,170 530,260 L190,260 Z" fill="#FF5DA2" filter="url(#glowPurple)"/><ellipse cx="360" cy="262" rx="170" ry="14" fill="#FF5DA2" stroke="#FFFFFF" stroke-opacity="0.6"/>
+</svg></div>
+    <div class="avatar"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720" role="img"
+     aria-label="تحدي الإجابات player avatar 16">
+
+  <defs>
+    <linearGradient id="gradBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#12071F"/>
+      <stop offset="100%" stop-color="#1B0E2E"/>
+    </linearGradient>
+    <linearGradient id="gradPinkPurple" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF5DA2"/>
+      <stop offset="100%" stop-color="#7B5CFA"/>
+    </linearGradient>
+    <linearGradient id="gradPurplePink" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7B5CFA"/>
+      <stop offset="100%" stop-color="#FF5DA2"/>
+    </linearGradient>
+    <radialGradient id="gradCyanPop" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#34E4EA" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#34E4EA" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="gradAmberPop" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#FFB627" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#FFB627" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glowPink" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#FF5DA2" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowPurple" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#7B5CFA" flood-opacity="0.85"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowCyan" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#34E4EA" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowAmber" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#FFB627" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softBlob" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="28" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#7B5CFA" flood-opacity="0.55"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+  </defs>
+<circle cx="360" cy="370" r="198" fill="none" stroke="#FFB627" stroke-width="6" opacity="0.85" filter="url(#glowCyan)"/>
+<path d="M200,330 Q180,210 360,180 Q540,210 520,330 L200,330 Z" fill="#34E4EA" filter="url(#glowPurple)"/>
+
+  <circle cx="360" cy="360" r="180" fill="#5A3C2A"/>
+  <ellipse cx="183.6" cy="370" rx="14" ry="22" fill="#5A3C2A"/>
+  <ellipse cx="536.4" cy="370" rx="14" ry="22" fill="#5A3C2A"/>
+  <ellipse cx="261.0" cy="417.6" rx="28" ry="16" fill="#FF5DA2" opacity="0.45"/>
+  <ellipse cx="459.0" cy="417.6" rx="28" ry="16" fill="#FF5DA2" opacity="0.45"/>
+<path d="M268,335 Q290,329 312,335" stroke="#1B0E2E" stroke-width="6" fill="none" stroke-linecap="round"/><ellipse cx="430" cy="335" rx="20" ry="22" fill="#FFFFFF"/><circle cx="430" cy="337" r="12" fill="#1B0E2E"/><circle cx="436" cy="331" r="3" fill="#FFFFFF"/>
+<path d="M328,430 Q360,452 392,430" stroke="#1B0E2E" stroke-width="6" fill="none" stroke-linecap="round"/>
+
+
+</svg></div>
+  </div>
+
+  <div class="cta">ابدأ اللعب<div class="cta-ring"></div></div>
+
+  <div class="microcopy" style="top:auto; bottom:9%;">تحدّي الإجابات · Neon Party Edition</div>
+
+  <div class="fadeout"></div>
+</body>
+</html>

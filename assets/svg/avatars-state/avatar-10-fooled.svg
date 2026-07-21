@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720" role="img"
+     aria-label="تحدي الإجابات player avatar 10 — fooled state">
+<style>
+
+  @keyframes shake {
+    0%,100% { transform: translate(0,0); }
+    20%     { transform: translate(-6px, -2px) rotate(-3deg); }
+    40%     { transform: translate( 5px,  3px) rotate( 3deg); }
+    60%     { transform: translate(-4px,  1px) rotate(-2deg); }
+    80%     { transform: translate( 4px, -2px) rotate( 2deg); }
+  }
+  .avatar-body { animation: shake 0.7s linear infinite;
+                 transform-box: fill-box; transform-origin: center; }
+  @keyframes flash { 0%,100% { opacity:0.5 } 50% { opacity:1 } }
+  .bolt { animation: flash 0.4s ease-in-out infinite; }
+  .bolt.b1 { animation-delay: 0.0s; }
+  .bolt.b2 { animation-delay: 0.2s; }
+  @keyframes spinSlow { to { transform: translate({cx}px,{cy-220}px) rotate(360deg); } }
+  .dizzy   { animation: spinSlow 1.6s linear infinite;
+             transform-box: fill-box; transform-origin: center; }
+  </style>
+
+  <defs>
+    <linearGradient id="gradBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#12071F"/>
+      <stop offset="100%" stop-color="#1B0E2E"/>
+    </linearGradient>
+    <linearGradient id="gradPinkPurple" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF5DA2"/>
+      <stop offset="100%" stop-color="#7B5CFA"/>
+    </linearGradient>
+    <linearGradient id="gradPurplePink" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7B5CFA"/>
+      <stop offset="100%" stop-color="#FF5DA2"/>
+    </linearGradient>
+    <radialGradient id="gradCyanPop" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#34E4EA" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#34E4EA" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="gradAmberPop" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#FFB627" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#FFB627" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glowPink" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#FF5DA2" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowPurple" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#7B5CFA" flood-opacity="0.85"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowCyan" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#34E4EA" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowAmber" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#FFB627" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softBlob" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="28" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#7B5CFA" flood-opacity="0.55"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+  </defs>
+<path d="M160,250 L190,210 L175,250 L205,200 L160,280 L175,245 L155,245 Z" fill="#FFB627" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round" filter="url(#glowAmber)" class="bolt b1"/>
+  <path d="M525,180 L555,140 L540,175 L570,130 L525,210 L540,175 L520,175 Z" fill="#FFB627" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round" filter="url(#glowAmber)" class="bolt b2"/>
+  <g transform="translate(360,140)" filter="url(#glowAmber)" class="dizzy"><circle cx="-22" cy="0" r="4" fill="#FFFFFF"/><circle cx="22"  cy="0" r="4" fill="#FFFFFF"/><rect x="-3" y="-15" width="6" height="14" rx="2" fill="#FFB627"/><rect x="-3" y="2"   width="6" height="14" rx="2" fill="#FFB627"/><rect x="-15" y="-3" width="14" height="6" rx="2" fill="#FFB627"/><rect x="2"   y="-3" width="14" height="6" rx="2" fill="#FFB627"/></g>
+<g class="avatar-body">
+<circle cx="360" cy="370" r="198" fill="none" stroke="#FFB627" class="ring" stroke-width="6" opacity="0.9" filter="url(#glowAmber)"/>
+<path d="M230,300 Q230,250 360,240 Q490,250 490,300 Z" fill="#7B5CFA" opacity="0.6"/>
+
+  <circle cx="360" cy="360" r="180" fill="#B07A5C"/>
+  <ellipse cx="183.6" cy="370" rx="14" ry="22" fill="#B07A5C"/>
+  <ellipse cx="536.4" cy="370" rx="14" ry="22" fill="#B07A5C"/>
+  <ellipse cx="261.0" cy="417.6" rx="28" ry="16" fill="#FF5DA2" opacity="0.45"/>
+  <ellipse cx="459.0" cy="417.6" rx="28" ry="16" fill="#FF5DA2" opacity="0.45"/>
+<circle cx="290" cy="335" r="22" fill="#FFFFFF"/><circle cx="290" cy="338" r="10" fill="#1B0E2E"/><circle cx="295" cy="330" r="3" fill="#FFFFFF"/><circle cx="430" cy="335" r="22" fill="#FFFFFF"/><circle cx="430" cy="338" r="10" fill="#1B0E2E"/><circle cx="435" cy="330" r="3" fill="#FFFFFF"/>
+<ellipse cx="360" cy="440" rx="16" ry="22" fill="#1B0E2E"/>
+<path d="M200,340 Q360,200 520,340" stroke="#FFB627" stroke-width="10" fill="none" filter="url(#glowCyan)"/><ellipse cx="200" cy="340" rx="22" ry="32" fill="#FFB627" filter="url(#glowCyan)"/><ellipse cx="520" cy="340" rx="22" ry="32" fill="#FFB627" filter="url(#glowCyan)"/>
+
+</g>
+</svg>

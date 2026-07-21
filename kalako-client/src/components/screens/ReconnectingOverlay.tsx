@@ -1,0 +1,31 @@
+import { motion } from 'framer-motion'
+import { useGameStore } from '@/store/gameStore'
+
+export default function ReconnectingOverlay() {
+  const isReconnecting = useGameStore((s) => s.isReconnecting)
+
+  if (!isReconnecting) return null
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+      role="alert"
+      aria-live="assertive"
+    >
+      <div className="glass-strong p-8 text-center max-w-xs">
+        <div className="animate-pulse-glow mb-4">
+          <div className="w-12 h-12 mx-auto rounded-full border-4 border-primary/30 border-t-primary animate-spin" />
+        </div>
+        <p className="text-white font-bold text-lg" style={{ fontFamily: 'var(--font-heading)' }}>
+          جارِ إعادة الاتصال...
+        </p>
+        <p className="text-white/40 text-sm mt-2">
+          نحاول الاتصال بالخادم
+        </p>
+      </div>
+    </motion.div>
+  )
+}

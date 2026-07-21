@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" role="img"
+     aria-label="Lobby background for تحدي الإجابات"
+     preserveAspectRatio="xMidYMid slice">
+
+  <defs>
+    <linearGradient id="gradBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#12071F"/>
+      <stop offset="100%" stop-color="#1B0E2E"/>
+    </linearGradient>
+    <linearGradient id="gradPinkPurple" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF5DA2"/>
+      <stop offset="100%" stop-color="#7B5CFA"/>
+    </linearGradient>
+    <linearGradient id="gradPurplePink" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7B5CFA"/>
+      <stop offset="100%" stop-color="#FF5DA2"/>
+    </linearGradient>
+    <radialGradient id="gradCyanPop" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#34E4EA" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#34E4EA" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="gradAmberPop" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#FFB627" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#FFB627" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glowPink" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#FF5DA2" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowPurple" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#7B5CFA" flood-opacity="0.85"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowCyan" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#34E4EA" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowAmber" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#FFB627" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softBlob" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="28" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#7B5CFA" flood-opacity="0.55"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+<style>
+  :root { --c1: #FF5DA2; --c2: #7B5CFA; --c3: #34E4EA; --c4: #FFB627; }
+  .blob {
+    transform-box: fill-box;
+    transform-origin: center;
+    will-change: transform, filter;
+  }
+  @keyframes float-a { 0%,100% { transform: translate(0,0) scale(1) }
+                       50%     { transform: translate(40px,-30px) scale(1.06) } }
+  @keyframes float-b { 0%,100% { transform: translate(0,0) scale(1) }
+                       50%     { transform: translate(-50px,40px) scale(0.95) } }
+  @keyframes float-c { 0%,100% { transform: translate(0,0) scale(1) }
+                       50%     { transform: translate(20px,60px) scale(1.04) } }
+  @keyframes float-d { 0%,100% { transform: translate(0,0) scale(1) }
+                       50%     { transform: translate(-30px,-20px) scale(0.92) } }
+  .blob-a { animation: float-a 14s ease-in-out infinite; }
+  .blob-b { animation: float-b 18s ease-in-out infinite; }
+  .blob-c { animation: float-c 22s ease-in-out infinite; }
+  .blob-d { animation: float-d 16s ease-in-out infinite; }
+  .star { fill: #FFFFFF; opacity: 0.85; animation: twinkle 3s ease-in-out infinite; }
+  @keyframes twinkle { 0%,100% { opacity:.35 } 50% { opacity:1 } }
+  .star.s2 { animation-delay:.8s }
+  .star.s3 { animation-delay:1.4s }
+  .star.s4 { animation-delay:2.1s }
+</style>
+  </defs>
+  <rect width="1080" height="1920" fill="url(#gradBg)"/>
+  <g filter="url(#softBlob)" opacity="0.55">
+    <ellipse class="blob blob-a" cx="180" cy="320" rx="260" ry="230" fill="#FF5DA2"/>
+  </g>
+  <g filter="url(#softBlob)" opacity="0.6">
+    <ellipse class="blob blob-b" cx="900" cy="900" rx="300" ry="280" fill="#7B5CFA"/>
+  </g>
+  <g filter="url(#softBlob)" opacity="0.5">
+    <ellipse class="blob blob-c" cx="220" cy="1500" rx="320" ry="260" fill="#34E4EA"/>
+  </g>
+  <g filter="url(#softBlob)" opacity="0.45">
+    <ellipse class="blob blob-d" cx="880" cy="1700" rx="280" ry="220" fill="#FFB627"/>
+  </g>
+  <g>
+    <circle class="star"    cx="120" cy="780"  r="3"/>
+    <circle class="star s2" cx="320" cy="1200" r="2.5"/>
+    <circle class="star s3" cx="780" cy="500"  r="3"/>
+    <circle class="star s4" cx="640" cy="1600" r="2.5"/>
+    <circle class="star"    cx="520" cy="900"  r="2"/>
+    <circle class="star s2" cx="940" cy="1280" r="3"/>
+    <circle class="star s3" cx="260" cy="1700" r="2"/>
+  </g>
+  <g opacity="0.06" stroke="#FFFFFF" stroke-width="1">
+    <line x1="0" y1="120" x2="1080" y2="120"/><line x1="0" y1="240" x2="1080" y2="240"/><line x1="0" y1="360" x2="1080" y2="360"/><line x1="0" y1="480" x2="1080" y2="480"/><line x1="0" y1="600" x2="1080" y2="600"/><line x1="0" y1="720" x2="1080" y2="720"/><line x1="0" y1="840" x2="1080" y2="840"/><line x1="0" y1="960" x2="1080" y2="960"/><line x1="0" y1="1080" x2="1080" y2="1080"/><line x1="0" y1="1200" x2="1080" y2="1200"/><line x1="0" y1="1320" x2="1080" y2="1320"/><line x1="0" y1="1440" x2="1080" y2="1440"/><line x1="0" y1="1560" x2="1080" y2="1560"/><line x1="0" y1="1680" x2="1080" y2="1680"/><line x1="0" y1="1800" x2="1080" y2="1800"/>
+    <line x1="120" y1="0" x2="120" y2="1920"/><line x1="240" y1="0" x2="240" y2="1920"/><line x1="360" y1="0" x2="360" y2="1920"/><line x1="480" y1="0" x2="480" y2="1920"/><line x1="600" y1="0" x2="600" y2="1920"/><line x1="720" y1="0" x2="720" y2="1920"/><line x1="840" y1="0" x2="840" y2="1920"/><line x1="960" y1="0" x2="960" y2="1920"/>
+  </g>
+</svg>

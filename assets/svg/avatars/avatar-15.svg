@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720" role="img"
+     aria-label="تحدي الإجابات player avatar 15">
+
+  <defs>
+    <linearGradient id="gradBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#12071F"/>
+      <stop offset="100%" stop-color="#1B0E2E"/>
+    </linearGradient>
+    <linearGradient id="gradPinkPurple" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF5DA2"/>
+      <stop offset="100%" stop-color="#7B5CFA"/>
+    </linearGradient>
+    <linearGradient id="gradPurplePink" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7B5CFA"/>
+      <stop offset="100%" stop-color="#FF5DA2"/>
+    </linearGradient>
+    <radialGradient id="gradCyanPop" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#34E4EA" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#34E4EA" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="gradAmberPop" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#FFB627" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#FFB627" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glowPink" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#FF5DA2" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowPurple" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#7B5CFA" flood-opacity="0.85"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowCyan" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#34E4EA" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowAmber" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#FFB627" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softBlob" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="28" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#7B5CFA" flood-opacity="0.55"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+  </defs>
+<circle cx="360" cy="370" r="198" fill="none" stroke="#7B5CFA" stroke-width="6" opacity="0.85" filter="url(#glowCyan)"/>
+<path d="M200,320 Q180,200 370,170 Q560,200 540,340 L200,330 Z" fill="#FFB627" filter="url(#glowPurple)"/><path d="M530,300 Q620,400 580,540 Q530,490 510,360 Z" fill="#FFB627" filter="url(#glowPurple)"/>
+
+  <circle cx="360" cy="360" r="180" fill="#C99A78"/>
+  <ellipse cx="183.6" cy="370" rx="14" ry="22" fill="#C99A78"/>
+  <ellipse cx="536.4" cy="370" rx="14" ry="22" fill="#C99A78"/>
+  <ellipse cx="261.0" cy="417.6" rx="28" ry="16" fill="#FF5DA2" opacity="0.45"/>
+  <ellipse cx="459.0" cy="417.6" rx="28" ry="16" fill="#FF5DA2" opacity="0.45"/>
+<path d="M268,337 Q290,325 312,337" stroke="#1B0E2E" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M408,337 Q430,325 452,337" stroke="#1B0E2E" stroke-width="6" fill="none" stroke-linecap="round"/>
+<path d="M320,430 Q360,460 400,430" stroke="#1B0E2E" stroke-width="6" fill="none" stroke-linecap="round"/>
+<g stroke="#FFFFFF" stroke-width="3" fill="none" opacity="0.9"><rect x="260" y="309" width="60" height="40" rx="10"/><rect x="400" y="309" width="60" height="40" rx="10"/><line x1="320" y1="329" x2="400" y2="329"/></g>
+
+</svg>

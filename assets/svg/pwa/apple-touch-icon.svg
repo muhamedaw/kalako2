@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img"
+     aria-label="Kalako app icon">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@900&display=swap');
+  text { font-family: 'Cairo','Tajawal','Noto Sans Arabic',system-ui,sans-serif; }
+</style>
+
+  <defs>
+    <linearGradient id="gradBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#12071F"/>
+      <stop offset="100%" stop-color="#1B0E2E"/>
+    </linearGradient>
+    <linearGradient id="gradPinkPurple" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF5DA2"/>
+      <stop offset="100%" stop-color="#7B5CFA"/>
+    </linearGradient>
+    <radialGradient id="gradHalo" cx="50%" cy="50%" r="55%">
+      <stop offset="0%"  stop-color="#7B5CFA" stop-opacity="0.85"/>
+      <stop offset="70%" stop-color="#12071F" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glowPink" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="6" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#FF5DA2" flood-opacity="0.95"/>
+      <feComposite in2="b" operator="in" result="g"/>
+      <feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowCyan" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="4" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#34E4EA" flood-opacity="0.95"/>
+      <feComposite in2="b" operator="in" result="g"/>
+      <feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowAmber" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="3" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#FFB627" flood-opacity="0.95"/>
+      <feComposite in2="b" operator="in" result="g"/>
+      <feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect x="0" y="0" width="512" height="512" rx="120" ry="120" fill="url(#gradBg)"/>
+  <rect x="0" y="0" width="512" height="512" rx="120" ry="120" fill="url(#gradHalo)"/>
+  <!-- crown -->
+  <g transform="translate(176,72)" filter="url(#glowAmber)">
+    <path d="M0,52 L26,0 L52,38 L78,0 L104,52 Z M0,52 L104,52 L104,66 L0,66 Z"
+          fill="#FFB627" stroke="#FFFFFF" stroke-width="3" stroke-linejoin="round"/>
+    <circle cx="26" cy="0"  r="8" fill="#FF5DA2"/>
+    <circle cx="52" cy="25" r="6" fill="#34E4EA"/>
+    <circle cx="78" cy="0"  r="8" fill="#7B5CFA"/>
+  </g>
+  <!-- giant "?" -->
+  <g filter="url(#glowPink)">
+    <text x="256" y="380" text-anchor="middle"
+          font-weight="900" font-size="320" fill="url(#gradPinkPurple)">؟</text>
+  </g>
+  <!-- corner speckles -->
+  <circle cx="86"  cy="102" r="9" fill="#34E4EA"  filter="url(#glowCyan)"/>
+  <circle cx="430" cy="380" r="7" fill="#FFB627" filter="url(#glowAmber)"/>
+  <circle cx="430" cy="120" r="5" fill="#FFFFFF" opacity="0.85"/>
+  <circle cx="80"  cy="380" r="5" fill="#FFFFFF" opacity="0.7"/>
+</svg>

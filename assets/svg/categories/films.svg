@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img"
+     aria-label="تحدي الإجابات category — films">
+
+  <defs>
+    <linearGradient id="gradBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#12071F"/>
+      <stop offset="100%" stop-color="#1B0E2E"/>
+    </linearGradient>
+    <linearGradient id="gradPinkPurple" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF5DA2"/>
+      <stop offset="100%" stop-color="#7B5CFA"/>
+    </linearGradient>
+    <linearGradient id="gradPurplePink" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7B5CFA"/>
+      <stop offset="100%" stop-color="#FF5DA2"/>
+    </linearGradient>
+    <radialGradient id="gradCyanPop" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#34E4EA" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#34E4EA" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="gradAmberPop" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#FFB627" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#FFB627" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glowPink" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#FF5DA2" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowPurple" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#7B5CFA" flood-opacity="0.85"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowCyan" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#34E4EA" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowAmber" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#FFB627" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softBlob" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="28" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#7B5CFA" flood-opacity="0.55"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+  </defs>
+  <!-- chip backdrop with gradient — sits on the brand gradient so it works
+       in either bg-deep or elevated surface. -->
+  <rect x="0" y="0" width="512" height="512" rx="44" ry="44"
+        fill="url(#gradBg)" stroke="url(#gradPinkPurple)" stroke-width="6"
+        filter="url(#glowPurple)"/>
+  <!-- inner lavender hairline -->
+  <rect x="14" y="14" width="484" height="484" rx="32" ry="32"
+        fill="none" stroke="#E6DEFF" stroke-opacity="0.18" stroke-width="2"/>
+  <!-- corner accent shape: small chip-tab with category color -->
+  <g filter="url(#glowFf5Da2)">
+    <circle cx="430" cy="82" r="14" fill="#FF5DA2"/>
+  </g>
+  <!-- the semantic glyph -->
+  <g filter="url(#glowPink)">
+    <g transform="translate(256,256)"><rect x="-140" y="-30" width="280" height="180" rx="14" fill="#FFFFFF" stroke="#FF5DA2" stroke-width="12"/><g stroke="#FF5DA2" stroke-width="10"><line x1="-140" y1="20"  x2="140" y2="20"/><line x1="-140" y1="60"  x2="140" y2="60"/><line x1="-140" y1="100" x2="140" y2="100"/></g><rect x="-160" y="-110" width="320" height="80" rx="10" fill="#FFB627" stroke="#12071F" stroke-width="8" transform="rotate(-12)"/><g transform="rotate(-12)" stroke="#12071F" stroke-width="8"><line x1="-150" y1="-100" x2="-130" y2="-40"/><line x1="-100" y1="-100" x2="-80"  y2="-40"/><line x1="-50"  y1="-100" x2="-30"  y2="-40"/><line x1="0"    y1="-100" x2="20"   y2="-40"/><line x1="50"   y1="-100" x2="70"   y2="-40"/><line x1="100"  y1="-100" x2="120"  y2="-40"/></g></g>
+  </g>
+</svg>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720" role="img"
+     aria-label="تحدي الإجابات player avatar 11">
+
+  <defs>
+    <linearGradient id="gradBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#12071F"/>
+      <stop offset="100%" stop-color="#1B0E2E"/>
+    </linearGradient>
+    <linearGradient id="gradPinkPurple" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF5DA2"/>
+      <stop offset="100%" stop-color="#7B5CFA"/>
+    </linearGradient>
+    <linearGradient id="gradPurplePink" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7B5CFA"/>
+      <stop offset="100%" stop-color="#FF5DA2"/>
+    </linearGradient>
+    <radialGradient id="gradCyanPop" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#34E4EA" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#34E4EA" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="gradAmberPop" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#FFB627" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#FFB627" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glowPink" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#FF5DA2" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowPurple" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#7B5CFA" flood-opacity="0.85"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowCyan" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#34E4EA" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowAmber" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#FFB627" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softBlob" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="28" result="b" in="SourceGraphic"/>
+      <feFlood flood-color="#7B5CFA" flood-opacity="0.55"/>
+      <feComposite in2="b" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+  </defs>
+<circle cx="360" cy="370" r="198" fill="none" stroke="#FFB627" stroke-width="6" opacity="0.85" filter="url(#glowCyan)"/>
+<circle cx="270" cy="225" r="50" fill="#34E4EA" filter="url(#glowPurple)"/><circle cx="470" cy="225" r="50" fill="#34E4EA" filter="url(#glowPurple)"/><path d="M200,330 Q180,210 370,180 Q560,200 540,340 L200,330 Z" fill="#34E4EA" filter="url(#glowPurple)"/>
+
+  <circle cx="360" cy="360" r="180" fill="#F2C9A5"/>
+  <ellipse cx="183.6" cy="370" rx="14" ry="22" fill="#F2C9A5"/>
+  <ellipse cx="536.4" cy="370" rx="14" ry="22" fill="#F2C9A5"/>
+  <ellipse cx="261.0" cy="417.6" rx="28" ry="16" fill="#FF5DA2" opacity="0.45"/>
+  <ellipse cx="459.0" cy="417.6" rx="28" ry="16" fill="#FF5DA2" opacity="0.45"/>
+<circle cx="290" cy="335" r="18" fill="#FFFFFF"/><circle cx="293" cy="338" r="9" fill="#1B0E2E"/><circle cx="295" cy="332" r="2.5" fill="#FFFFFF"/><circle cx="430" cy="335" r="18" fill="#FFFFFF"/><circle cx="433" cy="338" r="9" fill="#1B0E2E"/><circle cx="435" cy="332" r="2.5" fill="#FFFFFF"/>
+<path d="M338,438 Q360,448 382,438" stroke="#1B0E2E" stroke-width="5" fill="none" stroke-linecap="round"/>
+
+
+</svg>
