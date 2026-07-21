@@ -1,11 +1,10 @@
 import { useState } from 'react'
-import { QRCodeSVG } from 'qrcode.react'
 import GlassCard from '@/components/ui/GlassCard'
 import Button from '@/components/ui/Button'
-import PlayerAvatar from '@/components/ui/PlayerAvatar'
 import { Badge } from '@/components/ui/FormControls'
+import ThemedQRCode from '@/components/brand/ThemedQRCode'
+import Avatar from '@/components/brand/Avatar'
 import { useGameStore } from '@/store/gameStore'
-import { AVATARS } from '@/types'
 
 export default function Lobby() {
   const { room, playerId, startGame, leaveRoom } = useGameStore()
@@ -60,15 +59,7 @@ export default function Lobby() {
               </Button>
             </div>
 
-            <div className="p-3 bg-white rounded-xl">
-              <QRCodeSVG
-                value={inviteLink}
-                size={120}
-                bgColor="white"
-                fgColor="#12071F"
-                level="M"
-              />
-            </div>
+            <ThemedQRCode value={inviteLink} size={120} />
             <p className="text-white/30 text-xs text-center">امسح الرمز للانضمام</p>
           </div>
         </GlassCard>
@@ -81,15 +72,20 @@ export default function Lobby() {
               </h3>
             </div>
             <div className="grid grid-cols-4 gap-4">
-              {room.players.map((p, i) => (
-                <PlayerAvatar
-                  key={p.id}
-                  emoji={AVATARS[i % AVATARS.length]}
-                  name={p.name}
-                  isHost={p.isHost}
-                  isCurrentPlayer={p.id === playerId}
-                  isConnected={p.connected}
-                />
+              {room.players.map((p) => (
+                <div key={p.id} className="flex flex-col items-center gap-1">
+                  <div className={`relative ${!p.connected ? 'opacity-30 grayscale' : ''}`}>
+                    <Avatar id={(room.players.indexOf(p) % 16) + 1} state="idle" size={60} />
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <span className={`text-xs font-medium truncate max-w-16 ${p.id === playerId ? 'text-primary' : 'text-white/60'}`}>
+                      {p.name}
+                    </span>
+                    {p.isHost && (
+                      <span className="text-[10px] text-warning" aria-label="المضيف">👑</span>
+                    )}
+                  </div>
+                </div>
               ))}
             </div>
           </div>

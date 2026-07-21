@@ -21,6 +21,9 @@ export interface Room {
     answerTimeSeconds: number
     roundsCount: number
     allowedCategories: string[]
+    familyMode: boolean
+    doublePointsRoundEnabled: boolean
+    blindVotingEnabled: boolean
   }
   players: Player[]
 }
@@ -55,6 +58,9 @@ export interface GameState {
     scores: Player[]
   } | null
   finalStandings: { id: string; name: string; score: number }[] | null
+  mostDeceptivePlayer: { id: string; name: string; timesFooledOthers: number } | null
+  isDoublePointsRound: boolean
+  wasDoublePoints: boolean
   isConnected: boolean
   isReconnecting: boolean
   submittedAnswer: boolean
@@ -75,6 +81,9 @@ export interface GameActions {
     answerTimeSeconds: number
     roundsCount: number
     allowedCategories: string[]
+    scoreMultiplierEnabled?: boolean
+    isBlindVote?: boolean
+    ageRating?: 'all' | 'adults'
   }) => void
   joinRoom: (code: string, name: string) => void
   startGame: () => void
@@ -139,6 +148,9 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
   answeredCount: 0,
   totalPlayers: 0,
   votedCount: 0,
+  mostDeceptivePlayer: null,
+  isDoublePointsRound: false,
+  wasDoublePoints: false,
 
   setScreen: (s) => set({ screen: s }),
   setError: (msg) => set({ serverError: msg }),
@@ -253,6 +265,7 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
           answeredCount: 0,
           totalPlayers: 0,
           votedCount: 0,
+          isDoublePointsRound: Boolean(data.isDoublePointsRound),
         })
       } else if (phase === 'VOTING') {
         set({
@@ -272,6 +285,7 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
           roundResults: data.results || null,
           submittedAnswer: false,
           submittedVote: false,
+          wasDoublePoints: Boolean(data.results?.wasDoublePoints),
         })
       } else if (phase === 'GAME_OVER') {
         clearSession()
@@ -279,6 +293,7 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
           screen: 'game_over',
           room,
           finalStandings: data.finalStandings || null,
+          mostDeceptivePlayer: data.mostDeceptivePlayer || null,
           submittedAnswer: false,
           submittedVote: false,
         })
@@ -320,6 +335,9 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
       answerTimeSeconds: settings.answerTimeSeconds,
       roundsCount: settings.roundsCount,
       allowedCategories: settings.allowedCategories,
+      doublePointsRoundEnabled: settings.scoreMultiplierEnabled ?? false,
+      blindVotingEnabled: settings.isBlindVote ?? false,
+      familyMode: (settings.ageRating ?? 'all') !== 'adults',
     }, (response: any) => {
       if (response.error) {
         set({ serverError: response.error })

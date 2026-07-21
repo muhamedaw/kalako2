@@ -1,8 +1,19 @@
+import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { useGameStore } from '@/store/gameStore'
+import { useSFX } from '@/components/brand/useSFX'
 
 export default function VoteScreen() {
   const { voteSlots, submittedVote, submitVote, mySlotId, votedCount, totalPlayers } = useGameStore()
+  const sfx = useSFX()
+  const playedRef = useRef(false)
+
+  useEffect(() => {
+    if (!playedRef.current && voteSlots.length > 0) {
+      playedRef.current = true
+      sfx.playVoteStart()
+    }
+  }, [voteSlots, sfx])
 
   return (
     <div className="flex flex-col items-center min-h-dvh px-4 py-6 gap-5">

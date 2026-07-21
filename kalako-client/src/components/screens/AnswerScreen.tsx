@@ -5,6 +5,7 @@ import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import ProgressRing from '@/components/ui/ProgressRing'
 import { useGameStore } from '@/store/gameStore'
+import { useSFX } from '@/components/brand/useSFX'
 
 export default function AnswerScreen() {
   const {
@@ -16,6 +17,7 @@ export default function AnswerScreen() {
     answeredCount,
     totalPlayers,
     room,
+    isDoublePointsRound,
   } = useGameStore()
 
   const [answer, setAnswer] = useState('')
@@ -23,6 +25,7 @@ export default function AnswerScreen() {
   const [timeLeft, setTimeLeft] = useState(timeSeconds)
   const intervalRef = useRef<number | undefined>(undefined)
   const inputRef = useRef<HTMLInputElement>(null)
+  const sfx = useSFX()
 
   answerRef.current = answer
 
@@ -45,16 +48,18 @@ export default function AnswerScreen() {
           }
           return 0
         }
+        if (prev <= 5 && prev > 0) sfx.playCountdown()
         return prev - 1
       })
     }, 1000)
     return () => clearInterval(intervalRef.current)
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSubmit = () => {
     if (!answer.trim() || submittedAnswer) return
     clearInterval(intervalRef.current)
     submitAnswer(answer.trim())
+    sfx.playSubmit()
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -71,6 +76,7 @@ export default function AnswerScreen() {
             <div className="text-sm text-white/40">
               الجولة {room?.round ?? 1}
               {questionCategory && <span className="mr-2 text-primary">• {questionCategory}</span>}
+              {isDoublePointsRound && <span className="mr-2 text-warning">⚡ ×2 نقاط</span>}
             </div>
             <h2
               className="text-xl sm:text-2xl font-black text-white"

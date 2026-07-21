@@ -1,12 +1,27 @@
+import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import GlassCard from '@/components/ui/GlassCard'
-import PlayerAvatar from '@/components/ui/PlayerAvatar'
 import { Badge } from '@/components/ui/FormControls'
+import Avatar from '@/components/brand/Avatar'
 import { useGameStore } from '@/store/gameStore'
-import { AVATARS } from '@/types'
+import { useSFX } from '@/components/brand/useSFX'
 
 export default function RoundResults() {
-  const { roundResults, room, playerId } = useGameStore()
+  const { roundResults, room, playerId, wasDoublePoints } = useGameStore()
+  const sfx = useSFX()
+  const playedRef = useRef(false)
+
+  useEffect(() => {
+    if (!playedRef.current && roundResults) {
+      playedRef.current = true
+      const myAnswer = roundResults.answers.find((a) => a.playerId === playerId)
+      if (myAnswer) {
+        const isCorrect = myAnswer.text === roundResults.correctAnswer
+        if (isCorrect) sfx.playCorrect()
+        else sfx.playTricked()
+      }
+    }
+  }, [roundResults, playerId, sfx])
 
   if (!roundResults || !room) return null
 
@@ -15,6 +30,7 @@ export default function RoundResults() {
       <div className="w-full max-w-sm flex flex-col gap-5">
         <h2 className="text-xl font-black text-gradient text-center" style={{ fontFamily: 'var(--font-heading)' }}>
           نتائج الجولة {room.round}
+          {wasDoublePoints && <span className="text-warning text-sm mr-2">⚡ ×2 نقاط</span>}
         </h2>
 
         <GlassCard strong className="w-full">
@@ -31,6 +47,7 @@ export default function RoundResults() {
           {roundResults.answers.map((a, i) => {
             const isCorrect = a.text === roundResults.correctAnswer
             const pIdx = room.players.findIndex((p) => p.id === a.playerId)
+            const state = isCorrect ? 'happy' as const : 'tricked' as const
             return (
               <motion.div
                 key={a.playerId + i}
@@ -40,19 +57,20 @@ export default function RoundResults() {
                 className={`glass p-3 flex items-center gap-3 ${isCorrect ? 'border-success/30 bg-success/5' : ''}`}
               >
                 <div className="flex-shrink-0">
-                  <PlayerAvatar
-                    emoji={AVATARS[pIdx >= 0 ? pIdx % AVATARS.length : 0]}
-                    name={a.playerName}
-                    isCurrentPlayer={a.playerId === playerId}
-                    size="sm"
+                  <Avatar
+                    id={(pIdx >= 0 ? pIdx % 16 : 0) + 1}
+                    state={state}
+                    size={48}
                   />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="font-bold text-sm truncate">{a.text}</p>
                   <div className="flex items-center gap-2 mt-1">
-                    <Badge variant={isCorrect ? 'success' : 'warning'}>
-                      {a.votesReceived} صوت
-                    </Badge>
+                    {a.votesReceived !== undefined && (
+                      <Badge variant={isCorrect ? 'success' : 'warning'}>
+                        {a.votesReceived} صوت
+                      </Badge>
+                    )}
                     {a.pointsAwarded > 0 && (
                       <Badge variant="success">+{a.pointsAwarded} نقطة</Badge>
                     )}

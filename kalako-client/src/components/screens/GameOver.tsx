@@ -1,16 +1,18 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import GlassCard from '@/components/ui/GlassCard'
 import Button from '@/components/ui/Button'
-import PlayerAvatar from '@/components/ui/PlayerAvatar'
 import { Badge } from '@/components/ui/FormControls'
+import Avatar from '@/components/brand/Avatar'
+import ResultsShareCard from '@/components/brand/ResultsShareCard'
+import MostDeceptive from '@/components/brand/icons/MostDeceptive'
 import { useGameStore } from '@/store/gameStore'
 import { fireConfetti, captureScreenshot } from '@/lib/helpers'
-import { AVATARS } from '@/types'
 
 export default function GameOver() {
-  const { finalStandings, room, playerId, disconnect } = useGameStore()
+  const { finalStandings, room, playerId, disconnect, mostDeceptivePlayer } = useGameStore()
   const confettiFired = useRef(false)
+  const [shareDataUrl, setShareDataUrl] = useState<string | null>(null)
 
   useEffect(() => {
     if (!confettiFired.current && finalStandings && finalStandings.length > 0) {
@@ -22,6 +24,7 @@ export default function GameOver() {
   if (!finalStandings || !room) return null
 
   const medals = ['🥇', '🥈', '🥉']
+  const topPlayer = finalStandings[0]
 
   return (
     <div className="flex flex-col items-center min-h-dvh px-4 py-6 gap-5">
@@ -35,6 +38,7 @@ export default function GameOver() {
             <p className="text-center text-white/40 text-sm font-bold">الترتيب النهائي</p>
             {finalStandings.slice(0, 3).map((p, i) => {
               const isMe = p.id === playerId
+              const isMostDeceptive = mostDeceptivePlayer?.id === p.id
               return (
                 <motion.div
                   key={p.id}
@@ -44,16 +48,14 @@ export default function GameOver() {
                   className={`flex items-center gap-3 p-3 rounded-xl ${isMe ? 'bg-primary/10 border border-primary/20' : 'bg-white/5'}`}
                 >
                   <span className="text-2xl">{medals[i]}</span>
-                  <PlayerAvatar
-                    emoji={AVATARS[i % AVATARS.length]}
-                    name={p.name}
-                    isCurrentPlayer={isMe}
-                    size="sm"
-                  />
+                  <Avatar id={i + 1} state="happy" size={44} />
                   <div className="flex-1">
-                    <p className={`font-bold ${isMe ? 'text-primary' : 'text-white'}`}>
-                      {p.name} {isMe && '(أنت)'}
-                    </p>
+                    <div className="flex items-center gap-1">
+                      <p className={`font-bold ${isMe ? 'text-primary' : 'text-white'}`}>
+                        {p.name} {isMe && '(أنت)'}
+                      </p>
+                      {isMostDeceptive && <MostDeceptive size={24} />}
+                    </div>
                   </div>
                   <Badge variant={i === 0 ? 'success' : 'secondary'}>
                     {p.score} نقطة
@@ -64,23 +66,41 @@ export default function GameOver() {
           </div>
         </GlassCard>
 
-        <div className="flex gap-3">
-          <Button
-            variant="primary"
-            size="md"
-            fullWidth
-            onClick={() => captureScreenshot('game-over-screen')}
-          >
-            📸 حفظ كصورة
-          </Button>
-          <Button
-            variant="ghost"
-            size="md"
-            fullWidth
-            onClick={disconnect}
-          >
-            خروج
-          </Button>
+        <div className="flex flex-col gap-3">
+          <ResultsShareCard
+            playerName={topPlayer.name}
+            score={topPlayer.score}
+            rank={1}
+            totalPlayers={finalStandings.length}
+            onDataUrl={setShareDataUrl}
+          />
+          <div className="flex gap-3">
+            <Button
+              variant="primary"
+              size="md"
+              fullWidth
+              onClick={() => {
+                if (shareDataUrl) {
+                  const link = document.createElement('a')
+                  link.download = `كلاكو-فائز-${Date.now()}.png`
+                  link.href = shareDataUrl
+                  link.click()
+                } else {
+                  captureScreenshot('game-over-screen')
+                }
+              }}
+            >
+              📸 حفظ كصورة
+            </Button>
+            <Button
+              variant="ghost"
+              size="md"
+              fullWidth
+              onClick={disconnect}
+            >
+              خروج
+            </Button>
+          </div>
         </div>
       </div>
     </div>

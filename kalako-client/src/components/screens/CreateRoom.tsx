@@ -3,8 +3,21 @@ import { motion } from 'framer-motion'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import { Toggle, Select, ChipGroup } from '@/components/ui/FormControls'
+import ScoreMultiplier from '@/components/brand/icons/ScoreMultiplier'
+import BlindVote from '@/components/brand/icons/BlindVote'
+import FamilyAdults from '@/components/brand/icons/FamilyAdults'
 import { useGameStore } from '@/store/gameStore'
-import { CATEGORIES } from '@/types'
+
+const CATEGORIES = [
+  { id: 'general', label: 'عامة', emoji: '🌍' },
+  { id: 'science', label: 'علوم', emoji: '🔬' },
+  { id: 'history', label: 'تاريخ', emoji: '📜' },
+  { id: 'geography', label: 'جغرافيا', emoji: '🗺️' },
+  { id: 'sports', label: 'رياضة', emoji: '⚽' },
+  { id: 'movies', label: 'أفلام', emoji: '🎬' },
+  { id: 'celebrities', label: 'مشاهير', emoji: '⭐' },
+  { id: 'cooking', label: 'طبخ', emoji: '🍳' },
+]
 
 export default function CreateRoom() {
   const { createRoom, setScreen } = useGameStore()
@@ -13,6 +26,9 @@ export default function CreateRoom() {
   const [answerTime, setAnswerTime] = useState('45')
   const [roundCount, setRoundCount] = useState('5')
   const [selectedCategories, setSelectedCategories] = useState<string[]>(['general'])
+  const [scoreMultiplierEnabled, setScoreMultiplierEnabled] = useState(false)
+  const [isBlindVote, setIsBlindVote] = useState(false)
+  const [ageRating, setAgeRating] = useState<'all' | 'adults'>('all')
 
   const handleCreate = () => {
     if (!playerName.trim()) return
@@ -21,6 +37,9 @@ export default function CreateRoom() {
       answerTimeSeconds: Number(answerTime),
       roundsCount: Number(roundCount),
       allowedCategories: selectedCategories,
+      scoreMultiplierEnabled,
+      isBlindVote,
+      ageRating,
     })
   }
 
@@ -94,6 +113,34 @@ export default function CreateRoom() {
               selected={selectedCategories}
               onToggle={toggleCategory}
             />
+          </div>
+
+          <div className="flex flex-col gap-4 p-4 rounded-xl bg-white/5 border border-white/10">
+            <p className="text-sm font-bold text-white/60">خيارات متقدمة</p>
+            <div className="flex items-center gap-3">
+              <ScoreMultiplier size={32} />
+              <Toggle
+                checked={scoreMultiplierEnabled}
+                onChange={setScoreMultiplierEnabled}
+                label="مضاعف نقاط (ضعف النقاط في بعض الجولات)"
+              />
+            </div>
+            <div className="flex items-center gap-3">
+              <BlindVote size={32} />
+              <Toggle
+                checked={isBlindVote}
+                onChange={setIsBlindVote}
+                label="تصويت أعمى (لا تعرف من صوّت لك)"
+              />
+            </div>
+            <div className="flex items-center gap-3">
+              <FamilyAdults size={32} variant={ageRating === 'adults' ? 'adults' : 'family'} />
+              <Toggle
+                checked={ageRating === 'adults'}
+                onChange={(v) => setAgeRating(v ? 'adults' : 'all')}
+                label="جلسة كبار (للبالغين فقط)"
+              />
+            </div>
           </div>
 
           <Button
