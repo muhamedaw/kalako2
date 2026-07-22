@@ -9,6 +9,8 @@ export type Screen =
   | 'round_results'
   | 'game_over'
   | 'dev_asset_preview'
+  | 'about'
+  | 'how_to_play'
 
 export const CATEGORIES = [
   { id: 'general', label: 'عامة', emoji: '🌍' },

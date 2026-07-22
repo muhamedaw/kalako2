@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/FormControls'
 import ThemedQRCode from '@/components/brand/ThemedQRCode'
 import Avatar from '@/components/brand/Avatar'
 import { useGameStore } from '@/store/gameStore'
+import { useTranslation } from '@/i18n/context'
 
 const stagger = {
   animate: { transition: { staggerChildren: 0.08 } },
@@ -18,6 +19,7 @@ const cardIn = {
 
 export default function Lobby() {
   const { room, playerId, startGame, leaveRoom } = useGameStore()
+  const t = useTranslation()
   const [copiedCode, setCopiedCode] = useState(false)
   const [copiedLink, setCopiedLink] = useState(false)
 
@@ -40,21 +42,21 @@ export default function Lobby() {
   }
 
   return (
-    <div className="flex flex-col items-center min-h-dvh px-4 py-6 gap-5">
+    <div className="flex flex-col items-center min-h-dvh px-4 py-6 gap-5 pt-16">
       <div className="w-full max-w-sm flex flex-col gap-5">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-black text-gradient" style={{ fontFamily: 'var(--font-heading)' }}>
-            اللوبي
+            {t.lobbyTitle}
           </h2>
           <Badge variant="secondary">
-            {room.settings.isPrivate ? '🔒 خاصة' : '🌐 عامة'}
+            {room.settings.isPrivate ? t.privateBadge : t.publicBadge}
           </Badge>
         </div>
 
         <GlassCard strong>
           <div className="flex flex-col items-center gap-4">
             <div className="text-center">
-              <p className="text-white/40 text-xs mb-2">كود الغرفة</p>
+              <p className="text-white/40 text-xs mb-2">{t.roomCodeLabel}</p>
               <motion.p
                 className="text-3xl font-black tracking-widest text-primary select-all"
                 dir="ltr"
@@ -67,15 +69,15 @@ export default function Lobby() {
 
             <div className="flex gap-2 w-full">
               <Button variant="primary" size="sm" fullWidth onClick={copyCode}>
-                {copiedCode ? '✓ تم النسخ' : '📋 نسخ الكود'}
+                {copiedCode ? t.copiedCode : t.copyCode}
               </Button>
               <Button variant="secondary" size="sm" fullWidth onClick={copyLink}>
-                {copiedLink ? '✓ تم النسخ' : '🔗 نسخ الرابط'}
+                {copiedLink ? t.copiedLink : t.copyLink}
               </Button>
             </div>
 
             <ThemedQRCode value={inviteLink} size={120} />
-            <p className="text-white/30 text-xs text-center">امسح الرمز للانضمام</p>
+            <p className="text-white/30 text-xs text-center">{t.scanToJoin}</p>
           </div>
         </GlassCard>
 
@@ -83,7 +85,7 @@ export default function Lobby() {
           <div className="flex flex-col gap-3">
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-bold text-white/60">
-                اللاعبون ({room.players.length})
+                {t.players} ({room.players.length})
               </h3>
             </div>
             <motion.div
@@ -106,7 +108,7 @@ export default function Lobby() {
                       {p.name}
                     </span>
                     {p.isHost && (
-                      <span className="text-[10px] text-warning" aria-label="المضيف">👑</span>
+                      <span className="text-[10px] text-warning">👑</span>
                     )}
                   </div>
                 </motion.div>
@@ -117,9 +119,9 @@ export default function Lobby() {
 
         <div className="flex flex-col gap-3">
           <div className="flex gap-3 text-xs text-white/40 justify-center">
-            <span>{room.settings.answerTimeSeconds}ث وقت</span>
+            <span>{room.settings.answerTimeSeconds}{t.sec} {t.timeLabel}</span>
             <span>•</span>
-            <span>{room.settings.roundsCount} جولات</span>
+            <span>{room.settings.roundsCount} {t.roundsLabel}</span>
           </div>
 
           {isHost ? (
@@ -130,7 +132,7 @@ export default function Lobby() {
               disabled={room.players.length < 2}
               onClick={startGame}
             >
-              ابدأ اللعبة ({room.players.length} لاعب{room.players.length > 1 ? 'ين' : ''})
+              {t.startGame} ({room.players.length} {t.playerCount}{room.players.length !== 1 ? (t.lang === 'ar' ? 'ين' : t.lang === 'he' ? 'ים' : 's') : ''})
             </Button>
           ) : (
             <motion.div
@@ -138,12 +140,12 @@ export default function Lobby() {
               animate={{ opacity: [0.4, 1, 0.4] }}
               transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
             >
-              بانتظار المضيف للبدء...
+              {t.waitingForHost}
             </motion.div>
           )}
 
           <Button variant="ghost" size="sm" fullWidth onClick={leaveRoom}>
-            مغادرة الغرفة
+            {t.leaveRoom}
           </Button>
         </div>
       </div>

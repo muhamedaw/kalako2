@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { useTranslation } from '@/i18n/context'
 
 interface ProgressRingProps {
   size?: number
@@ -33,6 +34,7 @@ export default function ProgressRing({
   total,
   color,
 }: ProgressRingProps) {
+  const t = useTranslation()
   const radius = (size - strokeWidth) / 2
   const circumference = 2 * Math.PI * radius
   const fraction = Math.max(0, Math.min(1, progress / total))
@@ -40,7 +42,7 @@ export default function ProgressRing({
   const displayColor = color ?? getTimerColor(fraction)
 
   return (
-    <div className="relative inline-flex items-center justify-center" role="timer" aria-label={`${Math.ceil(progress)} ثانية متبقية`}>
+    <div className="relative inline-flex items-center justify-center" role="timer"         aria-label={t.timerAria.replace('{{seconds}}', String(Math.ceil(progress)))}>
       <svg width={size} height={size} className="-rotate-90">
         <circle
           cx={size / 2}

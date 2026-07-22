@@ -8,6 +8,7 @@ import ResultsShareCard from '@/components/brand/ResultsShareCard'
 import MostDeceptive from '@/components/brand/icons/MostDeceptive'
 import { useGameStore } from '@/store/gameStore'
 import { fireConfetti, captureScreenshot } from '@/lib/helpers'
+import { useTranslation } from '@/i18n/context'
 
 const stagger = {
   animate: { transition: { staggerChildren: 0.15 } },
@@ -20,6 +21,7 @@ const medalIn = {
 
 export default function GameOver() {
   const { finalStandings, room, playerId, disconnect, mostDeceptivePlayer } = useGameStore()
+  const t = useTranslation()
   const confettiFired = useRef(false)
   const [shareDataUrl, setShareDataUrl] = useState<string | null>(null)
 
@@ -45,12 +47,12 @@ export default function GameOver() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          انتهت اللعبة!
+          {t.gameOverTitle}
         </motion.h2>
 
         <GlassCard strong className="w-full">
           <div className="flex flex-col gap-4">
-            <p className="text-center text-white/40 text-sm font-bold">الترتيب النهائي</p>
+            <p className="text-center text-white/40 text-sm font-bold">{t.finalStandings}</p>
             <motion.div
               variants={stagger}
               initial="initial"
@@ -77,13 +79,13 @@ export default function GameOver() {
                     <div className="flex-1">
                       <div className="flex items-center gap-1">
                         <p className={`font-bold ${isMe ? 'text-primary' : 'text-white'}`}>
-                          {p.name} {isMe && '(أنت)'}
+                          {p.name} {isMe && t.youLabel}
                         </p>
                         {isMostDeceptive && <MostDeceptive size={24} />}
                       </div>
                     </div>
                     <Badge variant={i === 0 ? 'success' : 'secondary'}>
-                      {p.score} نقطة
+                      {p.score} {t.points}
                     </Badge>
                   </motion.div>
                 )
@@ -108,7 +110,7 @@ export default function GameOver() {
               onClick={() => {
                 if (shareDataUrl) {
                   const link = document.createElement('a')
-                  link.download = `كلاكو-فائز-${Date.now()}.png`
+                  link.download = `kalako-${Date.now()}.png`
                   link.href = shareDataUrl
                   link.click()
                 } else {
@@ -116,7 +118,7 @@ export default function GameOver() {
                 }
               }}
             >
-              📸 حفظ كصورة
+              {t.saveImage}
             </Button>
             <Button
               variant="ghost"
@@ -124,7 +126,7 @@ export default function GameOver() {
               fullWidth
               onClick={disconnect}
             >
-              خروج
+              {t.exit}
             </Button>
           </div>
         </div>

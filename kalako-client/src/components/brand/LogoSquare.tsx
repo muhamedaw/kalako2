@@ -1,5 +1,6 @@
 import SvgDefs from './SvgDefs'
 import { COLORS } from './theme'
+import { useTranslation } from '@/i18n/context'
 
 interface Props {
   width?: number
@@ -8,6 +9,7 @@ interface Props {
 }
 
 export default function LogoSquare({ width = 512, height = 512, className }: Props) {
+  const t = useTranslation()
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -16,7 +18,7 @@ export default function LogoSquare({ width = 512, height = 512, className }: Pro
       height={height}
       className={className}
       role="img"
-      aria-label="تحدي الإجابات — app icon"
+      aria-label={t.logoSquareAria}
     >
       <SvgDefs />
       <rect x={0} y={0} width={512} height={512} rx={120} ry={120} fill="url(#gradBg)" />

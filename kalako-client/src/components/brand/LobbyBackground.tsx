@@ -1,4 +1,5 @@
 import { COLORS } from './theme'
+import { useTranslation } from '@/i18n/context'
 
 interface Props {
   className?: string
@@ -6,13 +7,14 @@ interface Props {
 }
 
 export default function LobbyBackground({ className, animated = true }: Props) {
+  const t = useTranslation()
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 1080 1920"
       className={className}
       role="img"
-      aria-label="Lobby background for تحدي الإجابات"
+      aria-label={t.lobbyBgAria}
       preserveAspectRatio="xMidYMid slice"
       style={{ width: '100%', height: '100%' }}
     >

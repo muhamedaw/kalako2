@@ -2,9 +2,11 @@ import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { useGameStore } from '@/store/gameStore'
 import { useSFX } from '@/components/brand/useSFX'
+import { useTranslation } from '@/i18n/context'
 
 export default function VoteScreen() {
   const { voteSlots, submittedVote, submitVote, mySlotId, votedCount, totalPlayers } = useGameStore()
+  const t = useTranslation()
   const sfx = useSFX()
   const playedRef = useRef(false)
 
@@ -20,9 +22,9 @@ export default function VoteScreen() {
       <div className="w-full max-w-sm flex flex-col gap-5">
         <div className="text-center">
           <h2 className="text-lg font-black text-gradient mb-1" style={{ fontFamily: 'var(--font-heading)' }}>
-            أيهم الإجابة الصحيحة؟
+            {t.voteTitle}
           </h2>
-          <p className="text-white/40 text-xs">اختر الإجابة التي تظنها صحيحة — الإجابات مخفية بلا أسماء</p>
+          <p className="text-white/40 text-xs">{t.voteSubtitle}</p>
         </div>
 
         <div className="flex flex-col gap-3">
@@ -47,7 +49,7 @@ export default function VoteScreen() {
                 style={{ fontFamily: 'var(--font-heading)' }}
               >
                 {slot.text}
-                {isMyAnswer && <span className="text-xs text-primary mr-2">(إجابتك)</span>}
+                {isMyAnswer && <span className="text-xs text-primary mr-2">{t.yourAnswer}</span>}
               </motion.button>
             )
           })}
@@ -60,7 +62,7 @@ export default function VoteScreen() {
             className="flex flex-col items-center gap-2 animate-pulse-success"
           >
             <p className="text-success text-sm font-bold py-2">
-              ✓ تم تسجيل تصويتك
+              {t.voteSubmitted}
             </p>
             {totalPlayers > 0 && (
               <div className="w-full flex flex-col items-center gap-1">
@@ -73,7 +75,7 @@ export default function VoteScreen() {
                   />
                 </div>
                 <p className="text-white/40 text-xs">
-                  {votedCount}/{totalPlayers} صوّتوا
+                  {votedCount}/{totalPlayers} {t.votedCount}
                 </p>
               </div>
             )}

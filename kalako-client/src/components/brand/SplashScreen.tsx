@@ -1,20 +1,21 @@
 import SvgDefs from './SvgDefs'
 import { COLORS } from './theme'
+import { useTranslation } from '@/i18n/context'
 
 interface Props {
   className?: string
-  loadingText?: string
   showProgress?: boolean
 }
 
-export default function SplashScreen({ className, loadingText = 'جاري التحميل…', showProgress = true }: Props) {
+export default function SplashScreen({ className, showProgress = true }: Props) {
+  const t = useTranslation()
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 1080 1920"
       className={className}
       role="img"
-      aria-label="تحدي الإجابات loading screen"
+      aria-label={t.splashAria}
       style={{ width: '100%', height: '100%' }}
     >
       <defs>
@@ -89,7 +90,7 @@ export default function SplashScreen({ className, loadingText = 'جاري الت
         <circle cx={44} cy={0} r={12} fill={COLORS.success} filter="url(#glowCyan)" className="sDot sDot3" />
       </g>
 
-      <text x={540} y={1560} textAnchor="middle" fontWeight={700} fontSize={36} fill="#E6DEFF" opacity={0.85} fontFamily="Cairo, Tajawal, 'Noto Sans Arabic', system-ui, sans-serif">{loadingText}</text>
+      <text x={540} y={1560} textAnchor="middle" fontWeight={700} fontSize={36} fill="#E6DEFF" opacity={0.85} fontFamily="Cairo, Tajawal, 'Noto Sans Arabic', system-ui, sans-serif">{t.loadingText}</text>
 
       {showProgress && (
         <g transform="translate(140, 1700)">
@@ -98,7 +99,7 @@ export default function SplashScreen({ className, loadingText = 'جاري الت
         </g>
       )}
 
-      <text x={540} y={1800} textAnchor="middle" fontWeight={600} fontSize={24} fill="#FFFFFF" opacity={0.55} fontFamily="Cairo, Tajawal, 'Noto Sans Arabic', system-ui, sans-serif">kalako.app</text>
+      <text x={540} y={1800} textAnchor="middle" fontWeight={600} fontSize={24} fill="#FFFFFF" opacity={0.55} fontFamily="Cairo, Tajawal, 'Noto Sans Arabic', system-ui, sans-serif">{t.brandLabel}</text>
     </svg>
   )
 }

@@ -1,4 +1,5 @@
 import { COLORS } from '../theme'
+import { useTranslation } from '@/i18n/context'
 
 interface Props {
   size?: number
@@ -6,8 +7,9 @@ interface Props {
 }
 
 export default function ScoreMultiplier({ size = 64, className }: Props) {
+  const t = useTranslation()
   return (
-    <svg viewBox="0 0 64 64" width={size} height={size} className={className} role="img" aria-label="مضاعف نقاط">
+    <svg viewBox="0 0 64 64" width={size} height={size} className={className} role="img"         aria-label={t.scoreMultiplierAria}>
       <defs>
         <linearGradient id="smGrad" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor={COLORS.primary} />

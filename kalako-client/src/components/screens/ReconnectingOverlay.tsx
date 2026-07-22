@@ -1,8 +1,10 @@
 import { motion } from 'framer-motion'
 import { useGameStore } from '@/store/gameStore'
+import { useTranslation } from '@/i18n/context'
 
 export default function ReconnectingOverlay() {
   const isReconnecting = useGameStore((s) => s.isReconnecting)
+  const t = useTranslation()
 
   if (!isReconnecting) return null
 
@@ -27,10 +29,10 @@ export default function ReconnectingOverlay() {
           <div className="w-12 h-12 mx-auto rounded-full border-4 border-primary/30 border-t-primary animate-spin" />
         </div>
         <p className="text-white font-bold text-lg" style={{ fontFamily: 'var(--font-heading)' }}>
-          جارِ إعادة الاتصال...
+          {t.reconnecting}
         </p>
         <p className="text-white/40 text-sm mt-2">
-          نحاول الاتصال بالخادم
+          {t.reconnectingSub}
         </p>
       </motion.div>
     </motion.div>

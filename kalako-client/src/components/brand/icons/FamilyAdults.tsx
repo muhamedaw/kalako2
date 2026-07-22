@@ -1,4 +1,5 @@
 import { COLORS } from '../theme'
+import { useTranslation } from '@/i18n/context'
 
 interface Props {
   size?: number
@@ -7,9 +8,10 @@ interface Props {
 }
 
 export default function FamilyAdults({ size = 64, className, variant = 'family' }: Props) {
+  const t = useTranslation()
   const isFamily = variant === 'family'
   return (
-    <svg viewBox="0 0 64 64" width={size} height={size} className={className} role="img" aria-label={isFamily ? 'عائلي' : 'كبار'}>
+    <svg viewBox="0 0 64 64" width={size} height={size} className={className} role="img"         aria-label={t.familyAdultsAria.replace('{{variant}}', variant)}>
       <defs>
         <linearGradient id="faGrad" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor={COLORS.success} />

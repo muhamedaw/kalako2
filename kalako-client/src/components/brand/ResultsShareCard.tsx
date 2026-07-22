@@ -1,4 +1,5 @@
 import { useRef, useEffect, useCallback } from 'react'
+import { useTranslation } from '@/i18n/context'
 import { COLORS } from './theme'
 
 interface Props {
@@ -13,6 +14,7 @@ const CARD_W = 600
 const CARD_H = 315
 
 export default function ResultsShareCard({ playerName, score, rank, totalPlayers = 4, onDataUrl }: Props) {
+  const t = useTranslation()
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   const draw = useCallback(() => {
@@ -131,7 +133,7 @@ export default function ResultsShareCard({ playerName, score, rank, totalPlayers
     <canvas
       ref={canvasRef}
       style={{ width: CARD_W, height: CARD_H, borderRadius: 24, maxWidth: '100%' }}
-      aria-label={`نتيجة ${playerName}: ${score} نقطة - المرتبة ${rank}`}
+      aria-label={t.shareCardResultAria.replace('{{name}}', playerName).replace('{{score}}', String(score)).replace('{{rank}}', String(rank))}
     />
   )
 }

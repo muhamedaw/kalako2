@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/FormControls'
 import Avatar from '@/components/brand/Avatar'
 import { useGameStore } from '@/store/gameStore'
 import { useSFX } from '@/components/brand/useSFX'
+import { useTranslation } from '@/i18n/context'
 
 const stagger = {
   animate: { transition: { staggerChildren: 0.08 } },
@@ -17,6 +18,7 @@ const itemIn = {
 
 export default function RoundResults() {
   const { roundResults, room, playerId, wasDoublePoints } = useGameStore()
+  const t = useTranslation()
   const sfx = useSFX()
   const playedRef = useRef(false)
 
@@ -38,13 +40,13 @@ export default function RoundResults() {
     <div className="flex flex-col items-center min-h-dvh px-4 py-6 gap-5">
       <div className="w-full max-w-sm flex flex-col gap-5">
         <h2 className="text-xl font-black text-gradient text-center" style={{ fontFamily: 'var(--font-heading)' }}>
-          نتائج الجولة {room.round}
-          {wasDoublePoints && <span className="text-warning text-sm mr-2">⚡ ×2 نقاط</span>}
+          {t.roundResults} {room.round}
+          {wasDoublePoints && <span className="text-warning text-sm mr-2">{t.doublePoints}</span>}
         </h2>
 
         <GlassCard strong className="w-full">
           <div className="flex flex-col gap-3 text-center">
-            <p className="text-white/40 text-xs">الإجابة الصحيحة</p>
+            <p className="text-white/40 text-xs">{t.correctAnswer}</p>
             <motion.div
               className="p-3 rounded-xl bg-success/10 border border-success/20"
               initial={{ scale: 0.9, opacity: 0 }}
@@ -62,7 +64,7 @@ export default function RoundResults() {
           initial="initial"
           animate="animate"
         >
-          <p className="text-sm text-white/50 font-bold">الإجابات والتصويت</p>
+          <p className="text-sm text-white/50 font-bold">{t.answersAndVotes}</p>
           {roundResults.answers.map((a, i) => {
             const isCorrect = a.text === roundResults.correctAnswer
             const pIdx = room.players.findIndex((p) => p.id === a.playerId)
@@ -85,11 +87,11 @@ export default function RoundResults() {
                   <div className="flex items-center gap-2 mt-1">
                     {a.votesReceived !== undefined && (
                       <Badge variant={isCorrect ? 'success' : 'warning'}>
-                        {a.votesReceived} صوت
+                        {a.votesReceived} {t.votes}
                       </Badge>
                     )}
                     {a.pointsAwarded > 0 && (
-                      <Badge variant="success">+{a.pointsAwarded} نقطة</Badge>
+                      <Badge variant="success">+{a.pointsAwarded} {t.points}</Badge>
                     )}
                   </div>
                 </div>
@@ -99,7 +101,7 @@ export default function RoundResults() {
         </motion.div>
 
         <GlassCard className="w-full">
-          <p className="text-sm text-white/50 font-bold text-center mb-3">الترتيب</p>
+          <p className="text-sm text-white/50 font-bold text-center mb-3">{t.standings}</p>
           {roundResults.scores.map((p, i) => (
             <motion.div
               key={p.id}
@@ -109,7 +111,7 @@ export default function RoundResults() {
               className="flex items-center justify-between py-1.5"
             >
               <span className={`text-sm ${p.id === playerId ? 'text-primary font-bold' : 'text-white/70'}`}>
-                {p.name} {p.id === playerId && '(أنت)'}
+                {p.name} {p.id === playerId && t.youLabel}
               </span>
               <span className="text-sm font-bold text-white/80">{p.score}</span>
             </motion.div>

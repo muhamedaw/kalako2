@@ -11,9 +11,11 @@ import { ScoreMultiplier, BlindVote, MostDeceptive, FamilyAdults } from '@/compo
 import { useSFX } from '@/components/brand/useSFX'
 import { CATEGORIES } from '@/components/brand/theme'
 import { useGameStore } from '@/store/gameStore'
+import { useTranslation } from '@/i18n/context'
 
 export default function DevAssetPreview() {
   const setScreen = useGameStore((s) => s.setScreen)
+  const t = useTranslation()
 
   return (
     <div className="min-h-screen p-4 pb-32 overflow-x-hidden" dir="ltr" style={{ background: 'linear-gradient(135deg, #12071F, #1B0E2E)' }}>
@@ -23,7 +25,7 @@ export default function DevAssetPreview() {
         <div className="text-center space-y-2 pt-4">
           <h1 className="text-3xl font-heading font-black text-primary" style={{ filter: 'drop-shadow(0 0 12px #FF5DA2)' }}>Asset Preview</h1>
           <p className="text-white/50">Neon Party Theme — تحدي الإجابات</p>
-          <button onClick={() => setScreen('welcome')} className="text-sm text-white/30 hover:text-white/60 underline cursor-pointer">العودة للتطبيق</button>
+          <button onClick={() => setScreen('welcome')} className="text-sm text-white/30 hover:text-white/60 underline cursor-pointer">{t.devPreviewBack}</button>
         </div>
 
         {/* 1. LOGOS */}

@@ -6,6 +6,7 @@ import Input from '@/components/ui/Input'
 import ProgressRing from '@/components/ui/ProgressRing'
 import { useGameStore } from '@/store/gameStore'
 import { useSFX } from '@/components/brand/useSFX'
+import { useTranslation } from '@/i18n/context'
 
 export default function AnswerScreen() {
   const {
@@ -19,6 +20,7 @@ export default function AnswerScreen() {
     room,
     isDoublePointsRound,
   } = useGameStore()
+  const t = useTranslation()
 
   const [answer, setAnswer] = useState('')
   const answerRef = useRef('')
@@ -74,15 +76,15 @@ export default function AnswerScreen() {
         <GlassCard strong className="w-full">
           <div className="flex flex-col gap-3 text-center">
             <div className="text-sm text-white/40">
-              الجولة {room?.round ?? 1}
+              {t.round} {room?.round ?? 1}
               {questionCategory && <span className="mr-2 text-primary">• {questionCategory}</span>}
-              {isDoublePointsRound && <span className="mr-2 text-warning">⚡ ×2 نقاط</span>}
+              {isDoublePointsRound && <span className="mr-2 text-warning">{t.doublePoints}</span>}
             </div>
             <h2
               className="text-xl sm:text-2xl font-black text-white"
               style={{ fontFamily: 'var(--font-heading)' }}
             >
-              {questionText || 'جارِ تحميل السؤال...'}
+              {questionText || t.questionLoading}
             </h2>
           </div>
         </GlassCard>
@@ -95,7 +97,7 @@ export default function AnswerScreen() {
           >
             <Input
               ref={inputRef}
-              placeholder="اكتب إجابتك هنا..."
+              placeholder={t.answerPlaceholder}
               value={answer}
               onChange={(e) => setAnswer(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -111,7 +113,7 @@ export default function AnswerScreen() {
               disabled={!answer.trim()}
               onClick={handleSubmit}
             >
-              إرسال الإجابة
+              {t.submitAnswer}
             </Button>
           </motion.div>
         ) : (
@@ -121,7 +123,7 @@ export default function AnswerScreen() {
             className="glass p-6 text-center w-full animate-pulse-success"
           >
             <p className="text-success text-lg font-bold" style={{ fontFamily: 'var(--font-heading)' }}>
-              ✓ تم تسجيل إجابتك
+              {t.answerSubmitted}
             </p>
             {totalPlayers > 0 && (
               <div className="mt-3 flex flex-col items-center gap-2">
@@ -134,7 +136,7 @@ export default function AnswerScreen() {
                   />
                 </div>
                 <p className="text-white/40 text-sm">
-                  {answeredCount}/{totalPlayers} أجابوا
+                  {answeredCount}/{totalPlayers} {t.answeredCount}
                 </p>
               </div>
             )}

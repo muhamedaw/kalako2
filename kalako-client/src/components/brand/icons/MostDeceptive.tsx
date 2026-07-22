@@ -1,4 +1,5 @@
 import { COLORS } from '../theme'
+import { useTranslation } from '@/i18n/context'
 
 interface Props {
   size?: number
@@ -6,8 +7,9 @@ interface Props {
 }
 
 export default function MostDeceptive({ size = 72, className }: Props) {
+  const t = useTranslation()
   return (
-    <svg viewBox="0 0 72 72" width={size} height={size} className={className} role="img" aria-label="الأكثر خداعًا">
+    <svg viewBox="0 0 72 72" width={size} height={size} className={className} role="img"         aria-label={t.mostDeceptiveAria}>
       <defs>
         <linearGradient id="mdGrad" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor={COLORS.warning} />

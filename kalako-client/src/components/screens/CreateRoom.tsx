@@ -7,17 +7,7 @@ import ScoreMultiplier from '@/components/brand/icons/ScoreMultiplier'
 import BlindVote from '@/components/brand/icons/BlindVote'
 import FamilyAdults from '@/components/brand/icons/FamilyAdults'
 import { useGameStore } from '@/store/gameStore'
-
-const CATEGORIES = [
-  { id: 'general', label: 'عامة', emoji: '🌍' },
-  { id: 'science', label: 'علوم', emoji: '🔬' },
-  { id: 'history', label: 'تاريخ', emoji: '📜' },
-  { id: 'geography', label: 'جغرافيا', emoji: '🗺️' },
-  { id: 'sports', label: 'رياضة', emoji: '⚽' },
-  { id: 'movies', label: 'أفلام', emoji: '🎬' },
-  { id: 'celebrities', label: 'مشاهير', emoji: '⭐' },
-  { id: 'cooking', label: 'طبخ', emoji: '🍳' },
-]
+import { useTranslation } from '@/i18n/context'
 
 const stagger = {
   animate: { transition: { staggerChildren: 0.05 } },
@@ -30,6 +20,7 @@ const itemIn = {
 
 export default function CreateRoom() {
   const { createRoom, setScreen } = useGameStore()
+  const t = useTranslation()
   const [playerName, setPlayerName] = useState('')
   const [isPrivate, setIsPrivate] = useState(false)
   const [answerTime, setAnswerTime] = useState('45')
@@ -59,7 +50,7 @@ export default function CreateRoom() {
   }
 
   return (
-    <div className="flex flex-col items-center min-h-dvh px-4 py-8 gap-6">
+    <div className="flex flex-col items-center min-h-dvh px-4 py-8 gap-6 pt-16">
       <motion.div
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
@@ -69,11 +60,11 @@ export default function CreateRoom() {
           onClick={() => setScreen('welcome')}
           className="text-white/40 text-sm mb-4 hover:text-white/70 transition-colors cursor-pointer"
         >
-          ← رجوع
+          {t.back}
         </button>
 
         <h2 className="text-2xl font-black text-gradient mb-6" style={{ fontFamily: 'var(--font-heading)' }}>
-          إنشاء غرفة
+          {t.createRoomTitle}
         </h2>
 
         <motion.div
@@ -84,8 +75,8 @@ export default function CreateRoom() {
         >
           <motion.div variants={itemIn}>
             <Input
-              label="اسمك"
-              placeholder="اكتب اسمك هنا..."
+              label={t.yourName}
+              placeholder={t.yourNamePlaceholder}
               value={playerName}
               onChange={(e) => setPlayerName(e.target.value)}
               maxLength={20}
@@ -96,7 +87,7 @@ export default function CreateRoom() {
             <Toggle
               checked={isPrivate}
               onChange={setIsPrivate}
-              label="غرفة خاصة (للمدعوين فقط)"
+              label={t.privateRoom}
             />
           </motion.div>
 
@@ -104,12 +95,12 @@ export default function CreateRoom() {
             <Select
               value={answerTime}
               onChange={setAnswerTime}
-              label="وقت الإجابة"
+              label={t.answerTime}
               options={[
-                { value: '30', label: '30 ثانية' },
-                { value: '45', label: '45 ثانية' },
-                { value: '60', label: '60 ثانية' },
-                { value: '90', label: '90 ثانية' },
+                { value: '30', label: `30 ${t.sec}` },
+                { value: '45', label: `45 ${t.sec}` },
+                { value: '60', label: `60 ${t.sec}` },
+                { value: '90', label: `90 ${t.sec}` },
               ]}
             />
           </motion.div>
@@ -118,33 +109,42 @@ export default function CreateRoom() {
             <Select
               value={roundCount}
               onChange={setRoundCount}
-              label="عدد الجولات"
+              label={t.rounds}
               options={[
-                { value: '3', label: '3 جولات' },
-                { value: '5', label: '5 جولات' },
-                { value: '7', label: '7 جولات' },
-                { value: '10', label: '10 جولات' },
+                { value: '3', label: `3 ${t.roundsLabel}` },
+                { value: '5', label: `5 ${t.roundsLabel}` },
+                { value: '7', label: `7 ${t.roundsLabel}` },
+                { value: '10', label: `10 ${t.roundsLabel}` },
               ]}
             />
           </motion.div>
 
           <motion.div variants={itemIn} className="flex flex-col gap-2">
-            <span className="text-sm font-medium text-white/60">التصنيفات</span>
+            <span className="text-sm font-medium text-white/60">{t.categories}</span>
             <ChipGroup
-              items={CATEGORIES}
+              items={[
+                { id: 'general', label: t.lang === 'ar' ? 'عامة' : t.lang === 'he' ? 'כללי' : 'General', emoji: '🌍' },
+                { id: 'science', label: t.lang === 'ar' ? 'علوم' : t.lang === 'he' ? 'מדע' : 'Science', emoji: '🔬' },
+                { id: 'history', label: t.lang === 'ar' ? 'تاريخ' : t.lang === 'he' ? 'היסטוריה' : 'History', emoji: '📜' },
+                { id: 'geography', label: t.lang === 'ar' ? 'جغرافيا' : t.lang === 'he' ? 'גיאוגרפיה' : 'Geography', emoji: '🗺️' },
+                { id: 'sports', label: t.lang === 'ar' ? 'رياضة' : t.lang === 'he' ? 'ספורט' : 'Sports', emoji: '⚽' },
+                { id: 'movies', label: t.lang === 'ar' ? 'أفلام' : t.lang === 'he' ? 'סרטים' : 'Movies', emoji: '🎬' },
+                { id: 'celebrities', label: t.lang === 'ar' ? 'مشاهير' : t.lang === 'he' ? 'סלבריטאים' : 'Celebrities', emoji: '⭐' },
+                { id: 'cooking', label: t.lang === 'ar' ? 'طبخ' : t.lang === 'he' ? 'בישול' : 'Cooking', emoji: '🍳' },
+              ]}
               selected={selectedCategories}
               onToggle={toggleCategory}
             />
           </motion.div>
 
           <motion.div variants={itemIn} className="flex flex-col gap-4 p-4 rounded-xl bg-white/5 border border-white/10">
-            <p className="text-sm font-bold text-white/60">خيارات متقدمة</p>
+            <p className="text-sm font-bold text-white/60">{t.advancedOptions}</p>
             <div className="flex items-center gap-3">
               <ScoreMultiplier size={32} />
               <Toggle
                 checked={scoreMultiplierEnabled}
                 onChange={setScoreMultiplierEnabled}
-                label="مضاعف نقاط (ضعف النقاط في بعض الجولات)"
+                label={`${t.scoreMultiplier} (${t.scoreMultiplierDesc})`}
               />
             </div>
             <div className="flex items-center gap-3">
@@ -152,7 +152,7 @@ export default function CreateRoom() {
               <Toggle
                 checked={isBlindVote}
                 onChange={setIsBlindVote}
-                label="تصويت أعمى (لا تعرف من صوّت لك)"
+                label={`${t.blindVote} (${t.blindVoteDesc})`}
               />
             </div>
             <div className="flex items-center gap-3">
@@ -160,7 +160,7 @@ export default function CreateRoom() {
               <Toggle
                 checked={ageRating === 'adults'}
                 onChange={(v) => setAgeRating(v ? 'adults' : 'all')}
-                label="جلسة كبار (للبالغين فقط)"
+                label={`${t.adultsOnly} (${t.adultsOnlyDesc})`}
               />
             </div>
           </motion.div>
@@ -173,7 +173,7 @@ export default function CreateRoom() {
               disabled={!playerName.trim() || selectedCategories.length === 0}
               onClick={handleCreate}
             >
-              إنشاء الغرفة
+              {t.createRoomBtn}
             </Button>
           </motion.div>
         </motion.div>

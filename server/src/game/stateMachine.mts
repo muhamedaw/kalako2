@@ -60,7 +60,7 @@ function isDoublePointsRound(room: RoomState): boolean {
 
 export function beginAnswering(io: Server, room: RoomState, category: string) {
   const chosenCategory = room.categoryOptions.includes(category) ? category : room.categoryOptions[0]
-  room.currentQuestion = pickQuestion(chosenCategory, room.settings.familyMode)
+  room.currentQuestion = pickQuestion(chosenCategory, room.settings.familyMode, room.settings.language)
   room.phase = 'ANSWERING'
   room.answers.clear()
   room.votes.clear()

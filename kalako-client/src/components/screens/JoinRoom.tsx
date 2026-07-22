@@ -4,9 +4,11 @@ import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import { useGameStore } from '@/store/gameStore'
 import { useShake } from '@/lib/useShake'
+import { useTranslation } from '@/i18n/context'
 
 export default function JoinRoom() {
   const { joinRoom, setScreen, pendingJoinCode, serverError, setError } = useGameStore()
+  const t = useTranslation()
   const [playerName, setPlayerName] = useState('')
   const [roomCode, setRoomCode] = useState(pendingJoinCode ?? '')
   const inputRef = useRef<HTMLInputElement>(null)
@@ -39,7 +41,7 @@ export default function JoinRoom() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-dvh px-4 py-8 gap-6">
+    <div className="flex flex-col items-center justify-center min-h-dvh px-4 py-8 gap-6 pt-16">
       <motion.div
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
@@ -49,18 +51,18 @@ export default function JoinRoom() {
           onClick={() => setScreen('welcome')}
           className="text-white/40 text-sm mb-4 hover:text-white/70 transition-colors cursor-pointer"
         >
-          ← رجوع
+          {t.back}
         </button>
 
         <h2 className="text-2xl font-black text-gradient mb-6" style={{ fontFamily: 'var(--font-heading)' }}>
-          الانضمام لغرفة
+          {t.joinRoomTitle}
         </h2>
 
         <div className={`flex flex-col gap-5 ${shaking ? 'animate-shake' : ''}`}>
           <Input
             name="name"
-            label="اسمك"
-            placeholder="اكتب اسمك هنا..."
+            label={t.yourName}
+            placeholder={t.yourNamePlaceholder}
             value={playerName}
             onChange={(e) => setPlayerName(e.target.value)}
             onKeyDown={handleKeyDown}
@@ -69,8 +71,8 @@ export default function JoinRoom() {
 
           <Input
             ref={inputRef}
-            label="كود الغرفة"
-            placeholder="مثال: ABC123"
+            label={t.roomCode}
+            placeholder={t.roomCodePlaceholder}
             value={roomCode}
             onChange={(e) => setRoomCode(e.target.value.toUpperCase())}
             onKeyDown={handleKeyDown}
@@ -96,7 +98,7 @@ export default function JoinRoom() {
             disabled={!playerName.trim() || roomCode.trim().length < 4}
             onClick={handleJoin}
           >
-            انضم للغرفة
+            {t.joinRoomBtn}
           </Button>
         </div>
       </motion.div>

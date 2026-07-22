@@ -1,5 +1,6 @@
 import SvgDefs from './SvgDefs'
 import { COLORS } from './theme'
+import { useTranslation } from '@/i18n/context'
 
 interface Props {
   width?: number
@@ -8,6 +9,7 @@ interface Props {
 }
 
 export default function LogoHorizontal({ width = 1200, height = 360, className }: Props) {
+  const t = useTranslation()
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -16,7 +18,7 @@ export default function LogoHorizontal({ width = 1200, height = 360, className }
       height={height}
       className={className}
       role="img"
-      aria-label="تحدي الإجابات — Neon Party trivia game logo"
+      aria-label={t.logoHorizontalAria}
     >
       <SvgDefs />
       <circle cx={190} cy={180} r={170} fill="url(#gradHaloSplash)" />

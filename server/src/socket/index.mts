@@ -19,7 +19,9 @@ import {
   publicRoomView,
   startRound,
 } from '../game/stateMachine.mts'
-import type { RoomSettings, RoomState } from '../game/types.mts'
+import type { Language, RoomSettings, RoomState } from '../game/types.mts'
+
+const SUPPORTED_LANGUAGES: Language[] = ['ar', 'en', 'he']
 
 interface CreateRoomPayload {
   playerName?: string
@@ -30,6 +32,7 @@ interface CreateRoomPayload {
   familyMode?: boolean
   doublePointsRoundEnabled?: boolean
   blindVotingEnabled?: boolean
+  language?: string
 }
 
 interface JoinRoomPayload {
@@ -61,6 +64,7 @@ function validateSettings(payload: CreateRoomPayload): RoomSettings | { error: s
     familyMode: payload.familyMode !== false,
     doublePointsRoundEnabled: Boolean(payload.doublePointsRoundEnabled),
     blindVotingEnabled: Boolean(payload.blindVotingEnabled),
+    language: SUPPORTED_LANGUAGES.includes(payload.language as Language) ? (payload.language as Language) : 'ar',
   }
 }
 
@@ -133,12 +137,16 @@ export function registerSocketHandlers(io: Server) {
       io.to(room.code).emit('player_joined', { player: { id: result.id, name: result.name }, room: publicRoomView(room) })
     })
 
-    socket.on('start_game', () => {
+    socket.on('start_game', (ack?: Ack<any>) => {
       const room = currentRoom(socket)
-      if (!room || room.phase !== 'LOBBY') return
-      if (!requireHost(room, socket)) return
-      if (connectedPlayers(room).length < config.minPlayers) return
+      if (!room) return ack?.({ error: 'الغرفة غير موجودة — أعد الاتصال' })
+      if (room.phase !== 'LOBBY') return ack?.({ error: 'اللعبة بدأت بالفعل' })
+      if (!requireHost(room, socket)) return ack?.({ error: 'المضيف فقط يقدر يبدأ اللعبة' })
+      if (connectedPlayers(room).length < config.minPlayers) {
+        return ack?.({ error: `يحتاج ${config.minPlayers} لاعبين على الأقل` })
+      }
       startRound(io, room)
+      ack?.({ ok: true })
     })
 
     socket.on('pick_category', (payload: { category?: string } = {}) => {

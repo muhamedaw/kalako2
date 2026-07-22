@@ -46,6 +46,7 @@ export interface GameState {
   room: Room | null
   playerId: string | null
   playerName: string | null
+  language: string
   categoryOptions: string[]
   questionText: string | null
   questionCategory: string | null
@@ -92,17 +93,20 @@ export interface GameActions {
   submitVote: (slotId: string) => void
   leaveRoom: () => void
   setError: (msg: string | null) => void
+  setLanguage: (lng: string) => void
 }
 
 const STORAGE_KEY_PLAYER_ID = 'kalako_playerId'
 const STORAGE_KEY_ROOM_CODE = 'kalako_roomCode'
 const STORAGE_KEY_PLAYER_NAME = 'kalako_playerName'
+const STORAGE_KEY_LANGUAGE = 'kalako_language'
 
-function persistSession(playerId: string, roomCode: string, playerName: string) {
+function persistSession(playerId: string, roomCode: string, playerName: string, language: string) {
   try {
     localStorage.setItem(STORAGE_KEY_PLAYER_ID, playerId)
     localStorage.setItem(STORAGE_KEY_ROOM_CODE, roomCode)
     localStorage.setItem(STORAGE_KEY_PLAYER_NAME, playerName)
+    localStorage.setItem(STORAGE_KEY_LANGUAGE, language)
   } catch { /* private browsing */ }
 }
 
@@ -120,9 +124,10 @@ function loadSession() {
       playerId: localStorage.getItem(STORAGE_KEY_PLAYER_ID),
       roomCode: localStorage.getItem(STORAGE_KEY_ROOM_CODE),
       playerName: localStorage.getItem(STORAGE_KEY_PLAYER_NAME),
+      language: localStorage.getItem(STORAGE_KEY_LANGUAGE),
     }
   } catch {
-    return { playerId: null, roomCode: null, playerName: null }
+    return { playerId: null, roomCode: null, playerName: null, language: null }
   }
 }
 
@@ -131,6 +136,7 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
   room: null,
   playerId: null,
   playerName: null,
+  language: 'ar',
   categoryOptions: [],
   questionText: null,
   questionCategory: null,
@@ -155,6 +161,11 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
   setScreen: (s) => set({ screen: s }),
   setError: (msg) => set({ serverError: msg }),
 
+  setLanguage: (lng) => {
+    set({ language: lng })
+    persistSession(get().playerId || '', get().room?.code || '', get().playerName || '', lng)
+  },
+
   connect: () => {
     const socket = getSocket()
 
@@ -165,11 +176,12 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
 
       const saved = loadSession()
       if (saved.playerId && saved.roomCode && saved.playerName) {
-        set({ isReconnecting: true })
+        set({ language: saved.language || 'ar', isReconnecting: true })
         socket.emit('join_room', {
           roomCode: saved.roomCode,
           playerName: saved.playerName,
           playerId: saved.playerId,
+          language: saved.language || 'ar',
         }, (response: any) => {
           if (response.error) {
             clearSession()
@@ -331,6 +343,7 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
     const socket = getSocket()
     socket.emit('create_room', {
       playerName: name,
+      language: get().language,
       isPrivate: settings.isPrivate,
       answerTimeSeconds: settings.answerTimeSeconds,
       roundsCount: settings.roundsCount,
@@ -345,7 +358,7 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
       }
       const playerId = response.playerId as string
       const roomCode = response.room.code as string
-      persistSession(playerId, roomCode, name)
+      persistSession(playerId, roomCode, name, get().language)
       set({
         room: response.room,
         playerId,
@@ -361,13 +374,14 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
     socket.emit('join_room', {
       roomCode: code,
       playerName: name,
+      language: get().language,
     }, (response: any) => {
       if (response.error) {
         set({ serverError: response.error })
         return
       }
       const playerId = response.playerId as string
-      persistSession(playerId, code, name)
+      persistSession(playerId, code, name, get().language)
       set({
         room: response.room,
         playerId,
@@ -378,8 +392,11 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
   },
 
   startGame: () => {
+    set({ serverError: null })
     const socket = getSocket()
-    socket.emit('start_game')
+    socket.emit('start_game', (response: any) => {
+      if (response?.error) set({ serverError: response.error })
+    })
   },
 
   pickCategory: (cat) => {

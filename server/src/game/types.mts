@@ -7,6 +7,8 @@ export type Phase =
   | 'TIEBREAKER'
   | 'GAME_OVER'
 
+export type Language = 'ar' | 'en' | 'he'
+
 export interface RoomSettings {
   isPrivate: boolean
   answerTimeSeconds: number
@@ -15,6 +17,7 @@ export interface RoomSettings {
   familyMode: boolean
   doublePointsRoundEnabled: boolean
   blindVotingEnabled: boolean
+  language: Language
 }
 
 export interface Player {

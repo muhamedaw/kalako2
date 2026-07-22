@@ -1,15 +1,11 @@
 import { motion } from 'framer-motion'
 import { useGameStore } from '@/store/gameStore'
 import { getCategoryLabel, getCategoryEmoji } from '@/types'
+import { useTranslation } from '@/i18n/context'
 
 const stagger = {
-  animate: {
-    transition: {
-      staggerChildren: 0.06,
-    },
-  },
+  animate: { transition: { staggerChildren: 0.06 } },
 }
-
 const cardIn = {
   initial: { opacity: 0, scale: 0.85, y: 16 },
   animate: { opacity: 1, scale: 1, y: 0 },
@@ -18,6 +14,7 @@ const cardIn = {
 
 export default function CategoryPick() {
   const { room, playerId, categoryOptions, pickCategory } = useGameStore()
+  const t = useTranslation()
 
   if (!room) return null
 
@@ -28,11 +25,11 @@ export default function CategoryPick() {
       <div className="w-full max-w-sm flex flex-col gap-5">
         <div className="text-center">
           <h2 className="text-2xl font-black text-gradient mb-2" style={{ fontFamily: 'var(--font-heading)' }}>
-            اختر التصنيف
+            {t.categoryPickTitle}
           </h2>
           <p className="text-white/40 text-sm">
-            {isHost ? 'اختر تصنيفاً لهذه الجولة' : 'بانتظار المضيف لاختيار التصنيف...'}
-            {room.isTiebreakerRound && <span className="text-warning block mt-1">⚡ جولة فاصلة</span>}
+            {isHost ? t.pickCategoryHost : t.pickCategoryWaiting}
+            {room.isTiebreakerRound && <span className="text-warning block mt-1">{t.tiebreaker}</span>}
           </p>
         </div>
 

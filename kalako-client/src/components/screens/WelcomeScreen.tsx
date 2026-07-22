@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import GlassCard from '@/components/ui/GlassCard'
 import Button from '@/components/ui/Button'
 import { useGameStore } from '@/store/gameStore'
+import { useTranslation } from '@/i18n/context'
 
 const stagger = {
   animate: {
@@ -19,9 +20,10 @@ const fadeUp = {
 
 export default function WelcomeScreen() {
   const setScreen = useGameStore((s) => s.setScreen)
+  const t = useTranslation()
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-dvh px-4 py-8 gap-8">
+    <div className="flex flex-col items-center justify-center min-h-dvh px-4 py-8 gap-8 pt-16">
       <motion.div
         variants={stagger}
         initial="initial"
@@ -35,10 +37,10 @@ export default function WelcomeScreen() {
           animate={{ y: [0, -6, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
         >
-          كلاكو
+          {t.welcomeTitle}
         </motion.h1>
         <motion.p variants={fadeUp} className="text-white/50 text-lg">
-          لعبة أسئلة جماعية بالكذب والحقيقة
+          {t.welcomeSubtitle}
         </motion.p>
       </motion.div>
 
@@ -55,7 +57,7 @@ export default function WelcomeScreen() {
             fullWidth
             onClick={() => setScreen('create')}
           >
-            إنشاء غرفة جديدة
+            {t.createRoom}
           </Button>
           <Button
             variant="secondary"
@@ -63,7 +65,7 @@ export default function WelcomeScreen() {
             fullWidth
             onClick={() => setScreen('join')}
           >
-            الانضمام بكود
+            {t.joinRoom}
           </Button>
         </GlassCard>
       </motion.div>
@@ -74,7 +76,7 @@ export default function WelcomeScreen() {
         transition={{ delay: 0.7 }}
         className="text-white/30 text-xs text-center"
       >
-        أضف الكذابة وتسلّي مع أصحابك
+        {t.welcomeTagline}
       </motion.p>
     </div>
   )
