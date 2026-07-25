@@ -59,7 +59,7 @@ export default function BottomNav() {
       aria-label={t.navPlay}
     >
       <div
-        className="mx-auto max-w-lg px-2 flex items-end justify-between"
+        className="w-full px-2 flex items-end justify-around"
         style={{
           background: '#1E60FF',
           borderTop: '4px solid #0A0A0A',
