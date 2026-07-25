@@ -71,6 +71,7 @@ export interface GameState {
   answeredCount: number
   totalPlayers: number
   votedCount: number
+  answerNeedsRevision: { questionId: string } | null
 }
 
 export interface GameActions {
@@ -89,7 +90,8 @@ export interface GameActions {
   joinRoom: (code: string, name: string) => void
   startGame: () => void
   pickCategory: (cat: string) => void
-  submitAnswer: (text: string) => void
+  submitAnswer: (text: string, forceSubmit?: boolean) => void
+  clearAnswerNeedsRevision: () => void
   submitVote: (slotId: string) => void
   leaveRoom: () => void
   setError: (msg: string | null) => void
@@ -157,9 +159,11 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
   mostDeceptivePlayer: null,
   isDoublePointsRound: false,
   wasDoublePoints: false,
+  answerNeedsRevision: null,
 
   setScreen: (s) => set({ screen: s }),
   setError: (msg) => set({ serverError: msg }),
+  clearAnswerNeedsRevision: () => set({ answerNeedsRevision: null }),
 
   setLanguage: (lng) => {
     set({ language: lng })
@@ -239,6 +243,10 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
 
     socket.on('your_answer_slot', (data: { slotId: string }) => {
       set({ mySlotId: data.slotId })
+    })
+
+    socket.on('answer_needs_revision', (data: { questionId: string }) => {
+      set({ answerNeedsRevision: data })
     })
 
     socket.on('phase_changed', (data: any) => {
@@ -404,10 +412,10 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
     socket.emit('pick_category', { category: cat })
   },
 
-  submitAnswer: (text) => {
+  submitAnswer: (text, forceSubmit = false) => {
     const socket = getSocket()
-    socket.emit('submit_answer', { text })
-    set({ submittedAnswer: true })
+    socket.emit('submit_answer', { text, forceSubmit })
+    set({ submittedAnswer: true, answerNeedsRevision: null })
   },
 
   submitVote: (slotId) => {

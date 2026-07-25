@@ -95,6 +95,11 @@ const ar: Translations = {
   answeredCount: 'أجابوا',
   charCount: '{{count}}/140',
 
+  answerRevisionTitle: 'إجابتك واضحة جدًا!',
+  answerRevisionBody: 'السؤال يطلب إجابة غامضة أو خادعة. إذا كانت إجابتك صحيحة جدًا، الخصم راح يكسب نقطة. حاول تكتك إجابة تخدعهم.',
+  answerRevisionEditButton: 'خلّي أعدل الإجابة',
+  answerRevisionSubmitAnyway: 'إرسالها زي ما هي',
+
   voteTitle: 'أيهم الإجابة الصحيحة؟',
   voteSubtitle: 'اختر الإجابة التي تظنها صحيحة — الإجابات مخفية بلا أسماء',
   yourAnswer: '(إجابتك)',

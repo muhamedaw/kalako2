@@ -95,6 +95,11 @@ const he: Translations = {
   answeredCount: 'ענו',
   charCount: 'תוים',
 
+  answerRevisionTitle: 'התשובה שלך ברורה מדי!',
+  answerRevisionBody: 'השאלה מבקשת תשובה מטעה. אם התשובה שלך נכונה מדי, היריבים יזהו אותה בקלות. נסה תשובה מטעה יותר.',
+  answerRevisionEditButton: 'תן לי לערוך',
+  answerRevisionSubmitAnyway: 'שלח בכל זאת',
+
   voteTitle: 'איזו תשובה נכונה?',
   voteSubtitle: 'בחר את התשובה שלדעתך אמיתית — תשובות מוסתרות בלי שמות',
   yourAnswer: '(התשובה שלך)',

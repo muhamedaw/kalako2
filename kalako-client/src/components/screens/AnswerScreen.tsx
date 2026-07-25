@@ -1,12 +1,14 @@
 import { useState, useEffect, useRef } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import GlassCard from '@/components/ui/GlassCard'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import ProgressRing from '@/components/ui/ProgressRing'
+import ArcadeModal from '@/components/ui/ArcadeModal'
 import { useGameStore } from '@/store/gameStore'
 import { useSFX } from '@/components/brand/useSFX'
 import { useTranslation } from '@/i18n/context'
+import { getCategoryLabel } from '@/types'
 
 export default function AnswerScreen() {
   const {
@@ -19,6 +21,8 @@ export default function AnswerScreen() {
     totalPlayers,
     room,
     isDoublePointsRound,
+    answerNeedsRevision,
+    clearAnswerNeedsRevision,
   } = useGameStore()
   const t = useTranslation()
 
@@ -45,7 +49,7 @@ export default function AnswerScreen() {
           if (!state.submittedAnswer && state.screen === 'answering') {
             const text = answerRef.current.trim()
             if (text) {
-              state.submitAnswer(text)
+              state.submitAnswer(text, !!state.answerNeedsRevision)
             }
           }
           return 0
@@ -68,6 +72,21 @@ export default function AnswerScreen() {
     if (e.key === 'Enter') handleSubmit()
   }
 
+  const handleEditAnswer = () => {
+    clearAnswerNeedsRevision()
+    setTimeout(() => {
+      inputRef.current?.focus()
+      inputRef.current?.select()
+    }, 0)
+  }
+
+  const handleSubmitAnyway = () => {
+    const text = answerRef.current.trim()
+    if (text) {
+      submitAnswer(text, true)
+    }
+  }
+
   return (
     <div className="flex flex-col items-center min-h-dvh px-4 py-6 gap-5">
       <div className="w-full max-w-sm flex flex-col items-center gap-5">
@@ -77,7 +96,7 @@ export default function AnswerScreen() {
           <div className="flex flex-col gap-3 text-center">
             <div className="text-sm text-white/40">
               {t.round} {room?.round ?? 1}
-              {questionCategory && <span className="mr-2 text-primary">• {questionCategory}</span>}
+              {questionCategory && <span className="mr-2 text-primary">• {getCategoryLabel(questionCategory, t.lang)}</span>}
               {isDoublePointsRound && <span className="mr-2 text-warning">{t.doublePoints}</span>}
             </div>
             <h2
@@ -143,6 +162,42 @@ export default function AnswerScreen() {
           </motion.div>
         )}
       </div>
+
+      <AnimatePresence>
+        {answerNeedsRevision && !submittedAnswer && (
+          <ArcadeModal onClose={handleEditAnswer}>
+            <div className="flex flex-col gap-4 text-black">
+              <h3
+                className="text-xl font-black text-center"
+                style={{ fontFamily: 'var(--font-heading)' }}
+              >
+                {t.answerRevisionTitle}
+              </h3>
+              <p className="text-sm leading-relaxed text-center">
+                {t.answerRevisionBody}
+              </p>
+              <div className="flex flex-col gap-2 mt-2">
+                <Button
+                  variant="secondary"
+                  size="lg"
+                  fullWidth
+                  onClick={handleEditAnswer}
+                >
+                  {t.answerRevisionEditButton}
+                </Button>
+                <Button
+                  variant="primary"
+                  size="lg"
+                  fullWidth
+                  onClick={handleSubmitAnyway}
+                >
+                  {t.answerRevisionSubmitAnyway}
+                </Button>
+              </div>
+            </div>
+          </ArcadeModal>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

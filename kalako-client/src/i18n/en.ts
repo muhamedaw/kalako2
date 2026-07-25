@@ -95,6 +95,11 @@ const en: Translations = {
   answeredCount: 'answered',
   charCount: '{{count}}/140',
 
+  answerRevisionTitle: 'Your answer is too obvious!',
+  answerRevisionBody: 'The question asks for a tricky answer. If your answer is too correct, opponents will spot it easily. Try a more deceptive answer.',
+  answerRevisionEditButton: 'Let me edit it',
+  answerRevisionSubmitAnyway: 'Submit it anyway',
+
   voteTitle: 'Which one is correct?',
   voteSubtitle: 'Pick the answer you think is real — answers are hidden without names',
   yourAnswer: '(Your answer)',

@@ -107,6 +107,12 @@ export interface Translations {
   answeredCount: string
   charCount: string
 
+  // Answer Revision Modal
+  answerRevisionTitle: string
+  answerRevisionBody: string
+  answerRevisionEditButton: string
+  answerRevisionSubmitAnyway: string
+
   // Vote Screen
   voteTitle: string
   voteSubtitle: string
