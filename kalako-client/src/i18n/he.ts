@@ -9,6 +9,20 @@ const he: Translations = {
   navHowToPlay: 'איך משחקים',
   navAbout: 'על המפתח',
 
+  navStore: 'חנות',
+  navVoting: 'הצבעה',
+  navPlay: 'שחק',
+  navNotifications: 'התראות',
+  navProfile: 'פרופיל',
+
+  comingSoonTitle: 'בקרוב',
+  comingSoonSubtitle: 'התכונה הזו בפיתוח — הישארו מעודכנים',
+
+  settingsTitle: 'הגדרות',
+
+  playOnline: 'שחק אונליין',
+  playCreatePrivate: 'צור חדר פרטי',
+
   welcomeTitle: 'קלאКО',
   welcomeSubtitle: 'משחק טריוויה חברתי בסגנון פיבאג׳',
   createRoom: 'צור חדר',
@@ -168,6 +182,14 @@ const he: Translations = {
   shareCardResultAria: 'כרטיס תוצאות לשיתוף',
   loadingText: 'טוען...',
   brandLabel: 'קלako',
+  
+  splashTagline: 'אתגר התשובות',
+  shareCardTitle: 'קלako',
+  shareCardSubtitle: 'משחק הונאה חברתי',
+  shareCardRank: 'מקום {{rank}}',
+  shareCardOutOf: 'מתוך {{total}}',
+  shareCardPlayerLabel: 'שחקן',
+  shareCardScoreLabel: 'ניקוד',
 }
 
 export default he

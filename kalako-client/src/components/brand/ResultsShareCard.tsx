@@ -75,13 +75,13 @@ export default function ResultsShareCard({ playerName, score, rank, totalPlayers
     ctx.fillStyle = '#FFFFFF'
     ctx.font = 'bold 18px Cairo, Tajawal, sans-serif'
     ctx.textAlign = 'center'
-    ctx.fillText('تحدي الإجابات', 108, 118)
+    ctx.fillText(t.shareCardTitle, 108, 118)
     ctx.fillStyle = COLORS.warning
     ctx.font = 'bold 12px Cairo, Tajawal, sans-serif'
-    ctx.fillText('لعبة خداع جماعية', 108, 140)
+    ctx.fillText(t.shareCardSubtitle, 108, 140)
 
     const rankColors = ['#FFD700', '#C0C0C0', '#CD7F32', COLORS.success]
-    const rankLabel = rank <= 3 ? ['الأول', 'الثاني', 'الثالث'][rank - 1] : `#${rank}`
+    const rankLabel = rank <= 3 ? t.shareCardRank.replace('{{rank}}', String(rank)) : `#${rank}`
     ctx.shadowColor = (rankColors[rank - 1] || COLORS.success) + '60'
     ctx.shadowBlur = 20
     ctx.fillStyle = rankColors[rank - 1] || COLORS.success
@@ -91,7 +91,7 @@ export default function ResultsShareCard({ playerName, score, rank, totalPlayers
     ctx.shadowBlur = 0
     ctx.fillStyle = 'rgba(255,255,255,0.6)'
     ctx.font = '12px Tajawal, sans-serif'
-    ctx.fillText(`من أصل ${totalPlayers}`, 108, 260)
+    ctx.fillText(t.shareCardOutOf.replace('{{total}}', String(totalPlayers)), 108, 260)
 
     const y0 = 50
     ctx.shadowColor = COLORS.primary + '50'
@@ -99,7 +99,7 @@ export default function ResultsShareCard({ playerName, score, rank, totalPlayers
     ctx.fillStyle = COLORS.primary
     ctx.font = 'bold 14px Cairo, Tajawal, sans-serif'
     ctx.textAlign = 'right'
-    ctx.fillText('اللاعب', 540, y0 + 28)
+    ctx.fillText(t.shareCardPlayerLabel, 540, y0 + 28)
     ctx.shadowBlur = 0
     ctx.fillStyle = '#FFFFFF'
     ctx.font = 'bold 36px Cairo, Tajawal, sans-serif'
@@ -109,7 +109,7 @@ export default function ResultsShareCard({ playerName, score, rank, totalPlayers
     ctx.shadowBlur = 15
     ctx.fillStyle = COLORS.success
     ctx.font = 'bold 14px Cairo, Tajawal, sans-serif'
-    ctx.fillText('النقاط', 540, y0 + 125)
+    ctx.fillText(t.shareCardScoreLabel, 540, y0 + 125)
     ctx.shadowBlur = 0
     ctx.fillStyle = '#FFFFFF'
     ctx.font = 'bold 48px Cairo, Tajawal, sans-serif'
@@ -125,7 +125,7 @@ export default function ResultsShareCard({ playerName, score, rank, totalPlayers
 
     const url = canvas.toDataURL('image/png')
     onDataUrl?.(url)
-  }, [playerName, score, rank, totalPlayers, onDataUrl])
+  }, [t, playerName, score, rank, totalPlayers, onDataUrl])
 
   useEffect(() => { draw() }, [draw])
 

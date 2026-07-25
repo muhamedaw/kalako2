@@ -13,8 +13,8 @@ function Eyes({ x, y, state }: { x: number; y: number; state: AvatarState }) {
   if (state === 'happy') {
     return (
       <>
-        <path d={`M${x - 32},${y} Q${x - 22},${y + 12} ${x - 12},${y}`} stroke="#1B0E2E" strokeWidth={6} fill="none" strokeLinecap="round" />
-        <path d={`M${x + 12},${y} Q${x + 22},${y + 12} ${x + 32},${y}`} stroke="#1B0E2E" strokeWidth={6} fill="none" strokeLinecap="round" />
+        <path d={`M${x - 32},${y} Q${x - 22},${y + 12} ${x - 12},${y}`} stroke="#0F172A" strokeWidth={6} fill="none" strokeLinecap="round" />
+        <path d={`M${x + 12},${y} Q${x + 22},${y + 12} ${x + 32},${y}`} stroke="#0F172A" strokeWidth={6} fill="none" strokeLinecap="round" />
       </>
     )
   }
@@ -23,10 +23,10 @@ function Eyes({ x, y, state }: { x: number; y: number; state: AvatarState }) {
   return (
     <>
       <ellipse cx={x - 22} cy={y} rx={eyeR} ry={eyeR + 2} fill="#FFFFFF" />
-      <circle cx={x - 22} cy={y + 2} r={pupilR} fill="#1B0E2E" />
+      <circle cx={x - 22} cy={y + 2} r={pupilR} fill="#0F172A" />
       <circle cx={x - 20} cy={y - 4} r={3} fill="#FFFFFF" />
       <ellipse cx={x + 22} cy={y} rx={eyeR} ry={eyeR + 2} fill="#FFFFFF" />
-      <circle cx={x + 22} cy={y + 2} r={pupilR} fill="#1B0E2E" />
+      <circle cx={x + 22} cy={y + 2} r={pupilR} fill="#0F172A" />
       <circle cx={x + 24} cy={y - 4} r={3} fill="#FFFFFF" />
     </>
   )
@@ -36,15 +36,15 @@ function Mouth({ x, y, state }: { x: number; y: number; state: AvatarState }) {
   if (state === 'happy') {
     return (
       <>
-        <path d={`M${x - 50},${y} Q${x},${y + 62} ${x + 50},${y}`} fill="#1B0E2E" />
+        <path d={`M${x - 50},${y} Q${x},${y + 62} ${x + 50},${y}`} fill="#0F172A" />
         <rect x={x - 40} y={y + 24} width={80} height={14} fill="#FFFFFF" rx={2} />
       </>
     )
   }
   if (state === 'tricked') {
-    return <ellipse cx={x} cy={y + 10} rx={16} ry={22} fill="#1B0E2E" />
+    return <ellipse cx={x} cy={y + 10} rx={16} ry={22} fill="#0F172A" />
   }
-  return <path d={`M${x - 30},${y} Q${x},${y + 22} ${x + 30},${y}`} stroke="#1B0E2E" strokeWidth={6} fill="none" strokeLinecap="round" />
+  return <path d={`M${x - 30},${y} Q${x},${y + 22} ${x + 30},${y}`} stroke="#0F172A" strokeWidth={6} fill="none" strokeLinecap="round" />
 }
 
 export default function Avatar({ id, state = 'idle', size = 720, className }: Props) {
@@ -53,7 +53,7 @@ export default function Avatar({ id, state = 'idle', size = 720, className }: Pr
   const scale = size / 720
   const cfg = AVATAR_CONFIGS[(id - 1) % AVATAR_CONFIGS.length]
   const ringColor = state === 'tricked' ? COLORS.warning : state === 'happy' ? COLORS.success : COLORS.success
-  const filterId = state === 'tricked' ? 'glowAmber' : state === 'happy' ? 'glowCyan' : 'glowPurple'
+  const filterId = state === 'tricked' ? 'glowAmber' : state === 'happy' ? 'glowGreen' : 'glowBlue'
   const blushOpacity = state === 'happy' ? 0.6 : 0.45
 
   const sparks = useMemo(() => {
@@ -61,7 +61,7 @@ export default function Avatar({ id, state = 'idle', size = 720, className }: Pr
     return (
       <>
         {[0, 1, 2, 3].map((i) => (
-          <g key={i} transform={`translate(${cx + (i % 2 === 0 ? -210 : 210)}, ${cy + (i < 2 ? -140 : 180)})`} filter="url(#glowCyan)" style={{ animation: `sparkle 0.7s ease-in-out infinite`, animationDelay: `${i * 0.18}s` }}>
+          <g key={i} transform={`translate(${cx + (i % 2 === 0 ? -210 : 210)}, ${cy + (i < 2 ? -140 : 180)})`} filter="url(#glowGreen)" style={{ animation: `sparkle 0.7s ease-in-out infinite`, animationDelay: `${i * 0.18}s` }}>
             <rect x={-2} y={-14} width={4} height={28} rx={2} fill={COLORS.success} />
             <rect x={-14} y={-2} width={28} height={4} rx={2} fill={COLORS.success} />
             <circle cx={0} cy={0} r={3} fill="#FFFFFF" />
@@ -131,8 +131,8 @@ export default function Avatar({ id, state = 'idle', size = 720, className }: Pr
 
       <g className="avatar-body">
         <circle cx={cx} cy={cy + 10 * scale} r={198 * scale} fill="none" stroke={ringColor} className="ring" strokeWidth={6 * scale} opacity={0.9} filter={`url(#${filterId})`} />
-        <path d={`M${cx - 160 * scale},${cy - 40 * scale} Q${cx - 180 * scale},${cy - 160 * scale} ${cx},${cy - 190 * scale} Q${cx + 180 * scale},${cy - 160 * scale} ${cx + 160 * scale},${cy - 40 * scale} L${cx - 160 * scale},${cy - 30 * scale} Z`} fill={cfg.hair} filter="url(#glowPurple)" />
-        <path d={`M${cx + 170 * scale},${cy - 60 * scale} Q${cx + 260 * scale},${cy + 40 * scale} ${cx + 220 * scale},${cy + 180 * scale} Q${cx + 170 * scale},${cy + 130 * scale} ${cx + 150 * scale},${cy} Z`} fill={cfg.hair} filter="url(#glowPurple)" />
+        <path d={`M${cx - 160 * scale},${cy - 40 * scale} Q${cx - 180 * scale},${cy - 160 * scale} ${cx},${cy - 190 * scale} Q${cx + 180 * scale},${cy - 160 * scale} ${cx + 160 * scale},${cy - 40 * scale} L${cx - 160 * scale},${cy - 30 * scale} Z`} fill={cfg.hair} filter="url(#glowBlue)" />
+        <path d={`M${cx + 170 * scale},${cy - 60 * scale} Q${cx + 260 * scale},${cy + 40 * scale} ${cx + 220 * scale},${cy + 180 * scale} Q${cx + 170 * scale},${cy + 130 * scale} ${cx + 150 * scale},${cy} Z`} fill={cfg.hair} filter="url(#glowBlue)" />
 
         <circle cx={cx} cy={cy} r={180 * scale} fill={cfg.skin} />
         <ellipse cx={cx - 176.4 * scale} cy={cy + 10 * scale} rx={14 * scale} ry={22 * scale} fill={cfg.skin} />

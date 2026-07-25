@@ -247,3 +247,71 @@ test('family mode filters out adult-rated questions', async () => {
   }
   assert.ok(ratings.has('family'))
 })
+
+test('room created with language:"en" serves English questions end-to-end over a real socket', async (t) => {
+  const { httpServer, port } = await startServer()
+  t.after(() => httpServer.close())
+
+  const url = `http://localhost:${port}`
+  const host = ioClient(url, { transports: ['websocket'] })
+  const p2 = ioClient(url, { transports: ['websocket'] })
+  t.after(() => {
+    host.close()
+    p2.close()
+  })
+  await Promise.all([waitFor(host, 'connect'), waitFor(p2, 'connect')])
+
+  const created = await ackCall(host, 'create_room', {
+    playerName: 'Host',
+    isPrivate: false,
+    answerTimeSeconds: 10,
+    roundsCount: 1,
+    allowedCategories: ['general'],
+    language: 'en',
+  })
+  await ackCall(p2, 'join_room', { roomCode: created.roomCode, playerName: 'P2' })
+
+  const catWaits = [waitFor(host, 'phase_changed'), waitFor(p2, 'phase_changed')]
+  host.emit('start_game')
+  const [catPick] = await Promise.all(catWaits)
+  assert.equal(catPick.phase, 'CATEGORY_PICK')
+
+  const ansPromise = waitFor(host, 'phase_changed')
+  host.emit('pick_category', { category: catPick.categoryOptions[0] })
+  const answering = await ansPromise
+  assert.equal(answering.phase, 'ANSWERING')
+  assert.match(answering.question.text, /^[\x00-\x7F]+$/) // ASCII-only: genuinely English, not Arabic
+})
+
+test('room created without a language field defaults to Arabic (backward compatible)', async (t) => {
+  const { httpServer, port } = await startServer()
+  t.after(() => httpServer.close())
+
+  const url = `http://localhost:${port}`
+  const host = ioClient(url, { transports: ['websocket'] })
+  const p2 = ioClient(url, { transports: ['websocket'] })
+  t.after(() => {
+    host.close()
+    p2.close()
+  })
+  await Promise.all([waitFor(host, 'connect'), waitFor(p2, 'connect')])
+
+  const created = await ackCall(host, 'create_room', {
+    playerName: 'Host',
+    isPrivate: false,
+    answerTimeSeconds: 10,
+    roundsCount: 1,
+    allowedCategories: ['general'],
+    // no `language` field at all — simulating an old client
+  })
+  assert.equal(created.room.settings.language, 'ar')
+  await ackCall(p2, 'join_room', { roomCode: created.roomCode, playerName: 'P2' })
+
+  const catWaits = [waitFor(host, 'phase_changed'), waitFor(p2, 'phase_changed')]
+  host.emit('start_game')
+  const [catPick] = await Promise.all(catWaits)
+  const ansPromise = waitFor(host, 'phase_changed')
+  host.emit('pick_category', { category: catPick.categoryOptions[0] })
+  const answering = await ansPromise
+  assert.match(answering.question.text, /[؀-ۿ]/) // Arabic script
+})

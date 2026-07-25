@@ -122,10 +122,10 @@ export default function CategoryIcon({ categoryId, size = 512, className }: Prop
       aria-label={`تحدي الإجابات category — ${cat.label}`}
     >
       <SvgDefs />
-      <rect x={0} y={0} width={512} height={512} rx={44} ry={44} fill="url(#gradBg)" stroke="url(#gradPinkPurple)" strokeWidth={6} filter="url(#glowPurple)" />
+      <rect x={0} y={0} width={512} height={512} rx={44} ry={44} fill="url(#gradBg)" stroke="url(#gradYellowBlue)" strokeWidth={6} filter="url(#glowBlue)" />
       <rect x={14} y={14} width={484} height={484} rx={32} ry={32} fill="none" stroke="#E6DEFF" strokeOpacity={0.18} strokeWidth={2} />
       <circle cx={430} cy={82} r={14} fill={cat.accent} filter="url(#glowAmber)" />
-      <g filter="url(#glowPink)">
+      <g filter="url(#glowYellow)">
         <CategoryGlyph id={categoryId} cx={256} cy={256} r={155} />
       </g>
     </svg>

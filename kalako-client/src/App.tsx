@@ -1,9 +1,11 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { Settings } from 'lucide-react'
 import AnimatedBackground from '@/components/ui/AnimatedBackground'
 import I18nProvider from '@/i18n/I18nProvider'
 import ReconnectingOverlay from '@/components/screens/ReconnectingOverlay'
-import Navbar from '@/components/layout/Navbar'
+import BottomNav from '@/components/navigation/BottomNav'
+import SettingsPanel from '@/components/SettingsPanel'
 import WelcomeScreen from '@/components/screens/WelcomeScreen'
 import CreateRoom from '@/components/screens/CreateRoom'
 import JoinRoom from '@/components/screens/JoinRoom'
@@ -16,11 +18,18 @@ import GameOver from '@/components/screens/GameOver'
 import DevAssetPreview from '@/components/screens/DevAssetPreview'
 import AboutPage from '@/components/screens/AboutPage'
 import HowToPlayPage from '@/components/screens/HowToPlayPage'
+import StoreScreen from '@/components/screens/StoreScreen'
+import GlobalVotingScreen from '@/components/screens/GlobalVotingScreen'
+import NotificationsScreen from '@/components/screens/NotificationsScreen'
+import ProfileScreen from '@/components/screens/ProfileScreen'
 import { useGameStore } from '@/store/gameStore'
+import { useNavigationStore } from '@/store/navigationStore'
 
-const GAME_SCREENS = new Set([
-  'create', 'join', 'lobby', 'category_pick', 'answering',
-  'voting', 'round_results', 'game_over', 'dev_asset_preview',
+// Screens where the bottom tab bar is shown. Everything else (active game
+// rounds, create/join forms, results, dev tools) hides it so it never
+// overlaps game UI.
+const BOTTOM_NAV_SCREENS = new Set([
+  'welcome', 'store', 'global_voting', 'notifications', 'profile', 'lobby',
 ])
 
 const pageVariants = {
@@ -36,6 +45,8 @@ const pageTransition = {
 
 function App() {
   const { screen, connect, setScreen } = useGameStore()
+  const toggleSettingsPanel = useNavigationStore((s) => s.toggleSettingsPanel)
+  const [createDefaultPrivate, setCreateDefaultPrivate] = useState(false)
 
   useEffect(() => {
     connect()
@@ -53,19 +64,20 @@ function App() {
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const showNavbar = !GAME_SCREENS.has(screen)
+  const showBottomNav = BOTTOM_NAV_SCREENS.has(screen)
+  const showSettingsGear = screen === 'welcome'
 
-  const handleNav = (page: 'home' | 'how_to_play' | 'about') => {
-    if (page === 'home') setScreen('welcome')
-    else setScreen(page)
+  const handleStartCreate = (isPrivate: boolean) => {
+    setCreateDefaultPrivate(isPrivate)
+    setScreen('create')
   }
 
   const renderScreen = () => {
     switch (screen) {
       case 'welcome':
-        return <WelcomeScreen key="welcome" />
+        return <WelcomeScreen key="welcome" onStartCreate={handleStartCreate} />
       case 'create':
-        return <CreateRoom key="create" />
+        return <CreateRoom key="create" initialIsPrivate={createDefaultPrivate} />
       case 'join':
         return <JoinRoom key="join" />
       case 'lobby':
@@ -84,16 +96,37 @@ function App() {
         return <AboutPage key="about" />
       case 'how_to_play':
         return <HowToPlayPage key="how_to_play" />
+      case 'store':
+        return <StoreScreen key="store" />
+      case 'global_voting':
+        return <GlobalVotingScreen key="global_voting" />
+      case 'notifications':
+        return <NotificationsScreen key="notifications" />
+      case 'profile':
+        return <ProfileScreen key="profile" />
       case 'dev_asset_preview':
         return <DevAssetPreview key="dev" />
       default:
-        return <WelcomeScreen key="welcome" />
+        return <WelcomeScreen key="welcome" onStartCreate={handleStartCreate} />
     }
   }
 
   return (
     <I18nProvider>
       {screen === 'welcome' && <AnimatedBackground />}
+      {showSettingsGear && (
+        <button
+          onClick={toggleSettingsPanel}
+          className="fixed top-4 start-4 z-50 w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
+          style={{
+            background: '#1E60FF',
+            border: '4px solid #0A0A0A',
+          }}
+          aria-label="settings"
+        >
+          <Settings size={18} className="text-white/70" />
+        </button>
+      )}
       <AnimatePresence mode="wait">
         <motion.div
           key={screen}
@@ -104,10 +137,11 @@ function App() {
           transition={pageTransition}
           className="flex-1 flex flex-col"
         >
-          {showNavbar && <Navbar onNavigate={handleNav} currentPage={screen} />}
           {renderScreen()}
         </motion.div>
       </AnimatePresence>
+      {showBottomNav && <BottomNav />}
+      <SettingsPanel />
       <ReconnectingOverlay />
     </I18nProvider>
   )

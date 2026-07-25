@@ -7,11 +7,11 @@ export default function SvgDefs() {
         <stop offset="0%" stopColor={COLORS.bgStart} />
         <stop offset="100%" stopColor={COLORS.bgEnd} />
       </linearGradient>
-      <linearGradient id="gradPinkPurple" x1="0" y1="0" x2="1" y2="0">
+      <linearGradient id="gradYellowBlue" x1="0" y1="0" x2="1" y2="0">
         <stop offset="0%" stopColor={COLORS.primary} />
         <stop offset="100%" stopColor={COLORS.secondary} />
       </linearGradient>
-      <linearGradient id="gradPurplePink" x1="0" y1="0" x2="1" y2="1">
+      <linearGradient id="gradBlueYellow" x1="0" y1="0" x2="1" y2="1">
         <stop offset="0%" stopColor={COLORS.secondary} />
         <stop offset="100%" stopColor={COLORS.primary} />
       </linearGradient>
@@ -23,19 +23,19 @@ export default function SvgDefs() {
         <stop offset="0%" stopColor={COLORS.warning} stopOpacity={0.95} />
         <stop offset="100%" stopColor={COLORS.warning} stopOpacity={0} />
       </radialGradient>
-      <filter id="glowPink" x="-60%" y="-60%" width="220%" height="220%">
+      <filter id="glowYellow" x="-60%" y="-60%" width="220%" height="220%">
         <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic" />
         <feFlood floodColor={COLORS.primary} floodOpacity={0.9} />
         <feComposite in2="b" operator="in" result="glow" />
         <feMerge><feMergeNode in="glow" /><feMergeNode in="SourceGraphic" /></feMerge>
       </filter>
-      <filter id="glowPurple" x="-60%" y="-60%" width="220%" height="220%">
+      <filter id="glowBlue" x="-60%" y="-60%" width="220%" height="220%">
         <feGaussianBlur stdDeviation="2.5" result="b" in="SourceGraphic" />
         <feFlood floodColor={COLORS.secondary} floodOpacity={0.85} />
         <feComposite in2="b" operator="in" result="glow" />
         <feMerge><feMergeNode in="glow" /><feMergeNode in="SourceGraphic" /></feMerge>
       </filter>
-      <filter id="glowCyan" x="-60%" y="-60%" width="220%" height="220%">
+      <filter id="glowGreen" x="-60%" y="-60%" width="220%" height="220%">
         <feGaussianBlur stdDeviation="2" result="b" in="SourceGraphic" />
         <feFlood floodColor={COLORS.success} floodOpacity={0.9} />
         <feComposite in2="b" operator="in" result="glow" />
@@ -53,7 +53,7 @@ export default function SvgDefs() {
         <feComposite in2="b" operator="in" result="glow" />
         <feMerge><feMergeNode in="glow" /><feMergeNode in="SourceGraphic" /></feMerge>
       </filter>
-      <radialGradient id="gradHaloSplash" cx="50%" cy="40%" r="60%">
+      <radialGradient id="gradHalo" cx="50%" cy="40%" r="60%">
         <stop offset="0%" stopColor={COLORS.secondary} stopOpacity={0.55} />
         <stop offset="60%" stopColor={COLORS.bgStart} stopOpacity={0} />
       </radialGradient>

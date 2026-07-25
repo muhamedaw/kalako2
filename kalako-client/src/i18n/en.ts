@@ -9,6 +9,20 @@ const en: Translations = {
   navHowToPlay: 'How to Play',
   navAbout: 'About',
 
+  navStore: 'Store',
+  navVoting: 'Voting',
+  navPlay: 'Play',
+  navNotifications: 'Notifications',
+  navProfile: 'Profile',
+
+  comingSoonTitle: 'Coming Soon',
+  comingSoonSubtitle: "This feature is under construction — stay tuned!",
+
+  settingsTitle: 'Settings',
+
+  playOnline: 'Play Online',
+  playCreatePrivate: 'Create Private Room',
+
   welcomeTitle: 'KALAKO',
   welcomeSubtitle: 'A Fibbage-style party trivia game',
   createRoom: 'Create Room',
@@ -147,6 +161,14 @@ const en: Translations = {
   shareCardResultAria: '{{name}} result: {{score}} points - Rank {{rank}}',
   loadingText: 'Loading...',
   brandLabel: 'kalako.app',
+
+  splashTagline: 'The Answer Challenge',
+  shareCardTitle: 'Kalako',
+  shareCardSubtitle: 'A group deception game',
+  shareCardRank: 'Rank {{rank}}',
+  shareCardOutOf: 'Out of {{total}}',
+  shareCardPlayerLabel: 'Player',
+  shareCardScoreLabel: 'Score',
 
   howToPlayTitle: 'How to Play?',
   howToPlayIntro: 'A group deception game — outsmart your friends!',

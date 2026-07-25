@@ -34,7 +34,7 @@ export default function GameOver() {
 
   if (!finalStandings || !room) return null
 
-  const medals = ['🥇', '🥈', '🥉']
+  const medals = [t.medal1, t.medal2, t.medal3]
   const topPlayer = finalStandings[0]
 
   return (

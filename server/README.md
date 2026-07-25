@@ -24,7 +24,7 @@ src/
   db/                   SQLite (sql.js) — أرشيف الجولات المنتهية فقط
   game/                 آلة الحالة، التسجيل، بنك الأسئلة، أكواد الغرف، QR
   socket/               معالجات أحداث Socket.io
-  data/questions/       بنك الأسئلة العربي (JSON قابل للتعديل يدويًا)
+  data/questions/<lang>/  بنك أسئلة مستقل لكل لغة (ar/en/he)، JSON قابل للتعديل يدويًا
 tests/                  اختبارات node:test
 ```
 
@@ -44,11 +44,12 @@ LOBBY → CATEGORY_PICK → ANSWERING → VOTING → RESULTS
 ## أحداث Socket.io
 
 **من العميل:**
-- `create_room({ isPrivate, answerTimeSeconds, roundsCount, allowedCategories, playerName, familyMode?, doublePointsRoundEnabled?, blindVotingEnabled? }, ack)`
+- `create_room({ isPrivate, answerTimeSeconds, roundsCount, allowedCategories, playerName, familyMode?, doublePointsRoundEnabled?, blindVotingEnabled?, language? }, ack)`
   → `ack({ roomCode, joinUrl, qrCodeDataUrl, playerId, room })` فورًا.
   - `familyMode` (افتراضي `true`): يستبعد الأسئلة `ageRating: "adult"` من بنك الأسئلة.
   - `doublePointsRoundEnabled`: جولة واحدة عشوائية بمضاعفة ×2 لكل النقاط المكتسبة فيها (`isDoublePointsRound` عند `ANSWERING`، `wasDoublePoints` عند `RESULTS`).
   - `blindVotingEnabled`: يخفي عدد الأصوات/النقاط لكل إجابة في `RESULTS` (لا يُبث `votesReceived`/`pointsAwarded`).
+  - `language` (`ar` | `en` | `he`، افتراضي `ar`): يحدد لغة الغرفة بأكملها لكل مدة اللعبة — بنك أسئلة مستقل تمامًا لكل لغة (مو ترجمة). قيمة غير مدعومة أو غائبة (غرف/عملاء قدامى) ترجع تلقائيًا لـ`ar`.
 - `join_room({ roomCode, playerName } | { roomCode, playerId }, ack)` — الشكل الثاني لإعادة الانضمام.
 - `start_game()`, `pick_category({ category })` — للمضيف فقط.
 - `submit_answer({ text })` — لا يُبث فورًا، فقط عدّاد تقدّم (`answer_progress`).

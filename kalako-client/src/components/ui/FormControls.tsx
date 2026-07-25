@@ -50,7 +50,7 @@ export function Select({ value, onChange, options, label }: SelectProps) {
         style={{ fontFamily: 'var(--font-body)' }}
       >
         {options.map((opt) => (
-          <option key={opt.value} value={opt.value} className="bg-[#1B0E2E] text-white">
+          <option key={opt.value} value={opt.value} className="bg-[#0F172A] text-white">
             {opt.label}
           </option>
         ))}

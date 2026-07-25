@@ -1,0 +1,23 @@
+{
+  "app.slogan": "Lie like a champion. Vote like a detective.",
+
+  "store.section.avatars.desc": "Express yourself with dozens of quirky character looks.",
+  "store.section.effects.desc": "Win sounds, confetti bursts, and glorious victory vibes.",
+  "store.section.boosts.desc": "Double points, blind votes — shake up every round.",
+  "store.section.frames.desc": "Deck out your share cards with killer neon frames.",
+
+  "mascot.description": "A friendly character shaped like a retro handheld gaming console with a chunky blue body, bright yellow accent stripes on the buttons and edges, and a small antenna nub on top. The entire silhouette has a thick black outline. Its face is a large glowing screen with two simple black dot eyes and a wide expressive mouth. On wins it jumps upward with a huge toothy grin and sparkle effects around its eyes. On losses it wobbles side to side with spiral dizzy-eyes and a wavy frown. Flat vector art style, bold saturated colors, kawaii-meets-arcade aesthetic, white background.",
+
+  "category.general.displayName": "World Secrets",
+  "category.science.displayName": "Brain Busters",
+  "category.history.displayName": "Time Warp",
+  "category.geography.displayName": "Globe Trotters",
+  "category.sports.displayName": "Game On!",
+  "category.movies.displayName": "Silver Screen",
+  "category.celebrities.displayName": "Star Power",
+  "category.cooking.displayName": "Kitchen Wars",
+
+  "notifications.sample1": "Your friends are waiting! Jump back in and prove you're the king of lies.",
+  "notifications.sample2": "A new challenger wants to outsmart you. Are you going to let that slide?",
+  "notifications.sample3": "Your bluff fooled everyone last round. Think you can do it again?"
+}

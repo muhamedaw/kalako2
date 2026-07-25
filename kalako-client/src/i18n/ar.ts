@@ -9,6 +9,20 @@ const ar: Translations = {
   navHowToPlay: 'كيف تلعب',
   navAbout: 'عن المطوّر',
 
+  navStore: 'المتجر',
+  navVoting: 'التصويت',
+  navPlay: 'العب',
+  navNotifications: 'الإشعارات',
+  navProfile: 'الملف الشخصي',
+
+  comingSoonTitle: 'قريبًا',
+  comingSoonSubtitle: 'هذه الميزة قيد التطوير، ترقّبوها قريبًا',
+
+  settingsTitle: 'الإعدادات',
+
+  playOnline: 'العب أونلاين',
+  playCreatePrivate: 'أنشئ غرفة خاصة',
+
   welcomeTitle: 'كلاكو',
   welcomeSubtitle: 'لعبة أسئلة جماعية بالكذب والحقيقة',
   createRoom: 'إنشاء غرفة جديدة',
@@ -147,6 +161,14 @@ const ar: Translations = {
   shareCardResultAria: 'نتيجة {{name}}: {{score}} نقطة - المرتبة {{rank}}',
   loadingText: 'جارِ التحميل...',
   brandLabel: 'كلاكو',
+
+  splashTagline: 'تحدي الإجابات',
+  shareCardTitle: 'تحدي الإجابات',
+  shareCardSubtitle: 'لعبة خداع جماعية',
+  shareCardRank: 'المرتبة {{rank}}',
+  shareCardOutOf: 'من أصل {{total}}',
+  shareCardPlayerLabel: 'اللاعب',
+  shareCardScoreLabel: 'النقاط',
 
   howToPlayTitle: 'كيف تلعب؟',
   howToPlayIntro: 'لعبة خداع جماعية — اختر كذبتك بذكاء!',

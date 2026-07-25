@@ -18,11 +18,15 @@ const itemIn = {
   transition: { duration: 0.25 },
 }
 
-export default function CreateRoom() {
+interface Props {
+  initialIsPrivate?: boolean
+}
+
+export default function CreateRoom({ initialIsPrivate = false }: Props) {
   const { createRoom, setScreen } = useGameStore()
   const t = useTranslation()
   const [playerName, setPlayerName] = useState('')
-  const [isPrivate, setIsPrivate] = useState(false)
+  const [isPrivate, setIsPrivate] = useState(initialIsPrivate)
   const [answerTime, setAnswerTime] = useState('45')
   const [roundCount, setRoundCount] = useState('5')
   const [selectedCategories, setSelectedCategories] = useState<string[]>(['general'])

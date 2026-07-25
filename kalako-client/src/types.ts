@@ -11,6 +11,10 @@ export type Screen =
   | 'dev_asset_preview'
   | 'about'
   | 'how_to_play'
+  | 'store'
+  | 'global_voting'
+  | 'notifications'
+  | 'profile'
 
 export const CATEGORIES = [
   { id: 'general', label: 'عامة', emoji: '🌍' },

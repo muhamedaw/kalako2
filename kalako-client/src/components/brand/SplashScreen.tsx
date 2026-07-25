@@ -34,7 +34,7 @@ export default function SplashScreen({ className, showProgress = true }: Props) 
           .sflB { animation: floatB 18s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
           .sflC { animation: floatC 22s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
           .sflD { animation: floatD 16s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
-          @keyframes splashPulse { 0%,100% { transform: scale(1); filter: drop-shadow(0 0 20px #FF5DA2); } 50% { transform: scale(1.06); filter: drop-shadow(0 0 50px #FF5DA2); } }
+          @keyframes splashPulse { 0%,100% { transform: scale(1); filter: drop-shadow(0 0 20px var(--color-primary)); } 50% { transform: scale(1.06); filter: drop-shadow(0 0 50px var(--color-primary)); } }
           .splashLogo { animation: splashPulse 1.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
           @keyframes splashSpin { to { transform: rotate(360deg); } }
           .splashRing { animation: splashSpin 6s linear infinite; transform-box: fill-box; transform-origin: center; }
@@ -49,7 +49,7 @@ export default function SplashScreen({ className, showProgress = true }: Props) 
       </defs>
 
       <rect width={1080} height={1920} fill="url(#gradBg)" />
-      <rect width={1080} height={1920} fill="url(#gradHaloSplash)" />
+      <rect width={1080} height={1920} fill="url(#gradHalo)" />
 
       <g opacity={0.6}>
         <ellipse className="sflA" cx={180} cy={320} rx={260} ry={230} fill={COLORS.primary} filter="url(#softBlob)" />
@@ -69,25 +69,25 @@ export default function SplashScreen({ className, showProgress = true }: Props) 
       </g>
 
       <g transform="translate(540, 820)" className="splashLogo">
-        <circle r={240} fill="url(#gradHaloSplash)" />
+        <circle r={240} fill="url(#gradHalo)" />
         <g transform="translate(-110, -200)" filter="url(#glowAmber)">
           <path d="M0,52 L26,0 L52,38 L78,0 L104,52 Z M0,52 L104,52 L104,66 L0,66 Z" fill={COLORS.warning} stroke="#FFFFFF" strokeWidth={3} strokeLinejoin="round" />
           <circle cx={26} cy={0} r={8} fill={COLORS.primary} />
           <circle cx={52} cy={25} r={6} fill={COLORS.success} />
           <circle cx={78} cy={0} r={8} fill={COLORS.secondary} />
         </g>
-        <g filter="url(#glowPink)">
-          <text x={0} y={120} textAnchor="middle" fontWeight={900} fontSize={320} fill="url(#gradPinkPurple)" fontFamily="Cairo, Tajawal, 'Noto Sans Arabic', system-ui, sans-serif">؟</text>
+        <g filter="url(#glowYellow)">
+          <text x={0} y={120} textAnchor="middle" fontWeight={900} fontSize={320} fill="url(#gradYellowBlue)" fontFamily="Cairo, Tajawal, 'Noto Sans Arabic', system-ui, sans-serif">؟</text>
         </g>
-        <text x={0} y={260} textAnchor="middle" fontWeight={900} fontSize={64} fill="#FFFFFF" filter="url(#glowPink)" letterSpacing="-2" fontFamily="Cairo, Tajawal, 'Noto Sans Arabic', system-ui, sans-serif">تحدي الإجابات</text>
+        <text x={0} y={260} textAnchor="middle" fontWeight={900} fontSize={64} fill="#FFFFFF" filter="url(#glowYellow)" letterSpacing="-2" fontFamily="Cairo, Tajawal, 'Noto Sans Arabic', system-ui, sans-serif">{t.splashTagline}</text>
         <circle r={280} fill="none" stroke={COLORS.success} strokeWidth={2} strokeOpacity={0.4} className="splashRing" strokeDasharray="6 16" />
-        <circle cx={280} cy={0} r={6} fill={COLORS.success} filter="url(#glowCyan)" />
+        <circle cx={280} cy={0} r={6} fill={COLORS.success} filter="url(#glowGreen)" />
       </g>
 
       <g transform="translate(540, 1480)">
-        <circle cx={-44} cy={0} r={12} fill={COLORS.primary} filter="url(#glowPink)" className="sDot sDot1" />
-        <circle cx={0} cy={0} r={12} fill={COLORS.secondary} filter="url(#glowPurple)" className="sDot sDot2" />
-        <circle cx={44} cy={0} r={12} fill={COLORS.success} filter="url(#glowCyan)" className="sDot sDot3" />
+        <circle cx={-44} cy={0} r={12} fill={COLORS.primary} filter="url(#glowYellow)" className="sDot sDot1" />
+        <circle cx={0} cy={0} r={12} fill={COLORS.secondary} filter="url(#glowBlue)" className="sDot sDot2" />
+        <circle cx={44} cy={0} r={12} fill={COLORS.success} filter="url(#glowGreen)" className="sDot sDot3" />
       </g>
 
       <text x={540} y={1560} textAnchor="middle" fontWeight={700} fontSize={36} fill="#E6DEFF" opacity={0.85} fontFamily="Cairo, Tajawal, 'Noto Sans Arabic', system-ui, sans-serif">{t.loadingText}</text>
@@ -95,7 +95,7 @@ export default function SplashScreen({ className, showProgress = true }: Props) 
       {showProgress && (
         <g transform="translate(140, 1700)">
           <rect x={0} y={0} width={800} height={14} rx={7} fill={COLORS.bgEnd} stroke={COLORS.secondary} strokeWidth={2} strokeOpacity={0.6} />
-          <rect x={0} y={0} width={800} height={14} rx={7} fill="url(#splashBar)" filter="url(#glowPink)" className="sBarFill" />
+          <rect x={0} y={0} width={800} height={14} rx={7} fill="url(#splashBar)" filter="url(#glowYellow)" className="sBarFill" />
         </g>
       )}
 

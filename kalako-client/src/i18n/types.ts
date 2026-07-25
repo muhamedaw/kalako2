@@ -11,6 +11,24 @@ export interface Translations {
   navHowToPlay: string
   navAbout: string
 
+  // Bottom navigation
+  navStore: string
+  navVoting: string
+  navPlay: string
+  navNotifications: string
+  navProfile: string
+
+  // Coming soon placeholder screens
+  comingSoonTitle: string
+  comingSoonSubtitle: string
+
+  // Settings panel
+  settingsTitle: string
+
+  // Play / Home screen
+  playOnline: string
+  playCreatePrivate: string
+
   // Welcome
   welcomeTitle: string
   welcomeSubtitle: string
@@ -161,6 +179,17 @@ export interface Translations {
   shareCardResultAria: string
   loadingText: string
   brandLabel: string
+
+  // Splash screen
+  splashTagline: string
+
+  // Share card canvas text
+  shareCardTitle: string
+  shareCardSubtitle: string
+  shareCardRank: string
+  shareCardOutOf: string
+  shareCardPlayerLabel: string
+  shareCardScoreLabel: string
 
   // How to Play
   howToPlayTitle: string
