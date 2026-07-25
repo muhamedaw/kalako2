@@ -100,6 +100,7 @@
 :root, [data-lang="ar"] {
   --font-heading: "Cairo", sans-serif;
   --font-body: "Tajawal", sans-serif;
+  --bottom-nav-height: 60px;
 }
 [data-lang="en"] {
   --font-heading: "Inter", sans-serif;

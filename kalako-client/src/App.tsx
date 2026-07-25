@@ -4,6 +4,7 @@ import AnimatedBackground from '@/components/ui/AnimatedBackground'
 import I18nProvider from '@/i18n/I18nProvider'
 import ReconnectingOverlay from '@/components/screens/ReconnectingOverlay'
 import BottomNav from '@/components/navigation/BottomNav'
+import Toast from '@/components/ui/Toast'
 import SettingsPanel from '@/components/SettingsPanel'
 import SettingsGearButton from '@/components/SettingsGearButton'
 import DocumentTitleManager from '@/components/DocumentTitleManager'
@@ -119,22 +120,32 @@ function App() {
       {showSettingsGear && (
         <SettingsGearButton onClick={toggleSettingsPanel} />
       )}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={screen}
-          variants={pageVariants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          transition={pageTransition}
-          className="flex-1 flex flex-col"
-        >
-          {renderScreen()}
-        </motion.div>
-      </AnimatePresence>
+      <motion.div
+        className="flex-1 flex flex-col"
+        style={{
+          paddingBottom: showBottomNav
+            ? 'calc(var(--bottom-nav-height) + env(safe-area-inset-bottom))'
+            : undefined,
+        }}
+      >
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={screen}
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={pageTransition}
+            className="flex-1 flex flex-col"
+          >
+            {renderScreen()}
+          </motion.div>
+        </AnimatePresence>
+      </motion.div>
       {showBottomNav && <BottomNav />}
       <SettingsPanel />
       <ReconnectingOverlay />
+      <Toast />
     </I18nProvider>
   )
 }
