@@ -100,8 +100,15 @@ export default function Lobby() {
                   variants={cardIn}
                   className="flex flex-col items-center gap-1"
                 >
-                  <div className={`relative ${!p.connected ? 'opacity-30 grayscale' : ''}`}>
-                    <Avatar id={(idx % 16) + 1} state="idle" size={60} />
+                  <div className="relative">
+                    <div className={`${!p.connected ? 'opacity-40 grayscale' : ''}`}>
+                      <Avatar id={(idx % 16) + 1} state="idle" size={60} />
+                    </div>
+                    {!p.connected && (
+                      <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 text-[9px] bg-red-500/80 text-white px-1.5 py-0.5 rounded-full whitespace-nowrap">
+                        {t.playerDisconnected}
+                      </span>
+                    )}
                   </div>
                   <div className="flex items-center gap-1">
                     <span className={`text-xs font-medium truncate max-w-16 ${p.id === playerId ? 'text-primary' : 'text-white/60'}`}>

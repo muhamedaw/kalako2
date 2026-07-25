@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Settings } from 'lucide-react'
 import AnimatedBackground from '@/components/ui/AnimatedBackground'
 import I18nProvider from '@/i18n/I18nProvider'
 import ReconnectingOverlay from '@/components/screens/ReconnectingOverlay'
 import BottomNav from '@/components/navigation/BottomNav'
 import SettingsPanel from '@/components/SettingsPanel'
+import SettingsGearButton from '@/components/SettingsGearButton'
+import DocumentTitleManager from '@/components/DocumentTitleManager'
 import WelcomeScreen from '@/components/screens/WelcomeScreen'
 import CreateRoom from '@/components/screens/CreateRoom'
 import JoinRoom from '@/components/screens/JoinRoom'
@@ -16,8 +17,8 @@ import VoteScreen from '@/components/screens/VoteScreen'
 import RoundResults from '@/components/screens/RoundResults'
 import GameOver from '@/components/screens/GameOver'
 import DevAssetPreview from '@/components/screens/DevAssetPreview'
-import AboutPage from '@/components/screens/AboutPage'
 import HowToPlayPage from '@/components/screens/HowToPlayPage'
+import AboutCreditsScreen from '@/components/screens/AboutCreditsScreen'
 import StoreScreen from '@/components/screens/StoreScreen'
 import GlobalVotingScreen from '@/components/screens/GlobalVotingScreen'
 import NotificationsScreen from '@/components/screens/NotificationsScreen'
@@ -93,7 +94,7 @@ function App() {
       case 'game_over':
         return <GameOver key="game_over" />
       case 'about':
-        return <AboutPage key="about" />
+        return <AboutCreditsScreen key="about" />
       case 'how_to_play':
         return <HowToPlayPage key="how_to_play" />
       case 'store':
@@ -113,19 +114,10 @@ function App() {
 
   return (
     <I18nProvider>
+      <DocumentTitleManager />
       {screen === 'welcome' && <AnimatedBackground />}
       {showSettingsGear && (
-        <button
-          onClick={toggleSettingsPanel}
-          className="fixed top-4 start-4 z-50 w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
-          style={{
-            background: '#1E60FF',
-            border: '4px solid #0A0A0A',
-          }}
-          aria-label="settings"
-        >
-          <Settings size={18} className="text-white/70" />
-        </button>
+        <SettingsGearButton onClick={toggleSettingsPanel} />
       )}
       <AnimatePresence mode="wait">
         <motion.div

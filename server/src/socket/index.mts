@@ -116,6 +116,7 @@ export function registerSocketHandlers(io: Server) {
         socket.join(room.code)
 
         ack?.({ playerId: player.id, room: publicRoomView(room), reconnected: true })
+        io.to(room.code).emit('player_connection_changed', { playerId: player.id, status: 'reconnected' })
         io.to(room.code).emit('player_reconnected', { playerId: player.id, room: publicRoomView(room) })
         return
       }
@@ -158,19 +159,20 @@ export function registerSocketHandlers(io: Server) {
       beginAnswering(io, room, payload.category)
     })
 
-    socket.on('submit_answer', (payload: { text?: string; forceSubmit?: boolean } = {}) => {
+    socket.on('submit_answer', (payload: { text?: string; forceSubmit?: boolean } = {}, ack?: Ack<any>) => {
       const room = currentRoom(socket)
       const playerId = socket.data.playerId as string | undefined
-      if (!room || !playerId || room.phase !== 'ANSWERING' || !room.currentQuestion) return
+      if (!room || !playerId || room.phase !== 'ANSWERING' || !room.currentQuestion) return ack?.({ ok: false })
       const text = (payload.text || '').trim().slice(0, 140)
-      if (!text) return
+      if (!text) return ack?.({ ok: false })
 
       if (!payload.forceSubmit && isSameAnswer(text, room.currentQuestion.answer)) {
         socket.emit('answer_needs_revision', { questionId: room.currentQuestion.id })
-        return
+        return ack?.({ ok: false, needsRevision: true })
       }
 
       room.answers.set(playerId, { playerId, text })
+      ack?.({ ok: true })
       io.to(room.code).emit('answer_progress', {
         answeredCount: room.answers.size,
         totalPlayers: connectedPlayers(room).length,
@@ -209,6 +211,10 @@ function handleDisconnect(io: Server, socket: Socket) {
 
   const player = room.players.get(playerId)
   if (!player || player.socketId !== socket.id) return // stale event from a superseded socket
+
+  // Purely informational — fires in every phase, before any grace-period/removal logic,
+  // and never pauses timers or blocks other players.
+  io.to(room.code).emit('player_connection_changed', { playerId, status: 'disconnected' })
 
   if (room.phase === 'LOBBY') {
     removePlayer(room, playerId)

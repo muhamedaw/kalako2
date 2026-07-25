@@ -19,5 +19,12 @@
 
   "notifications.sample1": "Your friends are waiting! Jump back in and prove you're the king of lies.",
   "notifications.sample2": "A new challenger wants to outsmart you. Are you going to let that slide?",
-  "notifications.sample3": "Your bluff fooled everyone last round. Think you can do it again?"
+  "notifications.sample3": "Your bluff fooled everyone last round. Think you can do it again?",
+
+  "about.creatorBio": "Built solo by Muhammed Awesat, who just wanted a fun way to catch friends lying badly. Every pixel, every line of code, and every ridiculous fake answer came from the same place — wanting game night to hit different.",
+
+  "about.creditsTitle": "Credits",
+  "about.creditsBody": "Made with React, Socket.io, Vite, Tailwind CSS, Framer Motion, and way too much coffee. Thanks for playing — now go deceive your friends responsibly.",
+
+  "player.disconnected": "Disconnected"
 }

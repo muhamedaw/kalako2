@@ -75,12 +75,19 @@ export default function RoundResults() {
                 variants={itemIn}
                 className={`glass p-3 flex items-center gap-3 ${isCorrect ? 'border-success/30 bg-success/5' : ''}`}
               >
-                <div className="flex-shrink-0">
-                  <Avatar
-                    id={(pIdx >= 0 ? pIdx % 16 : 0) + 1}
-                    state={state}
-                    size={48}
-                  />
+                <div className="flex-shrink-0 relative">
+                  <div className={`${!a.playerId || !room.players.find((rp) => rp.id === a.playerId)?.connected ? 'opacity-40 grayscale' : ''}`}>
+                    <Avatar
+                      id={(pIdx >= 0 ? pIdx % 16 : 0) + 1}
+                      state={state}
+                      size={48}
+                    />
+                  </div>
+                  {(!a.playerId || !room.players.find((rp) => rp.id === a.playerId)?.connected) && (
+                    <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 text-[9px] bg-red-500/80 text-white px-1.5 py-0.5 rounded-full whitespace-nowrap">
+                      {t.playerDisconnected}
+                    </span>
+                  )}
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="font-bold text-sm truncate">{a.text}</p>

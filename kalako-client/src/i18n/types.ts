@@ -219,4 +219,13 @@ export interface Translations {
   aboutRole: string
   aboutBio: string
   aboutSignature: string
+
+  // About Creator & Credits
+  aboutCreatorName: string
+  aboutCreatorBio: string
+  aboutCreditsTitle: string
+  aboutCreditsBody: string
+
+  // Player connection status
+  playerDisconnected: string
 }

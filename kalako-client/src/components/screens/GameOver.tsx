@@ -75,7 +75,16 @@ export default function GameOver() {
                     >
                       {medals[i]}
                     </motion.span>
-                    <Avatar id={i + 1} state="happy" size={44} />
+                    <div className="relative">
+                      <div className={`${!p.id || !room.players.find((rp) => rp.id === p.id)?.connected ? 'opacity-40 grayscale' : ''}`}>
+                        <Avatar id={i + 1} state="happy" size={44} />
+                      </div>
+                      {(!p.id || !room.players.find((rp) => rp.id === p.id)?.connected) && (
+                        <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 text-[9px] bg-red-500/80 text-white px-1.5 py-0.5 rounded-full whitespace-nowrap">
+                          {t.playerDisconnected}
+                        </span>
+                      )}
+                    </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-1">
                         <p className={`font-bold ${isMe ? 'text-primary' : 'text-white'}`}>

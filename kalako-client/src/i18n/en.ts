@@ -195,6 +195,12 @@ const en: Translations = {
   aboutRole: 'Creator of Kalako',
   aboutBio: 'A passionate developer building interactive experiences that bring people together. Kalako is one of my favorite projects — a group deception game that entertains friends and challenges minds.',
   aboutSignature: 'Made with love ❤️',
+
+  aboutCreatorName: 'Muhammed Awesat',
+  aboutCreatorBio: 'A passionate developer building interactive experiences that bring people together. Kalako is one of my favorite projects — a group deception game that entertains friends and challenges minds.',
+  aboutCreditsTitle: 'Credits',
+  aboutCreditsBody: 'Built with love, late-night coffee, and the open-source community. Special thanks to everyone who played, tested, and contributed ideas along the way.',
+  playerDisconnected: 'Disconnected',
 }
 
 export default en

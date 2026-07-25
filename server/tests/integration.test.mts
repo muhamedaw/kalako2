@@ -376,3 +376,40 @@ test('submitting the real correct answer is caught and needs revision, does not 
   const progress2 = await progress2Promise
   assert.equal(progress2.answeredCount, 2)
 })
+
+test('player_connection_changed broadcasts disconnected then reconnected, works mid-round', async (t) => {
+  const { httpServer, port } = await startServer()
+  t.after(() => httpServer.close())
+
+  const url = `http://localhost:${port}`
+  const host = ioClient(url, { transports: ['websocket'] })
+  let flaky = ioClient(url, { transports: ['websocket'] })
+  t.after(() => {
+    host.close()
+    flaky.close()
+  })
+  await Promise.all([waitFor(host, 'connect'), waitFor(flaky, 'connect')])
+
+  const created = await ackCall(host, 'create_room', {
+    playerName: 'Host', isPrivate: false, answerTimeSeconds: 60, roundsCount: 3, allowedCategories: [],
+  })
+  const joined = await ackCall(flaky, 'join_room', { roomCode: created.roomCode, playerName: 'Flaky' })
+  const flakyId = joined.playerId
+
+  const catWaits = [waitFor(host, 'phase_changed'), waitFor(flaky, 'phase_changed')]
+  host.emit('start_game')
+  await Promise.all(catWaits) // now mid-round (CATEGORY_PICK), not lobby
+
+  const disconnectedPromise = waitFor(host, 'player_connection_changed')
+  flaky.close()
+  const disconnected = await disconnectedPromise
+  assert.deepEqual(disconnected, { playerId: flakyId, status: 'disconnected' })
+
+  const freshSocket = ioClient(url, { transports: ['websocket'] })
+  t.after(() => freshSocket.close())
+  await waitFor(freshSocket, 'connect')
+  const reconnectedPromise = waitFor(host, 'player_connection_changed')
+  await ackCall(freshSocket, 'join_room', { roomCode: created.roomCode, playerId: flakyId })
+  const reconnected = await reconnectedPromise
+  assert.deepEqual(reconnected, { playerId: flakyId, status: 'reconnected' })
+})

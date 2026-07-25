@@ -49,16 +49,16 @@ export default function WelcomeScreen({ onStartCreate }: Props) {
         className="text-center"
       >
         <motion.h1
-          variants={fadeUp}
+          initial={reducedMotion ? { opacity: 0 } : { scale: 0.9, opacity: 0 }}
+          animate={reducedMotion ? { opacity: 1 } : { scale: 1, opacity: 1 }}
+          transition={{ type: 'spring', bounce: 0.4, duration: 0.6 }}
           className="text-5xl sm:text-6xl font-black"
           style={{
             fontFamily: 'var(--font-heading)',
             color: '#FFD400',
             WebkitTextStroke: t.lang === 'en' ? '1.5px #0A0A0A' : undefined,
-            textShadow: '4px 4px 0 #0A0A0A',
+            textShadow: '0 0 24px rgba(255,212,0,0.5), 4px 4px 0 rgba(10,10,10,0.85)',
           }}
-          animate={reducedMotion ? {} : { y: [0, -8, 0] }}
-          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
         >
           {t.welcomeTitle}
         </motion.h1>

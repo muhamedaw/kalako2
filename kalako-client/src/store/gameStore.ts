@@ -233,6 +233,22 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
       set({ room: data.room })
     })
 
+    // Lightweight, purely informational — fires immediately in every phase (before the
+    // heavier full-room broadcasts above), so any screen showing player status updates
+    // right away instead of waiting on a phase-specific event.
+    socket.on('player_connection_changed', (data: { playerId: string; status: 'disconnected' | 'reconnected' }) => {
+      const room = get().room
+      if (!room) return
+      set({
+        room: {
+          ...room,
+          players: room.players.map((p) =>
+            p.id === data.playerId ? { ...p, connected: data.status === 'reconnected' } : p
+          ),
+        },
+      })
+    })
+
     socket.on('answer_progress', (data: { answeredCount: number; totalPlayers: number }) => {
       set({ answeredCount: data.answeredCount, totalPlayers: data.totalPlayers })
     })
@@ -414,8 +430,13 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
 
   submitAnswer: (text, forceSubmit = false) => {
     const socket = getSocket()
-    socket.emit('submit_answer', { text, forceSubmit })
-    set({ submittedAnswer: true, answerNeedsRevision: null })
+    set({ answerNeedsRevision: null })
+    socket.emit('submit_answer', { text, forceSubmit }, (res: any) => {
+      if (res?.ok) set({ submittedAnswer: true })
+      // if res.needsRevision, the separate 'answer_needs_revision' event (already
+      // wired above) sets answerNeedsRevision — submittedAnswer stays false so the
+      // revision modal's guard condition can actually show it.
+    })
   },
 
   submitVote: (slotId) => {
