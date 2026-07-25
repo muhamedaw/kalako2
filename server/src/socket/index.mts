@@ -20,6 +20,7 @@ import {
   startRound,
 } from '../game/stateMachine.mts'
 import type { Language, RoomSettings, RoomState } from '../game/types.mts'
+import { isSameAnswer } from '../game/textNormalize.mts'
 
 const SUPPORTED_LANGUAGES: Language[] = ['ar', 'en', 'he']
 
@@ -157,12 +158,17 @@ export function registerSocketHandlers(io: Server) {
       beginAnswering(io, room, payload.category)
     })
 
-    socket.on('submit_answer', (payload: { text?: string } = {}) => {
+    socket.on('submit_answer', (payload: { text?: string; forceSubmit?: boolean } = {}) => {
       const room = currentRoom(socket)
       const playerId = socket.data.playerId as string | undefined
-      if (!room || !playerId || room.phase !== 'ANSWERING') return
+      if (!room || !playerId || room.phase !== 'ANSWERING' || !room.currentQuestion) return
       const text = (payload.text || '').trim().slice(0, 140)
       if (!text) return
+
+      if (!payload.forceSubmit && isSameAnswer(text, room.currentQuestion.answer)) {
+        socket.emit('answer_needs_revision', { questionId: room.currentQuestion.id })
+        return
+      }
 
       room.answers.set(playerId, { playerId, text })
       io.to(room.code).emit('answer_progress', {

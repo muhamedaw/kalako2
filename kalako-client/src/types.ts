@@ -16,23 +16,40 @@ export type Screen =
   | 'notifications'
   | 'profile'
 
-export const CATEGORIES = [
-  { id: 'general', label: 'عامة', emoji: '🌍' },
-  { id: 'science', label: 'علوم', emoji: '🔬' },
-  { id: 'history', label: 'تاريخ', emoji: '📜' },
-  { id: 'geography', label: 'جغرافيا', emoji: '🗺️' },
-  { id: 'sports', label: 'رياضة', emoji: '⚽' },
-  { id: 'movies', label: 'أفلام', emoji: '🎬' },
-  { id: 'celebrities', label: 'مشاهير', emoji: '⭐' },
-  { id: 'cooking', label: 'طبخ', emoji: '🍳' },
-]
+const CATEGORY_LABELS: Record<string, { ar: string; en: string; he: string }> = {
+  general: { ar: 'عامة', en: 'General', he: 'כללי' },
+  science: { ar: 'علوم', en: 'Science', he: 'מדע' },
+  history: { ar: 'تاريخ', en: 'History', he: 'היסטוריה' },
+  geography: { ar: 'جغرافيا', en: 'Geography', he: 'גיאוגרפיה' },
+  sports: { ar: 'رياضة', en: 'Sports', he: 'ספורט' },
+  movies: { ar: 'أفلام', en: 'Movies', he: 'סרטים' },
+  celebrities: { ar: 'مشاهير', en: 'Celebrities', he: 'סלבריטאים' },
+  cooking: { ar: 'طبخ', en: 'Cooking', he: 'בישול' },
+}
 
-export function getCategoryLabel(id: string): string {
-  return CATEGORIES.find((c) => c.id === id)?.label ?? id
+const CATEGORY_EMOJI: Record<string, string> = {
+  general: '🌍',
+  science: '🔬',
+  history: '📜',
+  geography: '🗺️',
+  sports: '⚽',
+  movies: '🎬',
+  celebrities: '⭐',
+  cooking: '🍳',
+}
+
+export const CATEGORIES = Object.keys(CATEGORY_LABELS).map((id) => ({
+  id,
+  label: CATEGORY_LABELS[id].ar,
+  emoji: CATEGORY_EMOJI[id],
+}))
+
+export function getCategoryLabel(id: string, lang: 'ar' | 'en' | 'he' = 'ar'): string {
+  return CATEGORY_LABELS[id]?.[lang] ?? id
 }
 
 export function getCategoryEmoji(id: string): string {
-  return CATEGORIES.find((c) => c.id === id)?.emoji ?? '❓'
+  return CATEGORY_EMOJI[id] ?? '❓'
 }
 
 export const AVATARS = ['🦊', '🐱', '🐶', '🦁', '🐸', '🐙', '🦄', '🐼', '🐧', '🐲', '🤖', '👾']

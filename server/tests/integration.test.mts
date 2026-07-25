@@ -2,6 +2,7 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import path from 'node:path'
 import os from 'node:os'
+import { readFileSync } from 'node:fs'
 import crypto from 'node:crypto'
 import { io as ioClient, type Socket as ClientSocket } from 'socket.io-client'
 
@@ -314,4 +315,64 @@ test('room created without a language field defaults to Arabic (backward compati
   host.emit('pick_category', { category: catPick.categoryOptions[0] })
   const answering = await ansPromise
   assert.match(answering.question.text, /[؀-ۿ]/) // Arabic script
+})
+
+test('submitting the real correct answer is caught and needs revision, does not affect other players', async (t) => {
+  const { httpServer, port } = await startServer()
+  t.after(() => httpServer.close())
+
+  const url = `http://localhost:${port}`
+  const host = ioClient(url, { transports: ['websocket'] })
+  const p2 = ioClient(url, { transports: ['websocket'] })
+  t.after(() => {
+    host.close()
+    p2.close()
+  })
+  await Promise.all([waitFor(host, 'connect'), waitFor(p2, 'connect')])
+
+  const created = await ackCall(host, 'create_room', {
+    playerName: 'Host', isPrivate: false, answerTimeSeconds: 30, roundsCount: 1, allowedCategories: ['general'],
+  })
+  await ackCall(p2, 'join_room', { roomCode: created.roomCode, playerName: 'P2' })
+
+  const catWaits = [waitFor(host, 'phase_changed'), waitFor(p2, 'phase_changed')]
+  host.emit('start_game')
+  const [catPick] = await Promise.all(catWaits)
+
+  const ansWaits = [waitFor(host, 'phase_changed'), waitFor(p2, 'phase_changed')]
+  host.emit('pick_category', { category: catPick.categoryOptions[0] })
+  const [answering] = await Promise.all(ansWaits)
+
+  const bank = JSON.parse(readFileSync(
+    path.join(process.cwd(), 'src', 'data', 'questions', 'ar', 'general.json'), 'utf-8'
+  )) as Array<{ text: string; answer: string }>
+  const match = bank.find((q) => q.text === answering.question.text)
+  assert.ok(match, 'could not find the served question in the ar/general bank')
+  const correctAnswer = match!.answer
+
+  // P2 must never see any progress update from host's revision attempt.
+  let p2SawProgress = false
+  p2.on('answer_progress', () => { p2SawProgress = true })
+
+  const revisionPromise = waitFor(host, 'answer_needs_revision')
+  host.emit('submit_answer', { text: correctAnswer })
+  const revision = await revisionPromise
+  assert.ok(revision.questionId)
+
+  await new Promise((r) => setTimeout(r, 300))
+  assert.equal(p2SawProgress, false, 'other player must not see any progress change')
+
+  // Different (fake) answer submits normally, no revision prompt.
+  // Wait for BOTH sockets' copies of this broadcast before moving on, so the next
+  // .once() listener can't accidentally catch this one arriving late.
+  const firstBroadcastWaits = [waitFor(host, 'answer_progress'), waitFor(p2, 'answer_progress')]
+  host.emit('submit_answer', { text: 'إجابة مختلفة تمامًا' })
+  const [progress] = await Promise.all(firstBroadcastWaits)
+  assert.equal(progress.answeredCount, 1)
+
+  // P2 submits the correct answer too, but with forceSubmit — must be accepted as final.
+  const progress2Promise = waitFor(p2, 'answer_progress')
+  p2.emit('submit_answer', { text: correctAnswer, forceSubmit: true })
+  const progress2 = await progress2Promise
+  assert.equal(progress2.answeredCount, 2)
 })

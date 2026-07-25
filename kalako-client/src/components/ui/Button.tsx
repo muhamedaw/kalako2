@@ -5,6 +5,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'ghost' | 'danger'
   size?: 'sm' | 'md' | 'lg'
   fullWidth?: boolean
+  marquee?: boolean
 }
 
 const variants = {
@@ -37,6 +38,7 @@ export default function Button({
   variant = 'primary',
   size = 'md',
   fullWidth = false,
+  marquee = false,
   className = '',
   disabled,
   ...props
@@ -56,7 +58,7 @@ export default function Button({
       disabled={disabled}
       {...props}
     >
-      {variant === 'primary' || variant === 'secondary' ? (
+      {marquee ? (
         <div className="marquee-wrap">
           <div className="marquee-inner" style={reducedMotion ? { animation: 'none', justifyContent: 'center' } : {}}>
             <span>{children}</span>

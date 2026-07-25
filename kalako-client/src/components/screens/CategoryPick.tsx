@@ -54,7 +54,7 @@ export default function CategoryPick() {
               style={{ fontFamily: 'var(--font-heading)' }}
             >
               <span className="text-2xl block mb-1">{getCategoryEmoji(cat)}</span>
-              {getCategoryLabel(cat)}
+              {getCategoryLabel(cat, t.lang)}
             </motion.button>
           ))}
         </motion.div>

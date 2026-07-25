@@ -19,6 +19,7 @@ for (const lang of LANGUAGES) {
       if (!file.endsWith('.json')) continue
       const category = path.basename(file, '.json')
       const raw = JSON.parse(fs.readFileSync(path.join(langDir, file), 'utf-8')) as Array<{
+        id: string
         category: string
         text: string
         answer: string
@@ -26,7 +27,7 @@ for (const lang of LANGUAGES) {
       }>
       perCategory.set(
         category,
-        raw.map((q) => ({ category: q.category, text: q.text, answer: q.answer, ageRating: q.ageRating ?? 'family' }))
+        raw.map((q) => ({ id: q.id, category: q.category, text: q.text, answer: q.answer, ageRating: q.ageRating ?? 'family' }))
       )
     }
   }

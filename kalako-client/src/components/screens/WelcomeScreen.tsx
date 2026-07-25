@@ -79,6 +79,7 @@ export default function WelcomeScreen({ onStartCreate }: Props) {
               variant="primary"
               size="lg"
               fullWidth
+              marquee
               onClick={() => onStartCreate(false)}
             >
               {t.playOnline}
@@ -87,6 +88,7 @@ export default function WelcomeScreen({ onStartCreate }: Props) {
               variant="secondary"
               size="lg"
               fullWidth
+              marquee
               onClick={() => onStartCreate(true)}
             >
               {t.playCreatePrivate}

@@ -8,6 +8,7 @@ import BlindVote from '@/components/brand/icons/BlindVote'
 import FamilyAdults from '@/components/brand/icons/FamilyAdults'
 import { useGameStore } from '@/store/gameStore'
 import { useTranslation } from '@/i18n/context'
+import { CATEGORIES, getCategoryLabel } from '@/types'
 
 const stagger = {
   animate: { transition: { staggerChildren: 0.05 } },
@@ -29,7 +30,9 @@ export default function CreateRoom({ initialIsPrivate = false }: Props) {
   const [isPrivate, setIsPrivate] = useState(initialIsPrivate)
   const [answerTime, setAnswerTime] = useState('45')
   const [roundCount, setRoundCount] = useState('5')
-  const [selectedCategories, setSelectedCategories] = useState<string[]>(['general'])
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([
+    'general', 'science', 'history', 'geography', 'sports', 'movies', 'celebrities', 'cooking',
+  ])
   const [scoreMultiplierEnabled, setScoreMultiplierEnabled] = useState(false)
   const [isBlindVote, setIsBlindVote] = useState(false)
   const [ageRating, setAgeRating] = useState<'all' | 'adults'>('all')
@@ -126,16 +129,11 @@ export default function CreateRoom({ initialIsPrivate = false }: Props) {
           <motion.div variants={itemIn} className="flex flex-col gap-2">
             <span className="text-sm font-medium text-white/60">{t.categories}</span>
             <ChipGroup
-              items={[
-                { id: 'general', label: t.lang === 'ar' ? 'عامة' : t.lang === 'he' ? 'כללי' : 'General', emoji: '🌍' },
-                { id: 'science', label: t.lang === 'ar' ? 'علوم' : t.lang === 'he' ? 'מדע' : 'Science', emoji: '🔬' },
-                { id: 'history', label: t.lang === 'ar' ? 'تاريخ' : t.lang === 'he' ? 'היסטוריה' : 'History', emoji: '📜' },
-                { id: 'geography', label: t.lang === 'ar' ? 'جغرافيا' : t.lang === 'he' ? 'גיאוגרפיה' : 'Geography', emoji: '🗺️' },
-                { id: 'sports', label: t.lang === 'ar' ? 'رياضة' : t.lang === 'he' ? 'ספורט' : 'Sports', emoji: '⚽' },
-                { id: 'movies', label: t.lang === 'ar' ? 'أفلام' : t.lang === 'he' ? 'סרטים' : 'Movies', emoji: '🎬' },
-                { id: 'celebrities', label: t.lang === 'ar' ? 'مشاهير' : t.lang === 'he' ? 'סלבריטאים' : 'Celebrities', emoji: '⭐' },
-                { id: 'cooking', label: t.lang === 'ar' ? 'طبخ' : t.lang === 'he' ? 'בישול' : 'Cooking', emoji: '🍳' },
-              ]}
+              items={CATEGORIES.map((c) => ({
+                id: c.id,
+                label: getCategoryLabel(c.id, t.lang),
+                emoji: c.emoji,
+              }))}
               selected={selectedCategories}
               onToggle={toggleCategory}
             />
