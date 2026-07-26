@@ -356,6 +356,9 @@ const ar: Translations = {
   hallOfFameShareCaption: 'خدعت {{trickedCount}} أشخاص بكذبتي في كلاكو — تقدر تسوّيها؟',
   lobbyInviteNudge: 'كل ما زاد اللاعبون زادت الفوضى. الدعوة تزيد المرح.',
 
+  requestTimeout: 'انتهت مهلة الطلب — تحقق من اتصالك',
+  requestRetry: 'حدث خطأ. يرجى المحاولة مرة أخرى.',
+
   navPremium: 'بريميوم',
   premiumBadgeAria: 'عضو بريميوم',
   premiumScreenTitle: 'كلاكو بريميوم',
@@ -377,6 +380,14 @@ const ar: Translations = {
   premiumUpsellNudge: 'هذه من مميزات بريميوم — تستاهل نظرة؟',
   premiumMonthlyPrice: '$2.99/شهرياً',
   premiumYearlyPrice: '$19.99/سنوياً',
+
+  // Auth / Login-choice screen
+  authTitle: 'مرحباً بك في كلاكو',
+  authGuestButton: 'العب كضيف',
+  authLoginButton: 'تسجيل الدخول',
+  authGuestDescription: 'ادخل بدون حساب — بدون التزامات.',
+  authLoginDescription: 'احفظ تقدمك وإحصائياتك ومشترياتك.',
+  authOrDivider: 'أو',
 }
 
 export default ar

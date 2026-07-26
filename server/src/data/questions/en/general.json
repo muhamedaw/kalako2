@@ -321,24 +321,6 @@
     "ageRating": "adult"
   },
   {
-    "id": "en_general_051",
-    "category": "general",
-    "text": "What is the only letter not in any U.S. state name?",
-    "answer": "Q"
-  },
-  {
-    "id": "en_general_052",
-    "category": "general",
-    "text": "How many stripes are on the U.S. flag?",
-    "answer": "13"
-  },
-  {
-    "id": "en_general_053",
-    "category": "general",
-    "text": "What color do you get when you mix red and white?",
-    "answer": "Pink"
-  },
-  {
     "id": "en_general_054",
     "category": "general",
     "text": "How many days are in a leap year?",

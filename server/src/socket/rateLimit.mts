@@ -18,11 +18,16 @@ export function isRateLimited(key: string, maxPerWindow: number, windowMs: numbe
 }
 
 // Periodic sweep so one-shot keys (a socket that connects once and leaves) don't
-// accumulate forever in memory.
+// accumulate forever in memory. The retention horizon must be >= the longest window
+// any caller uses (recovery.mts rate-limits at 3_600_000ms) — a shorter horizon here
+// would silently evict timestamps out from under a long-window limiter and reset it
+// every sweep, defeating the limit entirely.
+const MAX_WINDOW_MS = 3_600_000
+
 const sweepTimer = setInterval(() => {
   const now = Date.now()
   for (const [key, timestamps] of buckets) {
-    const recent = timestamps.filter((t) => now - t < 60_000)
+    const recent = timestamps.filter((t) => now - t < MAX_WINDOW_MS)
     if (recent.length === 0) buckets.delete(key)
     else buckets.set(key, recent)
   }

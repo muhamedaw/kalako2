@@ -27,7 +27,12 @@ export const config = {
   paypalClientId: process.env.PAYPAL_CLIENT_ID || '',
   paypalClientSecret: process.env.PAYPAL_CLIENT_SECRET || '',
   paypalMode: process.env.PAYPAL_MODE === 'live' ? 'live' : 'sandbox',
+  paypalPremiumPlanId: process.env.PAYPAL_PREMIUM_PLAN_ID || 'P-XXXXXXXXXXXXXXXX',
+  paypalReturnUrl: process.env.PAYPAL_RETURN_URL || 'https://kalako.app/premium/success',
+  paypalCancelUrl: process.env.PAYPAL_CANCEL_URL || 'https://kalako.app/premium/cancel',
   debugToken: process.env.DEBUG_TOKEN || '',
+  resendApiKey: process.env.RESEND_API_KEY || '',
+  recoveryEmailFrom: process.env.RECOVERY_EMAIL_FROM || 'Kalako <onboarding@resend.dev>',
 }
 
 export const serverRoot = SERVER_ROOT

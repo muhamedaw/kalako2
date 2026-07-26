@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, lazy, Suspense } from 'react'
+import { useEffect, useRef, lazy, Suspense } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import AnimatedBackground from '@/components/ui/AnimatedBackground'
 import I18nProvider from '@/i18n/I18nProvider'

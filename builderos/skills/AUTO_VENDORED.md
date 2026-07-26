@@ -6,3 +6,4 @@
 - **2026-07-11** NMCarv/solana-auditor (0★, license: MIT) https://github.com/NMCarv/solana-auditor -> solana-auditor-head
 - **2026-07-11** NMCarv/solana-auditor (0★, license: MIT) https://github.com/NMCarv/solana-auditor -> solana-auditor
 - **2026-07-22** endlessblink/claude-sure-skill (5★, license: MIT) https://github.com/endlessblink/claude-sure-skill -> sure
+- **2026-07-26** sstklen/yes.md (50★, license: MIT) https://github.com/sstklen/yes.md -> yes, yes-ja, yes-zh

@@ -23,7 +23,10 @@ import type { Language, RoomSettings, RoomState } from '../game/types.mts'
 import { isSameAnswer } from '../game/textNormalize.mts'
 import { registerEconomyHandlers } from './economy.mts'
 import { registerPaymentHandlers } from './payments.mts'
+import { registerPremiumHandlers } from './premium.mts'
+import { registerRecoveryHandlers } from './recovery.mts'
 import { registerDebugHandlers } from './debug.mts'
+import { getDb } from '../db/index.mts'
 import { isRateLimited } from './rateLimit.mts'
 import { asObject, asString } from './validate.mts'
 import { safeOn } from './wrapHandler.mts'
@@ -103,6 +106,11 @@ export function registerSocketHandlers(io: Server) {
       socket.data.playerId = host.id
       socket.join(room.code)
 
+      if (deviceId) {
+        const premiumRows = getDb().exec(`SELECT status FROM premium_subscriptions WHERE device_id = ? AND status = 'active'`, [deviceId])
+        host.isPremium = premiumRows.length > 0 && premiumRows[0].values.length > 0
+      }
+
       const joinUrl = `${config.joinBaseUrl}/join/${room.code}`
       const qrCodeDataUrl = await makeQrCodeDataUrl(joinUrl)
 
@@ -129,6 +137,11 @@ export function registerSocketHandlers(io: Server) {
         socket.data.playerId = player.id
         socket.join(room.code)
 
+        if (player.deviceId) {
+          const premiumRows = getDb().exec(`SELECT status FROM premium_subscriptions WHERE device_id = ? AND status = 'active'`, [player.deviceId])
+          player.isPremium = premiumRows.length > 0 && premiumRows[0].values.length > 0
+        }
+
         ack?.({ playerId: player.id, room: publicRoomView(room), reconnected: true })
         io.to(room.code).emit('player_connection_changed', { playerId: player.id, status: 'reconnected' })
         io.to(room.code).emit('player_reconnected', { playerId: player.id, room: publicRoomView(room) })
@@ -149,6 +162,11 @@ export function registerSocketHandlers(io: Server) {
       result.socketId = socket.id
       socket.data.playerId = result.id
       socket.join(room.code)
+
+      if (deviceId) {
+        const premiumRows = getDb().exec(`SELECT status FROM premium_subscriptions WHERE device_id = ? AND status = 'active'`, [deviceId])
+        result.isPremium = premiumRows.length > 0 && premiumRows[0].values.length > 0
+      }
 
       ack?.({ playerId: result.id, room: publicRoomView(room) })
       io.to(room.code).emit('player_joined', { player: { id: result.id, name: result.name }, room: publicRoomView(room) })
@@ -229,6 +247,8 @@ export function registerSocketHandlers(io: Server) {
 
     registerEconomyHandlers(io, socket)
     registerPaymentHandlers(io, socket)
+    registerPremiumHandlers(io, socket)
+    registerRecoveryHandlers(io, socket)
     registerDebugHandlers(io, socket)
 
     // Test-only fault injection to verify safeOn's crash resilience end-to-end against a

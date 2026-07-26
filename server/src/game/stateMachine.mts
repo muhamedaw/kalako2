@@ -25,6 +25,7 @@ export function publicRoomView(room: RoomState) {
       name: p.name,
       score: p.score,
       isHost: p.isHost,
+      isPremium: p.isPremium,
       connected: p.connected,
     })),
   }

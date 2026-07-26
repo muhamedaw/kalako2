@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Star, Crown, ArrowLeft, Loader } from 'lucide-react'
+import { Star, Crown, ArrowLeft, ArrowRight, Loader } from 'lucide-react'
 import GlassCard from '@/components/ui/GlassCard'
 import Button from '@/components/ui/Button'
 import PremiumBadge from '@/components/ui/PremiumBadge'
 import { useGameStore } from '@/store/gameStore'
 import { useTranslation } from '@/i18n/context'
+import { useToastStore } from '@/store/toastStore'
 
 const FEATURES = [
   { key: 'premiumFeature1', icon: '🎯' },
@@ -25,9 +26,12 @@ export default function PremiumScreen() {
     cancelPremiumSubscription,
   } = useGameStore()
   const t = useTranslation()
+  const BackIcon = t.dir === 'rtl' ? ArrowRight : ArrowLeft
+  const showToast = useToastStore((s) => s.show)
   const [plan, setPlan] = useState<'monthly' | 'yearly'>('yearly')
   const [subscribing, setSubscribing] = useState(false)
   const [cancelling, setCancelling] = useState(false)
+  const [subscribeError, setSubscribeError] = useState(false)
 
   useEffect(() => {
     loadPremiumStatus()
@@ -35,8 +39,14 @@ export default function PremiumScreen() {
 
   const handleSubscribe = async () => {
     setSubscribing(true)
+    setSubscribeError(false)
     const res = await createPremiumSubscription(plan)
     setSubscribing(false)
+    if (res.error === 'timeout') {
+      setSubscribeError(true)
+      showToast(t.requestTimeout, 'error')
+      return
+    }
     if (res.approvalUrl) {
       window.open(res.approvalUrl, '_blank')
     }
@@ -59,7 +69,7 @@ export default function PremiumScreen() {
           onClick={() => setScreen('welcome')}
           className="flex items-center gap-1 text-sm text-white/50 hover:text-white transition-colors cursor-pointer"
         >
-          <ArrowLeft size={16} />
+          <BackIcon size={16} />
           {t.back}
         </button>
       </motion.div>
@@ -199,6 +209,11 @@ export default function PremiumScreen() {
                     </span>
                   )}
                 </Button>
+                {subscribeError && (
+                  <p className="text-xs text-center text-white/50">
+                    {t.requestRetry}
+                  </p>
+                )}
 
                 {t.premiumNotAvailable && (
                   <p className="text-[11px] text-white/30 text-center leading-relaxed">

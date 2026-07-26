@@ -74,6 +74,8 @@ export default function StoreScreen() {
       showToast(t.storePurchaseSuccess, 'success')
     } else if (res.error === 'insufficient_funds') {
       showToast(t.storeInsufficientFunds, 'error')
+    } else if (res.error === 'timeout') {
+      showToast(t.requestTimeout, 'error')
     }
     // Other error codes (already_owned, invalid_item, rate_limited) are edge cases the UI
     // shouldn't normally allow a click into — fail silently rather than invent new copy.
@@ -142,7 +144,7 @@ export default function StoreScreen() {
     const res = await createPayPalOrder(tierId)
     setProcessingTier(null)
     if (res.error) {
-      showToast(t.storePaymentCancelled)
+      showToast(res.error === 'timeout' ? t.requestTimeout : t.storePaymentCancelled, 'error')
       return ''
     }
     return res.orderId || ''

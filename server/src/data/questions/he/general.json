@@ -321,24 +321,6 @@
     "ageRating": "adult"
   },
   {
-    "id": "he_general_051",
-    "category": "general",
-    "text": "מהי המילה הראשונה בתנ\"ך?",
-    "answer": "בראשית"
-  },
-  {
-    "id": "he_general_052",
-    "category": "general",
-    "text": "כמה ימים נמשך חג הפסח?",
-    "answer": "7"
-  },
-  {
-    "id": "he_general_053",
-    "category": "general",
-    "text": "באיזו עיר נמצא הכותל המערבי?",
-    "answer": "ירושלים"
-  },
-  {
     "id": "he_general_054",
     "category": "general",
     "text": "מהי המכה הראשונה מעשר המכות?",

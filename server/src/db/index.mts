@@ -18,8 +18,21 @@ export async function initDb(): Promise<Database> {
 
   const schema = fs.readFileSync(path.join(__dirname, 'schema.sql'), 'utf-8')
   db.run(schema)
+  runMigrations(db)
   persistToDisk()
   return db
+}
+
+// One-off, non-idempotent schema changes that can't be expressed as
+// `CREATE ... IF NOT EXISTS` in schema.sql (which re-runs on every boot).
+// SQLite has no `ALTER TABLE ADD COLUMN IF NOT EXISTS`, so each migration
+// guards itself by swallowing the "duplicate column name" error.
+function runMigrations(database: Database) {
+  try {
+    database.run('ALTER TABLE players ADD COLUMN email TEXT')
+  } catch (err) {
+    if (!(err instanceof Error) || !/duplicate column name/i.test(err.message)) throw err
+  }
 }
 
 export function getDb(): Database {

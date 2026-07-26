@@ -1,7 +1,8 @@
 import { create } from 'zustand'
 import type { Screen, EconomyProfile, StoreSection, HallOfFameEntry, NotificationItem } from '@/types'
-import { getSocket, disconnectSocket } from '@/lib/socket'
+import { getSocket, disconnectSocket, resetSocket } from '@/lib/socket'
 import { getDeviceId } from '@/lib/deviceId'
+import { withTimeout } from '@/lib/helpers'
 
 export interface Player {
   id: string
@@ -134,6 +135,9 @@ export interface GameActions {
   loadPremiumStatus: () => void
   createPremiumSubscription: (plan: 'monthly' | 'yearly') => Promise<{ approvalUrl?: string; error?: string }>
   cancelPremiumSubscription: () => void
+
+  // Connection resilience
+  forceReconnect: () => void
 }
 
 const STORAGE_KEY_PLAYER_ID = 'kalako_playerId'
@@ -397,6 +401,11 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
     }
   },
 
+  forceReconnect: () => {
+    resetSocket()
+    get().connect()
+  },
+
   disconnect: () => {
     disconnectSocket()
     clearSession()
@@ -562,10 +571,7 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
 
   buyItem: (itemId) => {
     const socket = getSocket()
-    // Real event name is 'purchase_item' — it was 'buy_item' here, which the server has
-    // never listened for since an earlier rename, so every purchase silently no-op'd
-    // while the UI still showed a success toast regardless (see StoreScreen's caller).
-    return new Promise((resolve) => {
+    return withTimeout(new Promise<{ success?: boolean; error?: string; coins?: number }>((resolve) => {
       socket.emit('purchase_item', { deviceId: getDeviceId(), itemId }, (res: any) => {
         if (res?.success) {
           set((s) => ({
@@ -574,7 +580,7 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
         }
         resolve(res || { error: 'no_response' })
       })
-    })
+    })).catch(() => ({ error: 'timeout' }))
   },
 
   loadHallOfFame: () => {
@@ -627,12 +633,12 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
   clearUnreadCount: () => set({ unreadCount: 0 }),
 
   createPayPalOrder: (tierId) => {
-    return new Promise((resolve) => {
+    return withTimeout(new Promise<{ orderId?: string; error?: string }>((resolve) => {
       const socket = getSocket()
       socket.emit('create_paypal_order', { deviceId: getDeviceId(), tierId }, (res: any) => {
         resolve(res || { error: 'no_response' })
       })
-    })
+    })).catch(() => ({ error: 'timeout' }))
   },
 
   capturePayPalOrder: (paypalOrderId, tierId) => {
@@ -658,12 +664,12 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
   },
 
   createPremiumSubscription: (plan) => {
-    return new Promise((resolve) => {
+    return withTimeout(new Promise<{ approvalUrl?: string; error?: string }>((resolve) => {
       const socket = getSocket()
       socket.emit('create_premium_subscription', { deviceId: getDeviceId(), plan }, (res: any) => {
         resolve(res || { error: 'no_response' })
       })
-    })
+    })).catch(() => ({ error: 'timeout' }))
   },
 
   cancelPremiumSubscription: () => {

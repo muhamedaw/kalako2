@@ -356,6 +356,9 @@ const he: Translations = {
   hallOfFameShareCaption: 'עבדתי על {{trickedCount}} אנשים עם השקר הזה בקלאקו — אתה חושב שאתה יכול יותר?',
   lobbyInviteNudge: 'עוד שחקנים, עוד שקרים לחשוף. תזמין מישהו לפני שמתחילים.',
 
+  requestTimeout: 'הבקשה נכשלה עקב חריגת זמן — בדוק את החיבור שלך',
+  requestRetry: 'משהו השתבש. אנא נסה שוב.',
+
   navPremium: 'פרימיום',
   premiumBadgeAria: 'חבר פרימיום',
   premiumScreenTitle: 'קלאקו פרימיום',
@@ -377,6 +380,14 @@ const he: Translations = {
   premiumUpsellNudge: 'זה פריבילגיית פרימיום — שווה הצצה?',
   premiumMonthlyPrice: '$2.99/חודש',
   premiumYearlyPrice: '$19.99/שנה',
+
+  // Auth / Login-choice screen
+  authTitle: 'ברוכים הבאים לקלאקו',
+  authGuestButton: 'שחק כאורח',
+  authLoginButton: 'התחבר',
+  authGuestDescription: 'קפצו פנימה בלי חשבון — בלי התחייבויות.',
+  authLoginDescription: 'שמרו את ההתקדמות, הסטטיסטיקות והרכישות שלכם.',
+  authOrDivider: 'או',
 }
 
 export default he

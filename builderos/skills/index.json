@@ -1387,6 +1387,18 @@
   "name": "xurl",
   "description": "X/Twitter via xurl CLI: post, search, DM, media, v2 API."
  },
+ "yes": {
+  "name": "yes",
+  "description": "Use when any task involves modifying files, configs, databases, or deployments. Use when debugging hits 2+ failures. Use when about to guess or assume without evidence ('probably', 'might be', 'I think', 'should be'). Use when deflecting to user ('please check...', 'you should manually...', 'you may need to...'). Use when fixing something without verifying it works. Use when making a conclusion or root-cause claim. Use when skipping tools that are available (has WebSearch but doesn't search, has Bash but doesn't run, has Read but doesn't read). Use when spinning in circles (same approach 3+ times with parameter tweaks). Use when completing a fix without checking for related issues. Use when asking the user a question that could be self-investigated first. Use when giving suggestions instead of actionable code/commands. Applies to ALL task types: debugging, implementation, config, deployment, API integration, data processing. Do NOT trigger on first-attempt failures or when a known fix is already in progress."
+ },
+ "yes-ja": {
+  "name": "yes-ja",
+  "description": "ファイル・設定・データベース・デプロイの変更を伴うタスクで発動。デバッグが2回以上連続で失敗した時に発動。証拠なしに推測・仮定しようとした時に発動（「おそらく」「多分」「〜だと思う」「〜のはず」）。ユーザーに丸投げしようとした時に発動（「ご確認ください」「手動で対応してください」「〜が必要かもしれません」）。修正後に動作確認せず完了と報告しようとした時に発動。根本原因の結論を出す時に発動。使えるツールを使わない時に発動（WebSearchがあるのに検索しない、Bashがあるのに実行しない、Readがあるのに読まない）。同じアプローチで3回以上パラメータだけ変えて空回りしている時に発動。バグ修正後に関連する問題を確認しない時に発動。自分で調べられることをユーザーに質問する時に発動。具体的なコードやコマンドではなくアドバイスだけ出す時に発動。全タスクタイプに適用：デバッグ、実装、設定、デプロイ、API連携、データ処理。初回失敗時や既知の修正手順を実行中の場合は発動しない。"
+ },
+ "yes-zh": {
+  "name": "yes-zh",
+  "description": "當任務涉及修改檔案、設定、資料庫或部署時觸發。當除錯連續失敗 2 次以上時觸發。當即將猜測或假設而沒有證據時觸發（「應該是」「可能是」「我覺得」「感覺是」）。當把問題推給用戶時觸發（「請你檢查」「建議您手動」「你可能需要」）。當改完東西沒有驗證就說完成時觸發。當下結論或判定根因時觸發。當有工具卻不用時觸發（有 WebSearch 不搜、有 Bash 不跑、有 Read 不讀）。當原地打轉時觸發（同一個方向改 3 次以上只調參數）。當修完 bug 沒有檢查關聯問題時觸發。當空手提問卻沒先自己查過時觸發。當只給建議不給代碼或指令時觸發。適用於所有任務類型：除錯、開發、設定、部署、API 串接、資料處理。首次失敗或已知修復方案執行中不觸發。"
+ },
  "youtube-content": {
   "name": "youtube-content",
   "description": "YouTube transcripts to summaries, threads, blogs."

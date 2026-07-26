@@ -356,6 +356,9 @@ The operator is committed to resolving genuine issues fairly. While refunds are 
   hallOfFameShareCaption: 'I fooled {{trickedCount}} people with this lie on Kalako — think you can do better?',
   lobbyInviteNudge: 'More players, more lies to untangle. Invite someone before you start.',
 
+  requestTimeout: 'Request timed out — check your connection',
+  requestRetry: 'Something went wrong. Please try again.',
+
   navPremium: 'Premium',
   premiumBadgeAria: 'Premium member',
   premiumScreenTitle: 'Kalako Premium',
@@ -377,6 +380,16 @@ The operator is committed to resolving genuine issues fairly. While refunds are 
   premiumUpsellNudge: 'That one\'s a Premium perk — worth a look?',
   premiumMonthlyPrice: '$2.99/mo',
   premiumYearlyPrice: '$19.99/yr',
+  premiumLockedBadge: 'Premium',
+  premiumUpsellNudge: "That one's a Premium perk — worth a look?",
+
+  // Auth / Login-choice screen
+  authTitle: 'Welcome to Kalako',
+  authGuestButton: 'Play as Guest',
+  authLoginButton: 'Sign In',
+  authGuestDescription: 'Jump in without an account — no strings attached.',
+  authLoginDescription: 'Save your progress, stats, and purchases.',
+  authOrDivider: 'or',
 }
 
 export default en

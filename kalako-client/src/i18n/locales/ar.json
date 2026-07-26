@@ -101,5 +101,11 @@
   "premium.lockedBadge": "بريميوم",
   "premium.upsellNudge": "هذه من مميزات بريميوم — تستاهل نظرة؟",
   "premium.badgeAria": "عضو بريميوم",
-  "answerScreenPictureRound": "جولة صور"
+  "answerScreenPictureRound": "جولة صور",
+  "authTitle": "مرحباً بك في كلاكو",
+  "authGuestButton": "العب كضيف",
+  "authLoginButton": "تسجيل الدخول",
+  "authGuestDescription": "ادخل بدون حساب — بدون التزامات.",
+  "authLoginDescription": "احفظ تقدمك وإحصائياتك ومشترياتك.",
+  "authOrDivider": "أو"
 }

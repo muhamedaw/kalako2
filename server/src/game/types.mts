@@ -26,6 +26,7 @@ export interface Player {
   name: string
   score: number
   isHost: boolean
+  isPremium: boolean
   connected: boolean
   disconnectTimer: NodeJS.Timeout | null
   /** client-generated persistent id (localStorage), used to credit the guest-profile economy at game end. Optional: older/no-profile clients simply earn no coins. */

@@ -6,11 +6,29 @@ import { safeOn } from './wrapHandler.mts'
 
 interface CatalogItem {
   id: string
-  type: 'sound_pack' | 'frame'
+  type: 'sound_pack' | 'frame' | 'avatar_part'
   name: string
   description: string
   price: number
   previewId: string
+}
+
+// Avatar-part ID whitelist for update_profile validation. Includes the client's pre-existing
+// (non-zero-padded) ids so current player profiles keep validating, plus the Task-3 additions
+// below (zero-padded, distinct strings — deliberately a separate ID namespace, coordinated
+// with the client team who own the SVGs/wiring for these exact ids).
+const FREE_BODY_IDS = new Set(['body_1', 'body_2', 'body_3', 'body_4', 'body_05', 'body_06', 'body_07', 'body_08'])
+const FREE_EYES_IDS = new Set(['eyes_1', 'eyes_2', 'eyes_3', 'eyes_4', 'eyes_05', 'eyes_06', 'eyes_07', 'eyes_08'])
+const PREMIUM_EYES_IDS = new Set(['eyes_5', 'eyes_6', 'eyes_7', 'eyes_8', 'eyes_premium_05', 'eyes_premium_06', 'eyes_premium_07', 'eyes_premium_08'])
+const FREE_HAT_IDS = new Set(['hat_none', 'hat_party', 'hat_cap', 'hat_headband', 'hat_04', 'hat_05', 'hat_06', 'hat_07'])
+const PREMIUM_HAT_IDS = new Set(['hat_crown', 'hat_tophat', 'hat_wizard', 'hat_propeller', 'hat_sombrero', 'hat_viking', 'hat_premium_07', 'hat_premium_08', 'hat_premium_09', 'hat_premium_10'])
+
+function isValidAvatarConfig(cfg: Record<string, unknown>): boolean {
+  return (
+    typeof cfg.body === 'string' && FREE_BODY_IDS.has(cfg.body) &&
+    typeof cfg.eyes === 'string' && (FREE_EYES_IDS.has(cfg.eyes) || PREMIUM_EYES_IDS.has(cfg.eyes)) &&
+    typeof cfg.hat === 'string' && (FREE_HAT_IDS.has(cfg.hat) || PREMIUM_HAT_IDS.has(cfg.hat))
+  )
 }
 
 // Note: a numbered avatar-preset catalog (avatar_17..22) was removed here. The client's
@@ -37,6 +55,23 @@ const STORE_CATALOG: { type: string; title: string; description: string; items: 
       { id: 'frame_neon', type: 'frame', name: 'Neon', description: 'Neon glow frame', price: 40, previewId: 'neon' },
       { id: 'frame_fire', type: 'frame', name: 'Fire', description: 'Fiery glow frame', price: 40, previewId: 'fire' },
       { id: 'frame_royal', type: 'frame', name: 'Royal', description: 'Royal purple glow frame', price: 40, previewId: 'royal' },
+    ],
+  },
+  {
+    // Prices intentionally match the existing premium eyes_5-8 / hat_crown-etc. price points
+    // per the exact spec given for this catalog extension — not invented new tiers.
+    type: 'avatar_part',
+    title: 'Premium Avatar Parts',
+    description: 'Exclusive eyes and hats for your avatar',
+    items: [
+      { id: 'eyes_premium_05', type: 'avatar_part', name: 'Premium Eyes 05', description: 'Exclusive eyes style', price: 150, previewId: 'eyes_premium_05' },
+      { id: 'eyes_premium_06', type: 'avatar_part', name: 'Premium Eyes 06', description: 'Exclusive eyes style', price: 150, previewId: 'eyes_premium_06' },
+      { id: 'eyes_premium_07', type: 'avatar_part', name: 'Premium Eyes 07', description: 'Exclusive eyes style', price: 200, previewId: 'eyes_premium_07' },
+      { id: 'eyes_premium_08', type: 'avatar_part', name: 'Premium Eyes 08', description: 'Exclusive eyes style', price: 200, previewId: 'eyes_premium_08' },
+      { id: 'hat_premium_07', type: 'avatar_part', name: 'Premium Hat 07', description: 'Exclusive hat style', price: 250, previewId: 'hat_premium_07' },
+      { id: 'hat_premium_08', type: 'avatar_part', name: 'Premium Hat 08', description: 'Exclusive hat style', price: 200, previewId: 'hat_premium_08' },
+      { id: 'hat_premium_09', type: 'avatar_part', name: 'Premium Hat 09', description: 'Exclusive hat style', price: 250, previewId: 'hat_premium_09' },
+      { id: 'hat_premium_10', type: 'avatar_part', name: 'Premium Hat 10', description: 'Exclusive hat style', price: 150, previewId: 'hat_premium_10' },
     ],
   },
 ]
@@ -101,11 +136,15 @@ export function registerEconomyHandlers(io: Server, socket: Socket) {
         ? invRows[0].values.map((r: any) => ({ itemId: r[0] as string, equipped: false }))
         : []
 
+      const premiumRows = db.exec(`SELECT status FROM premium_subscriptions WHERE device_id = ? AND status = 'active'`, [deviceId])
+      const isPremium = premiumRows.length > 0 && premiumRows[0].values.length > 0
+
       ack?.({
         deviceId: profile[0],
         nickname: profile[1],
         avatarConfig: parseAvatarConfig(profile[2] as string),
         coins: Number(profile[3]),
+        isPremium,
         inventory,
       })
     } catch (err) {
@@ -126,7 +165,7 @@ export function registerEconomyHandlers(io: Server, socket: Socket) {
       ensureProfileRow(deviceId, nickname || 'Player')
       const db = getDb()
 
-      if (avatarConfig && typeof avatarConfig === 'object' && !Array.isArray(avatarConfig)) {
+      if (avatarConfig && typeof avatarConfig === 'object' && !Array.isArray(avatarConfig) && isValidAvatarConfig(avatarConfig as Record<string, unknown>)) {
         db.run(`UPDATE players SET avatar_id = ? WHERE device_id = ?`, [JSON.stringify(avatarConfig), deviceId])
       }
 

@@ -2,11 +2,11 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { pickQuestion, allCategories } from '../src/game/questionBank.mts'
 
-test('all 11 categories exist and are identical across languages by design', () => {
-  assert.equal(allCategories.length, 11)
+test('all 12 categories exist and are identical across languages by design', () => {
+  assert.equal(allCategories.length, 12)
   assert.deepEqual(
     [...allCategories].sort(),
-    ['celebrities', 'cooking', 'general', 'geography', 'history', 'movies', 'music', 'mythology', 'science', 'sports', 'tech']
+    ['celebrities', 'cooking', 'general', 'geography', 'history', 'movies', 'music', 'mythology', 'picture', 'science', 'sports', 'tech']
   )
 })
 

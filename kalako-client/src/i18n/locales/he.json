@@ -101,5 +101,11 @@
   "premium.lockedBadge": "פרימיום",
   "premium.upsellNudge": "זה פריבילגיית פרימיום — שווה הצצה?",
   "premium.badgeAria": "חבר פרימיום",
-  "answerScreenPictureRound": "סיבוב תמונות"
+  "answerScreenPictureRound": "סיבוב תמונות",
+  "authTitle": "ברוכים הבאים לקלאקו",
+  "authGuestButton": "שחק כאורח",
+  "authLoginButton": "התחבר",
+  "authGuestDescription": "קפצו פנימה בלי חשבון — בלי התחייבויות.",
+  "authLoginDescription": "שמרו את ההתקדמות, הסטטיסטיקות והרכישות שלכם.",
+  "authOrDivider": "או"
 }

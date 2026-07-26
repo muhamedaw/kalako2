@@ -64,7 +64,10 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code} %{content_type}\\\\n\" https://kalako-client.vercel.app/fonts/Cairo-Black.woff2)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" https://kalako-client.vercel.app/fonts/Cairo-Black.ttf)",
       "Bash(curl -s https://kalako-client.vercel.app/assets/index-Cqrcn0RY.js -o /tmp/live_bundle.js)",
-      "Bash(PYTHONIOENCODING=utf-8 python live_final_check.py)"
+      "Bash(PYTHONIOENCODING=utf-8 python live_final_check.py)",
+      "Bash(node -e \"const d=require\\('./he/music.json'\\); console.log\\(d.length, 'questions'\\); console.log\\(JSON.stringify\\(d[0],null,2\\)\\); console.log\\(JSON.stringify\\(d[d.length-1],null,2\\)\\)\")",
+      "Bash(node -e \"const d=require\\('./he/tech.json'\\); console.log\\(d.length, 'questions'\\); console.log\\(JSON.stringify\\(d[0],null,2\\)\\)\")",
+      "Bash(node -e \"const d=require\\('./he/mythology.json'\\); console.log\\(d.length, 'questions'\\); console.log\\(JSON.stringify\\(d[0],null,2\\)\\)\")"
     ],
     "additionalDirectories": [
       "\\tmp"

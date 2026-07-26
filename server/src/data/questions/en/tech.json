@@ -1,52 +1,302 @@
 [
-  { "id": "en_tech_001", "category": "technology", "text": "What year was the first iPhone released?", "answer": "2007" },
-  { "id": "en_tech_002", "category": "technology", "text": "What does 'HTTP' stand for?", "answer": "HyperText Transfer Protocol" },
-  { "id": "en_tech_003", "category": "technology", "text": "Who co-founded Apple Computer with Steve Jobs?", "answer": "Steve Wozniak" },
-  { "id": "en_tech_004", "category": "technology", "text": "What year was the World Wide Web invented?", "answer": "1989" },
-  { "id": "en_tech_005", "category": "technology", "text": "What is the name of the first programmable general-purpose electronic computer?", "answer": "ENIAC" },
-  { "id": "en_tech_006", "category": "technology", "text": "What company created the first smartphone?", "answer": "IBM" },
-  { "id": "en_tech_007", "category": "technology", "text": "What does 'URL' stand for?", "answer": "Uniform Resource Locator" },
-  { "id": "en_tech_008", "category": "technology", "text": "What year was Google founded?", "answer": "1998" },
-  { "id": "en_tech_009", "category": "technology", "text": "What is the name of the first computer mouse?", "answer": "Mouse" },
-  { "id": "en_tech_010", "category": "technology", "text": "What does 'CPU' stand for?", "answer": "Central Processing Unit" },
-  { "id": "en_tech_011", "category": "technology", "text": "What year was the first email sent?", "answer": "1971" },
-  { "id": "en_tech_012", "category": "technology", "text": "What is the name of the first commercially available computer?", "answer": "UNIVAC" },
-  { "id": "en_tech_013", "category": "technology", "text": "What company created the first laptop computer?", "answer": "Osborne" },
-  { "id": "en_tech_014", "category": "technology", "text": "What does 'RAM' stand for?", "answer": "Random Access Memory" },
-  { "id": "en_tech_015", "category": "technology", "text": "What year was the first Facebook post made?", "answer": "2004" },
-  { "id": "en_tech_016", "category": "technology", "text": "What is the name of the first web browser?", "answer": "WorldWideWeb" },
-  { "id": "en_tech_017", "category": "technology", "text": "What does 'USB' stand for?", "answer": "Universal Serial Bus" },
-  { "id": "en_tech_018", "category": "technology", "text": "What year was the first Android phone released?", "answer": "2008" },
-  { "id": "en_tech_019", "category": "technology", "text": "What company created the first graphical user interface?", "answer": "Xerox" },
-  { "id": "en_tech_020", "category": "technology", "text": "What does 'Wi-Fi' stand for?", "answer": "Wireless Fidelity" },
-  { "id": "en_tech_021", "category": "technology", "text": "What year was the first Twitter post made?", "answer": "2006" },
-  { "id": "en_tech_022", "category": "technology", "text": "What is the name of the first video uploaded to YouTube?", "answer": "Me at the zoo" },
-  { "id": "en_tech_023", "category": "technology", "text": "What does 'GPS' stand for?", "answer": "Global Positioning System" },
-  { "id": "en_tech_024", "category": "technology", "text": "What year was the first Kindle released?", "answer": "2007" },
-  { "id": "en_tech_025", "category": "technology", "text": "What company created the first television?", "answer": "Philo Farnsworth" },
-  { "id": "en_tech_026", "category": "technology", "text": "What does 'HTML' stand for?", "answer": "HyperText Markup Language" },
-  { "id": "en_tech_027", "category": "technology", "text": "What year was the first Bitcoin transaction made?", "answer": "2009" },
-  { "id": "en_tech_028", "category": "technology", "text": "What is the name of the first computer programmer?", "answer": "Ada Lovelace" },
-  { "id": "en_tech_029", "category": "technology", "text": "What does 'SSD' stand for?", "answer": "Solid State Drive" },
-  { "id": "en_tech_030", "category": "technology", "text": "What year was the first iPad released?", "answer": "2010" },
-  { "id": "en_tech_031", "category": "technology", "text": "What company created the first robot?", "answer": "Unimate" },
-  { "id": "en_tech_032", "category": "technology", "text": "What does 'LAN' stand for?", "answer": "Local Area Network" },
-  { "id": "en_tech_033", "category": "technology", "text": "What year was the first laptop computer released?", "answer": "1981" },
-  { "id": "en_tech_034", "category": "technology", "text": "What is the name of the first computer virus?", "answer": "Creeper" },
-  { "id": "en_tech_035", "category": "technology", "text": "What does 'OS' stand for?", "answer": "Operating System" },
-  { "id": "en_tech_036", "category": "technology", "text": "What year was the first MP3 player released?", "answer": "1998" },
-  { "id": "en_tech_037", "category": "technology", "text": "What company created the first digital camera?", "answer": "Kodak" },
-  { "id": "en_tech_038", "category": "technology", "text": "What does 'PDF' stand for?", "answer": "Portable Document Format" },
-  { "id": "en_tech_039", "category": "technology", "text": "What year was the first Instagram post made?", "answer": "2010" },
-  { "id": "en_tech_040", "category": "technology", "text": "What is the name of the first computer mouse pad?", "answer": "Mouse pad" },
-  { "id": "en_tech_041", "category": "technology", "text": "What does 'VPN' stand for?", "answer": "Virtual Private Network" },
-  { "id": "en_tech_042", "category": "technology", "text": "What year was the first smartphone released?", "answer": "1994" },
-  { "id": "en_tech_043", "category": "technology", "text": "What company created the first search engine?", "answer": "Archie" },
-  { "id": "en_tech_044", "category": "technology", "text": "What does 'Bluetooth' stand for?", "answer": "Named after King Harald Bluetooth" },
-  { "id": "en_tech_045", "category": "technology", "text": "What year was the first Xbox released?", "answer": "2001" },
-  { "id": "en_tech_046", "category": "technology", "text": "What is the name of the first computer keyboard?", "answer": "Teletype" },
-  { "id": "en_tech_047", "category": "technology", "text": "What does 'DNS' stand for?", "answer": "Domain Name System" },
-  { "id": "en_tech_048", "category": "technology", "text": "What year was the first PlayStation released?", "answer": "1994" },
-  { "id": "en_tech_049", "category": "technology", "text": "What company created the first tablet computer?", "answer": "Microsoft" },
-  { "id": "en_tech_050", "category": "technology", "text": "What does 'AI' stand for?", "answer": "Artificial Intelligence" }
+  {
+    "id": "en_tech_001",
+    "category": "tech",
+    "text": "What year was the first iPhone released?",
+    "answer": "2007"
+  },
+  {
+    "id": "en_tech_002",
+    "category": "tech",
+    "text": "What does 'HTTP' stand for?",
+    "answer": "HyperText Transfer Protocol"
+  },
+  {
+    "id": "en_tech_003",
+    "category": "tech",
+    "text": "Who co-founded Apple Computer with Steve Jobs?",
+    "answer": "Steve Wozniak"
+  },
+  {
+    "id": "en_tech_004",
+    "category": "tech",
+    "text": "What year was the World Wide Web invented?",
+    "answer": "1989"
+  },
+  {
+    "id": "en_tech_005",
+    "category": "tech",
+    "text": "What is the name of the first programmable general-purpose electronic computer?",
+    "answer": "ENIAC"
+  },
+  {
+    "id": "en_tech_006",
+    "category": "tech",
+    "text": "What company created the first smartphone?",
+    "answer": "IBM"
+  },
+  {
+    "id": "en_tech_007",
+    "category": "tech",
+    "text": "What does 'URL' stand for?",
+    "answer": "Uniform Resource Locator"
+  },
+  {
+    "id": "en_tech_008",
+    "category": "tech",
+    "text": "What year was Google founded?",
+    "answer": "1998"
+  },
+  {
+    "id": "en_tech_009",
+    "category": "tech",
+    "text": "What is the name of the first computer mouse?",
+    "answer": "Mouse"
+  },
+  {
+    "id": "en_tech_010",
+    "category": "tech",
+    "text": "What does 'CPU' stand for?",
+    "answer": "Central Processing Unit"
+  },
+  {
+    "id": "en_tech_011",
+    "category": "tech",
+    "text": "What year was the first email sent?",
+    "answer": "1971"
+  },
+  {
+    "id": "en_tech_012",
+    "category": "tech",
+    "text": "What is the name of the first commercially available computer?",
+    "answer": "UNIVAC"
+  },
+  {
+    "id": "en_tech_013",
+    "category": "tech",
+    "text": "What company created the first laptop computer?",
+    "answer": "Osborne"
+  },
+  {
+    "id": "en_tech_014",
+    "category": "tech",
+    "text": "What does 'RAM' stand for?",
+    "answer": "Random Access Memory"
+  },
+  {
+    "id": "en_tech_015",
+    "category": "tech",
+    "text": "What year was the first Facebook post made?",
+    "answer": "2004"
+  },
+  {
+    "id": "en_tech_016",
+    "category": "tech",
+    "text": "What is the name of the first web browser?",
+    "answer": "WorldWideWeb"
+  },
+  {
+    "id": "en_tech_017",
+    "category": "tech",
+    "text": "What does 'USB' stand for?",
+    "answer": "Universal Serial Bus"
+  },
+  {
+    "id": "en_tech_018",
+    "category": "tech",
+    "text": "What year was the first Android phone released?",
+    "answer": "2008"
+  },
+  {
+    "id": "en_tech_019",
+    "category": "tech",
+    "text": "What company created the first graphical user interface?",
+    "answer": "Xerox"
+  },
+  {
+    "id": "en_tech_020",
+    "category": "tech",
+    "text": "What does 'Wi-Fi' stand for?",
+    "answer": "Wireless Fidelity"
+  },
+  {
+    "id": "en_tech_021",
+    "category": "tech",
+    "text": "What year was the first Twitter post made?",
+    "answer": "2006"
+  },
+  {
+    "id": "en_tech_022",
+    "category": "tech",
+    "text": "What is the name of the first video uploaded to YouTube?",
+    "answer": "Me at the zoo"
+  },
+  {
+    "id": "en_tech_023",
+    "category": "tech",
+    "text": "What does 'GPS' stand for?",
+    "answer": "Global Positioning System"
+  },
+  {
+    "id": "en_tech_024",
+    "category": "tech",
+    "text": "What year was the first Kindle released?",
+    "answer": "2007"
+  },
+  {
+    "id": "en_tech_025",
+    "category": "tech",
+    "text": "What company created the first television?",
+    "answer": "Philo Farnsworth"
+  },
+  {
+    "id": "en_tech_026",
+    "category": "tech",
+    "text": "What does 'HTML' stand for?",
+    "answer": "HyperText Markup Language"
+  },
+  {
+    "id": "en_tech_027",
+    "category": "tech",
+    "text": "What year was the first Bitcoin transaction made?",
+    "answer": "2009"
+  },
+  {
+    "id": "en_tech_028",
+    "category": "tech",
+    "text": "What is the name of the first computer programmer?",
+    "answer": "Ada Lovelace"
+  },
+  {
+    "id": "en_tech_029",
+    "category": "tech",
+    "text": "What does 'SSD' stand for?",
+    "answer": "Solid State Drive"
+  },
+  {
+    "id": "en_tech_030",
+    "category": "tech",
+    "text": "What year was the first iPad released?",
+    "answer": "2010"
+  },
+  {
+    "id": "en_tech_031",
+    "category": "tech",
+    "text": "What company created the first robot?",
+    "answer": "Unimate"
+  },
+  {
+    "id": "en_tech_032",
+    "category": "tech",
+    "text": "What does 'LAN' stand for?",
+    "answer": "Local Area Network"
+  },
+  {
+    "id": "en_tech_033",
+    "category": "tech",
+    "text": "What year was the first laptop computer released?",
+    "answer": "1981"
+  },
+  {
+    "id": "en_tech_034",
+    "category": "tech",
+    "text": "What is the name of the first computer virus?",
+    "answer": "Creeper"
+  },
+  {
+    "id": "en_tech_035",
+    "category": "tech",
+    "text": "What does 'OS' stand for?",
+    "answer": "Operating System"
+  },
+  {
+    "id": "en_tech_036",
+    "category": "tech",
+    "text": "What year was the first MP3 player released?",
+    "answer": "1998"
+  },
+  {
+    "id": "en_tech_037",
+    "category": "tech",
+    "text": "What company created the first digital camera?",
+    "answer": "Kodak"
+  },
+  {
+    "id": "en_tech_038",
+    "category": "tech",
+    "text": "What does 'PDF' stand for?",
+    "answer": "Portable Document Format"
+  },
+  {
+    "id": "en_tech_039",
+    "category": "tech",
+    "text": "What year was the first Instagram post made?",
+    "answer": "2010"
+  },
+  {
+    "id": "en_tech_040",
+    "category": "tech",
+    "text": "What is the name of the first computer mouse pad?",
+    "answer": "Mouse pad"
+  },
+  {
+    "id": "en_tech_041",
+    "category": "tech",
+    "text": "What does 'VPN' stand for?",
+    "answer": "Virtual Private Network"
+  },
+  {
+    "id": "en_tech_042",
+    "category": "tech",
+    "text": "What year was the first smartphone released?",
+    "answer": "1994"
+  },
+  {
+    "id": "en_tech_043",
+    "category": "tech",
+    "text": "What company created the first search engine?",
+    "answer": "Archie"
+  },
+  {
+    "id": "en_tech_044",
+    "category": "tech",
+    "text": "What does 'Bluetooth' stand for?",
+    "answer": "Named after King Harald Bluetooth"
+  },
+  {
+    "id": "en_tech_045",
+    "category": "tech",
+    "text": "What year was the first Xbox released?",
+    "answer": "2001"
+  },
+  {
+    "id": "en_tech_046",
+    "category": "tech",
+    "text": "What is the name of the first computer keyboard?",
+    "answer": "Teletype"
+  },
+  {
+    "id": "en_tech_047",
+    "category": "tech",
+    "text": "What does 'DNS' stand for?",
+    "answer": "Domain Name System"
+  },
+  {
+    "id": "en_tech_048",
+    "category": "tech",
+    "text": "What year was the first PlayStation released?",
+    "answer": "1994"
+  },
+  {
+    "id": "en_tech_049",
+    "category": "tech",
+    "text": "What company created the first tablet computer?",
+    "answer": "Microsoft"
+  },
+  {
+    "id": "en_tech_050",
+    "category": "tech",
+    "text": "What does 'AI' stand for?",
+    "answer": "Artificial Intelligence"
+  }
 ]

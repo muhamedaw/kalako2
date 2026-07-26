@@ -92,3 +92,31 @@ CREATE TABLE IF NOT EXISTS transactions (
 );
 
 CREATE INDEX IF NOT EXISTS idx_transactions_device ON transactions(device_id);
+
+-- Passwordless email recovery. `players.email` is added via a guarded ALTER TABLE in
+-- db/index.mts (SQLite has no `ADD COLUMN IF NOT EXISTS`, and this file re-runs on every
+-- boot against a real, already-populated production DB — see initDb()).
+CREATE TABLE IF NOT EXISTS recovery_codes (
+  email TEXT NOT NULL,
+  code TEXT NOT NULL,
+  device_id TEXT NOT NULL,
+  purpose TEXT NOT NULL,
+  expires_at TEXT NOT NULL,
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_recovery_codes_email ON recovery_codes(email);
+
+-- PayPal Subscriptions-based Premium tier. A device has at most one active subscription.
+CREATE TABLE IF NOT EXISTS premium_subscriptions (
+  device_id TEXT NOT NULL,
+  subscription_id TEXT NOT NULL UNIQUE,
+  plan_id TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'pending',
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (device_id, subscription_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_premium_device ON premium_subscriptions(device_id);
+CREATE INDEX IF NOT EXISTS idx_premium_subscription ON premium_subscriptions(subscription_id);

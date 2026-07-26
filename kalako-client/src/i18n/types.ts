@@ -311,6 +311,10 @@ export interface Translations {
   hallOfFameShareCaption: string
   lobbyInviteNudge: string
 
+  // Connection / timeout
+  requestTimeout: string
+  requestRetry: string
+
   // Premium
   navPremium: string
   premiumBadgeAria: string
@@ -333,4 +337,12 @@ export interface Translations {
   premiumUpsellNudge: string
   premiumMonthlyPrice: string
   premiumYearlyPrice: string
+
+  // Auth / Login-choice screen
+  authTitle: string
+  authGuestButton: string
+  authLoginButton: string
+  authGuestDescription: string
+  authLoginDescription: string
+  authOrDivider: string
 }

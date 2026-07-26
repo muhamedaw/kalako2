@@ -21,6 +21,15 @@ export function getSocket(): TypedSocket {
   return socket
 }
 
+export function resetSocket() {
+  if (socket) {
+    socket.removeAllListeners()
+    socket.disconnect()
+    socket.close()
+    socket = null
+  }
+}
+
 export function disconnectSocket() {
   if (socket) {
     socket.removeAllListeners()

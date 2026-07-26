@@ -11,6 +11,7 @@ process.env.RECONNECT_WINDOW_MS = '300'
 process.env.JOIN_BASE_URL = 'http://localhost:0'
 
 const { createApp } = await import('../src/server.mts')
+const { getDb } = await import('../src/db/index.mts')
 
 async function startServer() {
   const { httpServer } = await createApp()
@@ -116,10 +117,59 @@ test('update_profile: a custom avatarConfig persists and round-trips through get
   const initial = await ackCall(client, 'get_or_create_profile', { deviceId, nickname: 'Stylish' })
   assert.ok(initial.avatarConfig && typeof initial.avatarConfig === 'object')
 
-  const customConfig = { body: 'body_3', eyes: 'eyes_5', hat: 'hat_2' }
+  // hat_04 is one of the Task-3 catalog additions — also exercises that the new ids validate.
+  const customConfig = { body: 'body_3', eyes: 'eyes_5', hat: 'hat_04' }
   const updated = await ackCall(client, 'update_profile', { deviceId, avatarConfig: customConfig })
   assert.deepEqual(updated.avatarConfig, customConfig)
 
   const reread = await ackCall(client, 'get_or_create_profile', { deviceId })
   assert.deepEqual(reread.avatarConfig, customConfig)
+})
+
+test('update_profile: an avatarConfig using an unrecognized id is rejected, leaving the previous config intact', async (t) => {
+  const { httpServer, port } = await startServer()
+  t.after(() => httpServer.close())
+  const client = ioClient(`http://localhost:${port}`, { transports: ['websocket'] })
+  t.after(() => client.close())
+  await waitFor(client, 'connect')
+
+  const deviceId = crypto.randomUUID()
+  const initial = await ackCall(client, 'get_or_create_profile', { deviceId, nickname: 'Guarded' })
+
+  const bogusConfig = { body: 'body_3', eyes: 'eyes_5', hat: 'not_a_real_hat' }
+  const updated = await ackCall(client, 'update_profile', { deviceId, avatarConfig: bogusConfig })
+  assert.deepEqual(updated.avatarConfig, initial.avatarConfig)
+
+  const reread = await ackCall(client, 'get_or_create_profile', { deviceId })
+  assert.deepEqual(reread.avatarConfig, initial.avatarConfig)
+})
+
+test('purchase_item: the new premium avatar-part catalog entries are purchasable at their spec\'d prices', async (t) => {
+  const { httpServer, port } = await startServer()
+  t.after(() => httpServer.close())
+  const client = ioClient(`http://localhost:${port}`, { transports: ['websocket'] })
+  t.after(() => client.close())
+  await waitFor(client, 'connect')
+
+  const deviceId = crypto.randomUUID()
+  await ackCall(client, 'get_or_create_profile', { deviceId, nickname: 'BigSpender' })
+  const db = getDb()
+  db.run(`UPDATE players SET coins = 1000 WHERE device_id = ?`, [deviceId])
+
+  const catalog = await ackCall(client, 'get_store_catalog', {})
+  const avatarSection = catalog.find((s: any) => s.type === 'avatar_part')
+  assert.ok(avatarSection)
+  const ids = avatarSection.items.map((i: any) => i.id).sort()
+  assert.deepEqual(ids, [
+    'eyes_premium_05', 'eyes_premium_06', 'eyes_premium_07', 'eyes_premium_08',
+    'hat_premium_07', 'hat_premium_08', 'hat_premium_09', 'hat_premium_10',
+  ])
+
+  const eyesItem = avatarSection.items.find((i: any) => i.id === 'eyes_premium_05')
+  assert.equal(eyesItem.price, 150)
+
+  const res = await ackCall(client, 'purchase_item', { deviceId, itemId: 'eyes_premium_05' })
+  assert.equal(res.success, true)
+  assert.equal(res.coins, 1000 - 150)
+  assert.ok(res.inventory.some((i: any) => i.itemId === 'eyes_premium_05'))
 })
