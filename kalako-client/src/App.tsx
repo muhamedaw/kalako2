@@ -1,4 +1,4 @@
-import { useEffect, useState, lazy, Suspense } from 'react'
+import { useEffect, useState, useRef, lazy, Suspense } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import AnimatedBackground from '@/components/ui/AnimatedBackground'
 import I18nProvider from '@/i18n/I18nProvider'
@@ -76,10 +76,18 @@ function JsonLdScript() {
 function App() {
   const { screen, connect, setScreen } = useGameStore()
   const toggleSettingsPanel = useNavigationStore((s) => s.toggleSettingsPanel)
-  const [createDefaultPrivate, setCreateDefaultPrivate] = useState(false)
+  const createDefaultPrivateRef = useRef(false)
 
   useEffect(() => {
     connect()
+
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) {
+        useGameStore.getState().forceReconnect()
+      }
+    }
+    window.addEventListener('pageshow', handlePageShow)
+
     const params = new URLSearchParams(window.location.search)
     const joinCode = params.get('join')
     if (joinCode) {
@@ -92,13 +100,15 @@ function App() {
       setScreen('dev_asset_preview')
       window.history.replaceState({}, '', window.location.pathname)
     }
+
+    return () => window.removeEventListener('pageshow', handlePageShow)
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const showBottomNav = BOTTOM_NAV_SCREENS.has(screen)
   const showSettingsGear = screen === 'welcome'
 
   const handleStartCreate = (isPrivate: boolean) => {
-    setCreateDefaultPrivate(isPrivate)
+    createDefaultPrivateRef.current = isPrivate
     setScreen('create')
   }
 
@@ -107,7 +117,7 @@ function App() {
       case 'welcome':
         return <WelcomeScreen key="welcome" onStartCreate={handleStartCreate} />
       case 'create':
-        return <CreateRoom key="create" initialIsPrivate={createDefaultPrivate} />
+        return <CreateRoom key="create" initialIsPrivate={createDefaultPrivateRef.current} />
       case 'join':
         return <JoinRoom key="join" />
       case 'lobby':
