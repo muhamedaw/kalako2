@@ -10,7 +10,7 @@ export default function AnimatedBackground() {
     >
       <div
         className="absolute inset-0"
-        style={{ background: '#1E60FF' }}
+        style={{ background: '#3A2143' }}
       />
 
       {!reducedMotion && (

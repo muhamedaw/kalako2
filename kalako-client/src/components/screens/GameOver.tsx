@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import GlassCard from '@/components/ui/GlassCard'
 import Button from '@/components/ui/Button'
 import { Badge } from '@/components/ui/FormControls'
-import Avatar from '@/components/brand/Avatar'
+import { ComposedAvatar } from '@/components/avatarParts'
+import { getAvatarConfig } from '@/lib/avatarUtils'
+import PremiumBadge from '@/components/ui/PremiumBadge'
 import ResultsShareCard from '@/components/brand/ResultsShareCard'
 import MostDeceptive from '@/components/brand/icons/MostDeceptive'
 import { useGameStore } from '@/store/gameStore'
@@ -22,6 +24,7 @@ const medalIn = {
 export default function GameOver() {
   const { finalStandings, room, playerId, disconnect, mostDeceptivePlayer } = useGameStore()
   const t = useTranslation()
+  const prefersReducedMotion = useReducedMotion()
   const confettiFired = useRef(false)
   const [shareDataUrl, setShareDataUrl] = useState<string | null>(null)
 
@@ -40,7 +43,7 @@ export default function GameOver() {
   return (
     <div className="flex flex-col items-center min-h-dvh px-4 py-6 gap-5">
       <div className="w-full max-w-sm flex flex-col gap-5" id="game-over-screen">
-        <motion.h2
+        <motion.h1
           className="text-2xl font-black text-gradient text-center"
           style={{ fontFamily: 'var(--font-heading)' }}
           initial={{ opacity: 0, y: -16 }}
@@ -48,11 +51,11 @@ export default function GameOver() {
           transition={{ duration: 0.5 }}
         >
           {t.gameOverTitle}
-        </motion.h2>
+        </motion.h1>
 
         <GlassCard strong className="w-full">
           <div className="flex flex-col gap-4">
-            <p className="text-center text-white/40 text-sm font-bold">{t.finalStandings}</p>
+            <p className="text-center text-white/50 text-sm font-bold">{t.finalStandings}</p>
             <motion.div
               variants={stagger}
               initial="initial"
@@ -70,17 +73,17 @@ export default function GameOver() {
                   >
                     <motion.span
                       className="text-2xl"
-                      animate={i === 0 ? { scale: [1, 1.2, 1] } : {}}
+                      animate={i === 0 && !prefersReducedMotion ? { scale: [1, 1.2, 1] } : {}}
                       transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
                     >
                       {medals[i]}
                     </motion.span>
                     <div className="relative">
                       <div className={`${!p.id || !room.players.find((rp) => rp.id === p.id)?.connected ? 'opacity-40 grayscale' : ''}`}>
-                        <Avatar id={i + 1} state="happy" size={44} />
+                        <ComposedAvatar {...getAvatarConfig(i)} size={44} />
                       </div>
                       {(!p.id || !room.players.find((rp) => rp.id === p.id)?.connected) && (
-                        <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 text-[9px] bg-red-500/80 text-white px-1.5 py-0.5 rounded-full whitespace-nowrap">
+                        <span className="absolute -bottom-1 start-1/2 -translate-x-1/2 text-[9px] bg-red-500/80 text-white px-1.5 py-0.5 rounded-full whitespace-nowrap">
                           {t.playerDisconnected}
                         </span>
                       )}
@@ -90,6 +93,7 @@ export default function GameOver() {
                         <p className={`font-bold ${isMe ? 'text-primary' : 'text-white'}`}>
                           {p.name} {isMe && t.youLabel}
                         </p>
+                        {(p as any).isPremium && <PremiumBadge size={14} />}
                         {isMostDeceptive && <MostDeceptive size={24} />}
                       </div>
                     </div>

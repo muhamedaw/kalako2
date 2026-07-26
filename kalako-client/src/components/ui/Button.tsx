@@ -1,11 +1,8 @@
-import { useEffect, useState } from 'react'
-
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode
   variant?: 'primary' | 'secondary' | 'ghost' | 'danger'
   size?: 'sm' | 'md' | 'lg'
   fullWidth?: boolean
-  marquee?: boolean
 }
 
 const variants = {
@@ -21,30 +18,15 @@ const sizes = {
   lg: 'px-8 py-4 text-lg min-h-[60px]',
 }
 
-function useReducedMotion(): boolean {
-  const [reduced, setReduced] = useState(false)
-  useEffect(() => {
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
-    setReduced(mq.matches)
-    const handler = (e: MediaQueryListEvent) => setReduced(e.matches)
-    mq.addEventListener('change', handler)
-    return () => mq.removeEventListener('change', handler)
-  }, [])
-  return reduced
-}
-
 export default function Button({
   children,
   variant = 'primary',
   size = 'md',
   fullWidth = false,
-  marquee = false,
   className = '',
   disabled,
   ...props
 }: ButtonProps) {
-  const reducedMotion = useReducedMotion()
-
   return (
     <button
       className={`
@@ -58,16 +40,7 @@ export default function Button({
       disabled={disabled}
       {...props}
     >
-      {marquee ? (
-        <div className="marquee-wrap">
-          <div className="marquee-inner" style={reducedMotion ? { animation: 'none', justifyContent: 'center' } : {}}>
-            <span>{children}</span>
-            <span aria-hidden="true">{children}</span>
-          </div>
-        </div>
-      ) : (
-        <span>{children}</span>
-      )}
+      <span className="flex items-center justify-center text-center leading-snug">{children}</span>
     </button>
   )
 }

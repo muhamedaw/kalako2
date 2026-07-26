@@ -7,6 +7,7 @@ import crypto from 'node:crypto'
 import { io as ioClient, type Socket as ClientSocket } from 'socket.io-client'
 
 process.env.DB_PATH = path.join(os.tmpdir(), `kalak-test-${crypto.randomUUID()}.sqlite`)
+process.env.DISABLE_BACKUP_SCHEDULER = 'true'
 process.env.RECONNECT_WINDOW_MS = '300'
 process.env.JOIN_BASE_URL = 'http://localhost:0'
 

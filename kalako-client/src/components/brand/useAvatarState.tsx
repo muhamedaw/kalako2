@@ -1,7 +1,6 @@
 import type { JSX } from 'react'
-import Avatar from './Avatar'
-import type { AvatarState } from './theme'
+import { ComposedAvatar, getAvatarConfig } from '@/components/avatarParts'
 
-export function useAvatarState(avatarId: number, state: AvatarState): JSX.Element {
-  return <Avatar id={avatarId} state={state} />
+export function useAvatarState(avatarId: number): JSX.Element {
+  return <ComposedAvatar {...getAvatarConfig(avatarId)} />
 }

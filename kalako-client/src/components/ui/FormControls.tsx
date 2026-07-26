@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion'
 import type { ReactNode } from 'react'
+import { useId } from 'react'
+import { useTranslation } from '@/i18n/context'
 
 interface ToggleProps {
   checked: boolean
@@ -36,21 +38,23 @@ interface SelectProps {
 }
 
 export function Select({ value, onChange, options, label }: SelectProps) {
+  const selectId = useId()
   return (
     <div className="flex flex-col gap-1.5">
       {label && (
-        <label className="text-sm font-medium text-white/60" style={{ fontFamily: 'var(--font-body)' }}>
+        <label htmlFor={selectId} className="text-sm font-medium text-white/60" style={{ fontFamily: 'var(--font-body)' }}>
           {label}
         </label>
       )}
       <select
+        id={selectId}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-base focus:outline-none focus:border-primary/50 cursor-pointer appearance-none"
         style={{ fontFamily: 'var(--font-body)' }}
       >
         {options.map((opt) => (
-          <option key={opt.value} value={opt.value} className="bg-[#0F172A] text-white">
+          <option key={opt.value} value={opt.value} className="bg-[#241528] text-white">
             {opt.label}
           </option>
         ))}
@@ -66,8 +70,9 @@ interface ChipGroupProps {
 }
 
 export function ChipGroup({ items, selected, onToggle }: ChipGroupProps) {
+  const t = useTranslation()
   return (
-    <div className="flex flex-wrap gap-2" role="group" aria-label="التصنيفات">
+    <div className="flex flex-wrap gap-2" role="group" aria-label={t?.navHome || 'Categories'}>
       {items.map((item) => {
         const isActive = selected.includes(item.id)
         return (

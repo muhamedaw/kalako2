@@ -1,0 +1,22 @@
+{
+  "premium.title": "Kalako Premium",
+  "premium.tagline": "Play like a VIP. Your lies deserve a bigger stage.",
+
+  "premium.feature1": "Every future expansion pack, included — picture rounds, new categories, and more, without spending a single coin.",
+  "premium.feature2": "500 bonus coins dropped into your account every month you're subscribed. Fuel for your best bluffs.",
+  "premium.feature3": "3 exclusive cosmetic items you literally cannot get any other way — hat, eyes, and a frame that scream Premium.",
+  "premium.feature4": "Host rooms of up to 30 players instead of 20. More people to fool, more chaos to enjoy.",
+  "premium.feature5": "A shiny Premium badge follows you into every lobby, every result screen, every leaderboard. Let them know who they're dealing with.",
+
+  "premium.monthlyPrice": "$2.99/mo",
+  "premium.yearlyPrice": "$19.99/yr",
+  "premium.yearlySavings": "Save 44%",
+
+  "premium.subscribeButton": "Get Premium",
+  "premium.currentPlanLabel": "You're Premium",
+  "premium.cancelButton": "Cancel",
+
+  "premium.lockedBadge": "Premium",
+  "premium.upsellNudge": "That one's a Premium perk — worth a look?",
+  "premium.badgeAria": "Premium member"
+}

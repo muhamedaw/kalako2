@@ -24,10 +24,12 @@ for (const lang of LANGUAGES) {
         text: string
         answer: string
         ageRating?: 'family' | 'adult'
+        imageUrl?: string
+        sourceAttribution?: string
       }>
       perCategory.set(
         category,
-        raw.map((q) => ({ id: q.id, category: q.category, text: q.text, answer: q.answer, ageRating: q.ageRating ?? 'family' }))
+        raw.map((q) => ({ id: q.id, category: q.category, text: q.text, answer: q.answer, ageRating: q.ageRating ?? 'family', imageUrl: q.imageUrl, sourceAttribution: q.sourceAttribution }))
       )
     }
   }

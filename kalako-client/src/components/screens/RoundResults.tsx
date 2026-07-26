@@ -2,7 +2,9 @@ import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import GlassCard from '@/components/ui/GlassCard'
 import { Badge } from '@/components/ui/FormControls'
-import Avatar from '@/components/brand/Avatar'
+import { ComposedAvatar } from '@/components/avatarParts'
+import { getAvatarConfig } from '@/lib/avatarUtils'
+import PremiumBadge from '@/components/ui/PremiumBadge'
 import { useGameStore } from '@/store/gameStore'
 import { useSFX } from '@/components/brand/useSFX'
 import { useTranslation } from '@/i18n/context'
@@ -39,14 +41,14 @@ export default function RoundResults() {
   return (
     <div className="flex flex-col items-center min-h-dvh px-4 py-6 gap-5">
       <div className="w-full max-w-sm flex flex-col gap-5">
-        <h2 className="text-xl font-black text-gradient text-center" style={{ fontFamily: 'var(--font-heading)' }}>
+        <h1 className="text-xl font-black text-gradient text-center" style={{ fontFamily: 'var(--font-heading)' }}>
           {t.roundResults} {room.round}
-          {wasDoublePoints && <span className="text-warning text-sm mr-2">{t.doublePoints}</span>}
-        </h2>
+          {wasDoublePoints && <span className="text-warning text-sm me-2">{t.doublePoints}</span>}
+        </h1>
 
         <GlassCard strong className="w-full">
           <div className="flex flex-col gap-3 text-center">
-            <p className="text-white/40 text-xs">{t.correctAnswer}</p>
+            <p className="text-white/50 text-xs">{t.correctAnswer}</p>
             <motion.div
               className="p-3 rounded-xl bg-success/10 border border-success/20"
               initial={{ scale: 0.9, opacity: 0 }}
@@ -68,7 +70,6 @@ export default function RoundResults() {
           {roundResults.answers.map((a, i) => {
             const isCorrect = a.text === roundResults.correctAnswer
             const pIdx = room.players.findIndex((p) => p.id === a.playerId)
-            const state = isCorrect ? 'happy' as const : 'tricked' as const
             return (
               <motion.div
                 key={a.playerId + i}
@@ -77,14 +78,13 @@ export default function RoundResults() {
               >
                 <div className="flex-shrink-0 relative">
                   <div className={`${!a.playerId || !room.players.find((rp) => rp.id === a.playerId)?.connected ? 'opacity-40 grayscale' : ''}`}>
-                    <Avatar
-                      id={(pIdx >= 0 ? pIdx % 16 : 0) + 1}
-                      state={state}
+                    <ComposedAvatar
+                      {...getAvatarConfig(Math.max(0, pIdx))}
                       size={48}
                     />
                   </div>
                   {(!a.playerId || !room.players.find((rp) => rp.id === a.playerId)?.connected) && (
-                    <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 text-[9px] bg-red-500/80 text-white px-1.5 py-0.5 rounded-full whitespace-nowrap">
+                    <span className="absolute -bottom-1 start-1/2 -translate-x-1/2 text-[9px] bg-red-500/80 text-white px-1.5 py-0.5 rounded-full whitespace-nowrap">
                       {t.playerDisconnected}
                     </span>
                   )}
@@ -117,8 +117,11 @@ export default function RoundResults() {
               transition={{ delay: 0.3 + i * 0.06 }}
               className="flex items-center justify-between py-1.5"
             >
-              <span className={`text-sm ${p.id === playerId ? 'text-primary font-bold' : 'text-white/70'}`}>
-                {p.name} {p.id === playerId && t.youLabel}
+              <span className="flex items-center gap-1">
+                <span className={`text-sm ${p.id === playerId ? 'text-primary font-bold' : 'text-white/70'}`}>
+                  {p.name} {p.id === playerId && t.youLabel}
+                </span>
+                {(p as any).isPremium && <PremiumBadge size={12} />}
               </span>
               <span className="text-sm font-bold text-white/80">{p.score}</span>
             </motion.div>

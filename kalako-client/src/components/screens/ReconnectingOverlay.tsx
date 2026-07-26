@@ -31,7 +31,7 @@ export default function ReconnectingOverlay() {
         <p className="text-white font-bold text-lg" style={{ fontFamily: 'var(--font-heading)' }}>
           {t.reconnecting}
         </p>
-        <p className="text-white/40 text-sm mt-2">
+        <p className="text-white/50 text-sm mt-2">
           {t.reconnectingSub}
         </p>
       </motion.div>

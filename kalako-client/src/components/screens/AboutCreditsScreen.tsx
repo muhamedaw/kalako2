@@ -13,7 +13,7 @@ export default function AboutCreditsScreen() {
 
         <button
           onClick={() => setScreen('welcome')}
-          className="self-start flex items-center gap-1.5 text-sm text-white/40 hover:text-white/70 transition-colors cursor-pointer mb-2"
+          className="self-start flex items-center gap-1.5 text-sm text-white/60 hover:text-white/90 transition-colors cursor-pointer mb-2"
         >
           {t.lang === 'ar' || t.lang === 'he' ? '\u2190' : '\u2192'} {t.navHome}
         </button>
@@ -27,7 +27,7 @@ export default function AboutCreditsScreen() {
               className="text-3xl sm:text-4xl font-black"
               style={{
                 fontFamily: 'var(--font-heading)',
-                color: '#FFD400',
+                color: '#FF6B35',
                 textShadow: '4px 4px 0 #0A0A0A',
               }}
             >
@@ -45,7 +45,7 @@ export default function AboutCreditsScreen() {
               className="text-lg font-black"
               style={{
                 fontFamily: 'var(--font-heading)',
-                color: '#FFD400',
+                color: '#FF6B35',
                 textShadow: '3px 3px 0 #0A0A0A',
               }}
             >
@@ -60,6 +60,23 @@ export default function AboutCreditsScreen() {
         <p className="text-white/20 text-xs mt-2">
           {t.aboutSignature}
         </p>
+
+        {/* Legal links */}
+        <div className="flex flex-wrap justify-center gap-3 mt-2">
+          {([
+            { kind: 'legal_privacy' as const, label: t.legalPrivacyTitle },
+            { kind: 'legal_terms' as const, label: t.legalTermsTitle },
+            { kind: 'legal_refund' as const, label: t.legalRefundTitle },
+          ]).map(({ kind, label }) => (
+            <button
+              key={kind}
+              onClick={() => setScreen(kind)}
+              className="text-xs text-white/30 hover:text-white/60 transition-colors underline underline-offset-2 cursor-pointer"
+            >
+              {label}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   )

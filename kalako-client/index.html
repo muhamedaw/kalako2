@@ -5,23 +5,67 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Preload the two above-the-fold fonts (welcome screen h1 + subtitle) so the
+         browser fetches them in parallel with CSS parsing instead of discovering them
+         only after the stylesheet loads — found via Lighthouse mobile network trace. -->
+    <link rel="preload" href="/fonts/Cairo-Black.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Tajawal-Bold.woff2" as="font" type="font/woff2" crossorigin />
     <meta name="theme-color" content="#FF5DA2" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="كلاكو" />
-    <title>كلاكو — لعبة أسئلة جماعية</title>
+    <meta name="description" content="Lie, bluff, and outsmart your friends in a hilarious group trivia game. Write fake answers, vote on the real one, and score points for every person you fool." />
+    <link rel="canonical" href="https://kalako-client.vercel.app/" />
+    <!--
+      hreflang note: this is a single-page app — ar/en/he are all served from this one
+      URL and switched client-side (a settings toggle), not via separate routes. The
+      tags below are self-referential (all point at the same URL) because that's the
+      only URL that exists; they tell crawlers the page supports 3 languages but do
+      NOT give the real hreflang benefit of serving a matching URL per user locale in
+      search results, since Google only ever sees one crawled/indexed HTML variant
+      (whichever language the server-rendered <html lang> defaults to — ar). A real
+      fix needs per-language routes (e.g. /en, /he) with distinct indexable content,
+      which is a routing/architecture change, not a meta-tag change — not done here.
+    -->
+    <link rel="alternate" hreflang="ar" href="https://kalako-client.vercel.app/" />
+    <link rel="alternate" hreflang="en" href="https://kalako-client.vercel.app/" />
+    <link rel="alternate" hreflang="he" href="https://kalako-client.vercel.app/" />
+    <link rel="alternate" hreflang="x-default" href="https://kalako-client.vercel.app/" />
+    <title>Kalako — The Bluffing Party Trivia Game</title>
     <!-- Open Graph -->
-    <meta property="og:title" content="تحدي الإجابات — كلاكو" />
-    <meta property="og:description" content="لعبة خداع جماعية • ادعُ ربعك!" />
+    <meta property="og:title" content="Kalako — Lie, Bluff &amp; Outsmart Your Friends" />
+    <meta property="og:description" content="Write fake answers to trick your friends, vote on which answer is real, and score points for every person you fool. The ultimate party trivia game." />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:locale" content="ar_AR" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Kalako" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="تحدي الإجابات — كلاكو" />
-    <meta name="twitter:description" content="لعبة خداع جماعية • ادعُ ربعك!" />
+    <meta name="twitter:title" content="Kalako — Lie, Bluff &amp; Outsmart Your Friends" />
+    <meta name="twitter:description" content="Write fake answers to trick your friends, vote on which answer is real, and score points for every person you fool." />
+    <meta name="twitter:image" content="/og-image.png" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Kalako",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Web",
+      "description": "Lie, bluff, and outsmart your friends in a hilarious group trivia game. Write fake answers, vote on the real one, and score points for every person you fool.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "browserRequirements": "Requires JavaScript",
+      "author": {
+        "@type": "Person",
+        "name": "Muhammed Awad"
+      }
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

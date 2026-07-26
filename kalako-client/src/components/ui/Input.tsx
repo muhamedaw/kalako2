@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { forwardRef, useId } from 'react'
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string
@@ -7,14 +7,16 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ label, error, className = '', ...props }, ref) => {
+    const inputId = useId()
     return (
       <div className="flex flex-col gap-1.5">
         {label && (
-          <label className="text-sm font-medium text-white/60" style={{ fontFamily: 'var(--font-body)' }}>
+          <label htmlFor={inputId} className="text-sm font-medium text-white/60" style={{ fontFamily: 'var(--font-body)' }}>
             {label}
           </label>
         )}
         <input
+          id={inputId}
           ref={ref}
           className={`
             w-full px-4 py-3 rounded-xl

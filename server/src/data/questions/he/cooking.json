@@ -1,52 +1,482 @@
 [
-  { "id": "he_cooking_001", "category": "cooking", "text": "מהו המרכיב העיקרי בחומוס?", "answer": "גרגירי חומוס" },
-  { "id": "he_cooking_002", "category": "cooking", "text": "מאיזו מדינה מקורה הפיצה במתכונתה המודרנית?", "answer": "איטליה" },
-  { "id": "he_cooking_003", "category": "cooking", "text": "מהו המרכיב העיקרי בפלאפל?", "answer": "חומוס או פול" },
-  { "id": "he_cooking_004", "category": "cooking", "text": "איזה תבלין נחשב לתבלין היקר ביותר במשקלו בעולם?", "answer": "זעפרן" },
-  { "id": "he_cooking_005", "category": "cooking", "text": "מאיזו מדינה מקורה הסושי?", "answer": "יפן" },
-  { "id": "he_cooking_006", "category": "cooking", "text": "מהו המרכיב העיקרי בטחינה?", "answer": "שומשום" },
-  { "id": "he_cooking_007", "category": "cooking", "text": "מאיזה פרי מייצרים יין?", "answer": "ענבים" },
-  { "id": "he_cooking_008", "category": "cooking", "text": "מהו הדגן העיקרי שממנו מייצרים פסטה איטלקית?", "answer": "חיטת דורום" },
-  { "id": "he_cooking_009", "category": "cooking", "text": "מאיזו מדינה מקור ההמבורגר המודרני?", "answer": "ארצות הברית" },
-  { "id": "he_cooking_010", "category": "cooking", "text": "מהו המרכיב העיקרי בשקשוקה?", "answer": "ביצים ורוטב עגבניות" },
-  { "id": "he_cooking_011", "category": "cooking", "text": "איזה תבלין נותן לקארי את הצבע הצהוב שלו?", "answer": "כורכום" },
-  { "id": "he_cooking_012", "category": "cooking", "text": "איזה ירק הוא המרכיב העיקרי בכרוב כבוש (סלט קולסלו)?", "answer": "כרוב" },
-  { "id": "he_cooking_013", "category": "cooking", "text": "ממה מיוצר הטופו?", "answer": "פולי סויה" },
-  { "id": "he_cooking_014", "category": "cooking", "text": "מאיזו מדינה מקור הקרואסון כפי שהוא ידוע היום?", "answer": "צרפת" },
-  { "id": "he_cooking_015", "category": "cooking", "text": "מהו המרכיב העיקרי במיונז?", "answer": "חלמון ביצה ושמן" },
-  { "id": "he_cooking_016", "category": "cooking", "text": "איזה משקה מיוצר מהתססת שעורה וכשות?", "answer": "בירה" },
-  { "id": "he_cooking_017", "category": "cooking", "text": "מהו שמו של יין האורז היפני המסורתי?", "answer": "סאקה" },
-  { "id": "he_cooking_018", "category": "cooking", "text": "מאיזו מדינה מקור הטאקו?", "answer": "מקסיקו" },
-  { "id": "he_cooking_019", "category": "cooking", "text": "איזה חלב משמש באופן מסורתי להכנת מוצרלה איטלקית מקורית?", "answer": "חלב תאואי (בופאלו)" },
-  { "id": "he_cooking_020", "category": "cooking", "text": "מהו המרכיב העיקרי ברוטב פסטו האיטלקי, מלבד שמן זית?", "answer": "בזיליקום" },
-  { "id": "he_cooking_021", "category": "cooking", "text": "מאיזו מדינה מקורה הפאייה?", "answer": "ספרד" },
-  { "id": "he_cooking_022", "category": "cooking", "text": "איך נקרא התהליך שבו מיץ ענבים הופך ליין?", "answer": "תסיסה" },
-  { "id": "he_cooking_023", "category": "cooking", "text": "איזה אגוז משמש להכנת מרציפן מסורתי?", "answer": "שקדים" },
-  { "id": "he_cooking_024", "category": "cooking", "text": "מהו המרכיב העיקרי במרק בצל צרפתי?", "answer": "בצל" },
-  { "id": "he_cooking_025", "category": "cooking", "text": "איזה תבלין מיוצר מפירות פלפל שחור מיובשים ולא בשלים?", "answer": "פלפל שחור" },
-  { "id": "he_cooking_026", "category": "cooking", "text": "מאיזו מדינה מקור הבייגל?", "answer": "פולין" },
-  { "id": "he_cooking_027", "category": "cooking", "text": "איזה מרכיב אחראי לתפיחת הבצק בהכנת לחם?", "answer": "שמרים" },
-  { "id": "he_cooking_028", "category": "cooking", "text": "מאיזה פרי מייצרים צימוקים?", "answer": "ענבים" },
-  { "id": "he_cooking_029", "category": "cooking", "text": "מאיזו מדינה מקור תבשיל הקארי כמסורת קולינרית?", "answer": "הודו" },
-  { "id": "he_cooking_030", "category": "cooking", "text": "מהו המרכיב העיקרי ברוטב הטראזיקי היווני?", "answer": "יוגורט ומלפפון" },
-  { "id": "he_cooking_031", "category": "cooking", "text": "איזה סוג קמח משמש באופן מסורתי להכנת בצק פיצה איטלקי?", "answer": "קמח 00" },
-  { "id": "he_cooking_032", "category": "cooking", "text": "מהו המרכיב העיקרי במרק מיסו יפני?", "answer": "משחת סויה מותססת" },
-  { "id": "he_cooking_033", "category": "cooking", "text": "מהו המרכיב העיקרי בבורקס?", "answer": "בצק עלים" },
-  { "id": "he_cooking_034", "category": "cooking", "text": "איזה תבלין מכונה 'מלך התבלינים' ומגיע מגרעיני פלפל שחור?", "answer": "פלפל שחור" },
-  { "id": "he_cooking_035", "category": "cooking", "text": "מהו המרכיב המסורתי ברוטב סלט קיסר?", "answer": "אנשובי" },
-  { "id": "he_cooking_036", "category": "cooking", "text": "איזה ממתק סיני-אמריקאי מכיל פתק עם משפט בתוכו ומוגש בסוף ארוחה?", "answer": "עוגיית מזל" },
-  { "id": "he_cooking_037", "category": "cooking", "text": "מהו הממתיק העיקרי המופק מעץ המייפל?", "answer": "סירופ מייפל" },
-  { "id": "he_cooking_038", "category": "cooking", "text": "איזה דגן מותסס להכנת סאקה יפני?", "answer": "אורז" },
-  { "id": "he_cooking_039", "category": "cooking", "text": "מאיזו מדינה מקור הדונר קבב?", "answer": "טורקיה" },
-  { "id": "he_cooking_040", "category": "cooking", "text": "מהו המרכיב העיקרי בוופל בלגי מסורתי?", "answer": "קמח, ביצים ובצק תפוח" },
-  { "id": "he_cooking_041", "category": "cooking", "text": "איזה פרי סוחטים כדי להכין קייפיריניה ברזילאית?", "answer": "ליים" },
-  { "id": "he_cooking_042", "category": "cooking", "text": "מהו המרכיב העיקרי בלחם נאן ההודי?", "answer": "קמח חיטה" },
-  { "id": "he_cooking_043", "category": "cooking", "text": "איזה ירק מותסס להכנת קימצ'י קוריאני מסורתי?", "answer": "כרוב סיני" },
-  { "id": "he_cooking_044", "category": "cooking", "text": "איך נקראת שיטת הבישול הצרפתית שבה בשר מבושל לאט בשומן שלו?", "answer": "קונפי" },
-  { "id": "he_cooking_045", "category": "cooking", "text": "מהו המרכיב העיקרי במלבי, קינוח מזרח תיכוני מסורתי?", "answer": "חלב ועמילן תירס" },
-  { "id": "he_cooking_046", "category": "cooking", "text": "מאיזו מדינה מקור הקנאפה?", "answer": "פלסטין (אזור נאבלוס)" },
-  { "id": "he_cooking_047", "category": "cooking", "text": "איזה תבלין משמש בסיס לתערובת ה'חוואיג' התימנית?", "answer": "כמון וכורכום ואחרים" },
-  { "id": "he_cooking_048", "category": "cooking", "text": "מהו המרכיב העיקרי בבבא גנוש?", "answer": "חציל" },
-  { "id": "he_cooking_049", "category": "cooking", "text": "איזה משקה חם מוכן מגרגירי קפה קלויים?", "answer": "קפה" },
-  { "id": "he_cooking_050", "category": "cooking", "text": "מהו המרכיב העיקרי בבורקס גבינה?", "answer": "גבינה" }
+  {
+    "id": "he_cooking_001",
+    "category": "cooking",
+    "text": "מהו המרכיב העיקרי בחומוס?",
+    "answer": "גרגירי חומוס"
+  },
+  {
+    "id": "he_cooking_002",
+    "category": "cooking",
+    "text": "מאיזו מדינה מקורה הפיצה במתכונתה המודרנית?",
+    "answer": "איטליה"
+  },
+  {
+    "id": "he_cooking_003",
+    "category": "cooking",
+    "text": "מהו המרכיב העיקרי בפלאפל?",
+    "answer": "חומוס או פול"
+  },
+  {
+    "id": "he_cooking_004",
+    "category": "cooking",
+    "text": "איזה תבלין נחשב לתבלין היקר ביותר במשקלו בעולם?",
+    "answer": "זעפרן"
+  },
+  {
+    "id": "he_cooking_005",
+    "category": "cooking",
+    "text": "מאיזו מדינה מקורה הסושי?",
+    "answer": "יפן"
+  },
+  {
+    "id": "he_cooking_006",
+    "category": "cooking",
+    "text": "מהו המרכיב העיקרי בטחינה?",
+    "answer": "שומשום"
+  },
+  {
+    "id": "he_cooking_007",
+    "category": "cooking",
+    "text": "מאיזה פרי מייצרים יין?",
+    "answer": "ענבים"
+  },
+  {
+    "id": "he_cooking_008",
+    "category": "cooking",
+    "text": "מהו הדגן העיקרי שממנו מייצרים פסטה איטלקית?",
+    "answer": "חיטת דורום"
+  },
+  {
+    "id": "he_cooking_009",
+    "category": "cooking",
+    "text": "מאיזו מדינה מקור ההמבורגר המודרני?",
+    "answer": "ארצות הברית"
+  },
+  {
+    "id": "he_cooking_010",
+    "category": "cooking",
+    "text": "מהו המרכיב העיקרי בשקשוקה?",
+    "answer": "ביצים ורוטב עגבניות"
+  },
+  {
+    "id": "he_cooking_011",
+    "category": "cooking",
+    "text": "איזה תבלין נותן לקארי את הצבע הצהוב שלו?",
+    "answer": "כורכום"
+  },
+  {
+    "id": "he_cooking_012",
+    "category": "cooking",
+    "text": "איזה ירק הוא המרכיב העיקרי בכרוב כבוש (סלט קולסלו)?",
+    "answer": "כרוב"
+  },
+  {
+    "id": "he_cooking_013",
+    "category": "cooking",
+    "text": "ממה מיוצר הטופו?",
+    "answer": "פולי סויה"
+  },
+  {
+    "id": "he_cooking_014",
+    "category": "cooking",
+    "text": "מאיזו מדינה מקור הקרואסון כפי שהוא ידוע היום?",
+    "answer": "צרפת"
+  },
+  {
+    "id": "he_cooking_015",
+    "category": "cooking",
+    "text": "מהו המרכיב העיקרי במיונז?",
+    "answer": "חלמון ביצה ושמן"
+  },
+  {
+    "id": "he_cooking_016",
+    "category": "cooking",
+    "text": "איזה משקה מיוצר מהתססת שעורה וכשות?",
+    "answer": "בירה"
+  },
+  {
+    "id": "he_cooking_017",
+    "category": "cooking",
+    "text": "מהו שמו של יין האורז היפני המסורתי?",
+    "answer": "סאקה"
+  },
+  {
+    "id": "he_cooking_018",
+    "category": "cooking",
+    "text": "מאיזו מדינה מקור הטאקו?",
+    "answer": "מקסיקו"
+  },
+  {
+    "id": "he_cooking_019",
+    "category": "cooking",
+    "text": "איזה חלב משמש באופן מסורתי להכנת מוצרלה איטלקית מקורית?",
+    "answer": "חלב תאואי (בופאלו)"
+  },
+  {
+    "id": "he_cooking_020",
+    "category": "cooking",
+    "text": "מהו המרכיב העיקרי ברוטב פסטו האיטלקי, מלבד שמן זית?",
+    "answer": "בזיליקום"
+  },
+  {
+    "id": "he_cooking_021",
+    "category": "cooking",
+    "text": "מאיזו מדינה מקורה הפאייה?",
+    "answer": "ספרד"
+  },
+  {
+    "id": "he_cooking_022",
+    "category": "cooking",
+    "text": "איך נקרא התהליך שבו מיץ ענבים הופך ליין?",
+    "answer": "תסיסה"
+  },
+  {
+    "id": "he_cooking_023",
+    "category": "cooking",
+    "text": "איזה אגוז משמש להכנת מרציפן מסורתי?",
+    "answer": "שקדים"
+  },
+  {
+    "id": "he_cooking_024",
+    "category": "cooking",
+    "text": "מהו המרכיב העיקרי במרק בצל צרפתי?",
+    "answer": "בצל"
+  },
+  {
+    "id": "he_cooking_025",
+    "category": "cooking",
+    "text": "איזה תבלין מיוצר מפירות פלפל שחור מיובשים ולא בשלים?",
+    "answer": "פלפל שחור"
+  },
+  {
+    "id": "he_cooking_026",
+    "category": "cooking",
+    "text": "מאיזו מדינה מקור הבייגל?",
+    "answer": "פולין"
+  },
+  {
+    "id": "he_cooking_027",
+    "category": "cooking",
+    "text": "איזה מרכיב אחראי לתפיחת הבצק בהכנת לחם?",
+    "answer": "שמרים"
+  },
+  {
+    "id": "he_cooking_028",
+    "category": "cooking",
+    "text": "מאיזה פרי מייצרים צימוקים?",
+    "answer": "ענבים"
+  },
+  {
+    "id": "he_cooking_029",
+    "category": "cooking",
+    "text": "מאיזו מדינה מקור תבשיל הקארי כמסורת קולינרית?",
+    "answer": "הודו"
+  },
+  {
+    "id": "he_cooking_030",
+    "category": "cooking",
+    "text": "מהו המרכיב העיקרי ברוטב הטראזיקי היווני?",
+    "answer": "יוגורט ומלפפון"
+  },
+  {
+    "id": "he_cooking_031",
+    "category": "cooking",
+    "text": "איזה סוג קמח משמש באופן מסורתי להכנת בצק פיצה איטלקי?",
+    "answer": "קמח 00"
+  },
+  {
+    "id": "he_cooking_032",
+    "category": "cooking",
+    "text": "מהו המרכיב העיקרי במרק מיסו יפני?",
+    "answer": "משחת סויה מותססת"
+  },
+  {
+    "id": "he_cooking_033",
+    "category": "cooking",
+    "text": "מהו המרכיב העיקרי בבורקס?",
+    "answer": "בצק עלים"
+  },
+  {
+    "id": "he_cooking_034",
+    "category": "cooking",
+    "text": "איזה תבלין מכונה 'מלך התבלינים' ומגיע מגרעיני פלפל שחור?",
+    "answer": "פלפל שחור"
+  },
+  {
+    "id": "he_cooking_035",
+    "category": "cooking",
+    "text": "מהו המרכיב המסורתי ברוטב סלט קיסר?",
+    "answer": "אנשובי"
+  },
+  {
+    "id": "he_cooking_036",
+    "category": "cooking",
+    "text": "איזה ממתק סיני-אמריקאי מכיל פתק עם משפט בתוכו ומוגש בסוף ארוחה?",
+    "answer": "עוגיית מזל"
+  },
+  {
+    "id": "he_cooking_037",
+    "category": "cooking",
+    "text": "מהו הממתיק העיקרי המופק מעץ המייפל?",
+    "answer": "סירופ מייפל"
+  },
+  {
+    "id": "he_cooking_038",
+    "category": "cooking",
+    "text": "איזה דגן מותסס להכנת סאקה יפני?",
+    "answer": "אורז"
+  },
+  {
+    "id": "he_cooking_039",
+    "category": "cooking",
+    "text": "מאיזו מדינה מקור הדונר קבב?",
+    "answer": "טורקיה"
+  },
+  {
+    "id": "he_cooking_040",
+    "category": "cooking",
+    "text": "מהו המרכיב העיקרי בוופל בלגי מסורתי?",
+    "answer": "קמח, ביצים ובצק תפוח"
+  },
+  {
+    "id": "he_cooking_041",
+    "category": "cooking",
+    "text": "איזה פרי סוחטים כדי להכין קייפיריניה ברזילאית?",
+    "answer": "ליים"
+  },
+  {
+    "id": "he_cooking_042",
+    "category": "cooking",
+    "text": "מהו המרכיב העיקרי בלחם נאן ההודי?",
+    "answer": "קמח חיטה"
+  },
+  {
+    "id": "he_cooking_043",
+    "category": "cooking",
+    "text": "איזה ירק מותסס להכנת קימצ'י קוריאני מסורתי?",
+    "answer": "כרוב סיני"
+  },
+  {
+    "id": "he_cooking_044",
+    "category": "cooking",
+    "text": "איך נקראת שיטת הבישול הצרפתית שבה בשר מבושל לאט בשומן שלו?",
+    "answer": "קונפי"
+  },
+  {
+    "id": "he_cooking_045",
+    "category": "cooking",
+    "text": "מהו המרכיב העיקרי במלבי, קינוח מזרח תיכוני מסורתי?",
+    "answer": "חלב ועמילן תירס"
+  },
+  {
+    "id": "he_cooking_046",
+    "category": "cooking",
+    "text": "מאיזו מדינה מקור הקנאפה?",
+    "answer": "פלסטין (אזור נאבלוס)"
+  },
+  {
+    "id": "he_cooking_047",
+    "category": "cooking",
+    "text": "איזה תבלין משמש בסיס לתערובת ה'חוואיג' התימנית?",
+    "answer": "כמון וכורכום ואחרים"
+  },
+  {
+    "id": "he_cooking_048",
+    "category": "cooking",
+    "text": "מהו המרכיב העיקרי בבבא גנוש?",
+    "answer": "חציל"
+  },
+  {
+    "id": "he_cooking_049",
+    "category": "cooking",
+    "text": "איזה משקה חם מוכן מגרגירי קפה קלויים?",
+    "answer": "קפה"
+  },
+  {
+    "id": "he_cooking_050",
+    "category": "cooking",
+    "text": "מהו המרכיב העיקרי בבורקס גבינה?",
+    "answer": "גבינה"
+  },
+  {
+    "id": "he_cooking_051",
+    "category": "cooking",
+    "text": "מהו המאכל שאוכלים בליל שישי בישראל?",
+    "answer": "דג"
+  },
+  {
+    "id": "he_cooking_052",
+    "category": "cooking",
+    "text": "איזה מאכל ישראלי עשוי מפול מטוגן?",
+    "answer": "פלאפל"
+  },
+  {
+    "id": "he_cooking_053",
+    "category": "cooking",
+    "text": "מהי המנה שמבוססת על ביצים ורוטב עגבניות?",
+    "answer": "שקשוקה"
+  },
+  {
+    "id": "he_cooking_054",
+    "category": "cooking",
+    "text": "מאיזו מדינה מקור המאכל 'בורקס'?",
+    "answer": "טורקיה"
+  },
+  {
+    "id": "he_cooking_055",
+    "category": "cooking",
+    "text": "איזה רוטב פופולרי מבוסס על שומשום?",
+    "answer": "טחינה"
+  },
+  {
+    "id": "he_cooking_056",
+    "category": "cooking",
+    "text": "מהו המרכיב המרכזי בסחוג?",
+    "answer": "פלפל חריף"
+  },
+  {
+    "id": "he_cooking_057",
+    "category": "cooking",
+    "text": "מאיזו מדינה מקור המאכל 'שווארמה'?",
+    "answer": "טורקיה"
+  },
+  {
+    "id": "he_cooking_058",
+    "category": "cooking",
+    "text": "איזה מאכל ישראלי מבוסס על גבינת עיזים?",
+    "answer": "פטה"
+  },
+  {
+    "id": "he_cooking_059",
+    "category": "cooking",
+    "text": "מהו שמו של המאכל החריף שמבוסס על פלפלים?",
+    "answer": "חריסה"
+  },
+  {
+    "id": "he_cooking_060",
+    "category": "cooking",
+    "text": "מאיזו מדינה מקור המאכל 'חומוס'?",
+    "answer": "לבנון"
+  },
+  {
+    "id": "he_cooking_061",
+    "category": "cooking",
+    "text": "איזה מאכל ישראלי עשוי מכרוב כבוש?",
+    "answer": "כרוב כבוש"
+  },
+  {
+    "id": "he_cooking_062",
+    "category": "cooking",
+    "text": "מהי המנה שכוללת אורז ואפונה?",
+    "answer": "אורז עם אפונה"
+  },
+  {
+    "id": "he_cooking_063",
+    "category": "cooking",
+    "text": "מאיזו מדינה מקור המאכל 'פיתה'?",
+    "answer": "טורקיה"
+  },
+  {
+    "id": "he_cooking_064",
+    "category": "cooking",
+    "text": "איזה מאכל ישראלי כולל בשר וצימוקים?",
+    "answer": "חריימה"
+  },
+  {
+    "id": "he_cooking_065",
+    "category": "cooking",
+    "text": "מהו שמו של המאכל שמבושל עם אורז ובשר?",
+    "answer": "מנסף"
+  },
+  {
+    "id": "he_cooking_066",
+    "category": "cooking",
+    "text": "מאיזו מדינה מקור המאכל 'קבב'?",
+    "answer": "טורקיה"
+  },
+  {
+    "id": "he_cooking_067",
+    "category": "cooking",
+    "text": "איזה מאכל ישראלי עשוי מלבנה?",
+    "answer": "לבנה"
+  },
+  {
+    "id": "he_cooking_068",
+    "category": "cooking",
+    "text": "מהו המאכל שכולל דגים שלמים?",
+    "answer": "דגים שלמים"
+  },
+  {
+    "id": "he_cooking_069",
+    "category": "cooking",
+    "text": "מאיזו מדינה מקור המאכל 'שקשוקה'?",
+    "answer": "תוניסיה"
+  },
+  {
+    "id": "he_cooking_070",
+    "category": "cooking",
+    "text": "איזה מאכל ישראלי מבוסס על ירקות מטוגנים?",
+    "answer": "ירקות מטוגנים"
+  },
+  {
+    "id": "he_cooking_071",
+    "category": "cooking",
+    "text": "מהו המאכל שמבוסס על חומוס ותבלינים?",
+    "answer": "חומוס מסאלה"
+  },
+  {
+    "id": "he_cooking_072",
+    "category": "cooking",
+    "text": "מאיזו מדינה מקור המאכל 'סושי'?",
+    "answer": "יפן"
+  },
+  {
+    "id": "he_cooking_073",
+    "category": "cooking",
+    "text": "איזה מאכל ישראלי עשוי מבצק ממולא?",
+    "answer": "בורקס"
+  },
+  {
+    "id": "he_cooking_074",
+    "category": "cooking",
+    "text": "מהו שמו של המאכל שכולל בשר על שיפוד?",
+    "answer": "שווארמה"
+  },
+  {
+    "id": "he_cooking_075",
+    "category": "cooking",
+    "text": "מאיזו מדינה מקור המאכל 'חומוס'?",
+    "answer": "לבנון"
+  },
+  {
+    "id": "he_cooking_076",
+    "category": "cooking",
+    "text": "איזה מאכל ישראלי מבוסס על גבינה צהובה?",
+    "answer": "חאלה"
+  },
+  {
+    "id": "he_cooking_077",
+    "category": "cooking",
+    "text": "מהו המאכל שכולל חומוס ותבלינים?",
+    "answer": "חומוס מסאלה"
+  },
+  {
+    "id": "he_cooking_078",
+    "category": "cooking",
+    "text": "מאיזו מדינה מקור המאכל 'טחינה'?",
+    "answer": "לבנון"
+  },
+  {
+    "id": "he_cooking_079",
+    "category": "cooking",
+    "text": "איזה מאכל ישראלי מבוסס על פלפל חריף?",
+    "answer": "חריסה"
+  },
+  {
+    "id": "he_cooking_080",
+    "category": "cooking",
+    "text": "מהו שמו של המאכל שמבושל עם אורז וירקות?",
+    "answer": "אורז עם ירקות"
+  }
 ]

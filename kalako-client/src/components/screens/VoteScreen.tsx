@@ -3,9 +3,10 @@ import { motion } from 'framer-motion'
 import { useGameStore } from '@/store/gameStore'
 import { useSFX } from '@/components/brand/useSFX'
 import { useTranslation } from '@/i18n/context'
+import PictureRoundImage from '@/components/ui/PictureRoundImage'
 
 export default function VoteScreen() {
-  const { voteSlots, submittedVote, submitVote, mySlotId, votedCount, totalPlayers } = useGameStore()
+  const { voteSlots, submittedVote, submitVote, mySlotId, votedCount, totalPlayers, questionImageUrl, questionSourceAttribution } = useGameStore()
   const t = useTranslation()
   const sfx = useSFX()
   const playedRef = useRef(false)
@@ -21,11 +22,15 @@ export default function VoteScreen() {
     <div className="flex flex-col items-center min-h-dvh px-4 py-6 gap-5">
       <div className="w-full max-w-sm flex flex-col gap-5">
         <div className="text-center">
-          <h2 className="text-lg font-black text-gradient mb-1" style={{ fontFamily: 'var(--font-heading)' }}>
+          <h1 className="text-lg font-black text-gradient mb-1" style={{ fontFamily: 'var(--font-heading)' }}>
             {t.voteTitle}
-          </h2>
-          <p className="text-white/40 text-xs">{t.voteSubtitle}</p>
+          </h1>
+          <p className="text-white/50 text-xs">{t.voteSubtitle}</p>
         </div>
+
+        {questionImageUrl && (
+          <PictureRoundImage src={questionImageUrl} alt="" sourceAttribution={questionSourceAttribution} />
+        )}
 
         <div className="flex flex-col gap-3">
           {voteSlots.map((slot, i) => {
@@ -49,7 +54,7 @@ export default function VoteScreen() {
                 style={{ fontFamily: 'var(--font-heading)' }}
               >
                 {slot.text}
-                {isMyAnswer && <span className="text-xs text-primary mr-2">{t.yourAnswer}</span>}
+                {isMyAnswer && <span className="text-xs text-primary me-2">{t.yourAnswer}</span>}
               </motion.button>
             )
           })}
@@ -74,7 +79,7 @@ export default function VoteScreen() {
                     transition={{ duration: 0.3 }}
                   />
                 </div>
-                <p className="text-white/40 text-xs">
+                <p className="text-white/50 text-xs">
                   {votedCount}/{totalPlayers} {t.votedCount}
                 </p>
               </div>

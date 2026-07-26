@@ -16,7 +16,11 @@ export function getRoomByPlayerId(playerId: string): RoomState | undefined {
   return code ? rooms.get(code) : undefined
 }
 
-export function createRoom(settings: RoomSettings, hostName: string): { room: RoomState; host: Player } {
+export function createRoom(
+  settings: RoomSettings,
+  hostName: string,
+  deviceId: string | null = null
+): { room: RoomState; host: Player } {
   let code = generateRoomCode()
   while (rooms.has(code)) code = generateRoomCode()
 
@@ -28,6 +32,7 @@ export function createRoom(settings: RoomSettings, hostName: string): { room: Ro
     isHost: true,
     connected: true,
     disconnectTimer: null,
+    deviceId,
   }
 
   const room: RoomState = {
@@ -51,6 +56,7 @@ export function createRoom(settings: RoomSettings, hostName: string): { room: Ro
     voteTimer: null,
     history: [],
     createdAt: Date.now(),
+    correctGuessCounts: new Map(),
   }
 
   rooms.set(code, room)
@@ -58,7 +64,11 @@ export function createRoom(settings: RoomSettings, hostName: string): { room: Ro
   return { room, host }
 }
 
-export function addPlayer(room: RoomState, name: string): Player | { error: string } {
+export function addPlayer(
+  room: RoomState,
+  name: string,
+  deviceId: string | null = null
+): Player | { error: string } {
   const connectedCount = [...room.players.values()].filter((p) => p.connected).length
   if (connectedCount >= config.maxPlayers) {
     return { error: 'الغرفة ممتلئة (الحد الأقصى 20 لاعب)' }
@@ -72,6 +82,7 @@ export function addPlayer(room: RoomState, name: string): Player | { error: stri
     isHost: false,
     connected: true,
     disconnectTimer: null,
+    deviceId,
   }
   room.players.set(player.id, player)
   playerIndex.set(player.id, room.code)

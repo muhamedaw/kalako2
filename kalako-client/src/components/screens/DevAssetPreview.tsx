@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import Avatar from '@/components/brand/Avatar'
+import { ComposedAvatar, getAvatarConfig } from '@/components/avatarParts'
 import LogoHorizontal from '@/components/brand/LogoHorizontal'
 import LogoSquare from '@/components/brand/LogoSquare'
 import CategoryIcon from '@/components/brand/CategoryIcon'
@@ -32,8 +32,8 @@ export default function DevAssetPreview() {
         <section className="space-y-4">
           <h2 className="text-xl font-heading font-bold text-secondary">{t.devPreviewLogos}</h2>
           <div className="grid md:grid-cols-2 gap-6 items-center bg-white/5 rounded-2xl p-6 border border-white/10">
-            <div><p className="text-white/40 text-sm mb-2">{t.devPreviewHorizontal}</p><LogoHorizontal className="w-full max-w-md" /></div>
-            <div><p className="text-white/40 text-sm mb-2">{t.devPreviewSquare}</p><LogoSquare className="w-32 h-32" /></div>
+            <div><p className="text-white/50 text-sm mb-2">{t.devPreviewHorizontal}</p><LogoHorizontal className="w-full max-w-md" /></div>
+            <div><p className="text-white/50 text-sm mb-2">{t.devPreviewSquare}</p><LogoSquare className="w-32 h-32" /></div>
           </div>
         </section>
 
@@ -41,19 +41,17 @@ export default function DevAssetPreview() {
         <section className="space-y-4">
           <h2 className="text-xl font-heading font-bold text-secondary">{t.devPreviewAvatars}</h2>
           <div className="space-y-4">
-            {(['idle', 'happy', 'tricked'] as const).map((state) => (
-              <div key={state} className="bg-white/5 rounded-2xl p-4 border border-white/10">
-                <p className="text-white/40 text-sm mb-3 capitalize">{state}</p>
-                <div className="flex flex-wrap gap-2" style={{ direction: 'ltr' }}>
-                  {Array.from({ length: 16 }, (_, i) => (
-                    <div key={i} className="flex flex-col items-center">
-                      <Avatar id={i + 1} state={state} size={60} />
-                      <span className="text-[10px] text-white/30 mt-1">#{i + 1}</span>
-                    </div>
-                  ))}
-                </div>
+            <div className="bg-white/5 rounded-2xl p-4 border border-white/10">
+              <p className="text-white/50 text-sm mb-3">Composed Avatars</p>
+              <div className="flex flex-wrap gap-2" style={{ direction: 'ltr' }}>
+                {Array.from({ length: 16 }, (_, i) => (
+                  <div key={i} className="flex flex-col items-center">
+                    <ComposedAvatar {...getAvatarConfig(i + 1)} size={60} />
+                    <span className="text-[10px] text-white/30 mt-1">#{i + 1}</span>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
         </section>
 
@@ -93,11 +91,11 @@ export default function DevAssetPreview() {
           <h2 className="text-xl font-heading font-bold text-secondary">{t.devPreviewQrCode}</h2>
           <div className="flex flex-wrap gap-8 items-center bg-white/5 rounded-2xl p-6 border border-white/10">
             <div className="flex flex-col items-center gap-2">
-              <p className="text-white/40 text-sm">{t.devPreviewWithNeon}</p>
+              <p className="text-white/50 text-sm">{t.devPreviewWithNeon}</p>
               <ThemedQRCode value={`${window.location.origin}/?join=ABC123`} size={120} />
             </div>
             <div className="flex flex-col items-center gap-2">
-              <p className="text-white/40 text-sm">{t.devPreviewSmall}</p>
+              <p className="text-white/50 text-sm">{t.devPreviewSmall}</p>
               <ThemedQRCode value={`${window.location.origin}/?join=DEV42`} size={80} />
             </div>
           </div>

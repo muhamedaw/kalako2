@@ -5,9 +5,11 @@ import cors from 'cors'
 import { config } from './config.mts'
 import { registerSocketHandlers } from './socket/index.mts'
 import { initDb } from './db/index.mts'
+import { startBackupScheduler } from './backup/scheduler.mts'
 
 export async function createApp() {
   await initDb()
+  startBackupScheduler()
 
   const app = express()
   app.use(cors({ origin: config.corsOrigin }))

@@ -24,10 +24,10 @@ export default function CategoryPick() {
     <div className="flex flex-col items-center justify-center min-h-dvh px-4 py-8 gap-6">
       <div className="w-full max-w-sm flex flex-col gap-5">
         <div className="text-center">
-          <h2 className="text-2xl font-black text-gradient mb-2" style={{ fontFamily: 'var(--font-heading)' }}>
+          <h1 className="text-2xl font-black text-gradient mb-2" style={{ fontFamily: 'var(--font-heading)' }}>
             {t.categoryPickTitle}
-          </h2>
-          <p className="text-white/40 text-sm">
+          </h1>
+          <p className="text-white/50 text-sm">
             {isHost ? t.pickCategoryHost : t.pickCategoryWaiting}
             {room.isTiebreakerRound && <span className="text-warning block mt-1">{t.tiebreaker}</span>}
           </p>
@@ -46,10 +46,12 @@ export default function CategoryPick() {
               whileTap={isHost ? { scale: 0.93 } : undefined}
               whileHover={isHost ? { scale: 1.04, boxShadow: '0 0 24px 4px rgba(255,93,162,0.15)' } : undefined}
               onClick={() => isHost && pickCategory(cat)}
+              disabled={!isHost}
+              aria-disabled={!isHost}
               className={`
                 glass p-4 text-center font-bold text-lg cursor-pointer
                 hover:bg-white/8 transition-colors hover-glow
-                ${!isHost ? 'pointer-events-none opacity-50' : ''}
+                ${!isHost ? 'opacity-50' : ''}
               `}
               style={{ fontFamily: 'var(--font-heading)' }}
             >

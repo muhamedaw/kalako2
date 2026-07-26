@@ -1,54 +1,496 @@
 [
-  { "id": "en_celeb_001", "category": "celebrities", "text": "Who is known as the 'King of Pop'?", "answer": "Michael Jackson" },
-  { "id": "en_celeb_002", "category": "celebrities", "text": "Which tech entrepreneur co-founded Apple with Steve Wozniak?", "answer": "Steve Jobs" },
-  { "id": "en_celeb_003", "category": "celebrities", "text": "Who is the founder of Microsoft?", "answer": "Bill Gates" },
-  { "id": "en_celeb_004", "category": "celebrities", "text": "Which singer is known as 'Queen Bey'?", "answer": "Beyoncé" },
-  { "id": "en_celeb_005", "category": "celebrities", "text": "Who founded Amazon?", "answer": "Jeff Bezos" },
-  { "id": "en_celeb_006", "category": "celebrities", "text": "Which boxer was famous for the phrase 'float like a butterfly, sting like a bee'?", "answer": "Muhammad Ali" },
-  { "id": "en_celeb_007", "category": "celebrities", "text": "Who is the founder of Tesla and SpaceX?", "answer": "Elon Musk" },
-  { "id": "en_celeb_008", "category": "celebrities", "text": "Which talk show host built a media empire and is known as one of the most influential women in America?", "answer": "Oprah Winfrey" },
-  { "id": "en_celeb_009", "category": "celebrities", "text": "Who is known as the 'Queen of Pop'?", "answer": "Madonna" },
-  { "id": "en_celeb_010", "category": "celebrities", "text": "Which physicist developed the theory of relativity and won the Nobel Prize in 1921?", "answer": "Albert Einstein" },
-  { "id": "en_celeb_011", "category": "celebrities", "text": "Who founded Facebook (now Meta)?", "answer": "Mark Zuckerberg" },
-  { "id": "en_celeb_012", "category": "celebrities", "text": "Which soccer star is nicknamed 'CR7'?", "answer": "Cristiano Ronaldo" },
-  { "id": "en_celeb_013", "category": "celebrities", "text": "Who painted the Mona Lisa?", "answer": "Leonardo da Vinci" },
-  { "id": "en_celeb_014", "category": "celebrities", "text": "Which basketball player is known as 'His Airness'?", "answer": "Michael Jordan" },
-  { "id": "en_celeb_015", "category": "celebrities", "text": "Who was the first woman to win a Nobel Prize?", "answer": "Marie Curie" },
-  { "id": "en_celeb_016", "category": "celebrities", "text": "Which rapper's real name is Shawn Carter?", "answer": "Jay-Z" },
-  { "id": "en_celeb_017", "category": "celebrities", "text": "Who is the longest-reigning British monarch in history?", "answer": "Queen Elizabeth II" },
-  { "id": "en_celeb_018", "category": "celebrities", "text": "Which soccer player won the 2022 World Cup with Argentina?", "answer": "Lionel Messi" },
-  { "id": "en_celeb_019", "category": "celebrities", "text": "Who invented the telephone?", "answer": "Alexander Graham Bell" },
-  { "id": "en_celeb_020", "category": "celebrities", "text": "Which rapper's real name is Marshall Mathers?", "answer": "Eminem" },
-  { "id": "en_celeb_021", "category": "celebrities", "text": "Who was the first person to walk on the Moon?", "answer": "Neil Armstrong" },
-  { "id": "en_celeb_022", "category": "celebrities", "text": "Which actress and singer starred as Elsa's voice in 'Frozen'?", "answer": "Idina Menzel" },
-  { "id": "en_celeb_023", "category": "celebrities", "text": "Which actor famously played both Batman and starred as an American Psycho?", "answer": "Christian Bale" },
-  { "id": "en_celeb_024", "category": "celebrities", "text": "Which swimmer has won the most Olympic gold medals ever?", "answer": "Michael Phelps" },
-  { "id": "en_celeb_025", "category": "celebrities", "text": "Who is known as the 'Godfather of Soul'?", "answer": "James Brown" },
-  { "id": "en_celeb_026", "category": "celebrities", "text": "Which British band is known for the album 'Abbey Road'?", "answer": "The Beatles" },
-  { "id": "en_celeb_027", "category": "celebrities", "text": "Who is the CEO and founder of Amazon who also owns The Washington Post?", "answer": "Jeff Bezos" },
-  { "id": "en_celeb_028", "category": "celebrities", "text": "Which tennis player has won the most Grand Slam titles among men (as of the mid-2020s)?", "answer": "Novak Djokovic" },
-  { "id": "en_celeb_029", "category": "celebrities", "text": "Who directed and starred in many silent comedy films, including 'The Kid' and 'Modern Times'?", "answer": "Charlie Chaplin" },
-  { "id": "en_celeb_030", "category": "celebrities", "text": "Which musician is known as 'The Boss'?", "answer": "Bruce Springsteen" },
-  { "id": "en_celeb_031", "category": "celebrities", "text": "Who was the President of the United States during the American Civil War?", "answer": "Abraham Lincoln" },
-  { "id": "en_celeb_032", "category": "celebrities", "text": "Which actress played the title role in 'Wonder Woman' (2017)?", "answer": "Gal Gadot" },
-  { "id": "en_celeb_033", "category": "celebrities", "text": "Who wrote the plays 'Hamlet' and 'Romeo and Juliet'?", "answer": "William Shakespeare" },
-  { "id": "en_celeb_034", "category": "celebrities", "text": "Which musician is known as the 'Princess of Pop' with hits like 'Toxic'?", "answer": "Britney Spears" },
-  { "id": "en_celeb_035", "category": "celebrities", "text": "Who was the first African American President of the United States?", "answer": "Barack Obama" },
-  { "id": "en_celeb_036", "category": "celebrities", "text": "Which scientist is famous for his wheelchair and work on black holes?", "answer": "Stephen Hawking" },
-  { "id": "en_celeb_037", "category": "celebrities", "text": "Who is the lead singer of the band Coldplay?", "answer": "Chris Martin" },
-  { "id": "en_celeb_038", "category": "celebrities", "text": "Which activist is known for her fight for girls' education and survived a Taliban attack?", "answer": "Malala Yousafzai" },
-  { "id": "en_celeb_039", "category": "celebrities", "text": "Who directed the film 'E.T. the Extra-Terrestrial'?", "answer": "Steven Spielberg" },
-  { "id": "en_celeb_040", "category": "celebrities", "text": "Which singer-songwriter is known for the album '1989' and reputation for re-recording her music?", "answer": "Taylor Swift" },
-  { "id": "en_celeb_041", "category": "celebrities", "text": "Who founded the Virgin Group of companies?", "answer": "Richard Branson" },
-  { "id": "en_celeb_042", "category": "celebrities", "text": "Which artist is known for the painting 'Starry Night'?", "answer": "Vincent van Gogh" },
-  { "id": "en_celeb_043", "category": "celebrities", "text": "Who was the civil rights leader who delivered the 'I Have a Dream' speech?", "answer": "Martin Luther King Jr." },
-  { "id": "en_celeb_044", "category": "celebrities", "text": "Which actor is known for playing Iron Man and also starred in 'Sherlock Holmes'?", "answer": "Robert Downey Jr." },
-  { "id": "en_celeb_045", "category": "celebrities", "text": "Who led the first expedition to circumnavigate the globe?", "answer": "Ferdinand Magellan" },
-  { "id": "en_celeb_046", "category": "celebrities", "text": "Which musician is the frontman of the band U2?", "answer": "Bono" },
-  { "id": "en_celeb_047", "category": "celebrities", "text": "Who was the first female Secretary of State in the United States?", "answer": "Madeleine Albright" },
-  { "id": "en_celeb_048", "category": "celebrities", "text": "Which director is known for 'Jaws', 'E.T.', and 'Jurassic Park'?", "answer": "Steven Spielberg" },
-  { "id": "en_celeb_049", "category": "celebrities", "text": "Who is the founder of the Alibaba Group?", "answer": "Jack Ma" },
-  { "id": "en_celeb_050", "category": "celebrities", "text": "Which physicist is known for the equation E=mc²?", "answer": "Albert Einstein" },
-  { "id": "en_celeb_051", "category": "celebrities", "text": "Which U.S. president was impeached by the House of Representatives twice?", "answer": "Donald Trump", "ageRating": "adult" },
-  { "id": "en_celeb_052", "category": "celebrities", "text": "Which billionaire acquired the social media platform Twitter (now X) in 2022?", "answer": "Elon Musk", "ageRating": "adult" }
+  {
+    "id": "en_celeb_001",
+    "category": "celebrities",
+    "text": "Who is known as the 'King of Pop'?",
+    "answer": "Michael Jackson"
+  },
+  {
+    "id": "en_celeb_002",
+    "category": "celebrities",
+    "text": "Which tech entrepreneur co-founded Apple with Steve Wozniak?",
+    "answer": "Steve Jobs"
+  },
+  {
+    "id": "en_celeb_003",
+    "category": "celebrities",
+    "text": "Who is the founder of Microsoft?",
+    "answer": "Bill Gates"
+  },
+  {
+    "id": "en_celeb_004",
+    "category": "celebrities",
+    "text": "Which singer is known as 'Queen Bey'?",
+    "answer": "Beyoncé"
+  },
+  {
+    "id": "en_celeb_005",
+    "category": "celebrities",
+    "text": "Who founded Amazon?",
+    "answer": "Jeff Bezos"
+  },
+  {
+    "id": "en_celeb_006",
+    "category": "celebrities",
+    "text": "Which boxer was famous for the phrase 'float like a butterfly, sting like a bee'?",
+    "answer": "Muhammad Ali"
+  },
+  {
+    "id": "en_celeb_007",
+    "category": "celebrities",
+    "text": "Who is the founder of Tesla and SpaceX?",
+    "answer": "Elon Musk"
+  },
+  {
+    "id": "en_celeb_008",
+    "category": "celebrities",
+    "text": "Which talk show host built a media empire and is known as one of the most influential women in America?",
+    "answer": "Oprah Winfrey"
+  },
+  {
+    "id": "en_celeb_009",
+    "category": "celebrities",
+    "text": "Who is known as the 'Queen of Pop'?",
+    "answer": "Madonna"
+  },
+  {
+    "id": "en_celeb_010",
+    "category": "celebrities",
+    "text": "Which physicist developed the theory of relativity and won the Nobel Prize in 1921?",
+    "answer": "Albert Einstein"
+  },
+  {
+    "id": "en_celeb_011",
+    "category": "celebrities",
+    "text": "Who founded Facebook (now Meta)?",
+    "answer": "Mark Zuckerberg"
+  },
+  {
+    "id": "en_celeb_012",
+    "category": "celebrities",
+    "text": "Which soccer star is nicknamed 'CR7'?",
+    "answer": "Cristiano Ronaldo"
+  },
+  {
+    "id": "en_celeb_013",
+    "category": "celebrities",
+    "text": "Who painted the Mona Lisa?",
+    "answer": "Leonardo da Vinci"
+  },
+  {
+    "id": "en_celeb_014",
+    "category": "celebrities",
+    "text": "Which basketball player is known as 'His Airness'?",
+    "answer": "Michael Jordan"
+  },
+  {
+    "id": "en_celeb_015",
+    "category": "celebrities",
+    "text": "Who was the first woman to win a Nobel Prize?",
+    "answer": "Marie Curie"
+  },
+  {
+    "id": "en_celeb_016",
+    "category": "celebrities",
+    "text": "Which rapper's real name is Shawn Carter?",
+    "answer": "Jay-Z"
+  },
+  {
+    "id": "en_celeb_017",
+    "category": "celebrities",
+    "text": "Who is the longest-reigning British monarch in history?",
+    "answer": "Queen Elizabeth II"
+  },
+  {
+    "id": "en_celeb_018",
+    "category": "celebrities",
+    "text": "Which soccer player won the 2022 World Cup with Argentina?",
+    "answer": "Lionel Messi"
+  },
+  {
+    "id": "en_celeb_019",
+    "category": "celebrities",
+    "text": "Who invented the telephone?",
+    "answer": "Alexander Graham Bell"
+  },
+  {
+    "id": "en_celeb_020",
+    "category": "celebrities",
+    "text": "Which rapper's real name is Marshall Mathers?",
+    "answer": "Eminem"
+  },
+  {
+    "id": "en_celeb_021",
+    "category": "celebrities",
+    "text": "Who was the first person to walk on the Moon?",
+    "answer": "Neil Armstrong"
+  },
+  {
+    "id": "en_celeb_022",
+    "category": "celebrities",
+    "text": "Which actress and singer starred as Elsa's voice in 'Frozen'?",
+    "answer": "Idina Menzel"
+  },
+  {
+    "id": "en_celeb_023",
+    "category": "celebrities",
+    "text": "Which actor famously played both Batman and starred as an American Psycho?",
+    "answer": "Christian Bale"
+  },
+  {
+    "id": "en_celeb_024",
+    "category": "celebrities",
+    "text": "Which swimmer has won the most Olympic gold medals ever?",
+    "answer": "Michael Phelps"
+  },
+  {
+    "id": "en_celeb_025",
+    "category": "celebrities",
+    "text": "Who is known as the 'Godfather of Soul'?",
+    "answer": "James Brown"
+  },
+  {
+    "id": "en_celeb_026",
+    "category": "celebrities",
+    "text": "Which British band is known for the album 'Abbey Road'?",
+    "answer": "The Beatles"
+  },
+  {
+    "id": "en_celeb_027",
+    "category": "celebrities",
+    "text": "Who is the CEO and founder of Amazon who also owns The Washington Post?",
+    "answer": "Jeff Bezos"
+  },
+  {
+    "id": "en_celeb_028",
+    "category": "celebrities",
+    "text": "Which tennis player has won the most Grand Slam titles among men (as of the mid-2020s)?",
+    "answer": "Novak Djokovic"
+  },
+  {
+    "id": "en_celeb_029",
+    "category": "celebrities",
+    "text": "Who directed and starred in many silent comedy films, including 'The Kid' and 'Modern Times'?",
+    "answer": "Charlie Chaplin"
+  },
+  {
+    "id": "en_celeb_030",
+    "category": "celebrities",
+    "text": "Which musician is known as 'The Boss'?",
+    "answer": "Bruce Springsteen"
+  },
+  {
+    "id": "en_celeb_031",
+    "category": "celebrities",
+    "text": "Who was the President of the United States during the American Civil War?",
+    "answer": "Abraham Lincoln"
+  },
+  {
+    "id": "en_celeb_032",
+    "category": "celebrities",
+    "text": "Which actress played the title role in 'Wonder Woman' (2017)?",
+    "answer": "Gal Gadot"
+  },
+  {
+    "id": "en_celeb_033",
+    "category": "celebrities",
+    "text": "Who wrote the plays 'Hamlet' and 'Romeo and Juliet'?",
+    "answer": "William Shakespeare"
+  },
+  {
+    "id": "en_celeb_034",
+    "category": "celebrities",
+    "text": "Which musician is known as the 'Princess of Pop' with hits like 'Toxic'?",
+    "answer": "Britney Spears"
+  },
+  {
+    "id": "en_celeb_035",
+    "category": "celebrities",
+    "text": "Who was the first African American President of the United States?",
+    "answer": "Barack Obama"
+  },
+  {
+    "id": "en_celeb_036",
+    "category": "celebrities",
+    "text": "Which scientist is famous for his wheelchair and work on black holes?",
+    "answer": "Stephen Hawking"
+  },
+  {
+    "id": "en_celeb_037",
+    "category": "celebrities",
+    "text": "Who is the lead singer of the band Coldplay?",
+    "answer": "Chris Martin"
+  },
+  {
+    "id": "en_celeb_038",
+    "category": "celebrities",
+    "text": "Which activist is known for her fight for girls' education and survived a Taliban attack?",
+    "answer": "Malala Yousafzai"
+  },
+  {
+    "id": "en_celeb_039",
+    "category": "celebrities",
+    "text": "Who directed the film 'E.T. the Extra-Terrestrial'?",
+    "answer": "Steven Spielberg"
+  },
+  {
+    "id": "en_celeb_040",
+    "category": "celebrities",
+    "text": "Which singer-songwriter is known for the album '1989' and reputation for re-recording her music?",
+    "answer": "Taylor Swift"
+  },
+  {
+    "id": "en_celeb_041",
+    "category": "celebrities",
+    "text": "Who founded the Virgin Group of companies?",
+    "answer": "Richard Branson"
+  },
+  {
+    "id": "en_celeb_042",
+    "category": "celebrities",
+    "text": "Which artist is known for the painting 'Starry Night'?",
+    "answer": "Vincent van Gogh"
+  },
+  {
+    "id": "en_celeb_043",
+    "category": "celebrities",
+    "text": "Who was the civil rights leader who delivered the 'I Have a Dream' speech?",
+    "answer": "Martin Luther King Jr."
+  },
+  {
+    "id": "en_celeb_044",
+    "category": "celebrities",
+    "text": "Which actor is known for playing Iron Man and also starred in 'Sherlock Holmes'?",
+    "answer": "Robert Downey Jr."
+  },
+  {
+    "id": "en_celeb_045",
+    "category": "celebrities",
+    "text": "Who led the first expedition to circumnavigate the globe?",
+    "answer": "Ferdinand Magellan"
+  },
+  {
+    "id": "en_celeb_046",
+    "category": "celebrities",
+    "text": "Which musician is the frontman of the band U2?",
+    "answer": "Bono"
+  },
+  {
+    "id": "en_celeb_047",
+    "category": "celebrities",
+    "text": "Who was the first female Secretary of State in the United States?",
+    "answer": "Madeleine Albright"
+  },
+  {
+    "id": "en_celeb_048",
+    "category": "celebrities",
+    "text": "Which director is known for 'Jaws', 'E.T.', and 'Jurassic Park'?",
+    "answer": "Steven Spielberg"
+  },
+  {
+    "id": "en_celeb_049",
+    "category": "celebrities",
+    "text": "Who is the founder of the Alibaba Group?",
+    "answer": "Jack Ma"
+  },
+  {
+    "id": "en_celeb_050",
+    "category": "celebrities",
+    "text": "Which physicist is known for the equation E=mc²?",
+    "answer": "Albert Einstein"
+  },
+  {
+    "id": "en_celeb_051",
+    "category": "celebrities",
+    "text": "Which U.S. president was impeached by the House of Representatives twice?",
+    "answer": "Donald Trump",
+    "ageRating": "adult"
+  },
+  {
+    "id": "en_celeb_052",
+    "category": "celebrities",
+    "text": "Which billionaire acquired the social media platform Twitter (now X) in 2022?",
+    "answer": "Elon Musk",
+    "ageRating": "adult"
+  },
+  {
+    "id": "en_celebrities_051",
+    "category": "celebrities",
+    "text": "What was Elon Musk's first company?",
+    "answer": "Zip2"
+  },
+  {
+    "id": "en_celebrities_052",
+    "category": "celebrities",
+    "text": "Which celebrity was a professional bodybuilder before acting?",
+    "answer": "Arnold Schwarzenegger"
+  },
+  {
+    "id": "en_celebrities_053",
+    "category": "celebrities",
+    "text": "Who was the youngest person to win an Academy Award?",
+    "answer": "Tatum O'Neal"
+  },
+  {
+    "id": "en_celebrities_054",
+    "category": "celebrities",
+    "text": "What was the first name of the musician known as 'Prince'?",
+    "answer": "Roger"
+  },
+  {
+    "id": "en_celebrities_055",
+    "category": "celebrities",
+    "text": "Which actor has the most Oscar nominations without winning?",
+    "answer": "Peter O'Toole"
+  },
+  {
+    "id": "en_celebrities_056",
+    "category": "celebrities",
+    "text": "What was the original name of the band 'Coldplay'?",
+    "answer": "Starfish"
+  },
+  {
+    "id": "en_celebrities_057",
+    "category": "celebrities",
+    "text": "Who was the first person to appear on the cover of Rolling Stone magazine?",
+    "answer": "John Lennon"
+  },
+  {
+    "id": "en_celebrities_058",
+    "category": "celebrities",
+    "text": "Which celebrity was a high school teacher before becoming famous?",
+    "answer": "Harrison Ford"
+  },
+  {
+    "id": "en_celebrities_059",
+    "category": "celebrities",
+    "text": "What was the real name of Marilyn Monroe?",
+    "answer": "Norma Jeane Mortenson"
+  },
+  {
+    "id": "en_celebrities_060",
+    "category": "celebrities",
+    "text": "Which musician wrote the song 'Happy Birthday'?",
+    "answer": "No one knows the original author"
+  },
+  {
+    "id": "en_celebrities_061",
+    "category": "celebrities",
+    "text": "Who was the oldest person to win an Oscar?",
+    "answer": "Jessica Tandy"
+  },
+  {
+    "id": "en_celebrities_062",
+    "category": "celebrities",
+    "text": "What was the first album released by Michael Jackson?",
+    "answer": "Got to Be There"
+  },
+  {
+    "id": "en_celebrities_063",
+    "category": "celebrities",
+    "text": "Which actor was a professional boxer before acting?",
+    "answer": "Carl Weathers"
+  },
+  {
+    "id": "en_celebrities_064",
+    "category": "celebrities",
+    "text": "What is the real name of rapper 'Eminem'?",
+    "answer": "Marshall Mathers"
+  },
+  {
+    "id": "en_celebrities_065",
+    "category": "celebrities",
+    "text": "Who was the first woman to win a Nobel Prize?",
+    "answer": "Marie Curie"
+  },
+  {
+    "id": "en_celebrities_066",
+    "category": "celebrities",
+    "text": "Which celebrity was a professional clown before becoming famous?",
+    "answer": "Johnny Depp"
+  },
+  {
+    "id": "en_celebrities_067",
+    "category": "celebrities",
+    "text": "What was the first movie Tom Cruise appeared in?",
+    "answer": "Endless Love"
+  },
+  {
+    "id": "en_celebrities_068",
+    "category": "celebrities",
+    "text": "Who was the first actor to win an Oscar for a superhero role?",
+    "answer": "Heath Ledger"
+  },
+  {
+    "id": "en_celebrities_069",
+    "category": "celebrities",
+    "text": "Which singer was a janitor before becoming famous?",
+    "answer": "Whitney Houston"
+  },
+  {
+    "id": "en_celebrities_070",
+    "category": "celebrities",
+    "text": "What was the original name of the band 'Led Zeppelin'?",
+    "answer": "The New Yardbirds"
+  },
+  {
+    "id": "en_celebrities_071",
+    "category": "celebrities",
+    "text": "Who was the first person to appear on the cover of Time magazine?",
+    "answer": "Joseph Gurney"
+  },
+  {
+    "id": "en_celebrities_072",
+    "category": "celebrities",
+    "text": "Which actor was a professional musician before acting?",
+    "answer": "Jared Leto"
+  },
+  {
+    "id": "en_celebrities_073",
+    "category": "celebrities",
+    "text": "What was the first social media platform to reach 1 billion users?",
+    "answer": "Facebook"
+  },
+  {
+    "id": "en_celebrities_074",
+    "category": "celebrities",
+    "text": "Who was the first person to be verified on Twitter?",
+    "answer": "John Legend"
+  },
+  {
+    "id": "en_celebrities_075",
+    "category": "celebrities",
+    "text": "Which celebrity was a professional poker player before acting?",
+    "answer": "Ben Affleck"
+  },
+  {
+    "id": "en_celebrities_076",
+    "category": "celebrities",
+    "text": "What was the real name of singer 'Lady Gaga'?",
+    "answer": "Stefani Germanotta"
+  },
+  {
+    "id": "en_celebrities_077",
+    "category": "celebrities",
+    "text": "Who was the first person to reach 100 million followers on Instagram?",
+    "answer": "Cristiano Ronaldo"
+  },
+  {
+    "id": "en_celebrities_078",
+    "category": "celebrities",
+    "text": "Which actor was a professional athlete before acting?",
+    "answer": "Jason Statham"
+  },
+  {
+    "id": "en_celebrities_079",
+    "category": "celebrities",
+    "text": "What was the first video game platform endorsed by a celebrity?",
+    "answer": "Sega Genesis by Michael Jackson"
+  },
+  {
+    "id": "en_celebrities_080",
+    "category": "celebrities",
+    "text": "Who was the first celebrity to have a fragrance named after them?",
+    "answer": "Elizabeth Taylor"
+  }
 ]

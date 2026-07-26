@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, lazy, Suspense } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import AnimatedBackground from '@/components/ui/AnimatedBackground'
 import I18nProvider from '@/i18n/I18nProvider'
@@ -9,23 +9,30 @@ import SettingsPanel from '@/components/SettingsPanel'
 import SettingsGearButton from '@/components/SettingsGearButton'
 import DocumentTitleManager from '@/components/DocumentTitleManager'
 import WelcomeScreen from '@/components/screens/WelcomeScreen'
-import CreateRoom from '@/components/screens/CreateRoom'
-import JoinRoom from '@/components/screens/JoinRoom'
-import Lobby from '@/components/screens/Lobby'
-import CategoryPick from '@/components/screens/CategoryPick'
-import AnswerScreen from '@/components/screens/AnswerScreen'
-import VoteScreen from '@/components/screens/VoteScreen'
-import RoundResults from '@/components/screens/RoundResults'
-import GameOver from '@/components/screens/GameOver'
-import DevAssetPreview from '@/components/screens/DevAssetPreview'
-import HowToPlayPage from '@/components/screens/HowToPlayPage'
-import AboutCreditsScreen from '@/components/screens/AboutCreditsScreen'
-import StoreScreen from '@/components/screens/StoreScreen'
-import GlobalVotingScreen from '@/components/screens/GlobalVotingScreen'
-import NotificationsScreen from '@/components/screens/NotificationsScreen'
-import ProfileScreen from '@/components/screens/ProfileScreen'
 import { useGameStore } from '@/store/gameStore'
 import { useNavigationStore } from '@/store/navigationStore'
+import { useTranslation } from '@/i18n/context'
+
+// Only WelcomeScreen (the default/first-paint view) is eagerly bundled — everything
+// else lazy-loads on navigation so the initial JS payload (and mobile LCP) stays
+// small. This was the single biggest lever found in the Lighthouse mobile audit.
+const CreateRoom = lazy(() => import('@/components/screens/CreateRoom'))
+const JoinRoom = lazy(() => import('@/components/screens/JoinRoom'))
+const Lobby = lazy(() => import('@/components/screens/Lobby'))
+const CategoryPick = lazy(() => import('@/components/screens/CategoryPick'))
+const AnswerScreen = lazy(() => import('@/components/screens/AnswerScreen'))
+const VoteScreen = lazy(() => import('@/components/screens/VoteScreen'))
+const RoundResults = lazy(() => import('@/components/screens/RoundResults'))
+const GameOver = lazy(() => import('@/components/screens/GameOver'))
+const DevAssetPreview = lazy(() => import('@/components/screens/DevAssetPreview'))
+const HowToPlayPage = lazy(() => import('@/components/screens/HowToPlayPage'))
+const AboutCreditsScreen = lazy(() => import('@/components/screens/AboutCreditsScreen'))
+const LegalPage = lazy(() => import('@/components/screens/LegalPage'))
+const GlobalVotingScreen = lazy(() => import('@/components/screens/GlobalVotingScreen'))
+const NotificationsScreen = lazy(() => import('@/components/screens/NotificationsScreen'))
+const ProfileScreen = lazy(() => import('@/components/screens/ProfileScreen'))
+const StoreScreen = lazy(() => import('@/components/screens/StoreScreen'))
+const PremiumScreen = lazy(() => import('@/components/screens/PremiumScreen'))
 
 // Screens where the bottom tab bar is shown. Everything else (active game
 // rounds, create/join forms, results, dev tools) hides it so it never
@@ -43,6 +50,27 @@ const pageVariants = {
 const pageTransition = {
   duration: 0.28,
   ease: [0.25, 0.46, 0.45, 0.94] as const,
+}
+
+function JsonLdScript() {
+  const t = useTranslation()
+  const json = {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'Kalako',
+    applicationCategory: 'GameApplication',
+    operatingSystem: 'Web',
+    description: t.appLongDescription,
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    browserRequirements: 'Requires JavaScript',
+    author: { '@type': 'Person', name: 'Muhammed Awad' },
+  }
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(json) }}
+    />
+  )
 }
 
 function App() {
@@ -106,6 +134,14 @@ function App() {
         return <NotificationsScreen key="notifications" />
       case 'profile':
         return <ProfileScreen key="profile" />
+      case 'premium':
+        return <PremiumScreen key="premium" />
+      case 'legal_privacy':
+        return <LegalPage key="legal_privacy" kind="privacy" />
+      case 'legal_terms':
+        return <LegalPage key="legal_terms" kind="terms" />
+      case 'legal_refund':
+        return <LegalPage key="legal_refund" kind="refund" />
       case 'dev_asset_preview':
         return <DevAssetPreview key="dev" />
       default:
@@ -115,37 +151,40 @@ function App() {
 
   return (
     <I18nProvider>
+      <JsonLdScript />
       <DocumentTitleManager />
-      {screen === 'welcome' && <AnimatedBackground />}
-      {showSettingsGear && (
-        <SettingsGearButton onClick={toggleSettingsPanel} />
-      )}
-      <motion.div
-        className="flex-1 flex flex-col"
-        style={{
-          paddingBottom: showBottomNav
-            ? 'calc(var(--bottom-nav-height) + env(safe-area-inset-bottom))'
-            : undefined,
-        }}
-      >
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={screen}
-            variants={pageVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={pageTransition}
-            className="flex-1 flex flex-col"
-          >
-            {renderScreen()}
-          </motion.div>
-        </AnimatePresence>
-      </motion.div>
-      {showBottomNav && <BottomNav />}
-      <SettingsPanel />
-      <ReconnectingOverlay />
-      <Toast />
+        {screen === 'welcome' && <AnimatedBackground />}
+        {showSettingsGear && (
+          <SettingsGearButton onClick={toggleSettingsPanel} />
+        )}
+        <motion.div
+          className="flex-1 flex flex-col"
+          style={{
+            paddingBottom: showBottomNav
+              ? 'calc(var(--bottom-nav-height) + env(safe-area-inset-bottom))'
+              : undefined,
+          }}
+        >
+          <Suspense fallback={null}>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={screen}
+              variants={pageVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              transition={pageTransition}
+              className="flex-1 flex flex-col"
+            >
+              {renderScreen()}
+            </motion.div>
+          </AnimatePresence>
+          </Suspense>
+        </motion.div>
+        {showBottomNav && <BottomNav />}
+        <SettingsPanel />
+        <ReconnectingOverlay />
+        <Toast />
     </I18nProvider>
   )
 }

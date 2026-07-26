@@ -5,6 +5,7 @@ import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import ProgressRing from '@/components/ui/ProgressRing'
 import ArcadeModal from '@/components/ui/ArcadeModal'
+import PictureRoundImage from '@/components/ui/PictureRoundImage'
 import { useGameStore } from '@/store/gameStore'
 import { useSFX } from '@/components/brand/useSFX'
 import { useTranslation } from '@/i18n/context'
@@ -14,6 +15,8 @@ export default function AnswerScreen() {
   const {
     questionText,
     questionCategory,
+    questionImageUrl,
+    questionSourceAttribution,
     timeSeconds,
     submittedAnswer,
     submitAnswer,
@@ -92,19 +95,36 @@ export default function AnswerScreen() {
       <div className="w-full max-w-sm flex flex-col items-center gap-5">
         <ProgressRing progress={timeLeft} total={timeSeconds} size={100} strokeWidth={6} />
 
+        {questionImageUrl && (
+          <div className="w-full flex flex-col items-center gap-2">
+            <span className="inline-block px-3 py-0.5 text-xs font-bold rounded-full bg-[#C6FF3D]/15 text-[#C6FF3D] border border-[#C6FF3D]/30">
+              {t.answerScreenPictureRound}
+            </span>
+            <PictureRoundImage src={questionImageUrl} alt={questionText || ''} sourceAttribution={questionSourceAttribution} />
+          </div>
+        )}
+
         <GlassCard strong className="w-full">
           <div className="flex flex-col gap-3 text-center">
-            <div className="text-sm text-white/40">
+            <div className="text-sm text-white/50">
               {t.round} {room?.round ?? 1}
-              {questionCategory && <span className="mr-2 text-primary">• {getCategoryLabel(questionCategory, t.lang)}</span>}
-              {isDoublePointsRound && <span className="mr-2 text-warning">{t.doublePoints}</span>}
+              {questionCategory && <span className="me-2 text-primary">• {getCategoryLabel(questionCategory, t.lang)}</span>}
+              {isDoublePointsRound && <span className="me-2 text-warning">{t.doublePoints}</span>}
+              {questionImageUrl && <span className="me-2 text-secondary">• {t.answerScreenPictureRound}</span>}
             </div>
-            <h2
+            <h1
               className="text-xl sm:text-2xl font-black text-white"
               style={{ fontFamily: 'var(--font-heading)' }}
             >
               {questionText || t.questionLoading}
-            </h2>
+            </h1>
+            {questionImageUrl && (
+              <PictureRoundImage
+                src={questionImageUrl}
+                alt={questionText || t.answerScreenPictureRound}
+                sourceAttribution={questionSourceAttribution}
+              />
+            )}
           </div>
         </GlassCard>
 
@@ -154,7 +174,7 @@ export default function AnswerScreen() {
                     transition={{ duration: 0.3 }}
                   />
                 </div>
-                <p className="text-white/40 text-sm">
+                <p className="text-white/50 text-sm">
                   {answeredCount}/{totalPlayers} {t.answeredCount}
                 </p>
               </div>
@@ -167,12 +187,12 @@ export default function AnswerScreen() {
         {answerNeedsRevision && !submittedAnswer && (
           <ArcadeModal onClose={handleEditAnswer}>
             <div className="flex flex-col gap-4 text-black">
-              <h3
+              <h2
                 className="text-xl font-black text-center"
                 style={{ fontFamily: 'var(--font-heading)' }}
               >
                 {t.answerRevisionTitle}
-              </h3>
+              </h2>
               <p className="text-sm leading-relaxed text-center">
                 {t.answerRevisionBody}
               </p>

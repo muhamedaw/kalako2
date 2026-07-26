@@ -1,52 +1,482 @@
 [
-  { "id": "he_geo_001", "category": "geography", "text": "מהי בירת ישראל?", "answer": "ירושלים" },
-  { "id": "he_geo_002", "category": "geography", "text": "מהו הים הכי מלוח בעולם, הנמצא בגבול ישראל וירדן?", "answer": "ים המלח" },
-  { "id": "he_geo_003", "category": "geography", "text": "מהו הנהר הארוך בעולם?", "answer": "הנילוס" },
-  { "id": "he_geo_004", "category": "geography", "text": "מהי העיר הגדולה ביותר בישראל מבחינת אוכלוסייה?", "answer": "ירושלים" },
-  { "id": "he_geo_005", "category": "geography", "text": "מהו ההר הגבוה בעולם?", "answer": "האוורסט" },
-  { "id": "he_geo_006", "category": "geography", "text": "מהי המדינה הגדולה בעולם משטח?", "answer": "רוסיה" },
-  { "id": "he_geo_007", "category": "geography", "text": "מהי בירת יפן?", "answer": "טוקיו" },
-  { "id": "he_geo_008", "category": "geography", "text": "כמה יבשות יש בעולם?", "answer": "7" },
-  { "id": "he_geo_009", "category": "geography", "text": "מהי הנקודה הנמוכה ביותר על פני כדור הארץ?", "answer": "חוף ים המלח" },
-  { "id": "he_geo_010", "category": "geography", "text": "מהו האגם הגדול בישראל?", "answer": "הכנרת" },
-  { "id": "he_geo_011", "category": "geography", "text": "מהי בירת צרפת?", "answer": "פריז" },
-  { "id": "he_geo_012", "category": "geography", "text": "מהו האוקיינוס הגדול בעולם?", "answer": "האוקיינוס השקט" },
-  { "id": "he_geo_013", "category": "geography", "text": "כמה קילומטרים בקירוב אורכה של מדינת ישראל מצפון לדרום?", "answer": "כ-470 קילומטר" },
-  { "id": "he_geo_014", "category": "geography", "text": "מהי בירת ארצות הברית?", "answer": "וושינגטון הבירה" },
-  { "id": "he_geo_015", "category": "geography", "text": "מהו המדבר הגדול והחם ביותר בעולם?", "answer": "מדבר סהרה" },
-  { "id": "he_geo_016", "category": "geography", "text": "איזה נהר עובר דרך בגדאד, בירת עיראק?", "answer": "נהר חידקל" },
-  { "id": "he_geo_017", "category": "geography", "text": "מהי המדינה הקטנה בעולם?", "answer": "קריית הוותיקן" },
-  { "id": "he_geo_018", "category": "geography", "text": "מהי בירת מצרים?", "answer": "קהיר" },
-  { "id": "he_geo_019", "category": "geography", "text": "איזה נחל/נהר עובר בעיר תל אביב?", "answer": "נחל הירקון" },
-  { "id": "he_geo_020", "category": "geography", "text": "מהי המדינה המאוכלסת ביותר בעולם?", "answer": "הודו" },
-  { "id": "he_geo_021", "category": "geography", "text": "באיזה הר במצרים מקובל שמשה קיבל את לוחות הברית?", "answer": "הר סיני" },
-  { "id": "he_geo_022", "category": "geography", "text": "מהי בירת ספרד?", "answer": "מדריד" },
-  { "id": "he_geo_023", "category": "geography", "text": "מהו שם המפרץ שבו שוכנת אילת?", "answer": "מפרץ אילת (מפרץ עקבה)" },
-  { "id": "he_geo_024", "category": "geography", "text": "מהי בירת בריטניה?", "answer": "לונדון" },
-  { "id": "he_geo_025", "category": "geography", "text": "מהו הים שגובל בישראל ממערב?", "answer": "הים התיכון" },
-  { "id": "he_geo_026", "category": "geography", "text": "מהי בירת רוסיה?", "answer": "מוסקבה" },
-  { "id": "he_geo_027", "category": "geography", "text": "איזו מדינה כוללת את שוניות האלמוגים הגדולות בעולם?", "answer": "אוסטרליה" },
-  { "id": "he_geo_028", "category": "geography", "text": "מהי היבשה הקרה ביותר בעולם?", "answer": "אנטארקטיקה" },
-  { "id": "he_geo_029", "category": "geography", "text": "מהי העיר שנחשבת לבירתה הכלכלית של ישראל?", "answer": "תל אביב" },
-  { "id": "he_geo_030", "category": "geography", "text": "מהו המיצר המפריד בין אירופה לאפריקה בנקודתו הצרה ביותר?", "answer": "מיצר גיברלטר" },
-  { "id": "he_geo_031", "category": "geography", "text": "מהי המדינה הגדולה ביותר באפריקה משטח?", "answer": "אלג'יריה" },
-  { "id": "he_geo_032", "category": "geography", "text": "מהי בירת מקסיקו?", "answer": "מקסיקו סיטי" },
-  { "id": "he_geo_033", "category": "geography", "text": "כמה מחוזות (נפות) יש בישראל?", "answer": "6" },
-  { "id": "he_geo_034", "category": "geography", "text": "מהי בירת דרום קוריאה?", "answer": "סיאול" },
-  { "id": "he_geo_035", "category": "geography", "text": "איזה הר בגליל נחשב לגבוה בישראל (ללא רמת הגולן)?", "answer": "הר מירון" },
-  { "id": "he_geo_036", "category": "geography", "text": "מהו המפל הגבוה בעולם?", "answer": "מפל אנחל" },
-  { "id": "he_geo_037", "category": "geography", "text": "מהי בירת טורקיה?", "answer": "אנקרה" },
-  { "id": "he_geo_038", "category": "geography", "text": "באיזו מדינה נמצא הר קילימנג'רו?", "answer": "טנזניה" },
-  { "id": "he_geo_039", "category": "geography", "text": "מהי היבשה הקטנה בעולם משטח?", "answer": "אוסטרליה" },
-  { "id": "he_geo_040", "category": "geography", "text": "מהי בירת הולנד?", "answer": "אמסטרדם" },
-  { "id": "he_geo_041", "category": "geography", "text": "איזה נחל במדבר יהודה ידוע במפלי המים והנופים שלו ומהווה אתר תיירות מרכזי?", "answer": "עין גדי" },
-  { "id": "he_geo_042", "category": "geography", "text": "מהי בירת ארגנטינה?", "answer": "בואנוס איירס" },
-  { "id": "he_geo_043", "category": "geography", "text": "איזו עיר אמריקאית מכונה 'התפוח הגדול'?", "answer": "ניו יורק" },
-  { "id": "he_geo_044", "category": "geography", "text": "מהי אגם המים המתוקים הגדול בעולם משטח?", "answer": "אגם סופיריור" },
-  { "id": "he_geo_045", "category": "geography", "text": "מהי בירת יוון?", "answer": "אתונה" },
-  { "id": "he_geo_046", "category": "geography", "text": "איזו מדינה בצורת מגף?", "answer": "איטליה" },
-  { "id": "he_geo_047", "category": "geography", "text": "מהי בירת סין?", "answer": "בייג'ינג" },
-  { "id": "he_geo_048", "category": "geography", "text": "איזה אוקיינוס נמצא בין אפריקה לאוסטרליה?", "answer": "האוקיינוס ההודי" },
-  { "id": "he_geo_049", "category": "geography", "text": "מהי בירת פורטוגל?", "answer": "ליסבון" },
-  { "id": "he_geo_050", "category": "geography", "text": "איזו מדינה אפריקאית נקראה בעבר אביסיניה?", "answer": "אתיופיה" }
+  {
+    "id": "he_geo_001",
+    "category": "geography",
+    "text": "מהי בירת ישראל?",
+    "answer": "ירושלים"
+  },
+  {
+    "id": "he_geo_002",
+    "category": "geography",
+    "text": "מהו הים הכי מלוח בעולם, הנמצא בגבול ישראל וירדן?",
+    "answer": "ים המלח"
+  },
+  {
+    "id": "he_geo_003",
+    "category": "geography",
+    "text": "מהו הנהר הארוך בעולם?",
+    "answer": "הנילוס"
+  },
+  {
+    "id": "he_geo_004",
+    "category": "geography",
+    "text": "מהי העיר הגדולה ביותר בישראל מבחינת אוכלוסייה?",
+    "answer": "ירושלים"
+  },
+  {
+    "id": "he_geo_005",
+    "category": "geography",
+    "text": "מהו ההר הגבוה בעולם?",
+    "answer": "האוורסט"
+  },
+  {
+    "id": "he_geo_006",
+    "category": "geography",
+    "text": "מהי המדינה הגדולה בעולם משטח?",
+    "answer": "רוסיה"
+  },
+  {
+    "id": "he_geo_007",
+    "category": "geography",
+    "text": "מהי בירת יפן?",
+    "answer": "טוקיו"
+  },
+  {
+    "id": "he_geo_008",
+    "category": "geography",
+    "text": "כמה יבשות יש בעולם?",
+    "answer": "7"
+  },
+  {
+    "id": "he_geo_009",
+    "category": "geography",
+    "text": "מהי הנקודה הנמוכה ביותר על פני כדור הארץ?",
+    "answer": "חוף ים המלח"
+  },
+  {
+    "id": "he_geo_010",
+    "category": "geography",
+    "text": "מהו האגם הגדול בישראל?",
+    "answer": "הכנרת"
+  },
+  {
+    "id": "he_geo_011",
+    "category": "geography",
+    "text": "מהי בירת צרפת?",
+    "answer": "פריז"
+  },
+  {
+    "id": "he_geo_012",
+    "category": "geography",
+    "text": "מהו האוקיינוס הגדול בעולם?",
+    "answer": "האוקיינוס השקט"
+  },
+  {
+    "id": "he_geo_013",
+    "category": "geography",
+    "text": "כמה קילומטרים בקירוב אורכה של מדינת ישראל מצפון לדרום?",
+    "answer": "כ-470 קילומטר"
+  },
+  {
+    "id": "he_geo_014",
+    "category": "geography",
+    "text": "מהי בירת ארצות הברית?",
+    "answer": "וושינגטון הבירה"
+  },
+  {
+    "id": "he_geo_015",
+    "category": "geography",
+    "text": "מהו המדבר הגדול והחם ביותר בעולם?",
+    "answer": "מדבר סהרה"
+  },
+  {
+    "id": "he_geo_016",
+    "category": "geography",
+    "text": "איזה נהר עובר דרך בגדאד, בירת עיראק?",
+    "answer": "נהר חידקל"
+  },
+  {
+    "id": "he_geo_017",
+    "category": "geography",
+    "text": "מהי המדינה הקטנה בעולם?",
+    "answer": "קריית הוותיקן"
+  },
+  {
+    "id": "he_geo_018",
+    "category": "geography",
+    "text": "מהי בירת מצרים?",
+    "answer": "קהיר"
+  },
+  {
+    "id": "he_geo_019",
+    "category": "geography",
+    "text": "איזה נחל/נהר עובר בעיר תל אביב?",
+    "answer": "נחל הירקון"
+  },
+  {
+    "id": "he_geo_020",
+    "category": "geography",
+    "text": "מהי המדינה המאוכלסת ביותר בעולם?",
+    "answer": "הודו"
+  },
+  {
+    "id": "he_geo_021",
+    "category": "geography",
+    "text": "באיזה הר במצרים מקובל שמשה קיבל את לוחות הברית?",
+    "answer": "הר סיני"
+  },
+  {
+    "id": "he_geo_022",
+    "category": "geography",
+    "text": "מהי בירת ספרד?",
+    "answer": "מדריד"
+  },
+  {
+    "id": "he_geo_023",
+    "category": "geography",
+    "text": "מהו שם המפרץ שבו שוכנת אילת?",
+    "answer": "מפרץ אילת (מפרץ עקבה)"
+  },
+  {
+    "id": "he_geo_024",
+    "category": "geography",
+    "text": "מהי בירת בריטניה?",
+    "answer": "לונדון"
+  },
+  {
+    "id": "he_geo_025",
+    "category": "geography",
+    "text": "מהו הים שגובל בישראל ממערב?",
+    "answer": "הים התיכון"
+  },
+  {
+    "id": "he_geo_026",
+    "category": "geography",
+    "text": "מהי בירת רוסיה?",
+    "answer": "מוסקבה"
+  },
+  {
+    "id": "he_geo_027",
+    "category": "geography",
+    "text": "איזו מדינה כוללת את שוניות האלמוגים הגדולות בעולם?",
+    "answer": "אוסטרליה"
+  },
+  {
+    "id": "he_geo_028",
+    "category": "geography",
+    "text": "מהי היבשה הקרה ביותר בעולם?",
+    "answer": "אנטארקטיקה"
+  },
+  {
+    "id": "he_geo_029",
+    "category": "geography",
+    "text": "מהי העיר שנחשבת לבירתה הכלכלית של ישראל?",
+    "answer": "תל אביב"
+  },
+  {
+    "id": "he_geo_030",
+    "category": "geography",
+    "text": "מהו המיצר המפריד בין אירופה לאפריקה בנקודתו הצרה ביותר?",
+    "answer": "מיצר גיברלטר"
+  },
+  {
+    "id": "he_geo_031",
+    "category": "geography",
+    "text": "מהי המדינה הגדולה ביותר באפריקה משטח?",
+    "answer": "אלג'יריה"
+  },
+  {
+    "id": "he_geo_032",
+    "category": "geography",
+    "text": "מהי בירת מקסיקו?",
+    "answer": "מקסיקו סיטי"
+  },
+  {
+    "id": "he_geo_033",
+    "category": "geography",
+    "text": "כמה מחוזות (נפות) יש בישראל?",
+    "answer": "6"
+  },
+  {
+    "id": "he_geo_034",
+    "category": "geography",
+    "text": "מהי בירת דרום קוריאה?",
+    "answer": "סיאול"
+  },
+  {
+    "id": "he_geo_035",
+    "category": "geography",
+    "text": "איזה הר בגליל נחשב לגבוה בישראל (ללא רמת הגולן)?",
+    "answer": "הר מירון"
+  },
+  {
+    "id": "he_geo_036",
+    "category": "geography",
+    "text": "מהו המפל הגבוה בעולם?",
+    "answer": "מפל אנחל"
+  },
+  {
+    "id": "he_geo_037",
+    "category": "geography",
+    "text": "מהי בירת טורקיה?",
+    "answer": "אנקרה"
+  },
+  {
+    "id": "he_geo_038",
+    "category": "geography",
+    "text": "באיזו מדינה נמצא הר קילימנג'רו?",
+    "answer": "טנזניה"
+  },
+  {
+    "id": "he_geo_039",
+    "category": "geography",
+    "text": "מהי היבשה הקטנה בעולם משטח?",
+    "answer": "אוסטרליה"
+  },
+  {
+    "id": "he_geo_040",
+    "category": "geography",
+    "text": "מהי בירת הולנד?",
+    "answer": "אמסטרדם"
+  },
+  {
+    "id": "he_geo_041",
+    "category": "geography",
+    "text": "איזה נחל במדבר יהודה ידוע במפלי המים והנופים שלו ומהווה אתר תיירות מרכזי?",
+    "answer": "עין גדי"
+  },
+  {
+    "id": "he_geo_042",
+    "category": "geography",
+    "text": "מהי בירת ארגנטינה?",
+    "answer": "בואנוס איירס"
+  },
+  {
+    "id": "he_geo_043",
+    "category": "geography",
+    "text": "איזו עיר אמריקאית מכונה 'התפוח הגדול'?",
+    "answer": "ניו יורק"
+  },
+  {
+    "id": "he_geo_044",
+    "category": "geography",
+    "text": "מהי אגם המים המתוקים הגדול בעולם משטח?",
+    "answer": "אגם סופיריור"
+  },
+  {
+    "id": "he_geo_045",
+    "category": "geography",
+    "text": "מהי בירת יוון?",
+    "answer": "אתונה"
+  },
+  {
+    "id": "he_geo_046",
+    "category": "geography",
+    "text": "איזו מדינה בצורת מגף?",
+    "answer": "איטליה"
+  },
+  {
+    "id": "he_geo_047",
+    "category": "geography",
+    "text": "מהי בירת סין?",
+    "answer": "בייג'ינג"
+  },
+  {
+    "id": "he_geo_048",
+    "category": "geography",
+    "text": "איזה אוקיינוס נמצא בין אפריקה לאוסטרליה?",
+    "answer": "האוקיינוס ההודי"
+  },
+  {
+    "id": "he_geo_049",
+    "category": "geography",
+    "text": "מהי בירת פורטוגל?",
+    "answer": "ליסבון"
+  },
+  {
+    "id": "he_geo_050",
+    "category": "geography",
+    "text": "איזו מדינה אפריקאית נקראה בעבר אביסיניה?",
+    "answer": "אתיופיה"
+  },
+  {
+    "id": "he_geography_051",
+    "category": "geography",
+    "text": "מהו הגובה של ים המלח מתחת לפני הים?",
+    "answer": "כ-430 מטר"
+  },
+  {
+    "id": "he_geography_052",
+    "category": "geography",
+    "text": "איזו עיר ישראלית הגדולה ביותר בשטחה?",
+    "answer": "ירושלים"
+  },
+  {
+    "id": "he_geography_053",
+    "category": "geography",
+    "text": "מהי עיר הנמל הגדולה ביותר בישראל?",
+    "answer": "חיפה"
+  },
+  {
+    "id": "he_geography_054",
+    "category": "geography",
+    "text": "איזו מדינה גובלת בישראל ממזרח?",
+    "answer": "ירדן"
+  },
+  {
+    "id": "he_geography_055",
+    "category": "geography",
+    "text": "מהי הנקודה הגבוהה ביותר בישראל?",
+    "answer": "הר מירון"
+  },
+  {
+    "id": "he_geography_056",
+    "category": "geography",
+    "text": "מהי המדינה הקטנה ביותר באסיה?",
+    "answer": "ברוניי"
+  },
+  {
+    "id": "he_geography_057",
+    "category": "geography",
+    "text": "באיזו מדינה נמצא הרכס הגבוה ביותר באירופה?",
+    "answer": "הקווקז"
+  },
+  {
+    "id": "he_geography_058",
+    "category": "geography",
+    "text": "איזה נהר עובר דרך ירושלים?",
+    "answer": "נחל קדרון"
+  },
+  {
+    "id": "he_geography_059",
+    "category": "geography",
+    "text": "מהי המדינה הגדולה ביותר באפריקה?",
+    "answer": "אלג'יריה"
+  },
+  {
+    "id": "he_geography_060",
+    "category": "geography",
+    "text": "באיזו מדינה נמצא הסהר הפורה?",
+    "answer": "עיראק"
+  },
+  {
+    "id": "he_geography_061",
+    "category": "geography",
+    "text": "מהי עיר הבירה של לבנון?",
+    "answer": "ביירות"
+  },
+  {
+    "id": "he_geography_062",
+    "category": "geography",
+    "text": "איזו מדינה בעלת מספר האיים הרב ביותר?",
+    "answer": "שוודיה"
+  },
+  {
+    "id": "he_geography_063",
+    "category": "geography",
+    "text": "כמה גבולות יבשתיים יש לישראל?",
+    "answer": "5"
+  },
+  {
+    "id": "he_geography_064",
+    "category": "geography",
+    "text": "מהו האי הגדול ביותר בעולם?",
+    "answer": "גרינלנד"
+  },
+  {
+    "id": "he_geography_065",
+    "category": "geography",
+    "text": "איזה נחל עובר בעיר תל אביב?",
+    "answer": "ירקון"
+  },
+  {
+    "id": "he_geography_066",
+    "category": "geography",
+    "text": "מהי הנקודה הנמוכה ביותר על פני כדור הארץ?",
+    "answer": "חוף ים המלח"
+  },
+  {
+    "id": "he_geography_067",
+    "category": "geography",
+    "text": "מהי עיר הבירה של ירדן?",
+    "answer": "עמן"
+  },
+  {
+    "id": "he_geography_068",
+    "category": "geography",
+    "text": "כמה אגמים גדולים יוצרים את אגמי אפריקה?",
+    "answer": "7"
+  },
+  {
+    "id": "he_geography_069",
+    "category": "geography",
+    "text": "מהי המדינה הקטנה ביותר באירופה?",
+    "answer": "קריית הוותיקן"
+  },
+  {
+    "id": "he_geography_070",
+    "category": "geography",
+    "text": "באיזה הר נמצא מערת המכפלה?",
+    "answer": "הר חברון"
+  },
+  {
+    "id": "he_geography_071",
+    "category": "geography",
+    "text": "מהי עיר הבירה של מצרים?",
+    "answer": "קהיר"
+  },
+  {
+    "id": "he_geography_072",
+    "category": "geography",
+    "text": "איזו מדינה גובלת בישראל מצפון?",
+    "answer": "לבנון"
+  },
+  {
+    "id": "he_geography_073",
+    "category": "geography",
+    "text": "מהי עיר הבירה של טורקיה?",
+    "answer": "אנקרה"
+  },
+  {
+    "id": "he_geography_074",
+    "category": "geography",
+    "text": "באיזו מדינה נמצא הגולן?",
+    "answer": "סוריה"
+  },
+  {
+    "id": "he_geography_075",
+    "category": "geography",
+    "text": "מהי העיר הגדולה ביותר בדרום אמריקה?",
+    "answer": "סאו פאולו"
+  },
+  {
+    "id": "he_geography_076",
+    "category": "geography",
+    "text": "מהו המרחק האווירי מתל אביב לירושלים?",
+    "answer": "כ-60 ק\"מ"
+  },
+  {
+    "id": "he_geography_077",
+    "category": "geography",
+    "text": "מהי עיר הבירה של סוריה?",
+    "answer": "דמשק"
+  },
+  {
+    "id": "he_geography_078",
+    "category": "geography",
+    "text": "באיזו מדינה נמצא מדבר נגב?",
+    "answer": "ישראל"
+  },
+  {
+    "id": "he_geography_079",
+    "category": "geography",
+    "text": "מהי המדינה הגדולה ביותר בעולם?",
+    "answer": "רוסיה"
+  },
+  {
+    "id": "he_geography_080",
+    "category": "geography",
+    "text": "מהי עיר הבירה של עיראק?",
+    "answer": "בגדד"
+  }
 ]

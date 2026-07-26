@@ -57,7 +57,7 @@ export default function NotificationsScreen() {
       ) : notifications.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
           <Bell size={48} className="text-white/20" strokeWidth={1.5} />
-          <p className="text-white/40 text-sm text-center" style={{ fontFamily: 'var(--font-body)' }}>
+          <p className="text-white/50 text-sm text-center" style={{ fontFamily: 'var(--font-body)' }}>
             {t.notificationsEmpty}
           </p>
         </div>
@@ -96,7 +96,7 @@ export default function NotificationsScreen() {
                     >
                       {getNotifText(notif as any, t)}
                     </p>
-                    <p className="text-[11px] text-white/40 mt-0.5" style={{ fontFamily: 'var(--font-body)' }}>
+                    <p className="text-[11px] text-white/50 mt-0.5" style={{ fontFamily: 'var(--font-body)' }}>
                       {relativeTime(notif.createdAt)}
                     </p>
                   </div>

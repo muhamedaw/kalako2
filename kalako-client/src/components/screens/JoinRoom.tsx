@@ -49,14 +49,14 @@ export default function JoinRoom() {
       >
         <button
           onClick={() => setScreen('welcome')}
-          className="text-white/40 text-sm mb-4 hover:text-white/70 transition-colors cursor-pointer"
+          className="text-white/60 text-sm mb-4 hover:text-white/90 transition-colors cursor-pointer"
         >
           {t.back}
         </button>
 
-        <h2 className="text-2xl font-black text-gradient mb-6" style={{ fontFamily: 'var(--font-heading)' }}>
+        <h1 className="text-2xl font-black text-gradient mb-6" style={{ fontFamily: 'var(--font-heading)' }}>
           {t.joinRoomTitle}
-        </h2>
+        </h1>
 
         <div className={`flex flex-col gap-5 ${shaking ? 'animate-shake' : ''}`}>
           <Input

@@ -22,9 +22,9 @@ function lerpColor(a: string, b: string, t: number): string {
 
 function getTimerColor(ratio: number): string {
   if (ratio > 0.5) {
-    return lerpColor('#34E4EA', '#FFB627', 1 - (ratio - 0.5) / 0.5)
+    return lerpColor('#C6FF3D', '#FFB627', 1 - (ratio - 0.5) / 0.5)
   }
-  return lerpColor('#FFB627', '#FF4444', 1 - ratio / 0.5)
+  return lerpColor('#FFB627', '#FF3D7F', 1 - ratio / 0.5)
 }
 
 export default function ProgressRing({
@@ -43,7 +43,7 @@ export default function ProgressRing({
 
   return (
     <div className="relative inline-flex items-center justify-center" role="timer"         aria-label={t.timerAria.replace('{{seconds}}', String(Math.ceil(progress)))}>
-      <svg width={size} height={size} className="-rotate-90">
+      <svg width={size} height={size} className="-rotate-90" aria-hidden="true">
         <circle
           cx={size / 2}
           cy={size / 2}

@@ -22,26 +22,26 @@ export default function LogoHorizontal({ width = 1200, height = 360, className }
     >
       <SvgDefs />
       <circle cx={190} cy={180} r={170} fill="url(#gradHalo)" />
-      <g filter="url(#glowYellow)">
-        <rect x={60} y={60} width={240} height={240} rx={44} ry={44} fill="url(#gradBlueYellow)" stroke={COLORS.primary} strokeWidth={2} />
+      <g filter="url(#glowCoral)">
+        <rect x={60} y={60} width={240} height={240} rx={44} ry={44} fill="url(#gradCoralLime)" stroke={COLORS.primary} strokeWidth={2} />
         <rect x={70} y={70} width={220} height={220} rx={34} ry={34} fill="none" stroke="#FFFFFF" strokeOpacity={0.12} strokeWidth={1} />
         <text x={180} y={230} textAnchor="middle" fontFamily="Cairo, Tajawal, 'Noto Sans Arabic', system-ui, sans-serif" fontWeight={900} fontSize={180} fill="#FFFFFF" letterSpacing="-6">؟</text>
-        <circle cx={108} cy={116} r={5} fill={COLORS.success} filter="url(#glowGreen)" />
-        <circle cx={260} cy={260} r={4} fill={COLORS.warning} filter="url(#glowAmber)" />
+        <circle cx={108} cy={116} r={5} fill={COLORS.accentLime} filter="url(#glowLime)" />
+        <circle cx={260} cy={260} r={4} fill={COLORS.accentPink} filter="url(#glowCoral)" />
         <circle cx={116} cy={260} r={3} fill="#FFFFFF" opacity={0.9} />
       </g>
-      <g transform="translate(140,30)" filter="url(#glowAmber)">
-        <path d="M0,40 L20,0 L40,30 L60,0 L80,40 Z M0,40 L80,40 L80,52 L0,52 Z" fill={COLORS.warning} stroke="#FFFFFF" strokeWidth={2} strokeLinejoin="round" />
+      <g transform="translate(140,30)" filter="url(#glowGold)">
+        <path d="M0,40 L20,0 L40,30 L60,0 L80,40 Z M0,40 L80,40 L80,52 L0,52 Z" fill={COLORS.primary} stroke="#FFFFFF" strokeWidth={2} strokeLinejoin="round" />
         <circle cx={20} cy={0} r={6} fill={COLORS.primary} />
-        <circle cx={40} cy={20} r={5} fill={COLORS.success} />
-        <circle cx={60} cy={0} r={6} fill={COLORS.secondary} />
+        <circle cx={40} cy={20} r={5} fill={COLORS.accentLime} />
+        <circle cx={60} cy={0} r={6} fill={COLORS.accentPink} />
       </g>
-      <g filter="url(#glowYellow)">
-        <text x={380} y={200} fontFamily="Cairo, Tajawal, 'Noto Sans Arabic', system-ui, sans-serif" fontWeight={900} fontSize={120} fill="url(#gradYellowBlue)" letterSpacing="-2">تحدي الإجابات</text>
+      <g filter="url(#glowGold)">
+        <text x={380} y={200} fontFamily="Cairo, Tajawal, 'Noto Sans Arabic', system-ui, sans-serif" fontWeight={900} fontSize={120} fill="url(#gradLimeCoral)" letterSpacing="-2">تحدي الإجابات</text>
       </g>
-      <text x={380} y={260} fontFamily="Cairo, Tajawal, 'Noto Sans Arabic', system-ui, sans-serif" fontWeight={600} fontSize={34} fill="#E6DEFF" opacity={0.85}>لعبة خداع جماعية • Fibbage-style</text>
-      <g filter="url(#glowGreen)">
-        <rect x={380} y={280} width={160} height={6} rx={3} fill={COLORS.success} />
+      <text x={380} y={260} fontFamily="Cairo, Tajawal, 'Noto Sans Arabic', system-ui, sans-serif" fontWeight={600} fontSize={34} fill="#F5EDE4" opacity={0.85}>لعبة خداع جماعية • Fibbage-style</text>
+      <g filter="url(#glowLime)">
+        <rect x={380} y={280} width={160} height={6} rx={3} fill={COLORS.accentLime} />
       </g>
       <rect x={550} y={280} width={60} height={6} rx={3} fill={COLORS.primary} opacity={0.7} />
     </svg>

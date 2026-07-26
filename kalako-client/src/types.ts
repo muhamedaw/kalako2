@@ -15,6 +15,10 @@ export type Screen =
   | 'global_voting'
   | 'notifications'
   | 'profile'
+  | 'premium'
+  | 'legal_privacy'
+  | 'legal_terms'
+  | 'legal_refund'
 
 const CATEGORY_LABELS: Record<string, { ar: string; en: string; he: string }> = {
   general: { ar: 'عامة', en: 'General', he: 'כללי' },
@@ -25,6 +29,10 @@ const CATEGORY_LABELS: Record<string, { ar: string; en: string; he: string }> = 
   movies: { ar: 'أفلام', en: 'Movies', he: 'סרטים' },
   celebrities: { ar: 'مشاهير', en: 'Celebrities', he: 'סלבריטאים' },
   cooking: { ar: 'طبخ', en: 'Cooking', he: 'בישול' },
+  music: { ar: 'موسيقى', en: 'Music', he: 'מוזיקה' },
+  tech: { ar: 'تكنولوجيا', en: 'Technology', he: 'טכנולוגיה' },
+  mythology: { ar: 'أساطير', en: 'Mythology', he: 'מיתולוגיה' },
+  picture: { ar: 'جولة الصور', en: 'Picture Round', he: 'סיבוב תמונות' },
 }
 
 const CATEGORY_EMOJI: Record<string, string> = {
@@ -36,6 +44,10 @@ const CATEGORY_EMOJI: Record<string, string> = {
   movies: '🎬',
   celebrities: '⭐',
   cooking: '🍳',
+  music: '🎵',
+  tech: '💻',
+  mythology: '🏛️',
+  picture: '🖼️',
 }
 
 export const CATEGORIES = Object.keys(CATEGORY_LABELS).map((id) => ({
@@ -53,3 +65,55 @@ export function getCategoryEmoji(id: string): string {
 }
 
 export const AVATARS = ['🦊', '🐱', '🐶', '🦁', '🐸', '🐙', '🦄', '🐼', '🐧', '🐲', '🤖', '👾']
+
+// ─── Economy Types ───
+
+export interface InventoryItem {
+  itemId: string
+  equipped: boolean
+}
+
+export interface EconomyProfile {
+  deviceId: string
+  nickname: string
+  avatarConfig: { body: string; eyes: string; hat: string }
+  coins: number
+  inventory: InventoryItem[]
+  isPremium: boolean
+  premiumExpiresAt: string | null
+}
+
+export interface StoreItem {
+  id: string
+  type: 'avatar' | 'sound_pack' | 'frame'
+  name: string
+  description: string
+  price: number
+  previewId: string
+  premium?: boolean
+}
+
+export interface StoreSection {
+  type: 'avatar' | 'sound_pack' | 'frame'
+  title: string
+  description: string
+  items: StoreItem[]
+}
+
+export interface HallOfFameEntry {
+  id: string
+  answerText: string
+  questionText: string
+  category: string
+  voteCount: number
+  playerName: string
+  rank: number
+}
+
+export interface NotificationItem {
+  id: string
+  type: 'coins_earned'
+  payload: { amount: number }
+  read: boolean
+  createdAt: string
+}

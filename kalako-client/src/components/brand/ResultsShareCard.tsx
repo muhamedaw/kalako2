@@ -53,9 +53,9 @@ export default function ResultsShareCard({ playerName, score, rank, totalPlayers
     ctx.roundRect(12, 12, CARD_W - 24, CARD_H - 24, 16)
     ctx.fill()
 
-    ctx.shadowColor = COLORS.warning + '50'
+    ctx.shadowColor = COLORS.primary + '50'
     ctx.shadowBlur = 15
-    ctx.fillStyle = COLORS.warning
+    ctx.fillStyle = COLORS.primary
     ctx.beginPath()
     const cx = 108, cy = 78, s = 34
     ctx.moveTo(cx, cy - s)
@@ -76,11 +76,11 @@ export default function ResultsShareCard({ playerName, score, rank, totalPlayers
     ctx.font = 'bold 18px Cairo, Tajawal, sans-serif'
     ctx.textAlign = 'center'
     ctx.fillText(t.shareCardTitle, 108, 118)
-    ctx.fillStyle = COLORS.warning
+    ctx.fillStyle = COLORS.primary
     ctx.font = 'bold 12px Cairo, Tajawal, sans-serif'
     ctx.fillText(t.shareCardSubtitle, 108, 140)
 
-    const rankColors = ['#FFD700', '#C0C0C0', '#CD7F32', COLORS.success]
+    const rankColors = [COLORS.primary, '#C0C0C0', '#CD7F32', COLORS.success]
     const rankLabel = rank <= 3 ? t.shareCardRank.replace('{{rank}}', String(rank)) : `#${rank}`
     ctx.shadowColor = (rankColors[rank - 1] || COLORS.success) + '60'
     ctx.shadowBlur = 20

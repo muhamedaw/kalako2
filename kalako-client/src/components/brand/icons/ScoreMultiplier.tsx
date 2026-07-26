@@ -13,11 +13,11 @@ export default function ScoreMultiplier({ size = 64, className }: Props) {
       <defs>
         <linearGradient id="smGrad" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor={COLORS.primary} />
-          <stop offset="100%" stopColor={COLORS.warning} />
+          <stop offset="100%" stopColor={COLORS.accentLime} />
         </linearGradient>
         <filter id="smGlow">
           <feGaussianBlur stdDeviation="1.5" result="b" in="SourceGraphic" />
-          <feFlood floodColor={COLORS.warning} floodOpacity={0.8} />
+          <feFlood floodColor={COLORS.accentLime} floodOpacity={0.8} />
           <feComposite in2="b" operator="in" result="g" />
           <feMerge><feMergeNode in="g" /><feMergeNode in="SourceGraphic" /></feMerge>
         </filter>

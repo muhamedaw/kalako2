@@ -12,7 +12,7 @@ export default function SettingsGearButton({ onClick }: Props) {
       onClick={onClick}
       className="fixed top-4 start-4 z-50 w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
       style={{
-        background: '#1E60FF',
+        background: '#FF6B35',
         border: '4px solid #0A0A0A',
       }}
       aria-label={t.settingsTitle}

@@ -34,7 +34,7 @@ export default function HowToPlayPage() {
           >
             {t.howToPlayTitle}
           </h1>
-          <p className="text-white/40 text-sm">{t.howToPlayIntro}</p>
+          <p className="text-white/50 text-sm">{t.howToPlayIntro}</p>
         </div>
 
         {/* Steps */}
@@ -55,15 +55,15 @@ export default function HowToPlayPage() {
                 <div
                   className="w-11 h-11 rounded-full flex items-center justify-center text-lg"
                   style={{
-                    background: 'rgba(52,228,234,0.1)',
-                    border: '1.5px solid rgba(52,228,234,0.2)',
+                    background: 'rgba(255,107,53,0.1)',
+                    border: '1.5px solid rgba(255,107,53,0.2)',
                   }}
                 >
                   {STEP_ICONS[i]}
                 </div>
                 <span
                   className="text-[10px] font-bold"
-                  style={{ color: '#34E4EA', fontFamily: 'var(--font-heading)' }}
+                  style={{ color: '#FF6B35', fontFamily: 'var(--font-heading)' }}
                 >
                   {i + 1}
                 </span>
@@ -71,12 +71,12 @@ export default function HowToPlayPage() {
 
               {/* Text */}
               <div className="flex-1 min-w-0 pt-1">
-                <h3
+                <h2
                   className="text-base font-bold text-white mb-1"
                   style={{ fontFamily: 'var(--font-heading)' }}
                 >
                   {step.title}
-                </h3>
+                </h2>
                 <p
                   className="text-white/50 text-sm leading-relaxed"
                   style={{ fontFamily: 'var(--font-body)' }}

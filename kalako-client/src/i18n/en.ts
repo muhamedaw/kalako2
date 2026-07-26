@@ -8,6 +8,9 @@ const en: Translations = {
   navHome: 'Home',
   navHowToPlay: 'How to Play',
   navAbout: 'About',
+  navLegalPrivacy: 'Privacy Policy',
+  navLegalTerms: 'Terms of Service',
+  navLegalRefund: 'Refund Policy',
 
   navStore: 'Store',
   navVoting: 'Voting',
@@ -19,12 +22,14 @@ const en: Translations = {
   comingSoonSubtitle: "This feature is under construction — stay tuned!",
 
   settingsTitle: 'Settings',
+  settingsLegalLabel: 'Legal',
+  settingsCloseAria: 'Close settings',
 
   playOnline: 'Play Online',
   playCreatePrivate: 'Create Private Room',
 
   welcomeTitle: 'KALAKO',
-  welcomeSubtitle: 'A Fibbage-style party trivia game',
+  welcomeSubtitle: 'A party trivia game full of lies, bluffing, and laughs',
   createRoom: 'Create Room',
   joinRoom: 'Join with Code',
   welcomeTagline: 'Bring the lies, have fun with friends!',
@@ -92,11 +97,12 @@ const en: Translations = {
   answerPlaceholder: 'Type your answer here...',
   submitAnswer: 'Submit Answer',
   answerSubmitted: '✓ Your answer has been recorded',
+  answerScreenPictureRound: '📷 Picture Round',
   answeredCount: 'answered',
   charCount: '{{count}}/140',
 
-  answerRevisionTitle: 'Your answer is too obvious!',
-  answerRevisionBody: 'The question asks for a tricky answer. If your answer is too correct, opponents will spot it easily. Try a more deceptive answer.',
+  answerRevisionTitle: 'That might give you away!',
+  answerRevisionBody: 'The question calls for a sneaky answer. If yours is too accurate, opponents will spot it instantly. Try something more deceptive.',
   answerRevisionEditButton: 'Let me edit it',
   answerRevisionSubmitAnyway: 'Submit it anyway',
 
@@ -201,6 +207,176 @@ const en: Translations = {
   aboutCreditsTitle: 'Credits',
   aboutCreditsBody: 'Built with love, late-night coffee, and the open-source community. Special thanks to everyone who played, tested, and contributed ideas along the way.',
   playerDisconnected: 'Disconnected',
+
+  storeSectionAvatarsDesc: 'Express yourself with dozens of quirky character looks.',
+  storeSectionEffectsDesc: 'Win sounds, confetti bursts, and glorious victory vibes.',
+  storeSectionFramesDesc: 'Deck out your share cards with killer neon frames.',
+  storeItemSfxArcadeName: 'Arcade Classics',
+  storeItemSfxArcadeDesc: 'Old-school beeps, boops, and victory jingles.',
+  storeItemSfxRetroName: 'Retro Rewind',
+  storeItemSfxRetroDesc: 'Cassette pops, chiptune wins, and 8-bit glory.',
+  storeItemSfxSoftName: 'Smooth Operator',
+  storeItemSfxSoftDesc: 'Chill chimes, gentle pings, and zen vibes only.',
+  storeItemFrameGoldName: 'Gold Digger',
+  storeItemFrameGoldDesc: 'Shiny gold border that screams winner energy.',
+  storeItemFrameNeonName: 'Neon Nights',
+  storeItemFrameNeonDesc: 'Glowing neon frame — your card, but louder.',
+  storeItemFrameFireName: 'Fire Starter',
+  storeItemFrameFireDesc: 'Fiery frame for answers that absolutely slap.',
+  storeItemFrameRoyalName: 'Royal Flush',
+  storeItemFrameRoyalDesc: 'Purple and gold royalty for the true kings of lies.',
+  storeInsufficientFunds: 'Not enough coins yet — keep playing!',
+  storePurchaseSuccess: 'Nice! It\'s yours now.',
+  storeBuyButton: 'Buy',
+  storeOwnedLabel: 'Owned',
+  storeBuyCoinsTitle: 'Buy Coins',
+  storeBuyCoinsDesc: 'Top up your coin balance with a one-time purchase.',
+  storeTierSmallLabel: 'Starter Pack',
+  storeTierMediumLabel: 'Fun Pack',
+  storeTierLargeLabel: 'Mega Pack',
+  storeTierAmount: '{{coins}} coins',
+  storeTierPrice: '${{price}}',
+  storeTierMediumBonus: '+{{bonus}} bonus',
+  storeTierLargeBonus: '+{{bonus}} bonus',
+  storePaymentProcessing: 'Processing payment...',
+  storePaymentCancelled: 'Payment cancelled — no coins charged.',
+  storeCoinsPurchaseSuccess: '{{coins}} coins added! 🎉',
+  storeCancelButton: 'Cancel',
+  hallOfFameTitle: 'Hall of Fame',
+  hallOfFameSubtitle: 'The funniest lies that fooled the most people — voted by the community.',
+  hallOfFameVoteButton: 'Upvote',
+  hallOfFameEmpty: 'No legendary lies yet. Play a round and let the greatness begin!',
+  notificationsCoinsEarned: 'You earned {{amount}} coins! 🎉',
+  notificationsEmpty: 'No notifications yet.',
+  profileNicknameLabel: 'Nickname',
+  profileCoinsLabel: 'Coins',
+  profileInventoryTitle: 'Your Inventory',
+  profileEditButton: 'Edit',
+  profileSaveButton: 'Save',
+  profileCancelButton: 'Cancel',
+  profileEditAria: 'Edit nickname',
+  profileSaveAria: 'Save nickname',
+  profileCancelAria: 'Cancel editing',
+
+  appShortDescription: 'Lie, bluff, and outsmart your friends in a hilarious group trivia game.',
+  appLongDescription: 'Kalako is a social party game where the best liar wins. Write fake answers to trick your friends, vote on which answer you think is real, and score points for every person you fool. With 8 categories and endless laughs, it\'s the ultimate game night companion.',
+
+  legalPrivacyTitle: 'Privacy Policy',
+  legalPrivacyBody: `Last updated: July 2026
+
+DISCLAIMER: This is general-purpose privacy policy text for a small independent game. It has not been reviewed by a lawyer. We recommend professional legal review before scaling to real large-scale payment processing, especially given cross-border considerations (operator based in Israel, PayPal involves international users).
+
+What We Collect
+
+Kalako is a party trivia game that runs in your web browser. We keep data collection to a minimum:
+
+• Device ID — A random identifier generated and stored on your device. This is used to link your game profile (nickname, avatar, coins, items) across sessions. It is not your real identity and cannot be traced back to you personally.
+
+• Nickname — A name you choose yourself when creating a room. Not your real name.
+
+• Avatar choices — Visual customizations you select in the game.
+
+• Coin balance and purchase history — Tracks your in-game currency and cosmetic item purchases.
+
+• Real purchases — When you buy coins through PayPal, PayPal processes the payment. Kalako never sees, stores, or has access to your credit card number, bank account details, or PayPal password. PayPal sends us only a transaction confirmation (transaction ID and amount) so we can credit your coins.
+
+We do NOT collect: email addresses, real names, passwords, phone numbers, photos, location data, or browsing history.
+
+How We Use Your Data
+
+Your data is used solely to operate the game — creating rooms, tracking scores, managing your coin balance, and delivering purchased items. We do not sell, share, or trade your data with advertisers, data brokers, or third parties. PayPal receives only the minimum information necessary to process your payment.
+
+Where Your Data Is Stored
+
+Game data is stored on the operator's own server and locally on your device via browser storage. For real-money purchases, PayPal maintains its own transaction records according to PayPal's own privacy policy.
+
+Your Rights
+
+You can request deletion of all your data at any time by opening an issue at https://github.com/muhamedaw/kalako2/issues with the subject "Data Deletion Request" and mentioning your device ID. The operator will remove all associated data within 30 days.
+
+Changes to This Policy
+
+This privacy policy may be updated from time to time. Changes will be posted on the GitHub repository at https://github.com/muhamedaw/kalako2.`,
+
+  legalTermsTitle: 'Terms of Service',
+  legalTermsBody: `Last updated: July 2026
+
+DISCLAIMER: This is general-purpose terms of service text for a small independent game. It has not been reviewed by a lawyer. We recommend professional legal review before scaling to real large-scale payment processing, especially given cross-border considerations (operator based in Israel, PayPal involves international users).
+
+About the Service
+
+Kalako is a free online party trivia and bluffing game. It is designed for a general audience. A family-friendly content filter is available and can be enabled when creating a room.
+
+User Conduct
+
+Players choose their own nicknames and write answers during gameplay. You agree to keep all content respectful. No harassment, hate speech, slurs, sexually explicit content, or content that targets individuals or groups. The operator reserves the right to remove inappropriate content and ban players who repeatedly violate these standards.
+
+Virtual Coins
+
+Coins earned by playing have no real-world cash value. They cannot be exchanged for money, transferred to other players, or refunded. Coins exist solely as an in-game currency for purchasing cosmetic items.
+
+Purchases
+
+Real-money coin purchases are processed through PayPal. PayPal's own terms of service apply to the payment transaction. Kalako does not guarantee uninterrupted payment processing and is not responsible for PayPal-side issues.
+
+Service Availability
+
+The game is provided "as-is" without warranties of any kind. We do not guarantee uninterrupted uptime or error-free operation. The operator reserves the right to modify, suspend, or discontinue features at any time without prior notice.
+
+Disputes
+
+Any disputes arising from use of the game should be raised directly with the operator via GitHub issues at https://github.com/muhamedaw/kalako2/issues. These terms are governed by the laws of the State of Israel.`,
+
+  legalRefundTitle: 'Refund Policy',
+  legalRefundBody: `Last updated: July 2026
+
+DISCLAIMER: This is general-purpose refund policy text for a small independent game. It has not been reviewed by a lawyer. We recommend professional legal review before scaling to real large-scale payment processing, especially given cross-border considerations (operator based in Israel, PayPal involves international users).
+
+General Policy
+
+Coin purchases in Kalako are digital goods delivered immediately to your game account. Once coins have been credited to your account, purchases are generally non-refundable.
+
+Exceptions
+
+If you experience a genuine technical error — for example, your PayPal account was charged but the coins were not delivered to your game account — please contact the operator. The operator will investigate and correct verified errors within 7 business days.
+
+PayPal Disputes
+
+If you believe a payment was made in error, you may also open a dispute through PayPal's own resolution process. PayPal's buyer protection policies apply to the payment transaction independently of this refund policy.
+
+Contact
+
+To request a refund or report a payment issue, open an issue at https://github.com/muhamedaw/kalako2/issues with the subject "Refund Request" and include your transaction details. The operator will respond within 7 business days.
+
+Fair Note
+
+The operator is committed to resolving genuine issues fairly. While refunds are not guaranteed beyond what is described above, the operator will review each case individually.`,
+
+  gameOverShareNudge: 'Rank {{rank}} out of {{totalPlayers}} — save your card and show them who won.',
+  hallOfFameShareCaption: 'I fooled {{trickedCount}} people with this lie on Kalako — think you can do better?',
+  lobbyInviteNudge: 'More players, more lies to untangle. Invite someone before you start.',
+
+  navPremium: 'Premium',
+  premiumBadgeAria: 'Premium member',
+  premiumScreenTitle: 'Kalako Premium',
+  premiumTagline: 'Play like a VIP. Your lies deserve a bigger stage.',
+  premiumMonthlyLabel: 'Monthly',
+  premiumYearlyLabel: 'Yearly',
+  premiumYearlySavings: 'Save 44%',
+  premiumSubscribeButton: 'Get Premium',
+  premiumCurrentPlanLabel: 'You\'re Premium',
+  premiumCancelButton: 'Cancel',
+  premiumExpiresLabel: 'Expires {{date}}',
+  premiumNotAvailable: '',
+  premiumFeature1: 'Every future expansion pack, included — picture rounds, new categories, and more, without spending a single coin.',
+  premiumFeature2: '500 bonus coins dropped into your account every month you\'re subscribed. Fuel for your best bluffs.',
+  premiumFeature3: '3 exclusive cosmetic items you literally cannot get any other way — hat, eyes, and a frame that scream Premium.',
+  premiumFeature4: 'Host rooms of up to 30 players instead of 20. More people to fool, more chaos to enjoy.',
+  premiumFeature5: 'A shiny Premium badge follows you into every lobby, every result screen, every leaderboard. Let them know who they\'re dealing with.',
+  premiumLockedBadge: 'Premium',
+  premiumUpsellNudge: 'That one\'s a Premium perk — worth a look?',
+  premiumMonthlyPrice: '$2.99/mo',
+  premiumYearlyPrice: '$19.99/yr',
 }
 
 export default en

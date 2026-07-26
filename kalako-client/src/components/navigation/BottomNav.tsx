@@ -24,20 +24,14 @@ const SCREEN_TO_TAB: Partial<Record<Screen, Tab>> = {
   profile: 'profile',
 }
 
-// Hardcoded for now — no real unread-notifications feature exists yet.
-const hasUnread = false
-
 export default function BottomNav() {
   const { activeTab, setActiveTab } = useNavigationStore()
-  const { screen, setScreen } = useGameStore()
+  const { screen, setScreen, unreadCount } = useGameStore()
   const t = useTranslation()
 
-  // Keep the highlighted tab in sync if the screen changes through some other path
-  // (e.g. Lobby's "leave room" button going straight back to 'welcome').
   useEffect(() => {
     const mapped = SCREEN_TO_TAB[screen]
     if (mapped && mapped !== activeTab) setActiveTab(mapped)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [screen])
 
   const go = (tab: Tab) => {
@@ -61,7 +55,7 @@ export default function BottomNav() {
       <div
         className="w-full px-2 flex items-end justify-around"
         style={{
-          background: '#1E60FF',
+          background: '#4A2D53',
           borderTop: '4px solid #0A0A0A',
         }}
       >
@@ -81,7 +75,7 @@ export default function BottomNav() {
                   whileTap={{ scale: 0.92 }}
                   className="-translate-y-4 w-16 h-16 rounded-full flex items-center justify-center"
                   style={{
-                    background: '#FFD400',
+                    background: '#FF6B35',
                     border: '4px solid #0A0A0A',
                     boxShadow: '6px 6px 0 #0A0A0A',
                   }}
@@ -104,8 +98,10 @@ export default function BottomNav() {
             >
               <span className="relative">
                 <Icon size={22} className={isActive ? 'text-primary' : 'text-white/50'} strokeWidth={2} />
-                {tab === 'notifications' && hasUnread && (
-                  <span className="absolute -top-0.5 -end-0.5 w-2 h-2 rounded-full bg-red-500" />
+                {tab === 'notifications' && unreadCount > 0 && (
+                  <span className="absolute -top-1 -end-1 min-w-[16px] h-4 rounded-full bg-red-500 border-2 border-[#0A0A0A] flex items-center justify-center px-0.5">
+                    <span className="text-[9px] font-black text-white leading-none">{unreadCount > 9 ? '9+' : unreadCount}</span>
+                  </span>
                 )}
               </span>
               <span className={`text-[11px] font-medium ${isActive ? 'text-primary' : 'text-white/50'}`}>

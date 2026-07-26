@@ -1,0 +1,632 @@
+[
+  {
+    "id": "pic_001",
+    "category": "geography",
+    "questionText": {
+      "en": "Which landmark is this?",
+      "ar": "أي معلم هذا؟",
+      "he": "איזה אתר זה?"
+    },
+    "correctAnswer": {
+      "en": "Eiffel Tower",
+      "ar": "برج إيفل",
+      "he": "מגדל אייפל"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Tour_Eiffel_Wikimedia_Commons.jpg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Benh LIEU SONG, CC BY-SA 3.0",
+    "difficulty": "easy"
+  },
+  {
+    "id": "pic_002",
+    "category": "geography",
+    "questionText": {
+      "en": "Which monument is this?",
+      "ar": "أي نصب تذكاري هذا؟",
+      "he": "איזה אנדרטה זו?"
+    },
+    "correctAnswer": {
+      "en": "Taj Mahal",
+      "ar": "تاج محل",
+      "he": "טאג' מאהל"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/b/bd/Taj_Mahal%2C_Agra%2C_India_edit3.jpg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Yann / King of Hearts / Jbarta, CC BY-SA 3.0",
+    "difficulty": "easy"
+  },
+  {
+    "id": "pic_003",
+    "category": "geography",
+    "questionText": {
+      "en": "Which landmark is this?",
+      "ar": "أي معلم هذا؟",
+      "he": "איזה אתר זה?"
+    },
+    "correctAnswer": {
+      "en": "Statue of Liberty",
+      "ar": "تمثال الحرية",
+      "he": "פסל החירות"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a1/Statue_of_Liberty_7.jpg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Elcobbola, CC BY-SA 3.0",
+    "difficulty": "easy"
+  },
+  {
+    "id": "pic_004",
+    "category": "geography",
+    "questionText": {
+      "en": "Which mountain is this?",
+      "ar": "أي جبل هذا؟",
+      "he": "איזה הר זה?"
+    },
+    "correctAnswer": {
+      "en": "Mount Fuji",
+      "ar": "جبل فوجي",
+      "he": "הר פוג'י"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1b/Mount_Fuji_from_Hotel_Mt_Fuji_1995-2-7.jpg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Alpsdake, CC0",
+    "difficulty": "easy"
+  },
+  {
+    "id": "pic_005",
+    "category": "geography",
+    "questionText": {
+      "en": "Which structure is this?",
+      "ar": "أي هيكل هذا؟",
+      "he": "איזה מבנה זה?"
+    },
+    "correctAnswer": {
+      "en": "Great Wall of China",
+      "ar": "سور الصين العظيم",
+      "he": "החומה הגדולה של סין"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a9/20090529_Great_Wall_8185.jpg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Jakub Hałun, CC BY-SA 3.0",
+    "difficulty": "easy"
+  },
+  {
+    "id": "pic_006",
+    "category": "geography",
+    "questionText": {
+      "en": "Which building is this?",
+      "ar": "أي مبنى هذا؟",
+      "he": "איזה בניין זה?"
+    },
+    "correctAnswer": {
+      "en": "Sydney Opera House",
+      "ar": "دار أوبرا سيدني",
+      "he": "בית האופרה של סידני"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Sydney_Opera_House_and_Harbour_Bridge_Dusk_%282%29_2019-06-21.jpg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Benh LIEU SONG, CC BY-SA 4.0",
+    "difficulty": "easy"
+  },
+  {
+    "id": "pic_007",
+    "category": "geography",
+    "questionText": {
+      "en": "Which ancient structure is this?",
+      "ar": "أي هيكل قديم هذا؟",
+      "he": "איזה מבנה עתיק זה?"
+    },
+    "correctAnswer": {
+      "en": "Colosseum",
+      "ar": "الكولوسيوم",
+      "he": "הקולוסיאום"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/d/de/Colosseum_in_Rome-April_2007-1-_copie_2B.jpg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Diliff, CC BY-SA 2.5",
+    "difficulty": "medium"
+  },
+  {
+    "id": "pic_008",
+    "category": "geography",
+    "questionText": {
+      "en": "Which ancient building is this?",
+      "ar": "أي مبنى قديم هذا؟",
+      "he": "איזה מבנה עתיק זה?"
+    },
+    "correctAnswer": {
+      "en": "Al-Khazneh (The Treasury)",
+      "ar": "الخزانة",
+      "he": "אל-ח'זנה"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b7/Petra_Jordan_BW_21.JPG",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Berthold Werner, CC BY-SA 3.0",
+    "difficulty": "medium"
+  },
+  {
+    "id": "pic_009",
+    "category": "geography",
+    "questionText": {
+      "en": "Which statue is this?",
+      "ar": "أي تمثال هذا؟",
+      "he": "איזה פסל זה?"
+    },
+    "correctAnswer": {
+      "en": "Christ the Redeemer",
+      "ar": "المسيح الفادي",
+      "he": "פסל ישו הגואל"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4f/Cristo_Redentor_-_Rio_de_Janeiro%2C_Brasil.jpg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Nico Kaiser, CC BY 2.0",
+    "difficulty": "easy"
+  },
+  {
+    "id": "pic_010",
+    "category": "geography",
+    "questionText": {
+      "en": "Which pyramid is this?",
+      "ar": "أي أهرامات هذا؟",
+      "he": "איזה פירמידה זו?"
+    },
+    "correctAnswer": {
+      "en": "El Castillo",
+      "ar": "إل كاستيلو",
+      "he": "אל קסטילו"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/51/Chichen_Itza_3.jpg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Daniel Schwen, CC BY-SA 4.0",
+    "difficulty": "medium"
+  },
+  {
+    "id": "pic_011",
+    "category": "history",
+    "questionText": {
+      "en": "Who is this?",
+      "ar": "من هذا؟",
+      "he": "מי זה?"
+    },
+    "correctAnswer": {
+      "en": "Leonardo da Vinci",
+      "ar": "ليوناردو دافنشي",
+      "he": "לאונרדו דה וינצ'י"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b7/Leonardo_da_Vinci_-_presumed_self-portrait_-_WGA12798.jpg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Leonardo da Vinci, Public Domain",
+    "difficulty": "medium"
+  },
+  {
+    "id": "pic_012",
+    "category": "history",
+    "questionText": {
+      "en": "Who is this?",
+      "ar": "من هذا؟",
+      "he": "מי זה?"
+    },
+    "correctAnswer": {
+      "en": "Cleopatra",
+      "ar": "كليوباترا",
+      "he": "קליאופטרה"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Cleopatra_and_Caesar_by_Jean-Leon_Gerome.jpg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Jean-Léon Gérôme, Public Domain",
+    "difficulty": "medium"
+  },
+  {
+    "id": "pic_013",
+    "category": "history",
+    "questionText": {
+      "en": "Who is this?",
+      "ar": "من هذا؟",
+      "he": "מי זה?"
+    },
+    "correctAnswer": {
+      "en": "Albert Einstein",
+      "ar": "ألبرت آينشتاين",
+      "he": "אלברט איינשטיין"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d3/Albert_Einstein_1947.jpg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Oren Jack Turner, Public Domain",
+    "difficulty": "easy"
+  },
+  {
+    "id": "pic_014",
+    "category": "history",
+    "questionText": {
+      "en": "Who is this?",
+      "ar": "من هذا؟",
+      "he": "מי זה?"
+    },
+    "correctAnswer": {
+      "en": "Amelia Earhart",
+      "ar": "أميليا إيرهارت",
+      "he": "אמיליה ארהארט"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Amelia_Earhart_LOC_hec.40747.jpg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Harris & Ewing, Public Domain",
+    "difficulty": "medium"
+  },
+  {
+    "id": "pic_015",
+    "category": "history",
+    "questionText": {
+      "en": "Who is this?",
+      "ar": "من هذا؟",
+      "he": "מי זה?"
+    },
+    "correctAnswer": {
+      "en": "Nikola Tesla",
+      "ar": "نيكولا تسلا",
+      "he": "ניקולה טסלה"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/79/Tesla_circa_1890.jpeg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Napoleon Sarony, Public Domain",
+    "difficulty": "medium"
+  },
+  {
+    "id": "pic_016",
+    "category": "history",
+    "questionText": {
+      "en": "Who is this?",
+      "ar": "من هذا؟",
+      "he": "מי זה?"
+    },
+    "correctAnswer": {
+      "en": "Frida Kahlo",
+      "ar": "فريدا كاهلو",
+      "he": "פרידה קאלו"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2a/Frida_Kahlo_%28self_portrait%29.jpg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Frida Kahlo, Public Domain",
+    "difficulty": "medium"
+  },
+  {
+    "id": "pic_017",
+    "category": "history",
+    "questionText": {
+      "en": "Who is this?",
+      "ar": "من هذا؟",
+      "he": "מי זה?"
+    },
+    "correctAnswer": {
+      "en": "Mahatma Gandhi",
+      "ar": "المهاتما غاندي",
+      "he": "מהאטמה גנדי"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/78/Gandhi_smiling.jpg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Unknown, Public Domain",
+    "difficulty": "easy"
+  },
+  {
+    "id": "pic_018",
+    "category": "history",
+    "questionText": {
+      "en": "Who is this?",
+      "ar": "من هذا؟",
+      "he": "מי זה?"
+    },
+    "correctAnswer": {
+      "en": "Marie Curie",
+      "ar": "ماري كوري",
+      "he": "מארי קירי"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Marie_Curie_c._1920s.jpg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Henri Manuel, Public Domain",
+    "difficulty": "medium"
+  },
+  {
+    "id": "pic_019",
+    "category": "history",
+    "questionText": {
+      "en": "Who is this?",
+      "ar": "من هذا؟",
+      "he": "מי זה?"
+    },
+    "correctAnswer": {
+      "en": "Napoleon Bonaparte",
+      "ar": "نابليون بونابرت",
+      "he": "נפוליאון בונפרטה"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/50/Jacques-Louis_David_-_The_Emperor_Napoleon_in_His_Study_at_the_Tuileries_-_Google_Art_Project.jpg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Jacques-Louis David, Public Domain",
+    "difficulty": "medium"
+  },
+  {
+    "id": "pic_020",
+    "category": "history",
+    "questionText": {
+      "en": "Who is this?",
+      "ar": "من هذا؟",
+      "he": "מי זה?"
+    },
+    "correctAnswer": {
+      "en": "Abraham Lincoln",
+      "ar": "أبراهام لينكولن",
+      "he": "אברהם לינקולן"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/eb/Abraham_Lincoln_O-77_matte_collodion_print.jpg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Alexander Gardner, Public Domain",
+    "difficulty": "easy"
+  },
+  {
+    "id": "pic_021",
+    "category": "animals",
+    "questionText": {
+      "en": "What animal is this?",
+      "ar": "أي حيوان هذا؟",
+      "he": "איזה חיה זו?"
+    },
+    "correctAnswer": {
+      "en": "Red Panda",
+      "ar": "باندا أحمر",
+      "he": "פנדה אדומה"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Red_panda_in_a_tree.jpg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "redpandasrule, CC BY-SA 2.0",
+    "difficulty": "medium"
+  },
+  {
+    "id": "pic_022",
+    "category": "animals",
+    "questionText": {
+      "en": "What animal is this?",
+      "ar": "أي حيوان هذا؟",
+      "he": "איזה חיה זו?"
+    },
+    "correctAnswer": {
+      "en": "Axolotl",
+      "ar": "أكсолوتل",
+      "he": "אקסולוטל"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Axolotl_ganz.jpg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "LoKiLeCh, CC BY-SA 3.0",
+    "difficulty": "medium"
+  },
+  {
+    "id": "pic_023",
+    "category": "animals",
+    "questionText": {
+      "en": "What bird is this?",
+      "ar": "أي طائر هذا؟",
+      "he": "איזה ציפור זו?"
+    },
+    "correctAnswer": {
+      "en": "Peacock",
+      "ar": "طاووس",
+      "he": "טווס"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Peacock_Plumage.jpg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Jatin Sindhu, CC BY-SA 4.0",
+    "difficulty": "easy"
+  },
+  {
+    "id": "pic_024",
+    "category": "animals",
+    "questionText": {
+      "en": "What animal is this?",
+      "ar": "أي حيوان هذا؟",
+      "he": "איזה חיה זו?"
+    },
+    "correctAnswer": {
+      "en": "Pangolin",
+      "ar": "بنغولين",
+      "he": "פנגולין"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/44/Manis_temminckii_%2829390603130%29.jpg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Wikimedia Commons contributor, CC BY-SA 2.0",
+    "difficulty": "hard"
+  },
+  {
+    "id": "pic_025",
+    "category": "animals",
+    "questionText": {
+      "en": "What animal is this?",
+      "ar": "أي حيوان هذا؟",
+      "he": "איזה חיה זו?"
+    },
+    "correctAnswer": {
+      "en": "Quokka",
+      "ar": "كووكا",
+      "he": "קווקה"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4d/Quokka_at_rottnest_%28cropped%29.jpg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Wikimedia Commons contributor, CC BY-SA 4.0",
+    "difficulty": "hard"
+  },
+  {
+    "id": "pic_026",
+    "category": "animals",
+    "questionText": {
+      "en": "What animal is this?",
+      "ar": "أي حيوان هذا؟",
+      "he": "איזה חיה זו?"
+    },
+    "correctAnswer": {
+      "en": "Tarsier",
+      "ar": "تارسير",
+      "he": "טרסייר"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ed/Bohol_Tarsier.jpg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Wikimedia Commons contributor, CC BY-SA 4.0",
+    "difficulty": "hard"
+  },
+  {
+    "id": "pic_027",
+    "category": "animals",
+    "questionText": {
+      "en": "What animal is this?",
+      "ar": "أي حيوان هذا؟",
+      "he": "איזה חיה זו?"
+    },
+    "correctAnswer": {
+      "en": "Leafy Sea Dragon",
+      "ar": "تنين بحري ورقي",
+      "he": "דרקון ים עלי"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b1/Leafy_Sea_Dragon_SA.jpg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Wikimedia Commons contributor, CC BY-SA 3.0",
+    "difficulty": "hard"
+  },
+  {
+    "id": "pic_028",
+    "category": "animals",
+    "questionText": {
+      "en": "What animal is this?",
+      "ar": "أي حيوان هذا؟",
+      "he": "איזה חיה זו?"
+    },
+    "correctAnswer": {
+      "en": "Okapi",
+      "ar": "أوكبي",
+      "he": "אוקאפי"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/17/Okapi_%28Okapia_johnstoni%29_2009-04-04_04.jpg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Wikimedia Commons contributor, CC BY-SA 4.0",
+    "difficulty": "hard"
+  },
+  {
+    "id": "pic_029",
+    "category": "animals",
+    "questionText": {
+      "en": "What primate is this?",
+      "ar": "أي رئيسي هذا؟",
+      "he": "איזה פרימט זה?"
+    },
+    "correctAnswer": {
+      "en": "Mandrill",
+      "ar": "ماندريل",
+      "he": "מנדראיל"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/75/Male_Mandrill.jpg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Wikimedia Commons contributor, CC BY-SA 3.0",
+    "difficulty": "medium"
+  },
+  {
+    "id": "pic_030",
+    "category": "animals",
+    "questionText": {
+      "en": "What animal is this?",
+      "ar": "أي حيوان هذا؟",
+      "he": "איזה חיה זו?"
+    },
+    "correctAnswer": {
+      "en": "Fennec Fox",
+      "ar": "ثعلب الفنек",
+      "he": "שועל פנק"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/99/Fennec_Fox_Vulpes_zerda.jpg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Wikimedia Commons contributor, CC BY-SA 3.0",
+    "difficulty": "medium"
+  },
+  {
+    "id": "pic_031",
+    "category": "flags",
+    "questionText": {
+      "en": "Which country's flag is this?",
+      "ar": "أي بلد علمه هذا؟",
+      "he": "של איזו מדינה הדגל הזה?"
+    },
+    "correctAnswer": {
+      "en": "Japan",
+      "ar": "اليابان",
+      "he": "יפן"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/en/9/9e/Flag_of_Japan.svg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Public Domain",
+    "difficulty": "easy"
+  },
+  {
+    "id": "pic_032",
+    "category": "flags",
+    "questionText": {
+      "en": "Which country's flag is this?",
+      "ar": "أي بلد علمه هذا؟",
+      "he": "של איזו מדינה הדגל הזה?"
+    },
+    "correctAnswer": {
+      "en": "Brazil",
+      "ar": "البرازيل",
+      "he": "ברזיל"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/en/0/05/Flag_of_Brazil.svg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Public Domain",
+    "difficulty": "easy"
+  },
+  {
+    "id": "pic_033",
+    "category": "flags",
+    "questionText": {
+      "en": "Which country's flag is this?",
+      "ar": "أي بلد علمه هذا؟",
+      "he": "של איזו מדינה הדגל הזה?"
+    },
+    "correctAnswer": {
+      "en": "Canada",
+      "ar": "كندا",
+      "he": "קנדה"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/en/c/cf/Flag_of_Canada.svg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Public Domain",
+    "difficulty": "easy"
+  },
+  {
+    "id": "pic_034",
+    "category": "flags",
+    "questionText": {
+      "en": "Which country's flag is this?",
+      "ar": "أي بلد علمه هذا؟",
+      "he": "של איזו מדינה הדגל הזה?"
+    },
+    "correctAnswer": {
+      "en": "Egypt",
+      "ar": "مصر",
+      "he": "מצרים"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Flag_of_Egypt.svg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Public Domain",
+    "difficulty": "easy"
+  },
+  {
+    "id": "pic_035",
+    "category": "flags",
+    "questionText": {
+      "en": "Which country's flag is this?",
+      "ar": "أي بلد علمه هذا؟",
+      "he": "של איזו מדינה הדגל הזה?"
+    },
+    "correctAnswer": {
+      "en": "South Korea",
+      "ar": "كوريا الجنوبية",
+      "he": "דרום קוריאה"
+    },
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/en/0/09/Flag_of_South_Korea.svg",
+    "imageUrlStatus": "UNVERIFIED — confirm resolves before going live",
+    "sourceAttribution": "Public Domain",
+    "difficulty": "easy"
+  }
+]

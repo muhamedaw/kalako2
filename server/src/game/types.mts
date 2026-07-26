@@ -28,6 +28,8 @@ export interface Player {
   isHost: boolean
   connected: boolean
   disconnectTimer: NodeJS.Timeout | null
+  /** client-generated persistent id (localStorage), used to credit the guest-profile economy at game end. Optional: older/no-profile clients simply earn no coins. */
+  deviceId: string | null
 }
 
 export interface Question {
@@ -36,6 +38,8 @@ export interface Question {
   text: string
   answer: string
   ageRating: 'family' | 'adult'
+  imageUrl?: string
+  sourceAttribution?: string
 }
 
 export interface SubmittedAnswer {
@@ -84,4 +88,6 @@ export interface RoomState {
   voteTimer: NodeJS.Timeout | null
   history: RoundRecord[]
   createdAt: number
+  /** playerId -> count of rounds this game where they voted CORRECT. Drives the "+5 coins per round guessed correctly" formula at game end. */
+  correctGuessCounts: Map<string, number>
 }

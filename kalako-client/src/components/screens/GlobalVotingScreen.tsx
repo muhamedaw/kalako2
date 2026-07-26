@@ -26,7 +26,7 @@ function persistVoted(entryId: string) {
 }
 
 const RANK_STYLES: Record<number, { icon: typeof Trophy; color: string; label: string }> = {
-  1: { icon: Crown, color: '#FFD400', label: '🥇' },
+  1: { icon: Crown, color: '#FF6B35', label: '🥇' },
   2: { icon: Medal, color: '#C0C0C0', label: '🥈' },
   3: { icon: Medal, color: '#CD7F32', label: '🥉' },
 }
@@ -70,7 +70,7 @@ export default function GlobalVotingScreen() {
       ) : hallOfFame.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
           <Trophy size={48} className="text-white/20" strokeWidth={1.5} />
-          <p className="text-white/40 text-sm text-center" style={{ fontFamily: 'var(--font-body)' }}>
+          <p className="text-white/50 text-sm text-center" style={{ fontFamily: 'var(--font-body)' }}>
             {t.hallOfFameEmpty}
           </p>
         </div>
@@ -97,7 +97,7 @@ export default function GlobalVotingScreen() {
                     {rankStyle ? (
                       <rankStyle.icon size={18} color={rankStyle.color} strokeWidth={2.5} />
                     ) : (
-                      <span className="text-white/40">#{rank}</span>
+                      <span className="text-white/50">#{rank}</span>
                     )}
                   </div>
 
@@ -108,7 +108,7 @@ export default function GlobalVotingScreen() {
                     >
                       "{entry.answerText}"
                     </p>
-                    <p className="text-[11px] text-white/40 mt-0.5" style={{ fontFamily: 'var(--font-body)' }}>
+                    <p className="text-[11px] text-white/50 mt-0.5" style={{ fontFamily: 'var(--font-body)' }}>
                       {getCategoryEmoji(entry.category)} {entry.playerName}
                     </p>
                     <div className="flex items-center gap-2 mt-1.5">

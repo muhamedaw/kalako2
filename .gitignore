@@ -42,3 +42,5 @@ screenshot-*.png
 
 # Knowledge graph (regenerable via graphify)
 graphify-out/
+
+.vercel

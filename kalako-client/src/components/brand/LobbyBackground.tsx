@@ -45,6 +45,7 @@ export default function LobbyBackground({ className, animated = true }: Props) {
           .s2 { animation-delay: 0.8s; }
           .s3 { animation-delay: 1.4s; }
           .s4 { animation-delay: 2.1s; }
+          @media (prefers-reduced-motion: reduce) { .flA,.flB,.flC,.flD,.star { animation: none !important; } }
         `}</style>
       )}
       <rect width={1080} height={1920} fill="url(#bgGrad)" />
@@ -58,7 +59,7 @@ export default function LobbyBackground({ className, animated = true }: Props) {
         <ellipse className={animated ? 'flC' : ''} cx={220} cy={1500} rx={320} ry={260} fill={COLORS.success} />
       </g>
       <g filter="url(#bgBlob)" opacity={0.45}>
-        <ellipse className={animated ? 'flD' : ''} cx={880} cy={1700} rx={280} ry={220} fill={COLORS.warning} />
+        <ellipse className={animated ? 'flD' : ''} cx={880} cy={1700} rx={280} ry={220} fill={COLORS.primary} />
       </g>
       <g>
         <circle className="star" cx={120} cy={780} r={3} fill="#FFFFFF" />

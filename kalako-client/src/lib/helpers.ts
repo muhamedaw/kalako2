@@ -6,7 +6,7 @@ export async function captureScreenshot(elementId: string) {
   if (!el) return
   try {
     const dataUrl = await toPng(el, {
-      backgroundColor: '#0F172A',
+      backgroundColor: '#241528',
       pixelRatio: 2,
       width: 400,
       style: { direction: 'rtl' },
@@ -24,7 +24,7 @@ export function fireConfetti() {
   const duration = 3000
   const end = Date.now() + duration
 
-  const colors = ['#2DD4BF', '#0EA5E9', '#10B981', '#F59E0B', '#38BDF8']
+  const colors = ['#FF6B35', '#C6FF3D', '#FF4081', '#FF3D7F', '#F5EDE4']
 
   const frame = () => {
     confetti({

@@ -28,8 +28,8 @@ export default function BlindVote({ size = 64, className }: Props) {
       <rect x={14} y={36} width={36} height={20} rx={4} fill="none" stroke={COLORS.secondary} strokeWidth={2.5} filter="url(#bvGlow)" />
       <line x1={20} y1={44} x2={44} y2={44} stroke={COLORS.secondary} strokeWidth={2} />
       <line x1={32} y1={36} x2={32} y2={56} stroke={COLORS.secondary} strokeWidth={2} />
-      <circle cx={32} cy={20} r={20} fill="none" stroke={COLORS.warning} strokeWidth={1.5} strokeDasharray="3 3" opacity={0.7} />
-      <line x1={12} y1={8} x2={52} y2={34} stroke={COLORS.warning} strokeWidth={2.5} strokeLinecap="round" filter="url(#bvGlow)" />
+      <circle cx={32} cy={20} r={20} fill="none" stroke={COLORS.primary} strokeWidth={1.5} strokeDasharray="3 3" opacity={0.7} />
+      <line x1={12} y1={8} x2={52} y2={34} stroke={COLORS.primary} strokeWidth={2.5} strokeLinecap="round" filter="url(#bvGlow)" />
     </svg>
   )
 }

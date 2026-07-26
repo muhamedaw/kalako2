@@ -35,7 +35,7 @@ export default function ThemedQRCode({ value, size = 120, className }: Props) {
         <rect x={4} y={4} width={200} height={200} rx={20} ry={20} fill={COLORS.bgEnd} stroke="url(#qrBorder)" strokeWidth={3} filter="url(#qrGlow)" />
         <rect x={12} y={12} width={184} height={184} rx={14} ry={14} fill="none" stroke="#FFFFFF" strokeOpacity={0.08} strokeWidth={1} />
         <circle cx={24} cy={24} r={3} fill={COLORS.success} />
-        <circle cx={184} cy={184} r={3} fill={COLORS.warning} />
+        <circle cx={184} cy={184} r={3} fill={COLORS.accentLime} />
         <circle cx={184} cy={24} r={2.5} fill={COLORS.primary} />
         <circle cx={24} cy={184} r={2.5} fill={COLORS.secondary} />
       </svg>

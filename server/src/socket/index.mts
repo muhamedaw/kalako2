@@ -21,6 +21,12 @@ import {
 } from '../game/stateMachine.mts'
 import type { Language, RoomSettings, RoomState } from '../game/types.mts'
 import { isSameAnswer } from '../game/textNormalize.mts'
+import { registerEconomyHandlers } from './economy.mts'
+import { registerPaymentHandlers } from './payments.mts'
+import { registerDebugHandlers } from './debug.mts'
+import { isRateLimited } from './rateLimit.mts'
+import { asObject, asString } from './validate.mts'
+import { safeOn } from './wrapHandler.mts'
 
 const SUPPORTED_LANGUAGES: Language[] = ['ar', 'en', 'he']
 
@@ -34,12 +40,14 @@ interface CreateRoomPayload {
   doublePointsRoundEnabled?: boolean
   blindVotingEnabled?: boolean
   language?: string
+  deviceId?: string
 }
 
 interface JoinRoomPayload {
   roomCode?: string
   playerName?: string
   playerId?: string
+  deviceId?: string
 }
 
 type Ack<T> = (response: T) => void
@@ -82,12 +90,15 @@ function currentRoom(socket: Socket): RoomState | undefined {
 
 export function registerSocketHandlers(io: Server) {
   io.on('connection', (socket: Socket) => {
-    socket.on('create_room', async (payload: CreateRoomPayload = {}, ack?: Ack<any>) => {
+    safeOn(socket, 'create_room', async (_payload: unknown, ack?: Ack<any>) => {
+      if (isRateLimited(`create_room:${socket.id}`, 5, 60_000)) return ack?.({ error: 'rate_limited' })
+      const payload = asObject<CreateRoomPayload>(_payload)
       const settings = validateSettings(payload)
       if ('error' in settings) return ack?.({ error: settings.error })
 
-      const name = (payload.playerName || '').trim().slice(0, 24) || 'المضيف'
-      const { room, host } = createRoom(settings, name)
+      const name = (asString(payload.playerName) || '').trim().slice(0, 24) || 'المضيف'
+      const deviceId = asString(payload.deviceId) || null
+      const { room, host } = createRoom(settings, name, deviceId)
       host.socketId = socket.id
       socket.data.playerId = host.id
       socket.join(room.code)
@@ -98,14 +109,17 @@ export function registerSocketHandlers(io: Server) {
       ack?.({ roomCode: room.code, joinUrl, qrCodeDataUrl, playerId: host.id, room: publicRoomView(room) })
     })
 
-    socket.on('join_room', (payload: JoinRoomPayload = {}, ack?: Ack<any>) => {
-      const code = (payload.roomCode || '').trim().toUpperCase()
+    safeOn(socket, 'join_room', (_payload: unknown, ack?: Ack<any>) => {
+      if (isRateLimited(`join_room:${socket.id}`, 10, 60_000)) return ack?.({ error: 'rate_limited' })
+      const payload = asObject<JoinRoomPayload>(_payload)
+      const code = (asString(payload.roomCode) || '').trim().toUpperCase()
       const room = getRoom(code)
       if (!room) return ack?.({ error: 'الغرفة غير موجودة' })
 
+      const playerId = asString(payload.playerId)
       // Reconnect path: known playerId already seated in this room.
-      if (payload.playerId && room.players.has(payload.playerId)) {
-        const player = room.players.get(payload.playerId)!
+      if (playerId && room.players.has(playerId)) {
+        const player = room.players.get(playerId)!
         if (player.disconnectTimer) {
           clearTimeout(player.disconnectTimer)
           player.disconnectTimer = null
@@ -125,10 +139,11 @@ export function registerSocketHandlers(io: Server) {
         return ack?.({ error: 'اللعبة بدأت بالفعل، لا يمكن الانضمام الآن' })
       }
 
-      const name = (payload.playerName || '').trim().slice(0, 24)
+      const name = (asString(payload.playerName) || '').trim().slice(0, 24)
       if (!name) return ack?.({ error: 'اسم اللاعب مطلوب' })
 
-      const result = addPlayer(room, name)
+      const deviceId = asString(payload.deviceId) || null
+      const result = addPlayer(room, name, deviceId)
       if ('error' in result) return ack?.({ error: result.error })
 
       result.socketId = socket.id
@@ -139,7 +154,8 @@ export function registerSocketHandlers(io: Server) {
       io.to(room.code).emit('player_joined', { player: { id: result.id, name: result.name }, room: publicRoomView(room) })
     })
 
-    socket.on('start_game', (ack?: Ack<any>) => {
+    safeOn(socket, 'start_game', (ack?: Ack<any>) => {
+      if (isRateLimited(`start_game:${socket.id}`, 10, 10_000)) return ack?.({ error: 'rate_limited' })
       const room = currentRoom(socket)
       if (!room) return ack?.({ error: 'الغرفة غير موجودة — أعد الاتصال' })
       if (room.phase !== 'LOBBY') return ack?.({ error: 'اللعبة بدأت بالفعل' })
@@ -151,19 +167,24 @@ export function registerSocketHandlers(io: Server) {
       ack?.({ ok: true })
     })
 
-    socket.on('pick_category', (payload: { category?: string } = {}) => {
+    safeOn(socket, 'pick_category', (_payload: unknown) => {
+      if (isRateLimited(`pick_category:${socket.id}`, 10, 10_000)) return
+      const payload = asObject<{ category?: string }>(_payload)
       const room = currentRoom(socket)
       if (!room || room.phase !== 'CATEGORY_PICK') return
       if (!requireHost(room, socket)) return
-      if (!payload.category || !room.categoryOptions.includes(payload.category)) return
-      beginAnswering(io, room, payload.category)
+      const category = asString(payload.category)
+      if (!category || !room.categoryOptions.includes(category)) return
+      beginAnswering(io, room, category)
     })
 
-    socket.on('submit_answer', (payload: { text?: string; forceSubmit?: boolean } = {}, ack?: Ack<any>) => {
+    safeOn(socket, 'submit_answer', (_payload: unknown, ack?: Ack<any>) => {
+      if (isRateLimited(`submit_answer:${socket.id}`, 15, 10_000)) return ack?.({ ok: false, error: 'rate_limited' })
+      const payload = asObject<{ text?: string; forceSubmit?: boolean }>(_payload)
       const room = currentRoom(socket)
       const playerId = socket.data.playerId as string | undefined
       if (!room || !playerId || room.phase !== 'ANSWERING' || !room.currentQuestion) return ack?.({ ok: false })
-      const text = (payload.text || '').trim().slice(0, 140)
+      const text = (asString(payload.text) || '').trim().slice(0, 140)
       if (!text) return ack?.({ ok: false })
 
       if (!payload.forceSubmit && isSameAnswer(text, room.currentQuestion.answer)) {
@@ -180,12 +201,14 @@ export function registerSocketHandlers(io: Server) {
       maybeAllAnswered(io, room)
     })
 
-    socket.on('submit_vote', (payload: { slotId?: string } = {}) => {
+    safeOn(socket, 'submit_vote', (_payload: unknown) => {
+      if (isRateLimited(`submit_vote:${socket.id}`, 15, 10_000)) return
+      const payload = asObject<{ slotId?: string }>(_payload)
       const room = currentRoom(socket)
       const playerId = socket.data.playerId as string | undefined
       if (!room || !playerId || room.phase !== 'VOTING') return
       if (room.votes.has(playerId)) return // one vote per player
-      const slotId = payload.slotId || ''
+      const slotId = asString(payload.slotId) || ''
       const targetPlayerId = room.voteSlots.get(slotId)
       if (!targetPlayerId) return
       if (targetPlayerId === playerId) return // can't vote your own answer
@@ -198,8 +221,27 @@ export function registerSocketHandlers(io: Server) {
       maybeAllVoted(io, room)
     })
 
-    socket.on('leave_room', () => handleDisconnect(io, socket))
-    socket.on('disconnect', () => handleDisconnect(io, socket))
+    safeOn(socket, 'leave_room', () => {
+      if (isRateLimited(`leave_room:${socket.id}`, 10, 10_000)) return
+      handleDisconnect(io, socket)
+    })
+    safeOn(socket, 'disconnect', () => handleDisconnect(io, socket))
+
+    registerEconomyHandlers(io, socket)
+    registerPaymentHandlers(io, socket)
+    registerDebugHandlers(io, socket)
+
+    // Test-only fault injection to verify safeOn's crash resilience end-to-end against a
+    // real server. Never active unless explicitly enabled — absent from .env/.env.example,
+    // so it does not exist in any real deployment.
+    if (process.env.ENABLE_TEST_FAULT_HANDLER === 'true') {
+      safeOn(socket, '__test_throw', () => {
+        throw new Error('deliberate test fault (sync)')
+      })
+      safeOn(socket, '__test_reject', async () => {
+        throw new Error('deliberate test fault (async)')
+      })
+    }
   })
 }
 

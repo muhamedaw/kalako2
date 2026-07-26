@@ -1,10 +1,12 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import GlassCard from '@/components/ui/GlassCard'
 import Button from '@/components/ui/Button'
 import { Badge } from '@/components/ui/FormControls'
 import ThemedQRCode from '@/components/brand/ThemedQRCode'
-import Avatar from '@/components/brand/Avatar'
+import { ComposedAvatar } from '@/components/avatarParts'
+import { getAvatarConfig } from '@/lib/avatarUtils'
+import PremiumBadge from '@/components/ui/PremiumBadge'
 import { useGameStore } from '@/store/gameStore'
 import { useTranslation } from '@/i18n/context'
 
@@ -20,6 +22,7 @@ const cardIn = {
 export default function Lobby() {
   const { room, playerId, startGame, leaveRoom } = useGameStore()
   const t = useTranslation()
+  const prefersReducedMotion = useReducedMotion()
   const [copiedCode, setCopiedCode] = useState(false)
   const [copiedLink, setCopiedLink] = useState(false)
 
@@ -45,9 +48,9 @@ export default function Lobby() {
     <div className="flex flex-col items-center min-h-dvh px-4 py-6 gap-5 pt-16">
       <div className="w-full max-w-sm flex flex-col gap-5">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-black text-gradient" style={{ fontFamily: 'var(--font-heading)' }}>
+          <h1 className="text-xl font-black text-gradient" style={{ fontFamily: 'var(--font-heading)' }}>
             {t.lobbyTitle}
-          </h2>
+          </h1>
           <Badge variant="secondary">
             {room.settings.isPrivate ? t.privateBadge : t.publicBadge}
           </Badge>
@@ -56,11 +59,11 @@ export default function Lobby() {
         <GlassCard strong>
           <div className="flex flex-col items-center gap-4">
             <div className="text-center">
-              <p className="text-white/40 text-xs mb-2">{t.roomCodeLabel}</p>
+              <p className="text-white/50 text-xs mb-2">{t.roomCodeLabel}</p>
               <motion.p
                 className="text-3xl font-black tracking-widest text-primary select-all"
                 dir="ltr"
-                animate={{ scale: [1, 1.02, 1] }}
+                animate={prefersReducedMotion ? {} : { scale: [1, 1.02, 1] }}
                 transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
               >
                 {room.code}
@@ -77,16 +80,16 @@ export default function Lobby() {
             </div>
 
             <ThemedQRCode value={inviteLink} size={120} />
-            <p className="text-white/30 text-xs text-center">{t.scanToJoin}</p>
+            <p className="text-white/50 text-xs text-center">{t.scanToJoin}</p>
           </div>
         </GlassCard>
 
         <GlassCard>
           <div className="flex flex-col gap-3">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold text-white/60">
+              <h2 className="text-sm font-bold text-white/60">
                 {t.players} ({room.players.length})
-              </h3>
+              </h2>
             </div>
             <motion.div
               className="grid grid-cols-4 gap-4"
@@ -102,10 +105,10 @@ export default function Lobby() {
                 >
                   <div className="relative">
                     <div className={`${!p.connected ? 'opacity-40 grayscale' : ''}`}>
-                      <Avatar id={(idx % 16) + 1} state="idle" size={60} />
+                      <ComposedAvatar {...getAvatarConfig(idx)} size={60} />
                     </div>
                     {!p.connected && (
-                      <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 text-[9px] bg-red-500/80 text-white px-1.5 py-0.5 rounded-full whitespace-nowrap">
+                      <span className="absolute -bottom-1 start-1/2 -translate-x-1/2 text-[9px] bg-red-500/80 text-white px-1.5 py-0.5 rounded-full whitespace-nowrap">
                         {t.playerDisconnected}
                       </span>
                     )}
@@ -114,6 +117,7 @@ export default function Lobby() {
                     <span className={`text-xs font-medium truncate max-w-16 ${p.id === playerId ? 'text-primary' : 'text-white/60'}`}>
                       {p.name}
                     </span>
+                    {p.isPremium && <PremiumBadge size={12} />}
                     {p.isHost && (
                       <span className="text-[10px] text-warning">👑</span>
                     )}
@@ -125,7 +129,7 @@ export default function Lobby() {
         </GlassCard>
 
         <div className="flex flex-col gap-3">
-          <div className="flex gap-3 text-xs text-white/40 justify-center">
+          <div className="flex gap-3 text-xs text-white/50 justify-center">
             <span>{room.settings.answerTimeSeconds}{t.sec} {t.timeLabel}</span>
             <span>•</span>
             <span>{room.settings.roundsCount} {t.roundsLabel}</span>
@@ -143,8 +147,8 @@ export default function Lobby() {
             </Button>
           ) : (
             <motion.div
-              className="text-center text-white/40 text-sm py-3"
-              animate={{ opacity: [0.4, 1, 0.4] }}
+              className="text-center text-white/50 text-sm py-3"
+              animate={prefersReducedMotion ? {} : { opacity: [0.4, 1, 0.4] }}
               transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
             >
               {t.waitingForHost}

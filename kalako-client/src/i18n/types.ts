@@ -10,6 +10,9 @@ export interface Translations {
   navHome: string
   navHowToPlay: string
   navAbout: string
+  navLegalPrivacy: string
+  navLegalTerms: string
+  navLegalRefund: string
 
   // Bottom navigation
   navStore: string
@@ -24,6 +27,7 @@ export interface Translations {
 
   // Settings panel
   settingsTitle: string
+  settingsLegalLabel: string
 
   // Play / Home screen
   playOnline: string
@@ -104,6 +108,7 @@ export interface Translations {
   answerPlaceholder: string
   submitAnswer: string
   answerSubmitted: string
+  answerScreenPictureRound: string
   answeredCount: string
   charCount: string
 
@@ -228,4 +233,104 @@ export interface Translations {
 
   // Player connection status
   playerDisconnected: string
+
+  // Store
+  storeSectionAvatarsDesc: string
+  storeSectionEffectsDesc: string
+  storeSectionFramesDesc: string
+  storeItemSfxArcadeName: string
+  storeItemSfxArcadeDesc: string
+  storeItemSfxRetroName: string
+  storeItemSfxRetroDesc: string
+  storeItemSfxSoftName: string
+  storeItemSfxSoftDesc: string
+  storeItemFrameGoldName: string
+  storeItemFrameGoldDesc: string
+  storeItemFrameNeonName: string
+  storeItemFrameNeonDesc: string
+  storeItemFrameFireName: string
+  storeItemFrameFireDesc: string
+  storeItemFrameRoyalName: string
+  storeItemFrameRoyalDesc: string
+  storeInsufficientFunds: string
+  storePurchaseSuccess: string
+  storeBuyButton: string
+  storeOwnedLabel: string
+  storeBuyCoinsTitle: string
+  storeBuyCoinsDesc: string
+  storeTierSmallLabel: string
+  storeTierMediumLabel: string
+  storeTierLargeLabel: string
+  storeTierAmount: string
+  storeTierPrice: string
+  storeTierMediumBonus: string
+  storeTierLargeBonus: string
+  storePaymentProcessing: string
+  storePaymentCancelled: string
+  storeCoinsPurchaseSuccess: string
+  storeCancelButton: string
+
+  // Hall of Fame
+  hallOfFameTitle: string
+  hallOfFameSubtitle: string
+  hallOfFameVoteButton: string
+  hallOfFameEmpty: string
+
+  // Notifications
+  notificationsCoinsEarned: string
+  notificationsEmpty: string
+
+  // Profile
+  profileNicknameLabel: string
+  profileCoinsLabel: string
+  profileInventoryTitle: string
+  profileEditButton: string
+  profileSaveButton: string
+  profileCancelButton: string
+  profileEditAria: string
+  profileSaveAria: string
+  profileCancelAria: string
+
+  // Settings
+  settingsCloseAria: string
+
+  // App Store descriptions
+  appShortDescription: string
+  appLongDescription: string
+
+  // Legal pages
+  legalPrivacyTitle: string
+  legalPrivacyBody: string
+  legalTermsTitle: string
+  legalTermsBody: string
+  legalRefundTitle: string
+  legalRefundBody: string
+
+  // Growth / shareability nudges
+  gameOverShareNudge: string
+  hallOfFameShareCaption: string
+  lobbyInviteNudge: string
+
+  // Premium
+  navPremium: string
+  premiumBadgeAria: string
+  premiumScreenTitle: string
+  premiumTagline: string
+  premiumMonthlyLabel: string
+  premiumYearlyLabel: string
+  premiumYearlySavings: string
+  premiumSubscribeButton: string
+  premiumCurrentPlanLabel: string
+  premiumCancelButton: string
+  premiumExpiresLabel: string
+  premiumNotAvailable: string
+  premiumFeature1: string
+  premiumFeature2: string
+  premiumFeature3: string
+  premiumFeature4: string
+  premiumFeature5: string
+  premiumLockedBadge: string
+  premiumUpsellNudge: string
+  premiumMonthlyPrice: string
+  premiumYearlyPrice: string
 }

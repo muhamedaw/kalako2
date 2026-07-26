@@ -1,6 +1,7 @@
 import { create } from 'zustand'
-import type { Screen } from '@/types'
+import type { Screen, EconomyProfile, StoreSection, HallOfFameEntry, NotificationItem } from '@/types'
 import { getSocket, disconnectSocket } from '@/lib/socket'
+import { getDeviceId } from '@/lib/deviceId'
 
 export interface Player {
   id: string
@@ -8,6 +9,7 @@ export interface Player {
   score: number
   isHost: boolean
   connected: boolean
+  isPremium?: boolean
 }
 
 export interface Room {
@@ -50,6 +52,8 @@ export interface GameState {
   categoryOptions: string[]
   questionText: string | null
   questionCategory: string | null
+  questionImageUrl: string | null
+  questionSourceAttribution: string | null
   timeSeconds: number
   voteSlots: VoteSlot[]
   mySlotId: string | null
@@ -72,6 +76,20 @@ export interface GameState {
   totalPlayers: number
   votedCount: number
   answerNeedsRevision: { questionId: string } | null
+
+  // Premium
+  isPremium: boolean
+  premiumExpiresAt: string | null
+
+  // Economy
+  profile: EconomyProfile | null
+  catalog: StoreSection[]
+  hallOfFame: HallOfFameEntry[]
+  notifications: NotificationItem[]
+  unreadCount: number
+  catalogLoading: boolean
+  hallOfFameLoading: boolean
+  notificationsLoading: boolean
 }
 
 export interface GameActions {
@@ -96,6 +114,26 @@ export interface GameActions {
   leaveRoom: () => void
   setError: (msg: string | null) => void
   setLanguage: (lng: string) => void
+
+  // Economy actions
+  loadProfile: () => void
+  updateProfileNickname: (nickname: string) => void
+  updateProfileAvatar: (avatarConfig: { body: string; eyes: string; hat: string }) => void
+  loadCatalog: () => void
+  buyItem: (itemId: string) => Promise<{ success?: boolean; error?: string; coins?: number }>
+  loadHallOfFame: () => void
+  voteHallOfFameEntry: (entryId: string) => void
+  loadNotifications: () => void
+  markNotificationRead: (notificationId: string) => void
+  loadUnreadCount: () => void
+  clearUnreadCount: () => void
+  createPayPalOrder: (tierId: string) => Promise<{ orderId?: string; error?: string }>
+  capturePayPalOrder: (paypalOrderId: string, tierId: string) => void
+
+  // Premium
+  loadPremiumStatus: () => void
+  createPremiumSubscription: (plan: 'monthly' | 'yearly') => Promise<{ approvalUrl?: string; error?: string }>
+  cancelPremiumSubscription: () => void
 }
 
 const STORAGE_KEY_PLAYER_ID = 'kalako_playerId'
@@ -142,6 +180,8 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
   categoryOptions: [],
   questionText: null,
   questionCategory: null,
+  questionImageUrl: null,
+  questionSourceAttribution: null,
   timeSeconds: 30,
   voteSlots: [],
   mySlotId: null,
@@ -160,6 +200,16 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
   isDoublePointsRound: false,
   wasDoublePoints: false,
   answerNeedsRevision: null,
+  isPremium: false,
+  premiumExpiresAt: null,
+  profile: null,
+  catalog: [],
+  hallOfFame: [],
+  notifications: [],
+  unreadCount: 0,
+  catalogLoading: false,
+  hallOfFameLoading: false,
+  notificationsLoading: false,
 
   setScreen: (s) => set({ screen: s }),
   setError: (msg) => set({ serverError: msg }),
@@ -177,6 +227,10 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
 
     socket.on('connect', () => {
       set({ isConnected: true, isReconnecting: false })
+
+      socket.emit('get_unread_count', { deviceId: getDeviceId() }, (res: any) => {
+        if (res?.count !== undefined) set({ unreadCount: res.count })
+      })
 
       const saved = loadSession()
       if (saved.playerId && saved.roomCode && saved.playerName) {
@@ -292,6 +346,8 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
           room,
           questionText: data.question?.text || null,
           questionCategory: data.question?.category || null,
+          questionImageUrl: data.question?.imageUrl || null,
+          questionSourceAttribution: data.question?.sourceAttribution || null,
           timeSeconds: data.timeSeconds || room.settings.answerTimeSeconds,
           submittedAnswer: false,
           submittedVote: false,
@@ -354,6 +410,9 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
       finalStandings: null,
       isConnected: false,
       isReconnecting: false,
+      questionCategory: null,
+      questionImageUrl: null,
+      questionSourceAttribution: null,
       categoryOptions: [],
       mySlotId: null,
       answeredCount: 0,
@@ -457,11 +516,162 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
       voteSlots: [],
       roundResults: null,
       finalStandings: null,
+      questionCategory: null,
+      questionImageUrl: null,
+      questionSourceAttribution: null,
       categoryOptions: [],
       mySlotId: null,
       answeredCount: 0,
       totalPlayers: 0,
       votedCount: 0,
+    })
+  },
+
+  // ─── Economy Actions ───
+
+  loadProfile: () => {
+    const socket = getSocket()
+    socket.emit('get_or_create_profile', { deviceId: getDeviceId() }, (res: any) => {
+      if (res?.error) return
+      set({ profile: res, isPremium: res.isPremium ?? false, premiumExpiresAt: res.premiumExpiresAt ?? null })
+    })
+  },
+
+  updateProfileNickname: (nickname) => {
+    const socket = getSocket()
+    socket.emit('update_profile', { deviceId: getDeviceId(), nickname }, (res: any) => {
+      if (res?.error) return
+      if (res?.nickname) set({ profile: res })
+    })
+  },
+  updateProfileAvatar: (avatarConfig) => {
+    const socket = getSocket()
+    socket.emit('update_profile', { deviceId: getDeviceId(), avatarConfig }, (res: any) => {
+      if (res?.error) return
+      set({ profile: res })
+    })
+  },
+
+  loadCatalog: () => {
+    set({ catalogLoading: true })
+    const socket = getSocket()
+    socket.emit('get_store_catalog', {}, (res: any) => {
+      set({ catalog: res || [], catalogLoading: false })
+    })
+  },
+
+  buyItem: (itemId) => {
+    const socket = getSocket()
+    // Real event name is 'purchase_item' — it was 'buy_item' here, which the server has
+    // never listened for since an earlier rename, so every purchase silently no-op'd
+    // while the UI still showed a success toast regardless (see StoreScreen's caller).
+    return new Promise((resolve) => {
+      socket.emit('purchase_item', { deviceId: getDeviceId(), itemId }, (res: any) => {
+        if (res?.success) {
+          set((s) => ({
+            profile: s.profile ? { ...s.profile, coins: res.coins, inventory: res.inventory } : null,
+          }))
+        }
+        resolve(res || { error: 'no_response' })
+      })
+    })
+  },
+
+  loadHallOfFame: () => {
+    set({ hallOfFameLoading: true })
+    const socket = getSocket()
+    socket.emit('get_hall_of_fame', {}, (res: any) => {
+      set({ hallOfFame: res || [], hallOfFameLoading: false })
+    })
+  },
+
+  voteHallOfFameEntry: (entryId) => {
+    const socket = getSocket()
+    socket.emit('vote_hall_of_fame', { deviceId: getDeviceId(), entryId }, (res: any) => {
+      if (res?.success) {
+        set((s) => ({
+          hallOfFame: s.hallOfFame.map((e) =>
+            e.id === entryId ? { ...e, voteCount: res.newVoteCount } : e
+          ),
+        }))
+      }
+    })
+  },
+
+  loadNotifications: () => {
+    set({ notificationsLoading: true })
+    const socket = getSocket()
+    socket.emit('get_notifications', { deviceId: getDeviceId() }, (res: any) => {
+      set({ notifications: res || [], notificationsLoading: false })
+    })
+  },
+
+  markNotificationRead: (notificationId) => {
+    const socket = getSocket()
+    socket.emit('mark_notification_read', { notificationId })
+    set((s) => ({
+      notifications: s.notifications.map((n) =>
+        n.id === notificationId ? { ...n, read: true } : n
+      ),
+      unreadCount: Math.max(0, s.unreadCount - 1),
+    }))
+  },
+
+  loadUnreadCount: () => {
+    const socket = getSocket()
+    socket.emit('get_unread_count', { deviceId: getDeviceId() }, (res: any) => {
+      if (res?.count !== undefined) set({ unreadCount: res.count })
+    })
+  },
+
+  clearUnreadCount: () => set({ unreadCount: 0 }),
+
+  createPayPalOrder: (tierId) => {
+    return new Promise((resolve) => {
+      const socket = getSocket()
+      socket.emit('create_paypal_order', { deviceId: getDeviceId(), tierId }, (res: any) => {
+        resolve(res || { error: 'no_response' })
+      })
+    })
+  },
+
+  capturePayPalOrder: (paypalOrderId, tierId) => {
+    const socket = getSocket()
+    socket.emit('capture_paypal_order', { deviceId: getDeviceId(), paypalOrderId, tierId }, (res: any) => {
+      if (res?.success && res?.newCoinBalance !== undefined) {
+        set((s) => ({
+          profile: s.profile ? { ...s.profile, coins: res.newCoinBalance } : null,
+        }))
+      }
+    })
+  },
+
+  // ─── Premium Actions ───
+
+  loadPremiumStatus: () => {
+    const socket = getSocket()
+    socket.emit('get_premium_status', { deviceId: getDeviceId() }, (res: any) => {
+      if (res?.isPremium !== undefined) {
+        set({ isPremium: res.isPremium, premiumExpiresAt: res.expiresAt ?? null })
+      }
+    })
+  },
+
+  createPremiumSubscription: (plan) => {
+    return new Promise((resolve) => {
+      const socket = getSocket()
+      socket.emit('create_premium_subscription', { deviceId: getDeviceId(), plan }, (res: any) => {
+        resolve(res || { error: 'no_response' })
+      })
+    })
+  },
+
+  cancelPremiumSubscription: () => {
+    const socket = getSocket()
+    socket.emit('cancel_premium_subscription', { deviceId: getDeviceId() }, (res: any) => {
+      if (res?.success) {
+        set({ isPremium: false, premiumExpiresAt: null })
+      }
     })
   },
 }))

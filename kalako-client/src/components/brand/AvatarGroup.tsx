@@ -1,18 +1,16 @@
-import type { AvatarState } from './theme'
-import Avatar from './Avatar'
+import { ComposedAvatar, getAvatarConfig } from '@/components/avatarParts'
 
 interface Props {
   count?: number
-  state?: AvatarState
   size?: number
   className?: string
 }
 
-export default function AvatarGroup({ count = 4, state = 'idle', size = 120, className }: Props) {
+export default function AvatarGroup({ count = 4, size = 120, className }: Props) {
   return (
     <div className={`flex flex-wrap justify-center gap-2 ${className ?? ''}`}>
       {Array.from({ length: Math.min(count, 16) }, (_, i) => (
-        <Avatar key={i + 1} id={i + 1} state={state} size={size} />
+        <ComposedAvatar key={i + 1} {...getAvatarConfig(i + 1)} size={size} />
       ))}
     </div>
   )

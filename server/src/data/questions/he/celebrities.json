@@ -1,54 +1,496 @@
 [
-  { "id": "he_celeb_001", "category": "celebrities", "text": "מי מכונה 'מלך הפופ'?", "answer": "מייקל ג'קסון" },
-  { "id": "he_celeb_002", "category": "celebrities", "text": "מי הזמרת הישראלית שייצגה את ישראל באירוויזיון 1983 עם השיר 'חי'?", "answer": "עופרה חזה" },
-  { "id": "he_celeb_003", "category": "celebrities", "text": "מי מייסד חברת מיקרוסופט?", "answer": "ביל גייטס" },
-  { "id": "he_celeb_004", "category": "celebrities", "text": "מי הזמרת הישראלית שייצגה את ישראל באירוויזיון 1998 וזכתה במקום הראשון?", "answer": "דנה אינטרנשיונל" },
-  { "id": "he_celeb_005", "category": "celebrities", "text": "מי מייסד חברת אמזון?", "answer": "ג'ף בזוס" },
-  { "id": "he_celeb_006", "category": "celebrities", "text": "מי המתאגרף שהיה ידוע במשפט 'לעוף כמו פרפר, לעקוץ כמו דבורה'?", "answer": "מוחמד עלי" },
-  { "id": "he_celeb_007", "category": "celebrities", "text": "מי מייסד חברות טסלה וספייסאקס?", "answer": "אילון מאסק" },
-  { "id": "he_celeb_008", "category": "celebrities", "text": "מי הזמר הישראלי שזכה באירוויזיון 1978 עם השיר 'אבניבי'?", "answer": "יזהר כהן" },
-  { "id": "he_celeb_009", "category": "celebrities", "text": "מי מכונה 'מלכת הפופ'?", "answer": "מדונה" },
-  { "id": "he_celeb_010", "category": "celebrities", "text": "מי הפיזיקאי שפיתח את תורת היחסות וזכה בפרס נובל ב-1921?", "answer": "אלברט איינשטיין" },
-  { "id": "he_celeb_011", "category": "celebrities", "text": "מי מייסד פייסבוק (מטא)?", "answer": "מארק צוקרברג" },
-  { "id": "he_celeb_012", "category": "celebrities", "text": "מי שחקן הכדורגל הפורטוגזי המכונה 'הדון'?", "answer": "כריסטיאנו רונאלדו" },
-  { "id": "he_celeb_013", "category": "celebrities", "text": "מי צייר את לוחת 'המונה ליזה'?", "answer": "לאונרדו דה וינצ'י" },
-  { "id": "he_celeb_014", "category": "celebrities", "text": "מי הסופר הישראלי שזכה בפרס נובל לספרות ב-1966?", "answer": "שמואל יוסף עגנון" },
-  { "id": "he_celeb_015", "category": "celebrities", "text": "מי הייתה האישה הראשונה שזכתה בפרס נובל?", "answer": "מארי קירי" },
-  { "id": "he_celeb_016", "category": "celebrities", "text": "מהו שמו האמיתי של הראפר ג'יי-זי?", "answer": "שון קרטר" },
-  { "id": "he_celeb_017", "category": "celebrities", "text": "מי הזמרת ששרה את 'שיר לשלום' בעצרת בה נרצח יצחק רבין ב-1995?", "answer": "מירי אלוני" },
-  { "id": "he_celeb_018", "category": "celebrities", "text": "מי שחקן הכדורגל שזכה במונדיאל 2022 עם נבחרת ארגנטינה?", "answer": "ליאונל מסי" },
-  { "id": "he_celeb_019", "category": "celebrities", "text": "מי המציא הראשון של הטלפון?", "answer": "אלכסנדר גרהם בל" },
-  { "id": "he_celeb_020", "category": "celebrities", "text": "מהו שמו האמיתי של הראפר אמינם?", "answer": "מרשל מאתרס" },
-  { "id": "he_celeb_021", "category": "celebrities", "text": "מי היה האדם הראשון שדרך על הירח?", "answer": "ניל ארמסטרונג" },
-  { "id": "he_celeb_022", "category": "celebrities", "text": "מי מייסד קבוצת עלי בבא הסינית?", "answer": "ג'ק מא" },
-  { "id": "he_celeb_023", "category": "celebrities", "text": "מי ראש הממשלה הראשון של מדינת ישראל?", "answer": "דוד בן-גוריון" },
-  { "id": "he_celeb_024", "category": "celebrities", "text": "מי השחיין שזכה במספר הכי גדול של מדליות זהב אולימפיות בהיסטוריה?", "answer": "מייקל פלפס" },
-  { "id": "he_celeb_025", "category": "celebrities", "text": "מי הזמר הישראלי שכונה 'הפרינס' ונחשב לאחד מגדולי הזמר המזרחי?", "answer": "זוהר ארגוב" },
-  { "id": "he_celeb_026", "category": "celebrities", "text": "איזו להקה בריטית ידועה באלבום 'Abbey Road'?", "answer": "החיפושיות (The Beatles)" },
-  { "id": "he_celeb_027", "category": "celebrities", "text": "מי מנכ\"ל ומייסד אמזון שגם בעלים של הוושינגטון פוסט?", "answer": "ג'ף בזוס" },
-  { "id": "he_celeb_028", "category": "celebrities", "text": "מי שחקן הטניס שזכה במספר הגדול ביותר של תארי גראנד סלאם בין הגברים (עד אמצע שנות ה-20)?", "answer": "נובאק ג'וקוביץ'" },
-  { "id": "he_celeb_029", "category": "celebrities", "text": "מי השחקן והבמאי שהתפרסם בסרטי קומדיה אילמים כמו 'הילד' ו'הזמנים המודרניים'?", "answer": "צ'רלי צ'פלין" },
-  { "id": "he_celeb_030", "category": "celebrities", "text": "מי הזמרת הישראלית שייצגה את ישראל באירוויזיון 2018 וזכתה במקום הראשון עם השיר 'טוי'?", "answer": "נטע ברזילי" },
-  { "id": "he_celeb_031", "category": "celebrities", "text": "מי נשיא ארצות הברית בזמן מלחמת האזרחים האמריקאית?", "answer": "אברהם לינקולן" },
-  { "id": "he_celeb_032", "category": "celebrities", "text": "מי השחקנית שגילמה את וונדר וומן בסרט מ-2017?", "answer": "גל גדות" },
-  { "id": "he_celeb_033", "category": "celebrities", "text": "מי כתב את המחזות 'המלט' ו'רומיאו ויוליה'?", "answer": "ויליאם שייקספיר" },
-  { "id": "he_celeb_034", "category": "celebrities", "text": "מי הזמרת הישראלית הוותיקה הידועה בביצוע 'חד גדיא' בסגנון פולק-רוק?", "answer": "חוה אלברשטיין" },
-  { "id": "he_celeb_035", "category": "celebrities", "text": "מי הנשיא האפרו-אמריקאי הראשון של ארצות הברית?", "answer": "ברק אובמה" },
-  { "id": "he_celeb_036", "category": "celebrities", "text": "מי המדען המפורסם בשל עבודתו על חורים שחורים והשימוש בכיסא גלגלים?", "answer": "סטיבן הוקינג" },
-  { "id": "he_celeb_037", "category": "celebrities", "text": "מי הזמר הראשי של להקת קולדפליי?", "answer": "כריס מרטין" },
-  { "id": "he_celeb_038", "category": "celebrities", "text": "מי הפעילה הפקיסטנית הידועה במאבקה לחינוך בנות ושרדה פיגוע של הטליבאן?", "answer": "מלאלה יוספזאי" },
-  { "id": "he_celeb_039", "category": "celebrities", "text": "מי הבמאי של הסרט 'הנער החייזר' (E.T.)?", "answer": "סטיבן שפילברג" },
-  { "id": "he_celeb_040", "category": "celebrities", "text": "מי הזמרת האמריקאית הידועה באלבום '1989' ובהקלטה מחדש של שיריה?", "answer": "טיילור סוויפט" },
-  { "id": "he_celeb_041", "category": "celebrities", "text": "מי מייסד קבוצת וירג'ין?", "answer": "ריצ'רד ברנסון" },
-  { "id": "he_celeb_042", "category": "celebrities", "text": "מי הצייר הידוע בזכות הציור 'ליל הכוכבים'?", "answer": "וינסנט ואן גוך" },
-  { "id": "he_celeb_043", "category": "celebrities", "text": "מי מנהיג זכויות האזרח שנשא את הנאום 'יש לי חלום'?", "answer": "מרטין לותר קינג" },
-  { "id": "he_celeb_044", "category": "celebrities", "text": "מי השחקן הידוע בגילום איירון מן וגם שרלוק הולמס?", "answer": "רוברט דאוני ג'וניור" },
-  { "id": "he_celeb_045", "category": "celebrities", "text": "מי הוביל את המשלחת הראשונה שהקיפה את כדור הארץ?", "answer": "פרדיננד מגלן" },
-  { "id": "he_celeb_046", "category": "celebrities", "text": "מי הזמר הראשי של להקת U2?", "answer": "בונו" },
-  { "id": "he_celeb_047", "category": "celebrities", "text": "מי הבמאי הידוע בסרטים 'מלתעות', 'הנער החייזר' ו'פארק היורה'?", "answer": "סטיבן שפילברג" },
-  { "id": "he_celeb_048", "category": "celebrities", "text": "מי הזמרת שביצעה לראשונה את השיר 'ירושלים של זהב' שכתבה נעמי שמר?", "answer": "שולי נתן" },
-  { "id": "he_celeb_049", "category": "celebrities", "text": "מי המדען שנוסחת E=mc² מיוחסת לו?", "answer": "אלברט איינשטיין" },
-  { "id": "he_celeb_050", "category": "celebrities", "text": "מי ראש הממשלה הישראלי שכיהן הכי הרבה שנים בהיסטוריה?", "answer": "בנימין נתניהו" },
-  { "id": "he_celeb_051", "category": "celebrities", "text": "מי נשיא ארה\"ב שהועמד להליך הדחה (אימפיצ'מנט) בבית הנבחרים פעמיים?", "answer": "דונלד טראמפ", "ageRating": "adult" },
-  { "id": "he_celeb_052", "category": "celebrities", "text": "מי איש העסקים שרכש את פלטפורמת טוויטר (כיום X) בשנת 2022?", "answer": "אילון מאסק", "ageRating": "adult" }
+  {
+    "id": "he_celeb_001",
+    "category": "celebrities",
+    "text": "מי מכונה 'מלך הפופ'?",
+    "answer": "מייקל ג'קסון"
+  },
+  {
+    "id": "he_celeb_002",
+    "category": "celebrities",
+    "text": "מי הזמרת הישראלית שייצגה את ישראל באירוויזיון 1983 עם השיר 'חי'?",
+    "answer": "עופרה חזה"
+  },
+  {
+    "id": "he_celeb_003",
+    "category": "celebrities",
+    "text": "מי מייסד חברת מיקרוסופט?",
+    "answer": "ביל גייטס"
+  },
+  {
+    "id": "he_celeb_004",
+    "category": "celebrities",
+    "text": "מי הזמרת הישראלית שייצגה את ישראל באירוויזיון 1998 וזכתה במקום הראשון?",
+    "answer": "דנה אינטרנשיונל"
+  },
+  {
+    "id": "he_celeb_005",
+    "category": "celebrities",
+    "text": "מי מייסד חברת אמזון?",
+    "answer": "ג'ף בזוס"
+  },
+  {
+    "id": "he_celeb_006",
+    "category": "celebrities",
+    "text": "מי המתאגרף שהיה ידוע במשפט 'לעוף כמו פרפר, לעקוץ כמו דבורה'?",
+    "answer": "מוחמד עלי"
+  },
+  {
+    "id": "he_celeb_007",
+    "category": "celebrities",
+    "text": "מי מייסד חברות טסלה וספייסאקס?",
+    "answer": "אילון מאסק"
+  },
+  {
+    "id": "he_celeb_008",
+    "category": "celebrities",
+    "text": "מי הזמר הישראלי שזכה באירוויזיון 1978 עם השיר 'אבניבי'?",
+    "answer": "יזהר כהן"
+  },
+  {
+    "id": "he_celeb_009",
+    "category": "celebrities",
+    "text": "מי מכונה 'מלכת הפופ'?",
+    "answer": "מדונה"
+  },
+  {
+    "id": "he_celeb_010",
+    "category": "celebrities",
+    "text": "מי הפיזיקאי שפיתח את תורת היחסות וזכה בפרס נובל ב-1921?",
+    "answer": "אלברט איינשטיין"
+  },
+  {
+    "id": "he_celeb_011",
+    "category": "celebrities",
+    "text": "מי מייסד פייסבוק (מטא)?",
+    "answer": "מארק צוקרברג"
+  },
+  {
+    "id": "he_celeb_012",
+    "category": "celebrities",
+    "text": "מי שחקן הכדורגל הפורטוגזי המכונה 'הדון'?",
+    "answer": "כריסטיאנו רונאלדו"
+  },
+  {
+    "id": "he_celeb_013",
+    "category": "celebrities",
+    "text": "מי צייר את לוחת 'המונה ליזה'?",
+    "answer": "לאונרדו דה וינצ'י"
+  },
+  {
+    "id": "he_celeb_014",
+    "category": "celebrities",
+    "text": "מי הסופר הישראלי שזכה בפרס נובל לספרות ב-1966?",
+    "answer": "שמואל יוסף עגנון"
+  },
+  {
+    "id": "he_celeb_015",
+    "category": "celebrities",
+    "text": "מי הייתה האישה הראשונה שזכתה בפרס נובל?",
+    "answer": "מארי קירי"
+  },
+  {
+    "id": "he_celeb_016",
+    "category": "celebrities",
+    "text": "מהו שמו האמיתי של הראפר ג'יי-זי?",
+    "answer": "שון קרטר"
+  },
+  {
+    "id": "he_celeb_017",
+    "category": "celebrities",
+    "text": "מי הזמרת ששרה את 'שיר לשלום' בעצרת בה נרצח יצחק רבין ב-1995?",
+    "answer": "מירי אלוני"
+  },
+  {
+    "id": "he_celeb_018",
+    "category": "celebrities",
+    "text": "מי שחקן הכדורגל שזכה במונדיאל 2022 עם נבחרת ארגנטינה?",
+    "answer": "ליאונל מסי"
+  },
+  {
+    "id": "he_celeb_019",
+    "category": "celebrities",
+    "text": "מי המציא הראשון של הטלפון?",
+    "answer": "אלכסנדר גרהם בל"
+  },
+  {
+    "id": "he_celeb_020",
+    "category": "celebrities",
+    "text": "מהו שמו האמיתי של הראפר אמינם?",
+    "answer": "מרשל מאתרס"
+  },
+  {
+    "id": "he_celeb_021",
+    "category": "celebrities",
+    "text": "מי היה האדם הראשון שדרך על הירח?",
+    "answer": "ניל ארמסטרונג"
+  },
+  {
+    "id": "he_celeb_022",
+    "category": "celebrities",
+    "text": "מי מייסד קבוצת עלי בבא הסינית?",
+    "answer": "ג'ק מא"
+  },
+  {
+    "id": "he_celeb_023",
+    "category": "celebrities",
+    "text": "מי ראש הממשלה הראשון של מדינת ישראל?",
+    "answer": "דוד בן-גוריון"
+  },
+  {
+    "id": "he_celeb_024",
+    "category": "celebrities",
+    "text": "מי השחיין שזכה במספר הכי גדול של מדליות זהב אולימפיות בהיסטוריה?",
+    "answer": "מייקל פלפס"
+  },
+  {
+    "id": "he_celeb_025",
+    "category": "celebrities",
+    "text": "מי הזמר הישראלי שכונה 'הפרינס' ונחשב לאחד מגדולי הזמר המזרחי?",
+    "answer": "זוהר ארגוב"
+  },
+  {
+    "id": "he_celeb_026",
+    "category": "celebrities",
+    "text": "איזו להקה בריטית ידועה באלבום 'Abbey Road'?",
+    "answer": "החיפושיות (The Beatles)"
+  },
+  {
+    "id": "he_celeb_027",
+    "category": "celebrities",
+    "text": "מי מנכ\"ל ומייסד אמזון שגם בעלים של הוושינגטון פוסט?",
+    "answer": "ג'ף בזוס"
+  },
+  {
+    "id": "he_celeb_028",
+    "category": "celebrities",
+    "text": "מי שחקן הטניס שזכה במספר הגדול ביותר של תארי גראנד סלאם בין הגברים (עד אמצע שנות ה-20)?",
+    "answer": "נובאק ג'וקוביץ'"
+  },
+  {
+    "id": "he_celeb_029",
+    "category": "celebrities",
+    "text": "מי השחקן והבמאי שהתפרסם בסרטי קומדיה אילמים כמו 'הילד' ו'הזמנים המודרניים'?",
+    "answer": "צ'רלי צ'פלין"
+  },
+  {
+    "id": "he_celeb_030",
+    "category": "celebrities",
+    "text": "מי הזמרת הישראלית שייצגה את ישראל באירוויזיון 2018 וזכתה במקום הראשון עם השיר 'טוי'?",
+    "answer": "נטע ברזילי"
+  },
+  {
+    "id": "he_celeb_031",
+    "category": "celebrities",
+    "text": "מי נשיא ארצות הברית בזמן מלחמת האזרחים האמריקאית?",
+    "answer": "אברהם לינקולן"
+  },
+  {
+    "id": "he_celeb_032",
+    "category": "celebrities",
+    "text": "מי השחקנית שגילמה את וונדר וומן בסרט מ-2017?",
+    "answer": "גל גדות"
+  },
+  {
+    "id": "he_celeb_033",
+    "category": "celebrities",
+    "text": "מי כתב את המחזות 'המלט' ו'רומיאו ויוליה'?",
+    "answer": "ויליאם שייקספיר"
+  },
+  {
+    "id": "he_celeb_034",
+    "category": "celebrities",
+    "text": "מי הזמרת הישראלית הוותיקה הידועה בביצוע 'חד גדיא' בסגנון פולק-רוק?",
+    "answer": "חוה אלברשטיין"
+  },
+  {
+    "id": "he_celeb_035",
+    "category": "celebrities",
+    "text": "מי הנשיא האפרו-אמריקאי הראשון של ארצות הברית?",
+    "answer": "ברק אובמה"
+  },
+  {
+    "id": "he_celeb_036",
+    "category": "celebrities",
+    "text": "מי המדען המפורסם בשל עבודתו על חורים שחורים והשימוש בכיסא גלגלים?",
+    "answer": "סטיבן הוקינג"
+  },
+  {
+    "id": "he_celeb_037",
+    "category": "celebrities",
+    "text": "מי הזמר הראשי של להקת קולדפליי?",
+    "answer": "כריס מרטין"
+  },
+  {
+    "id": "he_celeb_038",
+    "category": "celebrities",
+    "text": "מי הפעילה הפקיסטנית הידועה במאבקה לחינוך בנות ושרדה פיגוע של הטליבאן?",
+    "answer": "מלאלה יוספזאי"
+  },
+  {
+    "id": "he_celeb_039",
+    "category": "celebrities",
+    "text": "מי הבמאי של הסרט 'הנער החייזר' (E.T.)?",
+    "answer": "סטיבן שפילברג"
+  },
+  {
+    "id": "he_celeb_040",
+    "category": "celebrities",
+    "text": "מי הזמרת האמריקאית הידועה באלבום '1989' ובהקלטה מחדש של שיריה?",
+    "answer": "טיילור סוויפט"
+  },
+  {
+    "id": "he_celeb_041",
+    "category": "celebrities",
+    "text": "מי מייסד קבוצת וירג'ין?",
+    "answer": "ריצ'רד ברנסון"
+  },
+  {
+    "id": "he_celeb_042",
+    "category": "celebrities",
+    "text": "מי הצייר הידוע בזכות הציור 'ליל הכוכבים'?",
+    "answer": "וינסנט ואן גוך"
+  },
+  {
+    "id": "he_celeb_043",
+    "category": "celebrities",
+    "text": "מי מנהיג זכויות האזרח שנשא את הנאום 'יש לי חלום'?",
+    "answer": "מרטין לותר קינג"
+  },
+  {
+    "id": "he_celeb_044",
+    "category": "celebrities",
+    "text": "מי השחקן הידוע בגילום איירון מן וגם שרלוק הולמס?",
+    "answer": "רוברט דאוני ג'וניור"
+  },
+  {
+    "id": "he_celeb_045",
+    "category": "celebrities",
+    "text": "מי הוביל את המשלחת הראשונה שהקיפה את כדור הארץ?",
+    "answer": "פרדיננד מגלן"
+  },
+  {
+    "id": "he_celeb_046",
+    "category": "celebrities",
+    "text": "מי הזמר הראשי של להקת U2?",
+    "answer": "בונו"
+  },
+  {
+    "id": "he_celeb_047",
+    "category": "celebrities",
+    "text": "מי הבמאי הידוע בסרטים 'מלתעות', 'הנער החייזר' ו'פארק היורה'?",
+    "answer": "סטיבן שפילברג"
+  },
+  {
+    "id": "he_celeb_048",
+    "category": "celebrities",
+    "text": "מי הזמרת שביצעה לראשונה את השיר 'ירושלים של זהב' שכתבה נעמי שמר?",
+    "answer": "שולי נתן"
+  },
+  {
+    "id": "he_celeb_049",
+    "category": "celebrities",
+    "text": "מי המדען שנוסחת E=mc² מיוחסת לו?",
+    "answer": "אלברט איינשטיין"
+  },
+  {
+    "id": "he_celeb_050",
+    "category": "celebrities",
+    "text": "מי ראש הממשלה הישראלי שכיהן הכי הרבה שנים בהיסטוריה?",
+    "answer": "בנימין נתניהו"
+  },
+  {
+    "id": "he_celeb_051",
+    "category": "celebrities",
+    "text": "מי נשיא ארה\"ב שהועמד להליך הדחה (אימפיצ'מנט) בבית הנבחרים פעמיים?",
+    "answer": "דונלד טראמפ",
+    "ageRating": "adult"
+  },
+  {
+    "id": "he_celeb_052",
+    "category": "celebrities",
+    "text": "מי איש העסקים שרכש את פלטפורמת טוויטר (כיום X) בשנת 2022?",
+    "answer": "אילון מאסק",
+    "ageRating": "adult"
+  },
+  {
+    "id": "he_celeb_051",
+    "category": "celebrities",
+    "text": "מי הזמרת הישראלית שזכתה באירוויזיון 2018?",
+    "answer": "נטע ברזילי"
+  },
+  {
+    "id": "he_celeb_052",
+    "category": "celebrities",
+    "text": "מי הספורטאית הישראלית שזכתה במדליה בג'ודו?",
+    "answer": "ירדן ג'רבי"
+  },
+  {
+    "id": "he_celeb_053",
+    "category": "celebrities",
+    "text": "מי הזמרת הישראלית שזכתה באירוויזיון 1979?",
+    "answer": "גלי עטרי"
+  },
+  {
+    "id": "he_celeb_054",
+    "category": "celebrities",
+    "text": "מי המנחה של 'הכוכב הבא'?",
+    "answer": "אסי עזר"
+  },
+  {
+    "id": "he_celeb_055",
+    "category": "celebrities",
+    "text": "מי הזמרת ששרה 'חי' באירוויזיון 1983?",
+    "answer": "עופרה חזה"
+  },
+  {
+    "id": "he_celeb_056",
+    "category": "celebrities",
+    "text": "מי השף הישראלי עם כוכבי מישלן?",
+    "answer": "יונתן רושפלד"
+  },
+  {
+    "id": "he_celeb_057",
+    "category": "celebrities",
+    "text": "מי המנחה הישראלית של 'האח הגדול'?",
+    "answer": "גיא זו-ארץ"
+  },
+  {
+    "id": "he_celeb_058",
+    "category": "celebrities",
+    "text": "מי הזמר הישראלי שמכונה 'המלך'?",
+    "answer": "שלמה ארצי"
+  },
+  {
+    "id": "he_celeb_059",
+    "category": "celebrities",
+    "text": "מי הספורטאית שזכתה במדליה בהתעמלות?",
+    "answer": "לינוי אשרם"
+  },
+  {
+    "id": "he_celeb_060",
+    "category": "celebrities",
+    "text": "מי הזמרת שזכתה במקום השני באירוויזיון 2003?",
+    "answer": "לורן פנירה"
+  },
+  {
+    "id": "he_celeb_061",
+    "category": "celebrities",
+    "text": "מי הספורטאי הישראלי שזכתה במדליה בגלישת רוח?",
+    "answer": "גל פרידמן"
+  },
+  {
+    "id": "he_celeb_062",
+    "category": "celebrities",
+    "text": "מי הזמרת ששרה 'אבניבי' באירוויזיון?",
+    "answer": "יזהר כהן"
+  },
+  {
+    "id": "he_celeb_063",
+    "category": "celebrities",
+    "text": "מי המנחה של 'הכוכב הבא' עם אסי עזר?",
+    "answer": "רותם סלע"
+  },
+  {
+    "id": "he_celeb_064",
+    "category": "celebrities",
+    "text": "מי השחקן שכיכב בסדרה 'שטיסל'?",
+    "answer": "דוטו כהן"
+  },
+  {
+    "id": "he_celeb_065",
+    "category": "celebrities",
+    "text": "מי הספורטאי שקבע שיא עולם בשחייה?",
+    "answer": "גל נבו"
+  },
+  {
+    "id": "he_celeb_066",
+    "category": "celebrities",
+    "text": "מי הזמרת שזכתה באירוויזיון 1998?",
+    "answer": "דנה אינטרנשיונל"
+  },
+  {
+    "id": "he_celeb_067",
+    "category": "celebrities",
+    "text": "מי הזמרת ששרה 'שיר לשלום' בעצרת רבין?",
+    "answer": "מירי אלוני"
+  },
+  {
+    "id": "he_celeb_068",
+    "category": "celebrities",
+    "text": "מי שחקן פאודה בתפקיד דאמה?",
+    "answer": "הintree פינקאס"
+  },
+  {
+    "id": "he_celeb_069",
+    "category": "celebrities",
+    "text": "מי המנחה של '新陈kstein'?",
+    "answer": "אבי קושניר"
+  },
+  {
+    "id": "he_celeb_070",
+    "category": "celebrities",
+    "text": "מי הספורטאי שזכה באליפות העולם באגרוף?",
+    "answer": "ויקטור פצ'ה"
+  },
+  {
+    "id": "he_celeb_071",
+    "category": "celebrities",
+    "text": "מי הישראלית שזכתה בפרס נובל?",
+    "answer": "עדה יונת"
+  },
+  {
+    "id": "he_celeb_072",
+    "category": "celebrities",
+    "text": "מי השחקן הישראלי שכיכב בסדרה NCIS?",
+    "answer": "מariel חמו"
+  },
+  {
+    "id": "he_celeb_073",
+    "category": "celebrities",
+    "text": "מי הזמרת הישראלית ששרה 'ים'?",
+    "answer": "אורנה ומשה דץ"
+  },
+  {
+    "id": "he_celeb_074",
+    "category": "celebrities",
+    "text": "מי הספורטאית שזכתה במדליה אולימפית?",
+    "answer": "לינוי אשרם"
+  },
+  {
+    "id": "he_celeb_075",
+    "category": "celebrities",
+    "text": "מי המנחה של '新陈kstein'?",
+    "answer": "אבי קושניר"
+  },
+  {
+    "id": "he_celeb_076",
+    "category": "celebrities",
+    "text": "מי הזמרת ששרה 'אהבה בת 20'?",
+    "answer": "גלי עטרי"
+  },
+  {
+    "id": "he_celeb_077",
+    "category": "celebrities",
+    "text": "מי השף הישראלי הידוע בעולם?",
+    "answer": "יונתן רושפלד"
+  },
+  {
+    "id": "he_celeb_078",
+    "category": "celebrities",
+    "text": "מי הזמרת שזכתה באירוויזיון 1983?",
+    "answer": "עופרה חזה"
+  },
+  {
+    "id": "he_celeb_079",
+    "category": "celebrities",
+    "text": "מי הספורטאי הישראלי שקבע שיא?",
+    "answer": "גל נבו"
+  },
+  {
+    "id": "he_celeb_080",
+    "category": "celebrities",
+    "text": "מי המנחה של 'האח הגדול'?",
+    "answer": "גיא זו-ארץ"
+  }
 ]

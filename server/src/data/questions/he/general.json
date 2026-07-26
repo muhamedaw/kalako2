@@ -1,55 +1,503 @@
 [
-  { "id": "he_general_001", "category": "general", "text": "כמה ימים יש בשנה מעוברת?", "answer": "366" },
-  { "id": "he_general_002", "category": "general", "text": "כמה צלעות יש למשולש?", "answer": "3" },
-  { "id": "he_general_003", "category": "general", "text": "כמה צבעים יש בקשת בענן?", "answer": "7" },
-  { "id": "he_general_004", "category": "general", "text": "כמה אותיות יש באלפבית העברי?", "answer": "22" },
-  { "id": "he_general_005", "category": "general", "text": "כמה רגליים יש לעכביש?", "answer": "8" },
-  { "id": "he_general_006", "category": "general", "text": "כמה חודשים יש בשנה?", "answer": "12" },
-  { "id": "he_general_007", "category": "general", "text": "מהו בעל החיים המהיר ביותר ביבשה?", "answer": "הברדלס (צ'יטה)" },
-  { "id": "he_general_008", "category": "general", "text": "כמה מיתרים יש לגיטרה קלאסית?", "answer": "6" },
-  { "id": "he_general_009", "category": "general", "text": "מהו בעל החיים הגבוה ביותר בעולם?", "answer": "הג'ירפה" },
-  { "id": "he_general_010", "category": "general", "text": "כמה חושים בסיסיים יש לגוף האדם?", "answer": "5" },
-  { "id": "he_general_011", "category": "general", "text": "מהו היונק הגדול ביותר בעולם?", "answer": "לוויתן כחול" },
-  { "id": "he_general_012", "category": "general", "text": "כמה כלים יש למשחק שחמט לכל שחקן?", "answer": "16" },
-  { "id": "he_general_013", "category": "general", "text": "מהי העצם הארוכה ביותר בגוף האדם?", "answer": "עצם הירך" },
-  { "id": "he_general_014", "category": "general", "text": "כמה שיניים יש לאדם בוגר, כולל שיני בינה?", "answer": "32" },
-  { "id": "he_general_015", "category": "general", "text": "איזה בעל חיים מכונה 'ספינת המדבר'?", "answer": "הגמל" },
-  { "id": "he_general_016", "category": "general", "text": "כמה רגליים יש לחרק?", "answer": "6" },
-  { "id": "he_general_017", "category": "general", "text": "מהי הציפור הגדולה בעולם שאינה יכולה לעוף?", "answer": "היען" },
-  { "id": "he_general_018", "category": "general", "text": "כמה דקות יש ביממה שלמה?", "answer": "1440" },
-  { "id": "he_general_019", "category": "general", "text": "מהי העצם הקטנה ביותר בגוף האדם?", "answer": "עצם הפטיש או הדומם באוזן" },
-  { "id": "he_general_020", "category": "general", "text": "כמה עונות יש בשנה?", "answer": "4" },
-  { "id": "he_general_021", "category": "general", "text": "איזו ציפור ידועה בחיקוי דיבור אנושי?", "answer": "התוכי" },
-  { "id": "he_general_022", "category": "general", "text": "כמה משבצות יש בלוח שחמט?", "answer": "64" },
-  { "id": "he_general_023", "category": "general", "text": "איזה בעל חיים ידוע בזיכרון המצוין שלו ומשמש לו סמל?", "answer": "הפיל" },
-  { "id": "he_general_024", "category": "general", "text": "כמה שניות יש בדקה?", "answer": "60" },
-  { "id": "he_general_025", "category": "general", "text": "איזה בעל חיים מכונה 'מלך היער'?", "answer": "האריה" },
-  { "id": "he_general_026", "category": "general", "text": "כמה חודשים בשנה מכילים בדיוק 30 יום?", "answer": "4" },
-  { "id": "he_general_027", "category": "general", "text": "מהו האיבר הגדול ביותר בגוף המשמש לחוש המישוש?", "answer": "העור" },
-  { "id": "he_general_028", "category": "general", "text": "איזה בעל חיים לא מסוגל לקפוץ למרות גודלו?", "answer": "הפיל" },
-  { "id": "he_general_029", "category": "general", "text": "כמה כלי משחק יש על לוח שחמט בתחילת המשחק (שני השחקנים יחד)?", "answer": "32" },
-  { "id": "he_general_030", "category": "general", "text": "מהו הנהר הארוך ביותר באסיה?", "answer": "נהר היאנגצה" },
-  { "id": "he_general_031", "category": "general", "text": "כמה צבעים יש על לוח שחמט?", "answer": "2 (שחור ולבן)" },
-  { "id": "he_general_032", "category": "general", "text": "איזו ציפור מהווה סמל אוניברסלי לשלום?", "answer": "היונה" },
-  { "id": "he_general_033", "category": "general", "text": "כמה רגליים יש לסוס?", "answer": "4" },
-  { "id": "he_general_034", "category": "general", "text": "מהו הבניין הגבוה בעולם נכון לאמצע שנות ה-2020?", "answer": "בורג' ח'ליפה" },
-  { "id": "he_general_035", "category": "general", "text": "כמה ימים יש בחודש פברואר בשנה מעוברת?", "answer": "29" },
-  { "id": "he_general_036", "category": "general", "text": "איזה בעל חיים מפורסם ביכולתו לשנות את צבע עורו כדי להתחפש?", "answer": "הזיקית" },
-  { "id": "he_general_037", "category": "general", "text": "מהו בעל החיים הכבד ביותר ביבשה?", "answer": "הפיל האפריקאי" },
-  { "id": "he_general_038", "category": "general", "text": "כמה רגליים יש לנמלה?", "answer": "6" },
-  { "id": "he_general_039", "category": "general", "text": "על איזה כוכב לכת חיים בני האדם, המכונה 'הכוכב הכחול'?", "answer": "כדור הארץ" },
-  { "id": "he_general_040", "category": "general", "text": "איזה בעל חיים ידוע כמי שישן בעמידה?", "answer": "הסוס" },
-  { "id": "he_general_041", "category": "general", "text": "כמה כוכבי לכת גזיים יש במערכת השמש (צדק, שבתאי, אורנוס, נפטון)?", "answer": "4" },
-  { "id": "he_general_042", "category": "general", "text": "מהו החתול הגדול ביותר בעולם?", "answer": "הנמר (טיגריס)" },
-  { "id": "he_general_043", "category": "general", "text": "כמה גלגלים יש לאופניים רגילים?", "answer": "2" },
-  { "id": "he_general_044", "category": "general", "text": "לאיזה יצור ימי יש שלושה לבבות?", "answer": "התמנון" },
-  { "id": "he_general_045", "category": "general", "text": "כמה שחקנים צריך כדי לשחק משחק שחמט רגיל?", "answer": "2" },
-  { "id": "he_general_046", "category": "general", "text": "מהו בעל החיים הרועש ביותר בעולם ביחס לגודלו?", "answer": "לוויתן כחול" },
-  { "id": "he_general_047", "category": "general", "text": "כמה אפסים יש במיליון?", "answer": "6" },
-  { "id": "he_general_048", "category": "general", "text": "איזו יבשה נחשבת ליבשה הקרה ביותר בעולם?", "answer": "אנטארקטיקה" },
-  { "id": "he_general_049", "category": "general", "text": "כמה יבשות יש בעולם?", "answer": "7" },
-  { "id": "he_general_050", "category": "general", "text": "מהו בעל החיים המהיר ביותר בעולם באוויר (בצלילה)?", "answer": "הבז הנודד" },
-  { "id": "he_general_051", "category": "general", "text": "מהו משך המשכנתא הממוצע בישראל לרכישת דירה?", "answer": "כ-25-30 שנה", "ageRating": "adult" },
-  { "id": "he_general_052", "category": "general", "text": "מהי הסיבה הנפוצה ביותר לגירושין לפי מומחי זוגיות?", "answer": "בעיות תקשורת בין בני הזוג", "ageRating": "adult" },
-  { "id": "he_general_053", "category": "general", "text": "מהו גיל הפרישה הרשמי לגברים בישראל?", "answer": "67", "ageRating": "adult" }
+  {
+    "id": "he_general_001",
+    "category": "general",
+    "text": "כמה ימים יש בשנה מעוברת?",
+    "answer": "366"
+  },
+  {
+    "id": "he_general_002",
+    "category": "general",
+    "text": "כמה צלעות יש למשולש?",
+    "answer": "3"
+  },
+  {
+    "id": "he_general_003",
+    "category": "general",
+    "text": "כמה צבעים יש בקשת בענן?",
+    "answer": "7"
+  },
+  {
+    "id": "he_general_004",
+    "category": "general",
+    "text": "כמה אותיות יש באלפבית העברי?",
+    "answer": "22"
+  },
+  {
+    "id": "he_general_005",
+    "category": "general",
+    "text": "כמה רגליים יש לעכביש?",
+    "answer": "8"
+  },
+  {
+    "id": "he_general_006",
+    "category": "general",
+    "text": "כמה חודשים יש בשנה?",
+    "answer": "12"
+  },
+  {
+    "id": "he_general_007",
+    "category": "general",
+    "text": "מהו בעל החיים המהיר ביותר ביבשה?",
+    "answer": "הברדלס (צ'יטה)"
+  },
+  {
+    "id": "he_general_008",
+    "category": "general",
+    "text": "כמה מיתרים יש לגיטרה קלאסית?",
+    "answer": "6"
+  },
+  {
+    "id": "he_general_009",
+    "category": "general",
+    "text": "מהו בעל החיים הגבוה ביותר בעולם?",
+    "answer": "הג'ירפה"
+  },
+  {
+    "id": "he_general_010",
+    "category": "general",
+    "text": "כמה חושים בסיסיים יש לגוף האדם?",
+    "answer": "5"
+  },
+  {
+    "id": "he_general_011",
+    "category": "general",
+    "text": "מהו היונק הגדול ביותר בעולם?",
+    "answer": "לוויתן כחול"
+  },
+  {
+    "id": "he_general_012",
+    "category": "general",
+    "text": "כמה כלים יש למשחק שחמט לכל שחקן?",
+    "answer": "16"
+  },
+  {
+    "id": "he_general_013",
+    "category": "general",
+    "text": "מהי העצם הארוכה ביותר בגוף האדם?",
+    "answer": "עצם הירך"
+  },
+  {
+    "id": "he_general_014",
+    "category": "general",
+    "text": "כמה שיניים יש לאדם בוגר, כולל שיני בינה?",
+    "answer": "32"
+  },
+  {
+    "id": "he_general_015",
+    "category": "general",
+    "text": "איזה בעל חיים מכונה 'ספינת המדבר'?",
+    "answer": "הגמל"
+  },
+  {
+    "id": "he_general_016",
+    "category": "general",
+    "text": "כמה רגליים יש לחרק?",
+    "answer": "6"
+  },
+  {
+    "id": "he_general_017",
+    "category": "general",
+    "text": "מהי הציפור הגדולה בעולם שאינה יכולה לעוף?",
+    "answer": "היען"
+  },
+  {
+    "id": "he_general_018",
+    "category": "general",
+    "text": "כמה דקות יש ביממה שלמה?",
+    "answer": "1440"
+  },
+  {
+    "id": "he_general_019",
+    "category": "general",
+    "text": "מהי העצם הקטנה ביותר בגוף האדם?",
+    "answer": "עצם הפטיש או הדומם באוזן"
+  },
+  {
+    "id": "he_general_020",
+    "category": "general",
+    "text": "כמה עונות יש בשנה?",
+    "answer": "4"
+  },
+  {
+    "id": "he_general_021",
+    "category": "general",
+    "text": "איזו ציפור ידועה בחיקוי דיבור אנושי?",
+    "answer": "התוכי"
+  },
+  {
+    "id": "he_general_022",
+    "category": "general",
+    "text": "כמה משבצות יש בלוח שחמט?",
+    "answer": "64"
+  },
+  {
+    "id": "he_general_023",
+    "category": "general",
+    "text": "איזה בעל חיים ידוע בזיכרון המצוין שלו ומשמש לו סמל?",
+    "answer": "הפיל"
+  },
+  {
+    "id": "he_general_024",
+    "category": "general",
+    "text": "כמה שניות יש בדקה?",
+    "answer": "60"
+  },
+  {
+    "id": "he_general_025",
+    "category": "general",
+    "text": "איזה בעל חיים מכונה 'מלך היער'?",
+    "answer": "האריה"
+  },
+  {
+    "id": "he_general_026",
+    "category": "general",
+    "text": "כמה חודשים בשנה מכילים בדיוק 30 יום?",
+    "answer": "4"
+  },
+  {
+    "id": "he_general_027",
+    "category": "general",
+    "text": "מהו האיבר הגדול ביותר בגוף המשמש לחוש המישוש?",
+    "answer": "העור"
+  },
+  {
+    "id": "he_general_028",
+    "category": "general",
+    "text": "איזה בעל חיים לא מסוגל לקפוץ למרות גודלו?",
+    "answer": "הפיל"
+  },
+  {
+    "id": "he_general_029",
+    "category": "general",
+    "text": "כמה כלי משחק יש על לוח שחמט בתחילת המשחק (שני השחקנים יחד)?",
+    "answer": "32"
+  },
+  {
+    "id": "he_general_030",
+    "category": "general",
+    "text": "מהו הנהר הארוך ביותר באסיה?",
+    "answer": "נהר היאנגצה"
+  },
+  {
+    "id": "he_general_031",
+    "category": "general",
+    "text": "כמה צבעים יש על לוח שחמט?",
+    "answer": "2 (שחור ולבן)"
+  },
+  {
+    "id": "he_general_032",
+    "category": "general",
+    "text": "איזו ציפור מהווה סמל אוניברסלי לשלום?",
+    "answer": "היונה"
+  },
+  {
+    "id": "he_general_033",
+    "category": "general",
+    "text": "כמה רגליים יש לסוס?",
+    "answer": "4"
+  },
+  {
+    "id": "he_general_034",
+    "category": "general",
+    "text": "מהו הבניין הגבוה בעולם נכון לאמצע שנות ה-2020?",
+    "answer": "בורג' ח'ליפה"
+  },
+  {
+    "id": "he_general_035",
+    "category": "general",
+    "text": "כמה ימים יש בחודש פברואר בשנה מעוברת?",
+    "answer": "29"
+  },
+  {
+    "id": "he_general_036",
+    "category": "general",
+    "text": "איזה בעל חיים מפורסם ביכולתו לשנות את צבע עורו כדי להתחפש?",
+    "answer": "הזיקית"
+  },
+  {
+    "id": "he_general_037",
+    "category": "general",
+    "text": "מהו בעל החיים הכבד ביותר ביבשה?",
+    "answer": "הפיל האפריקאי"
+  },
+  {
+    "id": "he_general_038",
+    "category": "general",
+    "text": "כמה רגליים יש לנמלה?",
+    "answer": "6"
+  },
+  {
+    "id": "he_general_039",
+    "category": "general",
+    "text": "על איזה כוכב לכת חיים בני האדם, המכונה 'הכוכב הכחול'?",
+    "answer": "כדור הארץ"
+  },
+  {
+    "id": "he_general_040",
+    "category": "general",
+    "text": "איזה בעל חיים ידוע כמי שישן בעמידה?",
+    "answer": "הסוס"
+  },
+  {
+    "id": "he_general_041",
+    "category": "general",
+    "text": "כמה כוכבי לכת גזיים יש במערכת השמש (צדק, שבתאי, אורנוס, נפטון)?",
+    "answer": "4"
+  },
+  {
+    "id": "he_general_042",
+    "category": "general",
+    "text": "מהו החתול הגדול ביותר בעולם?",
+    "answer": "הנמר (טיגריס)"
+  },
+  {
+    "id": "he_general_043",
+    "category": "general",
+    "text": "כמה גלגלים יש לאופניים רגילים?",
+    "answer": "2"
+  },
+  {
+    "id": "he_general_044",
+    "category": "general",
+    "text": "לאיזה יצור ימי יש שלושה לבבות?",
+    "answer": "התמנון"
+  },
+  {
+    "id": "he_general_045",
+    "category": "general",
+    "text": "כמה שחקנים צריך כדי לשחק משחק שחמט רגיל?",
+    "answer": "2"
+  },
+  {
+    "id": "he_general_046",
+    "category": "general",
+    "text": "מהו בעל החיים הרועש ביותר בעולם ביחס לגודלו?",
+    "answer": "לוויתן כחול"
+  },
+  {
+    "id": "he_general_047",
+    "category": "general",
+    "text": "כמה אפסים יש במיליון?",
+    "answer": "6"
+  },
+  {
+    "id": "he_general_048",
+    "category": "general",
+    "text": "איזו יבשה נחשבת ליבשה הקרה ביותר בעולם?",
+    "answer": "אנטארקטיקה"
+  },
+  {
+    "id": "he_general_049",
+    "category": "general",
+    "text": "כמה יבשות יש בעולם?",
+    "answer": "7"
+  },
+  {
+    "id": "he_general_050",
+    "category": "general",
+    "text": "מהו בעל החיים המהיר ביותר בעולם באוויר (בצלילה)?",
+    "answer": "הבז הנודד"
+  },
+  {
+    "id": "he_general_051",
+    "category": "general",
+    "text": "מהו משך המשכנתא הממוצע בישראל לרכישת דירה?",
+    "answer": "כ-25-30 שנה",
+    "ageRating": "adult"
+  },
+  {
+    "id": "he_general_052",
+    "category": "general",
+    "text": "מהי הסיבה הנפוצה ביותר לגירושין לפי מומחי זוגיות?",
+    "answer": "בעיות תקשורת בין בני הזוג",
+    "ageRating": "adult"
+  },
+  {
+    "id": "he_general_053",
+    "category": "general",
+    "text": "מהו גיל הפרישה הרשמי לגברים בישראל?",
+    "answer": "67",
+    "ageRating": "adult"
+  },
+  {
+    "id": "he_general_051",
+    "category": "general",
+    "text": "מהי המילה הראשונה בתנ\"ך?",
+    "answer": "בראשית"
+  },
+  {
+    "id": "he_general_052",
+    "category": "general",
+    "text": "כמה ימים נמשך חג הפסח?",
+    "answer": "7"
+  },
+  {
+    "id": "he_general_053",
+    "category": "general",
+    "text": "באיזו עיר נמצא הכותל המערבי?",
+    "answer": "ירושלים"
+  },
+  {
+    "id": "he_general_054",
+    "category": "general",
+    "text": "מהי המכה הראשונה מעשר המכות?",
+    "answer": "דם"
+  },
+  {
+    "id": "he_general_055",
+    "category": "general",
+    "text": "כמה כוכבים יש בדגל ישראל?",
+    "answer": "2"
+  },
+  {
+    "id": "he_general_056",
+    "category": "general",
+    "text": "באיזו עיר נמצא נמל התעופה בן-גוריון?",
+    "answer": "לוד"
+  },
+  {
+    "id": "he_general_057",
+    "category": "general",
+    "text": "באיזה חודש חל חג חנוכה?",
+    "answer": "דצמבר"
+  },
+  {
+    "id": "he_general_058",
+    "category": "general",
+    "text": "מהי המילה האחרונה בתנ\"ך?",
+    "answer": "לקלל"
+  },
+  {
+    "id": "he_general_059",
+    "category": "general",
+    "text": "כמה ימים נמשך חג הסוכות?",
+    "answer": "7"
+  },
+  {
+    "id": "he_general_060",
+    "category": "general",
+    "text": "באיזו עיר נמצא מוזיאון ישראל?",
+    "answer": "ירושלים"
+  },
+  {
+    "id": "he_general_061",
+    "category": "general",
+    "text": "כמה מזלות יש במזלות?",
+    "answer": "12"
+  },
+  {
+    "id": "he_general_062",
+    "category": "general",
+    "text": "מהו היום הראשון של השבוע בעברית?",
+    "answer": "ראשון"
+  },
+  {
+    "id": "he_general_063",
+    "category": "general",
+    "text": "באיזו עיר נמצא מגדל דוד?",
+    "answer": "ירושלים"
+  },
+  {
+    "id": "he_general_064",
+    "category": "general",
+    "text": "מהי המכה האחרונה מעשר המכות?",
+    "answer": "מכת בכורות"
+  },
+  {
+    "id": "he_general_065",
+    "category": "general",
+    "text": "כמה חודשים יש בלוח השנה העברי?",
+    "answer": "12"
+  },
+  {
+    "id": "he_general_066",
+    "category": "general",
+    "text": "באיזו עיר נמצאת האוניברסיטה העברית?",
+    "answer": "ירושלים"
+  },
+  {
+    "id": "he_general_067",
+    "category": "general",
+    "text": "מהי המכה הרביעית מעשר המכות?",
+    "answer": "ערוב"
+  },
+  {
+    "id": "he_general_068",
+    "category": "general",
+    "text": "כמה ימים נמשך צום יום כיפור?",
+    "answer": "1"
+  },
+  {
+    "id": "he_general_069",
+    "category": "general",
+    "text": "באיזה חודש חל פורים?",
+    "answer": "מרץ"
+  },
+  {
+    "id": "he_general_070",
+    "category": "general",
+    "text": "מהי המכה החמישית מעשר המכות?",
+    "answer": "דבר"
+  },
+  {
+    "id": "he_general_071",
+    "category": "general",
+    "text": "באיזו עיר נמצא המצפה האסטרונומי?",
+    "answer": "הר צפה"
+  },
+  {
+    "id": "he_general_072",
+    "category": "general",
+    "text": "מהי המכה השישית מעשר המכות?",
+    "answer": "שחין"
+  },
+  {
+    "id": "he_general_073",
+    "category": "general",
+    "text": "כמה ימים נמשך חג שבועות?",
+    "answer": "1"
+  },
+  {
+    "id": "he_general_074",
+    "category": "general",
+    "text": "באיזה חודש חל ט\"ו בשבט?",
+    "answer": "ינואר"
+  },
+  {
+    "id": "he_general_075",
+    "category": "general",
+    "text": "מהי המכה השביעית מעשר המכות?",
+    "answer": "ברד"
+  },
+  {
+    "id": "he_general_076",
+    "category": "general",
+    "text": "באיזו עיר נמצא מוזיאון תל אביב לאמנות?",
+    "answer": "תל אביב"
+  },
+  {
+    "id": "he_general_077",
+    "category": "general",
+    "text": "מהי המכה השמינית מעשר המכות?",
+    "answer": "ארבה"
+  },
+  {
+    "id": "he_general_078",
+    "category": "general",
+    "text": "כמה מטבעות יש במטבע הישראלי?",
+    "answer": "6"
+  },
+  {
+    "id": "he_general_079",
+    "category": "general",
+    "text": "מהי המכה התשיעית מעשר המכות?",
+    "answer": "חושך"
+  },
+  {
+    "id": "he_general_080",
+    "category": "general",
+    "text": "באיזו עיר נמצא התיאטרון הלאומי?",
+    "answer": "תל אביב"
+  }
 ]

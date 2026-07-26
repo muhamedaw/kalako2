@@ -5,6 +5,7 @@ import { pickCategories, pickQuestion } from './questionBank.mts'
 import { computeRoundScoring } from './scoring.mts'
 import { connectedPlayers, destroyRoom } from './roomManager.mts'
 import { persistFinishedGame } from '../db/gameHistoryRepo.mts'
+import { awardCoinsForFinishedGame } from '../socket/economy.mts'
 import type { RoomState } from './types.mts'
 
 function emitRoom(io: Server, room: RoomState, event: string, payload: unknown) {
@@ -71,7 +72,12 @@ export function beginAnswering(io: Server, room: RoomState, category: string) {
   emitRoom(io, room, 'phase_changed', {
     phase: room.phase,
     room: publicRoomView(room),
-    question: { category: room.currentQuestion.category, text: room.currentQuestion.text },
+    question: {
+      category: room.currentQuestion.category,
+      text: room.currentQuestion.text,
+      ...(room.currentQuestion.imageUrl && { imageUrl: room.currentQuestion.imageUrl }),
+      ...(room.currentQuestion.sourceAttribution && { sourceAttribution: room.currentQuestion.sourceAttribution }),
+    },
     timeSeconds,
     isDoublePointsRound: isDoublePointsRound(room),
   })
@@ -138,12 +144,15 @@ export function computeResults(io: Server, room: RoomState) {
   clearTimers(room)
   room.phase = 'RESULTS'
 
-  const { deltas, answerRecords } = computeRoundScoring(room.answers, room.votes)
+  const { deltas, answerRecords, correctVoterIds } = computeRoundScoring(room.answers, room.votes)
   const multiplier = isDoublePointsRound(room) ? 2 : 1
 
   for (const [playerId, delta] of deltas) {
     const player = room.players.get(playerId)
     if (player) player.score += delta * multiplier
+  }
+  for (const voterId of correctVoterIds) {
+    room.correctGuessCounts.set(voterId, (room.correctGuessCounts.get(voterId) ?? 0) + 1)
   }
   if (multiplier > 1) {
     for (const record of answerRecords) record.pointsAwarded *= multiplier
@@ -232,13 +241,18 @@ function startTiebreaker(io: Server, room: RoomState) {
   })
 }
 
-function mostDeceptivePlayer(room: RoomState) {
+function computeFoolCounts(room: RoomState) {
   const foolCounts = new Map<string, number>()
   for (const round of room.history) {
     for (const answer of round.answers) {
       foolCounts.set(answer.playerId, (foolCounts.get(answer.playerId) ?? 0) + answer.votesReceived)
     }
   }
+  return foolCounts
+}
+
+function mostDeceptivePlayer(room: RoomState) {
+  const foolCounts = computeFoolCounts(room)
   let bestId: string | null = null
   let bestCount = 0
   for (const [playerId, count] of foolCounts) {
@@ -271,6 +285,19 @@ function endGame(io: Server, room: RoomState) {
     persistFinishedGame(room, room.history)
   } catch (err) {
     console.error(`[kalak] failed to persist game history for room ${room.code}:`, err)
+  }
+
+  const foolCounts = computeFoolCounts(room)
+  for (const player of room.players.values()) {
+    if (!player.deviceId) continue
+    const roundsCorrect = room.correctGuessCounts.get(player.id) ?? 0
+    const playersTricked = foolCounts.get(player.id) ?? 0
+    const coinsEarned = 10 + 5 * roundsCorrect + 5 * playersTricked
+    try {
+      awardCoinsForFinishedGame(player.deviceId, player.name, coinsEarned)
+    } catch (err) {
+      console.error(`[kalak] failed to award coins to device ${player.deviceId}:`, err)
+    }
   }
 
   setTimeout(() => destroyRoom(room.code), 60_000)
