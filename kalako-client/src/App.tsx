@@ -157,6 +157,10 @@ function App() {
   const showSettingsGear = screen === 'welcome'
 
   const handleStartCreate = (isPrivate: boolean) => {
+    // Fresh entry from Play/Home: reset draft so persisted isPrivate doesn't stick,
+    // then force-set the correct value for the clicked button.
+    // Premium-and-back preserves the draft because it doesn't call this path.
+    useGameStore.getState().resetCreateRoomDraft()
     updateCreateRoomDraft({ isPrivate })
     setScreen('create')
   }

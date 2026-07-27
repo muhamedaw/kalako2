@@ -20,10 +20,12 @@ export const usePurchaseEmailGateStore = create<PurchaseEmailGateState>((set, ge
   pendingAction: null,
 
   requestPurchase: (hasEmail, action) => {
-    if (hasEmail) return action()
-    try {
-      if (localStorage.getItem(DISMISS_KEY) === '1') return action()
-    } catch { /* private browsing */ }
+    if (hasEmail) { action(); return }
+    // Check the dismissed flag OUTSIDE the action call so the bare catch {} never
+    // accidentally swallows a thrown action() — both concerns are cleanly separated.
+    let dismissed = false
+    try { dismissed = localStorage.getItem(DISMISS_KEY) === '1' } catch { /* private browsing */ }
+    if (dismissed) { action(); return }
     set({ isOpen: true, pendingAction: action })
   },
 
@@ -31,7 +33,7 @@ export const usePurchaseEmailGateStore = create<PurchaseEmailGateState>((set, ge
     try { localStorage.setItem(DISMISS_KEY, '1') } catch { /* private browsing */ }
     const action = get().pendingAction
     set({ isOpen: false, pendingAction: null })
-    action?.()
+    if (action) action()
   },
 
   close: () => set({ isOpen: false, pendingAction: null }),
