@@ -6,7 +6,7 @@ import { safeOn } from './wrapHandler.mts'
 
 interface CatalogItem {
   id: string
-  type: 'sound_pack' | 'frame' | 'avatar_part'
+  type: 'sound_pack' | 'frame' | 'avatar_part' | 'categoryUnlock' | 'categoryExpansion'
   name: string
   description: string
   price: number
@@ -74,6 +74,28 @@ const STORE_CATALOG: { type: string; title: string; description: string; items: 
       { id: 'hat_premium_10', type: 'avatar_part', name: 'Premium Hat 10', description: 'Exclusive hat style', price: 150, previewId: 'hat_premium_10' },
     ],
   },
+  {
+    // Permanent per-category unlocks — independent of an active Premium subscription (either
+    // path grants access, see game/categoryAccess.mts). Only ever applies to categories added
+    // AFTER this feature; every category that was free before stays free forever.
+    type: 'categoryUnlock',
+    title: 'Category Unlocks',
+    description: 'Permanently unlock a premium trivia category',
+    items: [
+      { id: 'category_unlock_space', type: 'categoryUnlock', name: 'Space & Astronomy', description: 'Unlock the Space category forever', price: 200, previewId: 'space' },
+    ],
+  },
+  {
+    // "Expansion" packs: +questions for an EXISTING free category, one-time purchase,
+    // inventory-based exactly like cosmetics — ownership alone is what the game checks
+    // (see beginAnswering's includeExpansion check in game/stateMachine.mts).
+    type: 'categoryExpansion',
+    title: 'Category Expansions',
+    description: 'Add more questions to a category you already play',
+    items: [
+      { id: 'category_expansion_sports', type: 'categoryExpansion', name: 'Sports Expansion Pack', description: 'Extra Sports questions for every game in this room', price: 100, previewId: 'sports' },
+    ],
+  },
 ]
 
 const CATALOG_BY_ID = new Map(STORE_CATALOG.flatMap((section) => section.items).map((item) => [item.id, item]))
@@ -129,22 +151,25 @@ export function registerEconomyHandlers(io: Server, socket: Socket) {
       ensureProfileRow(deviceId, asString(payload?.nickname) || 'Player')
 
       const db = getDb()
-      const row = db.exec(`SELECT device_id, nickname, avatar_id, coins FROM players WHERE device_id = ?`, [deviceId])
+      const row = db.exec(`SELECT device_id, nickname, avatar_id, coins, email FROM players WHERE device_id = ?`, [deviceId])
       const profile = row[0].values[0]
       const invRows = db.exec(`SELECT item_id FROM inventory WHERE device_id = ?`, [deviceId])
       const inventory = invRows.length > 0
         ? invRows[0].values.map((r: any) => ({ itemId: r[0] as string, equipped: false }))
         : []
 
-      const premiumRows = db.exec(`SELECT status FROM premium_subscriptions WHERE device_id = ? AND status = 'active'`, [deviceId])
+      const premiumRows = db.exec(`SELECT status, expires_at FROM premium_subscriptions WHERE device_id = ? AND status = 'active'`, [deviceId])
       const isPremium = premiumRows.length > 0 && premiumRows[0].values.length > 0
+      const premiumExpiresAt = isPremium ? (premiumRows[0].values[0][1] as string | null) ?? null : null
 
       ack?.({
         deviceId: profile[0],
         nickname: profile[1],
         avatarConfig: parseAvatarConfig(profile[2] as string),
         coins: Number(profile[3]),
+        email: (profile[4] as string | null) ?? null,
         isPremium,
+        premiumExpiresAt,
         inventory,
       })
     } catch (err) {

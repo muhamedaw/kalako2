@@ -1,0 +1,10 @@
+[
+  { "id": "space_001", "category": "space", "text": "Which planet is known as the Red Planet?", "answer": "Mars", "ageRating": "family" },
+  { "id": "space_002", "category": "space", "text": "What is the name of the galaxy that contains our Solar System?", "answer": "The Milky Way", "ageRating": "family" },
+  { "id": "space_003", "category": "space", "text": "Who was the first human to walk on the Moon?", "answer": "Neil Armstrong", "ageRating": "family" },
+  { "id": "space_004", "category": "space", "text": "What force keeps planets in orbit around the Sun?", "answer": "Gravity", "ageRating": "family" },
+  { "id": "space_005", "category": "space", "text": "Which planet has the most prominent ring system?", "answer": "Saturn", "ageRating": "family" },
+  { "id": "space_006", "category": "space", "text": "What do astronomers call a star that suddenly increases greatly in brightness before fading?", "answer": "A nova", "ageRating": "family" },
+  { "id": "space_007", "category": "space", "text": "What is the closest star to Earth?", "answer": "The Sun", "ageRating": "family" },
+  { "id": "space_008", "category": "space", "text": "What is the name of NASA's rover that landed on Mars in 2021?", "answer": "Perseverance", "ageRating": "family" }
+]

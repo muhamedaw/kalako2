@@ -199,6 +199,7 @@ const ar: Translations = {
   brandLabel: 'كلاكو',
 
   splashTagline: 'تحدي الإجابات',
+  logoSubtitle: 'كلاكو',
   shareCardTitle: 'تحدي الإجابات',
   shareCardSubtitle: 'لعبة خداع جماعية',
   shareCardRank: 'المرتبة {{rank}}',
@@ -420,6 +421,7 @@ const ar: Translations = {
   authRecoverEmailPlaceholder: 'you@example.com',
   authRecoverSendCodeButton: 'إرسال الكود',
   authRecoverCodeSentNotice: 'إذا كان هذا البريد مرتبط بحساب، الكود بالطريق.',
+  authRecoverSendError: 'تعذر الاتصال. تحقق من اتصالك وحاول مرة أخرى.',
   authRecoverCodeLabel: 'كود من 6 أرقام',
   authRecoverCodePlaceholder: '000000',
   authRecoverVerifyButton: 'تحقق واسترجع',
@@ -427,6 +429,17 @@ const ar: Translations = {
   authRecoverEmailNotConfigured: 'استرجاع الحساب مو متاح حاليًا — جرب لاحقًا.',
   authRecoverInvalidCode: 'الكود غلط أو منتهي الصلاحية.',
   authRecoverSuccess: 'تم استرجاع حسابك! أهلاً بعودتك.',
+
+  purchaseEmailNudgeTitle: 'لا تفقد هذه العملية',
+  purchaseEmailNudgeBody: 'أضف بريد إلكتروني للاسترجاع عشان ما تفقد هذا الشراء — بيربط عملاتك وعناصرك بحسابك لو غيّرت جهازك.',
+  purchaseAddEmailButton: 'إضافة بريد إلكتروني',
+  purchaseSkipButton: 'تخطي، كمّل بدون',
+  purchaseEmailVerifyButton: 'تحقق واربط',
+  purchaseEmailLinkedSuccess: 'تم ربط البريد! شراؤك محمي الآن.',
+  purchaseEmailInvalidCode: 'الكود غلط أو منتهي الصلاحية.',
+  purchaseEmailNotConfigured: 'ربط البريد مو متاح حاليًا — هنكمل بدونه.',
+  purchaseEmailSentNotice: 'تم إرسال الكود — تحقق من بريدك.',
+  purchaseEmailRateLimited: 'محاولات كثيرة — جرب لاحقًا.',
 
   // Avatar part display names (bodies 1-4)
   avatarBody01: 'برقوق منتفخ',

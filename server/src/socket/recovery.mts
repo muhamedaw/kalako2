@@ -1,4 +1,5 @@
 import crypto from 'node:crypto'
+import nodemailer from 'nodemailer'
 import type { Server, Socket } from 'socket.io'
 import { config } from '../config.mts'
 import { getDb, persistToDisk } from '../db/index.mts'
@@ -18,20 +19,40 @@ function generateCode(): string {
   return String(crypto.randomInt(0, 1_000_000)).padStart(6, '0')
 }
 
+function isEmailConfigured(): boolean {
+  return Boolean(config.gmailUser && config.gmailAppPassword)
+}
+
+// Built once, not per-send — nodemailer pools/reuses the SMTP connection internally.
+let transporter: ReturnType<typeof nodemailer.createTransport> | null = null
+function getTransporter() {
+  if (!transporter) {
+    transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: { user: config.gmailUser, pass: config.gmailAppPassword },
+    })
+  }
+  return transporter
+}
+
 async function sendRecoveryEmail(to: string, code: string, purpose: 'link_email' | 'recover_account'): Promise<boolean> {
-  if (!config.resendApiKey) return false
+  if (!isEmailConfigured()) return false
   const subject = purpose === 'link_email' ? 'Confirm your Kalako email' : 'Recover your Kalako account'
   const text = `Your Kalako verification code is ${code}. It expires in 10 minutes. If you didn't request this, ignore this email.`
+  // Plain-text-only body with a from-name (not a bare address) — reduces the chance Gmail
+  // or the recipient's spam filter flags this as a generic transactional/automated blast.
+  const html = `<p>Your Kalako verification code is <strong style="font-size:18px">${code}</strong>.</p><p>It expires in 10 minutes. If you didn't request this, ignore this email.</p>`
   try {
-    const res = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${config.resendApiKey}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ from: config.recoveryEmailFrom, to, subject, text }),
+    await getTransporter().sendMail({
+      from: `"${config.recoveryEmailFromName}" <${config.gmailUser}>`,
+      to,
+      subject,
+      text,
+      html,
     })
-    if (!res.ok) console.error('[kalak] Resend API returned', res.status, await res.text().catch(() => ''))
-    return res.ok
+    return true
   } catch (err) {
-    console.error('[kalak] Resend send failed:', err)
+    console.error('[kalak] Gmail SMTP send failed:', err)
     return false
   }
 }
@@ -59,7 +80,7 @@ export function registerRecoveryHandlers(io: Server, socket: Socket) {
     if (isRateLimited(`add_recovery_email:device:${deviceId}`, 5, 3_600_000)) return ack?.({ success: false, error: 'rate_limited' })
     if (isRateLimited(`add_recovery_email:email:${email}`, 5, 3_600_000)) return ack?.({ success: false, error: 'rate_limited' })
 
-    if (!config.resendApiKey) return ack?.({ success: false, error: 'email_not_configured' })
+    if (!isEmailConfigured()) return ack?.({ success: false, error: 'email_not_configured' })
 
     try {
       ensureProfileRow(deviceId, 'Player')

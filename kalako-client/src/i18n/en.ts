@@ -198,6 +198,8 @@ const en: Translations = {
   loadingText: 'Loading...',
   brandLabel: 'kalako.app',
 
+  logoSubtitle: 'Kalako',
+
   splashTagline: 'The Answer Challenge',
   shareCardTitle: 'Kalako',
   shareCardSubtitle: 'A group deception game',
@@ -420,6 +422,7 @@ The operator is committed to resolving genuine issues fairly. While refunds are 
   authRecoverEmailPlaceholder: 'you@example.com',
   authRecoverSendCodeButton: 'Send Code',
   authRecoverCodeSentNotice: 'If that email is linked to an account, a code is on its way.',
+  authRecoverSendError: 'Could not connect. Please check your connection and try again.',
   authRecoverCodeLabel: '6-digit code',
   authRecoverCodePlaceholder: '000000',
   authRecoverVerifyButton: 'Verify & Restore',
@@ -427,6 +430,17 @@ The operator is committed to resolving genuine issues fairly. While refunds are 
   authRecoverEmailNotConfigured: 'Account recovery isn\'t available yet — check back soon.',
   authRecoverInvalidCode: 'That code is invalid or expired.',
   authRecoverSuccess: 'Account restored! Welcome back.',
+
+  purchaseEmailNudgeTitle: 'Don\'t lose this purchase',
+  purchaseEmailNudgeBody: 'Add a recovery email so you never lose this purchase — it links your coins and items to your account if you ever switch devices.',
+  purchaseAddEmailButton: 'Add Email',
+  purchaseSkipButton: 'Skip, continue anyway',
+  purchaseEmailVerifyButton: 'Verify & Link',
+  purchaseEmailLinkedSuccess: 'Email linked! Your purchase is protected now.',
+  purchaseEmailInvalidCode: 'That code is invalid or expired.',
+  purchaseEmailNotConfigured: 'Email linking isn\'t available yet — continuing without it.',
+  purchaseEmailSentNotice: 'Code sent — check your inbox.',
+  purchaseEmailRateLimited: 'Too many attempts — try again later.',
 
   // Avatar part display names (bodies 1-4)
   avatarBody01: 'Plum Puff',

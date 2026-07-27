@@ -8,8 +8,8 @@ import { io as ioClient, type Socket as ClientSocket } from 'socket.io-client'
 process.env.DB_PATH = path.join(os.tmpdir(), `kalak-test-recovery-${crypto.randomUUID()}.sqlite`)
 process.env.DISABLE_BACKUP_SCHEDULER = 'true'
 process.env.JOIN_BASE_URL = 'http://localhost:0'
-// No RESEND_API_KEY set — every test here exercises the graceful "not configured" path,
-// since a real key was never provided (documented blocker, see final report).
+// No GMAIL_USER/GMAIL_APP_PASSWORD set — every test here exercises the graceful "not
+// configured" path, since real credentials were never provided (documented blocker, see final report).
 
 const { createApp } = await import('../src/server.mts')
 const { getDb } = await import('../src/db/index.mts')
@@ -36,7 +36,7 @@ function waitFor<T = any>(socket: ClientSocket, event: string, ms = 8000): Promi
   })
 }
 
-test('add_recovery_email fails gracefully with email_not_configured when RESEND_API_KEY is unset', async (t) => {
+test('add_recovery_email fails gracefully with email_not_configured when Gmail SMTP credentials are unset', async (t) => {
   const { httpServer, port } = await startServer()
   t.after(() => httpServer.close())
   const client = ioClient(`http://localhost:${port}`, { transports: ['websocket'] })

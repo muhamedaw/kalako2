@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
@@ -8,7 +7,7 @@ import BlindVote from '@/components/brand/icons/BlindVote'
 import FamilyAdults from '@/components/brand/icons/FamilyAdults'
 import { useGameStore } from '@/store/gameStore'
 import { useTranslation } from '@/i18n/context'
-import { CATEGORIES, getCategoryLabel } from '@/types'
+import { CATEGORIES, PREMIUM_CATEGORY_IDS, getCategoryLabel } from '@/types'
 
 const stagger = {
   animate: { transition: { staggerChildren: 0.05 } },
@@ -19,23 +18,26 @@ const itemIn = {
   transition: { duration: 0.25 },
 }
 
-interface Props {
-  initialIsPrivate?: boolean
-}
-
-export default function CreateRoom({ initialIsPrivate = false }: Props) {
-  const { createRoom, setScreen } = useGameStore()
+export default function CreateRoom() {
+  const { createRoom, setScreen, profile, isPremium, createRoomDraft, updateCreateRoomDraft, resetCreateRoomDraft } = useGameStore()
   const t = useTranslation()
-  const [playerName, setPlayerName] = useState('')
-  const [isPrivate, setIsPrivate] = useState(initialIsPrivate)
-  const [answerTime, setAnswerTime] = useState('45')
-  const [roundCount, setRoundCount] = useState('5')
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([
-    'general', 'science', 'history', 'geography', 'sports', 'movies', 'celebrities', 'cooking',
-  ])
-  const [scoreMultiplierEnabled, setScoreMultiplierEnabled] = useState(false)
-  const [isBlindVote, setIsBlindVote] = useState(false)
-  const [ageRating, setAgeRating] = useState<'all' | 'adults'>('all')
+  // Draft lives in the shared store (not local useState) so it survives a detour to
+  // Store/Premium (e.g. tapping a locked category) and back — the component remounts on
+  // every screen switch, but the store doesn't. See resetCreateRoomDraft() call sites for
+  // the two places this intentionally clears: the explicit Back button below, and a
+  // successful create_room ack in gameStore.ts.
+  const {
+    playerName, isPrivate, answerTimeSeconds: answerTime, roundsCount: roundCount,
+    selectedCategories, scoreMultiplierEnabled, isBlindVote, ageRating, tournamentMode,
+  } = createRoomDraft
+
+  const ownsCategory = (id: string) =>
+    isPremium || (profile?.inventory ?? []).some((i) => i.itemId === `category_unlock_${id}`)
+
+  const handleBack = () => {
+    resetCreateRoomDraft()
+    setScreen('welcome')
+  }
 
   const handleCreate = () => {
     if (!playerName.trim()) return
@@ -43,17 +45,26 @@ export default function CreateRoom({ initialIsPrivate = false }: Props) {
       isPrivate,
       answerTimeSeconds: Number(answerTime),
       roundsCount: Number(roundCount),
-      allowedCategories: selectedCategories,
+      // The server silently drops any premium category the device hasn't unlocked — this
+      // client-side filter just keeps the UI honest about what will actually apply.
+      allowedCategories: selectedCategories.filter((id) => !PREMIUM_CATEGORY_IDS.has(id) || ownsCategory(id)),
       scoreMultiplierEnabled,
       isBlindVote,
       ageRating,
+      tournamentMode,
     })
   }
 
   const toggleCategory = (id: string) => {
-    setSelectedCategories((prev) =>
-      prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]
-    )
+    if (PREMIUM_CATEGORY_IDS.has(id) && !ownsCategory(id)) {
+      setScreen('store')
+      return
+    }
+    updateCreateRoomDraft({
+      selectedCategories: selectedCategories.includes(id)
+        ? selectedCategories.filter((c) => c !== id)
+        : [...selectedCategories, id],
+    })
   }
 
   return (
@@ -64,7 +75,7 @@ export default function CreateRoom({ initialIsPrivate = false }: Props) {
         className="w-full max-w-sm"
       >
         <button
-          onClick={() => setScreen('welcome')}
+          onClick={handleBack}
           className="text-white/60 text-sm mb-4 hover:text-white/90 transition-colors cursor-pointer"
         >
           {t.back}
@@ -85,7 +96,7 @@ export default function CreateRoom({ initialIsPrivate = false }: Props) {
               label={t.yourName}
               placeholder={t.yourNamePlaceholder}
               value={playerName}
-              onChange={(e) => setPlayerName(e.target.value)}
+              onChange={(e) => updateCreateRoomDraft({ playerName: e.target.value })}
               maxLength={20}
             />
           </motion.div>
@@ -93,7 +104,7 @@ export default function CreateRoom({ initialIsPrivate = false }: Props) {
           <motion.div variants={itemIn}>
             <Toggle
               checked={isPrivate}
-              onChange={setIsPrivate}
+              onChange={(v) => updateCreateRoomDraft({ isPrivate: v })}
               label={t.privateRoom}
             />
           </motion.div>
@@ -101,7 +112,7 @@ export default function CreateRoom({ initialIsPrivate = false }: Props) {
           <motion.div variants={itemIn}>
             <Select
               value={answerTime}
-              onChange={setAnswerTime}
+              onChange={(v) => updateCreateRoomDraft({ answerTimeSeconds: v })}
               label={t.answerTime}
               options={[
                 { value: '30', label: `30 ${t.sec}` },
@@ -115,7 +126,7 @@ export default function CreateRoom({ initialIsPrivate = false }: Props) {
           <motion.div variants={itemIn}>
             <Select
               value={roundCount}
-              onChange={setRoundCount}
+              onChange={(v) => updateCreateRoomDraft({ roundsCount: v })}
               label={t.rounds}
               options={[
                 { value: '3', label: `3 ${t.roundsLabel}` },
@@ -129,11 +140,14 @@ export default function CreateRoom({ initialIsPrivate = false }: Props) {
           <motion.div variants={itemIn} className="flex flex-col gap-2">
             <span className="text-sm font-medium text-white/60">{t.categories}</span>
             <ChipGroup
-              items={CATEGORIES.map((c) => ({
-                id: c.id,
-                label: getCategoryLabel(c.id, t.lang),
-                emoji: c.emoji,
-              }))}
+              items={CATEGORIES.map((c) => {
+                const locked = PREMIUM_CATEGORY_IDS.has(c.id) && !ownsCategory(c.id)
+                return {
+                  id: c.id,
+                  label: locked ? `🔒 ${getCategoryLabel(c.id, t.lang)}` : getCategoryLabel(c.id, t.lang),
+                  emoji: locked ? '' : c.emoji,
+                }
+              })}
               selected={selectedCategories}
               onToggle={toggleCategory}
             />
@@ -145,7 +159,7 @@ export default function CreateRoom({ initialIsPrivate = false }: Props) {
               <ScoreMultiplier size={32} />
               <Toggle
                 checked={scoreMultiplierEnabled}
-                onChange={setScoreMultiplierEnabled}
+                onChange={(v) => updateCreateRoomDraft({ scoreMultiplierEnabled: v })}
                 label={`${t.scoreMultiplier} (${t.scoreMultiplierDesc})`}
               />
             </div>
@@ -153,7 +167,7 @@ export default function CreateRoom({ initialIsPrivate = false }: Props) {
               <BlindVote size={32} />
               <Toggle
                 checked={isBlindVote}
-                onChange={setIsBlindVote}
+                onChange={(v) => updateCreateRoomDraft({ isBlindVote: v })}
                 label={`${t.blindVote} (${t.blindVoteDesc})`}
               />
             </div>
@@ -161,8 +175,16 @@ export default function CreateRoom({ initialIsPrivate = false }: Props) {
               <FamilyAdults size={32} variant={ageRating === 'adults' ? 'adults' : 'family'} />
               <Toggle
                 checked={ageRating === 'adults'}
-                onChange={(v) => setAgeRating(v ? 'adults' : 'all')}
+                onChange={(v) => updateCreateRoomDraft({ ageRating: v ? 'adults' : 'all' })}
                 label={`${t.adultsOnly} (${t.adultsOnlyDesc})`}
+              />
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="text-2xl">🏆</span>
+              <Toggle
+                checked={tournamentMode}
+                onChange={(v) => updateCreateRoomDraft({ tournamentMode: v })}
+                label={`${t.tournamentModeLabel} (${t.tournamentModeDesc})`}
               />
             </div>
           </motion.div>

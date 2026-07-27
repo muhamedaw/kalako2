@@ -216,6 +216,9 @@ export interface Translations {
   loadingText: string
   brandLabel: string
 
+  // Logo / brand wordmark
+  logoSubtitle: string
+
   // Splash screen
   splashTagline: string
 
@@ -380,6 +383,7 @@ export interface Translations {
   authRecoverEmailPlaceholder: string
   authRecoverSendCodeButton: string
   authRecoverCodeSentNotice: string
+  authRecoverSendError: string
   authRecoverCodeLabel: string
   authRecoverCodePlaceholder: string
   authRecoverVerifyButton: string
@@ -387,6 +391,18 @@ export interface Translations {
   authRecoverEmailNotConfigured: string
   authRecoverInvalidCode: string
   authRecoverSuccess: string
+
+  // Purchase-flow "add a recovery email" nudge (shown before checkout if no email is linked)
+  purchaseEmailNudgeTitle: string
+  purchaseEmailNudgeBody: string
+  purchaseAddEmailButton: string
+  purchaseSkipButton: string
+  purchaseEmailVerifyButton: string
+  purchaseEmailLinkedSuccess: string
+  purchaseEmailInvalidCode: string
+  purchaseEmailNotConfigured: string
+  purchaseEmailSentNotice: string
+  purchaseEmailRateLimited: string
 
   // Avatar part display names (bodies 1-4)
   avatarBody01: string

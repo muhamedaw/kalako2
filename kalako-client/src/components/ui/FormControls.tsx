@@ -18,7 +18,7 @@ export function Toggle({ checked, onChange, label }: ToggleProps) {
       onClick={() => onChange(!checked)}
       className="flex items-center gap-3 cursor-pointer"
     >
-      <div className="relative w-12 h-7 rounded-full bg-white/10 border border-white/10">
+      <div className={`relative w-12 h-7 rounded-full border border-white/10 transition-colors duration-200 ${checked ? 'bg-[#C6FF3D]/35' : 'bg-white/10'}`}>
         <motion.div
           className="absolute top-0.5 w-6 h-6 rounded-full bg-primary"
           animate={{ left: checked ? '22px' : '2px' }}

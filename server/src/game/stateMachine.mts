@@ -3,10 +3,33 @@ import type { Server } from 'socket.io'
 import { config } from '../config.mts'
 import { pickCategories, pickQuestion } from './questionBank.mts'
 import { computeRoundScoring } from './scoring.mts'
-import { connectedPlayers, destroyRoom } from './roomManager.mts'
+import { connectedPlayers, destroyRoom, resetRoomForNextTournamentGame } from './roomManager.mts'
 import { persistFinishedGame } from '../db/gameHistoryRepo.mts'
 import { awardCoinsForFinishedGame } from '../socket/economy.mts'
+import { hasExpansionAccess } from './categoryAccess.mts'
+import { getDb, persistToDisk } from '../db/index.mts'
 import type { RoomState } from './types.mts'
+
+/** One row per (device, question) actually served — drives the category-completion %
+ * feature. Best-effort: a device without a linked profile (deviceId null) is simply skipped,
+ * matching how coin-earning already treats guests with no deviceId. */
+function recordSeenQuestions(room: RoomState, category: string, questionId: string) {
+  const db = getDb()
+  let wrote = false
+  for (const player of connectedPlayers(room)) {
+    if (!player.deviceId) continue
+    try {
+      db.run(
+        `INSERT OR IGNORE INTO player_seen_questions (device_id, question_id, category) VALUES (?, ?, ?)`,
+        [player.deviceId, questionId, category]
+      )
+      wrote = true
+    } catch (err) {
+      console.error(`[kalak] failed to record seen question for device ${player.deviceId}:`, err)
+    }
+  }
+  if (wrote) persistToDisk()
+}
 
 function emitRoom(io: Server, room: RoomState, event: string, payload: unknown) {
   io.to(room.code).emit(event, payload)
@@ -20,6 +43,8 @@ export function publicRoomView(room: RoomState) {
     round: room.round,
     isTiebreakerRound: room.isTiebreakerRound,
     settings: room.settings,
+    displayCount: room.displays.size,
+    tournament: room.tournament ? { gameIndex: room.tournament.gameIndex, totalGames: room.tournament.totalGames } : null,
     players: [...room.players.values()].map((p) => ({
       id: p.id,
       name: p.name,
@@ -62,7 +87,13 @@ function isDoublePointsRound(room: RoomState): boolean {
 
 export function beginAnswering(io: Server, room: RoomState, category: string) {
   const chosenCategory = room.categoryOptions.includes(category) ? category : room.categoryOptions[0]
-  room.currentQuestion = pickQuestion(chosenCategory, room.settings.familyMode, room.settings.language)
+  // If ANY connected player in the room bought the expansion pack for this category, everyone
+  // in the room benefits for this game — matches the "inventory-based like cosmetics" scope
+  // (simplest real behavior; a per-player-visible-only pool would need per-player question
+  // fan-out, which isn't how this game broadcasts questions).
+  const includeExpansion = connectedPlayers(room).some((p) => hasExpansionAccess(p.deviceId, chosenCategory))
+  room.currentQuestion = pickQuestion(chosenCategory, room.settings.familyMode, room.settings.language, includeExpansion)
+  recordSeenQuestions(room, chosenCategory, room.currentQuestion.id)
   room.phase = 'ANSWERING'
   room.answers.clear()
   room.votes.clear()
@@ -275,11 +306,28 @@ function endGame(io: Server, room: RoomState) {
     .sort((a, b) => b.score - a.score)
     .map((p) => ({ id: p.id, name: p.name, score: p.score }))
 
+  // Tournament: fold this game's scores into the running cumulative total for the payload
+  // (the actual room.tournament.cumulativeScores mutation happens later, only when the host
+  // advances to the next game — this is a preview so GAME_OVER can show it immediately).
+  const tournamentPayload = room.tournament ? {
+    gameIndex: room.tournament.gameIndex,
+    totalGames: room.tournament.totalGames,
+    isFinalGame: room.tournament.gameIndex >= room.tournament.totalGames,
+    cumulativeStandings: [...room.players.values()]
+      .map((p) => ({
+        id: p.id,
+        name: p.name,
+        cumulativeScore: (room.tournament!.cumulativeScores.get(p.id) ?? 0) + p.score,
+      }))
+      .sort((a, b) => b.cumulativeScore - a.cumulativeScore),
+  } : null
+
   emitRoom(io, room, 'phase_changed', {
     phase: room.phase,
     room: publicRoomView(room),
     finalStandings,
     mostDeceptivePlayer: mostDeceptivePlayer(room),
+    tournament: tournamentPayload,
   })
 
   try {
@@ -301,5 +349,23 @@ function endGame(io: Server, room: RoomState) {
     }
   }
 
-  setTimeout(() => destroyRoom(room.code), 60_000)
+  // Mid-series: leave the room alive so the host can start the next game. Only the final
+  // game (or a non-tournament game) schedules the usual cleanup.
+  if (!tournamentPayload || tournamentPayload.isFinalGame) {
+    setTimeout(() => destroyRoom(room.code), 60_000)
+  }
+}
+
+/** Host-triggered advance to the next game in a tournament series. Only valid from
+ * GAME_OVER, with games remaining — enforced by the caller (socket/index.mts). */
+export function startNextTournamentGame(io: Server, room: RoomState) {
+  resetRoomForNextTournamentGame(room)
+  emitRoom(io, room, 'phase_changed', {
+    phase: room.phase,
+    room: publicRoomView(room),
+    tournament: room.tournament ? {
+      gameIndex: room.tournament.gameIndex,
+      totalGames: room.tournament.totalGames,
+    } : null,
+  })
 }

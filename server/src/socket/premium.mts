@@ -127,14 +127,18 @@ export function registerPremiumHandlers(io: Server, socket: Socket) {
         return ack?.({ success: false, error: 'subscription_not_active', status })
       }
 
+      // Use next_billing_time from PayPal as the expiry date for this billing cycle
+      const nextBilling = data.billing_info?.next_billing_time as string | undefined
+      const expiresAt = nextBilling ? new Date(nextBilling).toISOString() : null
+
       const db = getDb()
       db.run(
-        `UPDATE premium_subscriptions SET status = 'active', updated_at = datetime('now') WHERE subscription_id = ?`,
-        [subscriptionId]
+        `UPDATE premium_subscriptions SET status = 'active', expires_at = ?, updated_at = datetime('now') WHERE subscription_id = ?`,
+        [expiresAt, subscriptionId]
       )
       persistToDisk()
 
-      ack?.({ success: true, isPremium: true })
+      ack?.({ success: true, isPremium: true, expiresAt })
     } catch (err) {
       console.error('[kalak] activate_premium_subscription failed:', err)
       ack?.({ success: false, error: 'activate_premium_failed' })
@@ -197,7 +201,7 @@ export function registerPremiumHandlers(io: Server, socket: Socket) {
     try {
       const db = getDb()
       const rows = db.exec(
-        `SELECT subscription_id, status FROM premium_subscriptions WHERE device_id = ? ORDER BY created_at DESC LIMIT 1`,
+        `SELECT subscription_id, status, expires_at FROM premium_subscriptions WHERE device_id = ? ORDER BY created_at DESC LIMIT 1`,
         [deviceId]
       )
 
@@ -205,10 +209,10 @@ export function registerPremiumHandlers(io: Server, socket: Socket) {
         return ack?.({ isPremium: false })
       }
 
-      const [subscriptionId, localStatus] = rows[0].values[0] as [string, string]
+      const [subscriptionId, localStatus, expiresAt] = rows[0].values[0] as [string, string, string | null]
 
       if (localStatus === 'active') {
-        return ack?.({ isPremium: true })
+        return ack?.({ isPremium: true, expiresAt: expiresAt || null })
       }
 
       // Pending or cancelled — check PayPal in case status changed externally
@@ -221,9 +225,11 @@ export function registerPremiumHandlers(io: Server, socket: Socket) {
           if (res.ok) {
             const data = await res.json()
             if (data.status === 'ACTIVE') {
-              db.run(`UPDATE premium_subscriptions SET status = 'active', updated_at = datetime('now') WHERE subscription_id = ?`, [subscriptionId])
+              const nextBilling = data.billing_info?.next_billing_time as string | undefined
+              const paypalExpiresAt = nextBilling ? new Date(nextBilling).toISOString() : null
+              db.run(`UPDATE premium_subscriptions SET status = 'active', expires_at = ?, updated_at = datetime('now') WHERE subscription_id = ?`, [paypalExpiresAt, subscriptionId])
               persistToDisk()
-              return ack?.({ isPremium: true })
+              return ack?.({ isPremium: true, expiresAt: paypalExpiresAt })
             }
           }
         } catch (err) {

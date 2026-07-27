@@ -11,9 +11,17 @@
   "name": "huggingface-accelerate",
   "description": "Simplest distributed training API. 4 lines to add distributed support to any PyTorch script. Unified API for DeepSpeed/FSDP/Megatron/DDP. Automatic device placement, mixed precision (FP16/BF16/FP8). Interactive config, single launch command. HuggingFace ecosystem standard."
  },
+ "adaptyv": {
+  "name": "adaptyv",
+  "description": "How to use the Adaptyv Bio Foundry API and Python SDK for protein experiment design, submission, and results retrieval. Use this skill whenever the user mentions Adaptyv, Foundry API, protein binding assays, protein screening experiments, BLI/SPR assays, thermostability assays, or wants to submit protein sequences for experimental characterization. Also trigger when code imports `adaptyv`, `adaptyv_sdk`, or `FoundryClient`, or references `foundry-api-public.adaptyvbio.com`."
+ },
  "adversarial-ux-test": {
   "name": "adversarial-ux-test",
   "description": "Roleplay the most difficult, tech-resistant user for your product. Browse the app as that persona, find every UX pain point, then filter complaints through a pragmatism layer to separate real problems from noise. Creates actionable tickets from genuine issues only."
+ },
+ "aeon": {
+  "name": "aeon",
+  "description": "This skill should be used for time series machine learning tasks including classification, regression, clustering, forecasting, anomaly detection, segmentation, and similarity search. Use when working with temporal data, sequential patterns, or time-indexed observations requiring specialized algorithms beyond standard ML approaches. Particularly suited for univariate and multivariate time series analysis with scikit-learn compatible APIs."
  },
  "agent-adaptive-coordinator": {
   "name": "agent-adaptive-coordinator",
@@ -407,6 +415,10 @@
   "name": "algorithmic-art",
   "description": "Creating algorithmic art using p5.js with seeded randomness and interactive parameter exploration. Use this when users request creating art using code, generative art, algorithmic art, flow fields, or particle systems. Create original algorithmic art rather than copying existing artists' work to avoid copyright violations."
  },
+ "anndata": {
+  "name": "anndata",
+  "description": "Data structure for annotated matrices in single-cell analysis. Use when working with .h5ad files or integrating with the scverse ecosystem. This is the data format skill—for analysis workflows use scanpy; for probabilistic models use scvi-tools; for population-scale queries use cellxgene-census."
+ },
  "antigravity-cli": {
   "name": "antigravity-cli",
   "description": "Operate the Antigravity CLI (agy): plugins, auth, sandbox."
@@ -639,6 +651,10 @@
   "name": "design-md",
   "description": "Author/validate/export Google's DESIGN.md token spec files."
  },
+ "did-it-actually": {
+  "name": "did-it-actually",
+  "description": "Verifies Claude's own work against the user's request before reporting done. Catches dropped sub-asks, stub bodies, premature \"done\", phantom edits. Use when the user has had to repeat themselves, when a task touched multiple files, or before any \"done/completo/ready/shipped/pronto/feito\" emission on multi-step work. Triggers — \"did it actually\", \"is it really done\", \"are you sure\", \"audita-te\", \"verifica\", \"está mesmo feito\", \"self-audit\", \"did you test it\", \"confirma\", \"check your work\". NOT a code reviewer (that's /code-review) — only verifies request fidelity."
+ },
  "dispatching-parallel-agents": {
   "name": "dispatching-parallel-agents",
   "description": "Use when facing 2+ independent tasks that can be worked on without shared state or sequential dependencies"
@@ -851,6 +867,10 @@
   "name": "hyperliquid",
   "description": "Hyperliquid market data, account history, trade review."
  },
+ "hypothesis-generation": {
+  "name": "hypothesis-generation",
+  "description": "Formulate evidence-bounded scientific questions, candidate hypotheses, rival explanations, causal or associational claims, discriminating predictions, measurements, and preregistration-ready analysis plans. Use when turning observations or preliminary findings into transparent, testable research plans without treating hypotheses as facts."
+ },
  "imessage": {
   "name": "imessage",
   "description": "Send and receive iMessages/SMS via the imsg CLI on macOS."
@@ -895,6 +915,10 @@
   "name": "maps",
   "description": "Geocode, POIs, routes, timezones via OpenStreetMap/OSRM."
  },
+ "matplotlib": {
+  "name": "matplotlib",
+  "description": "Low-level plotting library for full customization. Use when you need fine-grained control over every plot element, creating novel plot types, or integrating with specific scientific workflows. Export to PNG/PDF/SVG for publication. For quick statistical plots use seaborn; for interactive plots use plotly; for publication-ready multi-panel figures with journal styling, use scientific-visualization."
+ },
  "mcp-builder": {
   "name": "mcp-builder",
   "description": "Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK)."
@@ -926,6 +950,10 @@
  "modal": {
   "name": "modal-serverless-gpu",
   "description": "Serverless GPU cloud platform for running ML workloads. Use when you need on-demand GPU access without infrastructure management, deploying ML models as APIs, or running batch jobs with automatic scaling."
+ },
+ "morning-mvp": {
+  "name": "morning-mvp",
+  "description": "Run every morning to produce a single printable brief that ranks who is waiting on a response from Robby and what is due in the next 48 hours. Pulls Apple Mail (every account), Notion call notes from the last 7 days, and Basecamp todos assigned to Robby. Filters out newsletters, automated notifications, and anything that is not business or action. Renders to a print-friendly HTML one-pager and opens it in the browser. Trigger phrases include \"morning brief\", \"what is on my plate today\", \"who is waiting on me\", \"morning MVP\", \"what needs a reply\"."
  },
  "mpp-agent": {
   "name": "mpp-agent",
@@ -1123,6 +1151,10 @@
   "name": "sparse-autoencoder-training",
   "description": "Provides guidance for training and analyzing Sparse Autoencoders (SAEs) using SAELens to decompose neural network activations into interpretable features. Use when discovering interpretable features, analyzing superposition, or studying monosemantic representations in language models."
  },
+ "scientific-visualization": {
+  "name": "scientific-visualization",
+  "description": "Create and audit truthful, accessible, publication-ready scientific figures with Matplotlib, Seaborn, or Plotly. Use for figure design, multi-panel layouts, uncertainty and missing-data displays, color/contrast review, image metadata validation, and journal export planning."
+ },
  "scrapling": {
   "name": "scrapling",
   "description": "Web scraping with Scrapling - HTTP fetching, stealth browser automation, Cloudflare bypass, and spider crawling via CLI and Python."
@@ -1203,6 +1235,10 @@
   "name": "spike",
   "description": "Throwaway experiments to validate an idea before build."
  },
+ "stable-baselines3": {
+  "name": "stable-baselines3",
+  "description": "Production-ready reinforcement learning algorithms (PPO, SAC, DQN, TD3, DDPG, A2C) with scikit-learn-like API. Use for standard RL experiments, quick prototyping, and well-documented algorithm implementations. Best for single-agent RL with Gymnasium environments. For high-performance parallel training, multi-agent systems, or custom vectorized environments, use pufferlib instead."
+ },
  "stable-diffusion": {
   "name": "stable-diffusion-image-generation",
   "description": "State-of-the-art text-to-image generation with Stable Diffusion models via HuggingFace Diffusers. Use when generating images from text prompts, performing image-to-image translation, inpainting, or building custom diffusion pipelines."
@@ -1270,6 +1306,10 @@
  "touchdesigner-mcp": {
   "name": "touchdesigner-mcp",
   "description": "Control a running TouchDesigner instance via twozero MCP — create operators, set parameters, wire connections, execute Python, build real-time visuals. 36 native tools."
+ },
+ "treatment-plans": {
+  "name": "treatment-plans",
+  "description": "Format and structurally validate local treatment-plan documentation after clinical decisions have already been supplied and verified by authorized licensed professionals. Use for source traceability, clinician-authored intervention records, goals and checkpoints, shared-decision records, reconciliation handoffs, and release gates—not for clinical decision-making."
  },
  "unbroker": {
   "name": "unbroker",

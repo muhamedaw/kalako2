@@ -22,7 +22,7 @@ const medalIn = {
 }
 
 export default function GameOver() {
-  const { finalStandings, room, playerId, disconnect, mostDeceptivePlayer } = useGameStore()
+  const { finalStandings, room, playerId, disconnect, mostDeceptivePlayer, tournamentResult, startNextTournamentGame } = useGameStore()
   const t = useTranslation()
   const prefersReducedMotion = useReducedMotion()
   const confettiFired = useRef(false)
@@ -106,6 +106,40 @@ export default function GameOver() {
             </motion.div>
           </div>
         </GlassCard>
+
+        {tournamentResult && (
+          <GlassCard strong className="w-full">
+            <div className="flex flex-col gap-3">
+              <p className="text-center text-secondary text-sm font-bold">
+                {tournamentResult.isFinalGame ? t.tournamentFinalStandings : t.tournamentStandingsTitle}
+              </p>
+              <p className="text-center text-white/40 text-xs -mt-2">
+                {t.tournamentGameLabel.replace('{{current}}', String(tournamentResult.gameIndex)).replace('{{total}}', String(tournamentResult.totalGames))}
+              </p>
+              <div className="flex flex-col gap-2">
+                {tournamentResult.cumulativeStandings.map((p, i) => (
+                  <div key={p.id} className={`flex items-center justify-between p-2.5 rounded-lg ${i === 0 && tournamentResult.isFinalGame ? 'bg-primary/10 border border-primary/20' : 'bg-white/5'}`}>
+                    <span className="font-bold text-white/80 text-sm">{i + 1}. {p.name}</span>
+                    <Badge variant={i === 0 ? 'success' : 'secondary'}>{p.cumulativeScore}</Badge>
+                  </div>
+                ))}
+              </div>
+              {tournamentResult.isFinalGame && (
+                <p className="text-center text-primary font-black text-sm mt-1">
+                  🏆 {t.tournamentOverallWinner}: {tournamentResult.cumulativeStandings[0]?.name}
+                </p>
+              )}
+              {!tournamentResult.isFinalGame && room.hostId === playerId && (
+                <Button variant="primary" size="md" fullWidth onClick={startNextTournamentGame}>
+                  {t.tournamentPlayNextGame.replace('{{next}}', String(tournamentResult.gameIndex + 1)).replace('{{total}}', String(tournamentResult.totalGames))}
+                </Button>
+              )}
+              {!tournamentResult.isFinalGame && room.hostId !== playerId && (
+                <p className="text-center text-white/50 text-xs">{t.waitingForHost}</p>
+              )}
+            </div>
+          </GlassCard>
+        )}
 
         <div className="flex flex-col gap-3">
           <ResultsShareCard

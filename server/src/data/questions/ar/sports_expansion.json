@@ -1,0 +1,7 @@
+[
+  { "id": "sports_exp_001", "category": "sports", "text": "كم عدد لاعبي فريق الكرة الطائرة على أرض الملعب في وقت واحد؟", "answer": "ستة", "ageRating": "family" },
+  { "id": "sports_exp_002", "category": "sports", "text": "في أي رياضة يمكنك تنفيذ حركة 'سلام دانك'؟", "answer": "كرة السلة", "ageRating": "family" },
+  { "id": "sports_exp_003", "category": "sports", "text": "ما أقصى نقاط ممكنة في شوط واحد من البولينج؟", "answer": "ثلاثون", "ageRating": "family" },
+  { "id": "sports_exp_004", "category": "sports", "text": "أي دولة اخترعت رياضة الريشة الطائرة بشكلها الحديث؟", "answer": "إنجلترا", "ageRating": "family" },
+  { "id": "sports_exp_005", "category": "sports", "text": "كم طول حمام السباحة الأولمبي بالمتر؟", "answer": "خمسون مترًا", "ageRating": "family" }
+]

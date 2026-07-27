@@ -6,7 +6,7 @@
     "dev": "echo 'Starting server and client...' && cmd /c \"cd server && npx tsx server.mts\" & cmd /c \"cd kalako-client && npx vite\"",
     "dev:server": "cd server && npx tsx server.mts",
     "dev:client": "cd kalako-client && npx vite",
-    "build": "cd kalako-client && npx vite build",
+    "build": "cd kalako-client && npm run build",
     "deploy": "cd kalako-client && npx vercel deploy -y --no-wait"
   }
 }

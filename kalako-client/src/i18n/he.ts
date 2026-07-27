@@ -225,6 +225,8 @@ const he: Translations = {
   loadingText: 'טוען...',
   brandLabel: 'קלאקו',
   
+  logoSubtitle: 'קלאקו',
+
   splashTagline: 'אתגר התשובות',
   shareCardTitle: 'קלאקו',
   shareCardSubtitle: 'משחק הונאה חברתי',
@@ -420,6 +422,7 @@ const he: Translations = {
   authRecoverEmailPlaceholder: 'you@example.com',
   authRecoverSendCodeButton: 'שלח קוד',
   authRecoverCodeSentNotice: 'אם האימייל הזה מקושר לחשבון, הקוד בדרך.',
+  authRecoverSendError: 'לא ניתן להתחבר. בדקו את החיבור ונסו שוב.',
   authRecoverCodeLabel: 'קוד בן 6 ספרות',
   authRecoverCodePlaceholder: '000000',
   authRecoverVerifyButton: 'אמת ושחזר',
@@ -427,6 +430,17 @@ const he: Translations = {
   authRecoverEmailNotConfigured: 'שחזור חשבון עדיין לא זמין — נסו שוב בקרוב.',
   authRecoverInvalidCode: 'הקוד שגוי או שפג תוקפו.',
   authRecoverSuccess: 'החשבון שוחזר! ברוכים השבים.',
+
+  purchaseEmailNudgeTitle: 'אל תאבדו את הרכישה הזו',
+  purchaseEmailNudgeBody: 'הוסיפו אימייל לשחזור כדי שלעולם לא תאבדו את הרכישה — הוא מקשר את המטבעות והפריטים שלכם לחשבון אם תחליפו מכשיר.',
+  purchaseAddEmailButton: 'הוסף אימייל',
+  purchaseSkipButton: 'דלג, המשך בכל זאת',
+  purchaseEmailVerifyButton: 'אמת וקשר',
+  purchaseEmailLinkedSuccess: 'האימייל קושר! הרכישה שלך מוגנת עכשיו.',
+  purchaseEmailInvalidCode: 'הקוד שגוי או שפג תוקפו.',
+  purchaseEmailNotConfigured: 'קישור אימייל עדיין לא זמין — נמשיך בלעדיו.',
+  purchaseEmailSentNotice: 'הקוד נשלח — בדקו את תיבת הדואר.',
+  purchaseEmailRateLimited: 'יותר מדי ניסיונות — נסו שוב מאוחר יותר.',
 
   // Avatar part display names (bodies 1-4)
   avatarBody01: 'שזיף תפוח',

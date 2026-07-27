@@ -27,8 +27,42 @@ export interface Room {
     familyMode: boolean
     doublePointsRoundEnabled: boolean
     blindVotingEnabled: boolean
+    tournamentMode?: boolean
   }
   players: Player[]
+  displayCount?: number
+  tournament?: { gameIndex: number; totalGames: number } | null
+}
+
+export interface CreateRoomDraft {
+  playerName: string
+  isPrivate: boolean
+  answerTimeSeconds: string
+  roundsCount: string
+  selectedCategories: string[]
+  scoreMultiplierEnabled: boolean
+  isBlindVote: boolean
+  ageRating: 'all' | 'adults'
+  tournamentMode: boolean
+}
+
+const DEFAULT_CREATE_ROOM_DRAFT: CreateRoomDraft = {
+  playerName: '',
+  isPrivate: false,
+  answerTimeSeconds: '45',
+  roundsCount: '5',
+  selectedCategories: ['general', 'science', 'history', 'geography', 'sports', 'movies', 'celebrities', 'cooking'],
+  scoreMultiplierEnabled: false,
+  isBlindVote: false,
+  ageRating: 'all',
+  tournamentMode: false,
+}
+
+export interface CategoryCompletion {
+  category: string
+  seenCount: number
+  totalCount: number
+  percentage: number
 }
 
 export interface VoteSlot {
@@ -65,9 +99,17 @@ export interface GameState {
   } | null
   finalStandings: { id: string; name: string; score: number }[] | null
   mostDeceptivePlayer: { id: string; name: string; timesFooledOthers: number } | null
+  tournamentResult: {
+    gameIndex: number
+    totalGames: number
+    isFinalGame: boolean
+    cumulativeStandings: { id: string; name: string; cumulativeScore: number }[]
+  } | null
+  categoryCompletion: CategoryCompletion[]
   isDoublePointsRound: boolean
   wasDoublePoints: boolean
   isConnected: boolean
+  isDisplayMode: boolean
   isReconnecting: boolean
   submittedAnswer: boolean
   submittedVote: boolean
@@ -91,10 +133,14 @@ export interface GameState {
   catalogLoading: boolean
   hallOfFameLoading: boolean
   notificationsLoading: boolean
+
+  createRoomDraft: CreateRoomDraft
 }
 
 export interface GameActions {
   setScreen: (s: Screen) => void
+  updateCreateRoomDraft: (partial: Partial<CreateRoomDraft>) => void
+  resetCreateRoomDraft: () => void
   connect: () => void
   disconnect: () => void
   createRoom: (name: string, settings: {
@@ -105,9 +151,14 @@ export interface GameActions {
     scoreMultiplierEnabled?: boolean
     isBlindVote?: boolean
     ageRating?: 'all' | 'adults'
+    tournamentMode?: boolean
   }) => void
   joinRoom: (code: string, name: string) => void
   startGame: () => void
+  updateRoomSettings: (settings: { roundsCount?: number }) => Promise<{ ok?: boolean; error?: string }>
+  joinAsDisplay: (roomCode: string) => Promise<{ ok?: boolean; error?: string }>
+  getCategoryCompletion: () => Promise<CategoryCompletion[]>
+  startNextTournamentGame: () => void
   pickCategory: (cat: string) => void
   submitAnswer: (text: string, forceSubmit?: boolean) => void
   clearAnswerNeedsRevision: () => void
@@ -135,6 +186,15 @@ export interface GameActions {
   loadPremiumStatus: () => void
   createPremiumSubscription: (plan: 'monthly' | 'yearly') => Promise<{ approvalUrl?: string; error?: string }>
   cancelPremiumSubscription: () => void
+
+  // Account recovery
+  requestAccountRecovery: (email: string) => Promise<{ success: boolean }>
+  confirmAccountRecovery: (email: string, code: string) => Promise<{ success: boolean; reason?: string }>
+
+  // Link a recovery email to the CURRENT device's profile (distinct from
+  // request/confirmAccountRecovery above, which restore an old profile onto a new device).
+  linkRecoveryEmail: (email: string) => Promise<{ success: boolean; error?: string }>
+  confirmLinkRecoveryEmail: (email: string, code: string) => Promise<{ success: boolean; reason?: string }>
 
   // Connection resilience
   forceReconnect: () => void
@@ -176,7 +236,7 @@ function loadSession() {
 }
 
 export const useGameStore = create<GameState & GameActions>((set, get) => ({
-  screen: 'welcome',
+  screen: 'auth',
   room: null,
   playerId: null,
   playerName: null,
@@ -192,6 +252,7 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
   roundResults: null,
   finalStandings: null,
   isConnected: false,
+  isDisplayMode: false,
   isReconnecting: false,
   submittedAnswer: false,
   submittedVote: false,
@@ -201,6 +262,8 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
   totalPlayers: 0,
   votedCount: 0,
   mostDeceptivePlayer: null,
+  tournamentResult: null,
+  categoryCompletion: [],
   isDoublePointsRound: false,
   wasDoublePoints: false,
   answerNeedsRevision: null,
@@ -215,7 +278,11 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
   hallOfFameLoading: false,
   notificationsLoading: false,
 
+  createRoomDraft: { ...DEFAULT_CREATE_ROOM_DRAFT },
+
   setScreen: (s) => set({ screen: s }),
+  updateCreateRoomDraft: (partial) => set((s) => ({ createRoomDraft: { ...s.createRoomDraft, ...partial } })),
+  resetCreateRoomDraft: () => set({ createRoomDraft: { ...DEFAULT_CREATE_ROOM_DRAFT } }),
   setError: (msg) => set({ serverError: msg }),
   clearAnswerNeedsRevision: () => set({ answerNeedsRevision: null }),
 
@@ -384,15 +451,21 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
           wasDoublePoints: Boolean(data.results?.wasDoublePoints),
         })
       } else if (phase === 'GAME_OVER') {
-        clearSession()
+        // Mid-tournament: the room stays alive for the next game, so don't clear the
+        // reconnect session — a refresh should still land the player back in this room.
+        if (!data.tournament || data.tournament.isFinalGame) clearSession()
         set({
           screen: 'game_over',
           room,
           finalStandings: data.finalStandings || null,
           mostDeceptivePlayer: data.mostDeceptivePlayer || null,
+          tournamentResult: data.tournament || null,
           submittedAnswer: false,
           submittedVote: false,
         })
+      } else if (phase === 'LOBBY') {
+        // Reached via start_next_tournament_game — back to Lobby for "Game N of 3".
+        set({ screen: 'lobby', room, tournamentResult: null })
       }
     })
 
@@ -443,6 +516,8 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
       doublePointsRoundEnabled: settings.scoreMultiplierEnabled ?? false,
       blindVotingEnabled: settings.isBlindVote ?? false,
       familyMode: (settings.ageRating ?? 'all') !== 'adults',
+      tournamentMode: settings.tournamentMode ?? false,
+      deviceId: getDeviceId(),
     }, (response: any) => {
       if (response.error) {
         set({ serverError: response.error })
@@ -456,7 +531,43 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
         playerId,
         screen: 'lobby',
         serverError: null,
+        createRoomDraft: { ...DEFAULT_CREATE_ROOM_DRAFT },
       })
+    })
+  },
+
+  updateRoomSettings: (settings) => {
+    return withTimeout(new Promise<{ ok?: boolean; error?: string }>((resolve) => {
+      const socket = getSocket()
+      socket.emit('update_room_settings', settings, (res: any) => resolve(res || { error: 'no_response' }))
+    })).catch(() => ({ error: 'timeout' }))
+  },
+
+  joinAsDisplay: (roomCode) => {
+    return withTimeout(new Promise<{ ok?: boolean; error?: string }>((resolve) => {
+      const socket = getSocket()
+      socket.emit('join_display', { roomCode }, (res: any) => {
+        if (res?.ok) set({ room: res.room, isDisplayMode: true })
+        resolve(res || { error: 'no_response' })
+      })
+    })).catch(() => ({ error: 'timeout' }))
+  },
+
+  getCategoryCompletion: () => {
+    return withTimeout(new Promise<CategoryCompletion[]>((resolve) => {
+      const socket = getSocket()
+      socket.emit('get_category_completion', { deviceId: getDeviceId() }, (res: any) => {
+        const completion = Array.isArray(res) ? res : []
+        set({ categoryCompletion: completion })
+        resolve(completion)
+      })
+    })).catch(() => [])
+  },
+
+  startNextTournamentGame: () => {
+    const socket = getSocket()
+    socket.emit('start_next_tournament_game', (response: any) => {
+      if (response?.error) set({ serverError: response.error })
     })
   },
 
@@ -557,7 +668,7 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
     const socket = getSocket()
     socket.emit('update_profile', { deviceId: getDeviceId(), avatarConfig }, (res: any) => {
       if (res?.error) return
-      set({ profile: res })
+      set((s) => ({ profile: { ...s.profile, ...res } }))
     })
   },
 
@@ -679,5 +790,53 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
         set({ isPremium: false, premiumExpiresAt: null })
       }
     })
+  },
+
+  // ─── Account Recovery ───
+
+  requestAccountRecovery: (email) => {
+    const socket = getSocket()
+    if (!socket.connected) {
+      return Promise.resolve({ success: false })
+    }
+    return withTimeout(new Promise<{ success: boolean }>((resolve) => {
+      socket.emit('request_account_recovery', { email }, (res: any) => {
+        resolve(res || { success: true })
+      })
+    })).catch(() => ({ success: false }))
+  },
+
+  confirmAccountRecovery: (email, code) => {
+    return withTimeout(new Promise<{ success: boolean; reason?: string }>((resolve) => {
+      const socket = getSocket()
+      socket.emit('confirm_account_recovery', { email, code, newDeviceId: getDeviceId() }, (res: any) => {
+        if (res?.success) {
+          // Re-fetch through the normal profile-load path (same deviceId) rather than
+          // trusting the recovery ack's profile shape directly — keeps isPremium/etc.
+          // consistent with every other place profile state gets set.
+          get().loadProfile()
+        }
+        resolve(res || { success: false, reason: 'no_response' })
+      })
+    })).catch(() => ({ success: false, reason: 'timeout' }))
+  },
+
+  linkRecoveryEmail: (email) => {
+    return withTimeout(new Promise<{ success: boolean; error?: string }>((resolve) => {
+      const socket = getSocket()
+      socket.emit('add_recovery_email', { deviceId: getDeviceId(), email }, (res: any) => {
+        resolve(res || { success: false, error: 'no_response' })
+      })
+    })).catch(() => ({ success: false, error: 'timeout' }))
+  },
+
+  confirmLinkRecoveryEmail: (email, code) => {
+    return withTimeout(new Promise<{ success: boolean; reason?: string }>((resolve) => {
+      const socket = getSocket()
+      socket.emit('confirm_recovery_email', { deviceId: getDeviceId(), email, code }, (res: any) => {
+        if (res?.success) get().loadProfile()
+        resolve(res || { success: false, reason: 'no_response' })
+      })
+    })).catch(() => ({ success: false, reason: 'timeout' }))
   },
 }))

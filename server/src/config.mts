@@ -31,8 +31,10 @@ export const config = {
   paypalReturnUrl: process.env.PAYPAL_RETURN_URL || 'https://kalako.app/premium/success',
   paypalCancelUrl: process.env.PAYPAL_CANCEL_URL || 'https://kalako.app/premium/cancel',
   debugToken: process.env.DEBUG_TOKEN || '',
-  resendApiKey: process.env.RESEND_API_KEY || '',
-  recoveryEmailFrom: process.env.RECOVERY_EMAIL_FROM || 'Kalako <onboarding@resend.dev>',
+  adminPassword: process.env.ADMIN_PASSWORD || '',
+  gmailUser: process.env.GMAIL_USER || '',
+  gmailAppPassword: process.env.GMAIL_APP_PASSWORD || '',
+  recoveryEmailFromName: process.env.RECOVERY_EMAIL_FROM_NAME || 'Kalako',
 }
 
 export const serverRoot = SERVER_ROOT

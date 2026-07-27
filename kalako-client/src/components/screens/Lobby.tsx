@@ -20,17 +20,20 @@ const cardIn = {
 }
 
 export default function Lobby() {
-  const { room, playerId, startGame, leaveRoom } = useGameStore()
+  const { room, playerId, startGame, leaveRoom, updateRoomSettings } = useGameStore()
   const t = useTranslation()
   const prefersReducedMotion = useReducedMotion()
   const [copiedCode, setCopiedCode] = useState(false)
   const [copiedLink, setCopiedLink] = useState(false)
+  const [copiedWatchLink, setCopiedWatchLink] = useState(false)
+  const [applyingRecommended, setApplyingRecommended] = useState(false)
 
   if (!room) return null
 
   const isHost = room.hostId === playerId
   const baseUrl = window.location.origin
   const inviteLink = `${baseUrl}?join=${room.code}`
+  const watchLink = `${baseUrl}?display=${room.code}`
 
   const copyCode = async () => {
     await navigator.clipboard.writeText(room.code)
@@ -42,6 +45,23 @@ export default function Lobby() {
     await navigator.clipboard.writeText(inviteLink)
     setCopiedLink(true)
     setTimeout(() => setCopiedLink(false), 2000)
+  }
+
+  const copyWatchLink = async () => {
+    await navigator.clipboard.writeText(watchLink)
+    setCopiedWatchLink(true)
+    setTimeout(() => setCopiedWatchLink(false), 2000)
+  }
+
+  // Advisory only, per spec: shown alongside the host's chosen roundsCount, never overrides
+  // it automatically. playerCount here deliberately excludes displays (Watch Mode spectators
+  // never count toward this formula).
+  const recommendedRounds = room.players.length * 2
+  const recommendationDiffers = recommendedRounds !== room.settings.roundsCount
+  const handleUseRecommended = async () => {
+    setApplyingRecommended(true)
+    await updateRoomSettings({ roundsCount: recommendedRounds })
+    setApplyingRecommended(false)
   }
 
   return (
@@ -81,6 +101,17 @@ export default function Lobby() {
 
             <ThemedQRCode value={inviteLink} size={120} />
             <p className="text-white/50 text-xs text-center">{t.scanToJoin}</p>
+
+            <div className="w-full pt-2 border-t border-white/10 flex flex-col items-center gap-2">
+              <Button variant="ghost" size="sm" fullWidth onClick={copyWatchLink}>
+                📺 {copiedWatchLink ? t.copiedLink : t.lobbyWatchOnTv}
+              </Button>
+              {!!room.displayCount && room.displayCount > 0 && (
+                <p className="text-white/40 text-[11px]">
+                  {room.displayCount === 1 ? t.lobbyDisplayCountOne : t.lobbyDisplayCount.replace('{{count}}', String(room.displayCount))}
+                </p>
+              )}
+            </div>
           </div>
         </GlassCard>
 
@@ -129,11 +160,32 @@ export default function Lobby() {
         </GlassCard>
 
         <div className="flex flex-col gap-3">
+          {room.tournament && (
+            <div className="text-center text-xs font-bold text-primary">
+              🏆 {t.tournamentGameLabel.replace('{{current}}', String(room.tournament.gameIndex)).replace('{{total}}', String(room.tournament.totalGames))}
+            </div>
+          )}
+
           <div className="flex gap-3 text-xs text-white/50 justify-center">
             <span>{room.settings.answerTimeSeconds}{t.sec} {t.timeLabel}</span>
             <span>•</span>
             <span>{room.settings.roundsCount} {t.roundsLabel}</span>
           </div>
+
+          {isHost && recommendationDiffers && (
+            <div className="flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs">
+              <span className="text-white/60">
+                {t.lobbyRecommendedRounds.replace('{{count}}', String(recommendedRounds)).replace('{{players}}', String(room.players.length))}
+              </span>
+              <button
+                onClick={handleUseRecommended}
+                disabled={applyingRecommended}
+                className="text-primary font-bold whitespace-nowrap hover:text-primary/80 transition-colors cursor-pointer disabled:opacity-50"
+              >
+                {t.lobbyUseRecommended}
+              </button>
+            </div>
+          )}
 
           {isHost ? (
             <Button

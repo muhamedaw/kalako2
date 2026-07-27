@@ -18,6 +18,22 @@ export interface RoomSettings {
   doublePointsRoundEnabled: boolean
   blindVotingEnabled: boolean
   language: Language
+  /** "Tournament (best of 3 games)" — same room/players play 3 games in a row with a
+   * cumulative leaderboard on top of each game's own scoring. See RoomState.tournament. */
+  tournamentMode: boolean
+}
+
+/** A TV/projector spectator connection — never a Player, never counted toward playerCount
+ * or the round-count recommendation, doesn't submit answers/votes. Just watches broadcasts. */
+export interface DisplaySession {
+  socketId: string
+}
+
+export interface TournamentState {
+  gameIndex: number
+  totalGames: number
+  /** playerId -> summed score across all completed games in this series (not the current game's live score). */
+  cumulativeScores: Map<string, number>
 }
 
 export interface Player {
@@ -91,4 +107,7 @@ export interface RoomState {
   createdAt: number
   /** playerId -> count of rounds this game where they voted CORRECT. Drives the "+5 coins per round guessed correctly" formula at game end. */
   correctGuessCounts: Map<string, number>
+  /** socketId -> DisplaySession, for "Watch on TV" spectators. Capped separately from players. */
+  displays: Map<string, DisplaySession>
+  tournament: TournamentState | null
 }

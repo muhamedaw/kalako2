@@ -113,6 +113,7 @@ CREATE TABLE IF NOT EXISTS premium_subscriptions (
   subscription_id TEXT NOT NULL UNIQUE,
   plan_id TEXT NOT NULL,
   status TEXT NOT NULL DEFAULT 'pending',
+  expires_at TEXT,
   created_at TEXT DEFAULT CURRENT_TIMESTAMP,
   updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (device_id, subscription_id)
@@ -120,3 +121,16 @@ CREATE TABLE IF NOT EXISTS premium_subscriptions (
 
 CREATE INDEX IF NOT EXISTS idx_premium_device ON premium_subscriptions(device_id);
 CREATE INDEX IF NOT EXISTS idx_premium_subscription ON premium_subscriptions(subscription_id);
+
+-- One row per (device, question) the player has actually been served in ANSWERING phase.
+-- Drives the category-completion % feature. PRIMARY KEY means a repeat viewing doesn't
+-- duplicate or need an update — "have they ever seen it" is all this tracks.
+CREATE TABLE IF NOT EXISTS player_seen_questions (
+  device_id TEXT NOT NULL,
+  question_id TEXT NOT NULL,
+  category TEXT NOT NULL,
+  seen_at TEXT DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (device_id, question_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_seen_questions_device_category ON player_seen_questions(device_id, category);

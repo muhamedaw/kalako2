@@ -85,7 +85,10 @@ export default function SettingsPanel() {
                   {LANG_OPTIONS.map((opt) => (
                     <button
                       key={opt.lang}
-                      onClick={() => setLang(opt.lang)}
+                      onClick={() => {
+                        setLang(opt.lang)
+                        useGameStore.getState().setLanguage(opt.lang)
+                      }}
                       className={`
                         flex-1 px-3 py-2 rounded-xl text-xs font-medium cursor-pointer transition-colors
                         ${currentLang === opt.lang

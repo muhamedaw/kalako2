@@ -1,4 +1,6 @@
 export type Screen =
+  | 'auth'
+  | 'recover'
   | 'welcome'
   | 'create'
   | 'join'
@@ -9,6 +11,7 @@ export type Screen =
   | 'round_results'
   | 'game_over'
   | 'dev_asset_preview'
+  | 'admin_dashboard'
   | 'about'
   | 'how_to_play'
   | 'store'
@@ -33,7 +36,13 @@ const CATEGORY_LABELS: Record<string, { ar: string; en: string; he: string }> = 
   tech: { ar: 'تكنولوجيا', en: 'Technology', he: 'טכנולוגיה' },
   mythology: { ar: 'أساطير', en: 'Mythology', he: 'מיתולוגיה' },
   picture: { ar: 'جولة الصور', en: 'Picture Round', he: 'סיבוב תמונות' },
+  space: { ar: 'الفضاء والفلك', en: 'Space & Astronomy', he: 'חלל ואסטרונומיה' },
 }
+
+// Categories requiring an unlock (active Premium or a one-time coin purchase) — kept in sync
+// with server/src/game/categoryAccess.mts's PREMIUM_CATEGORIES. Every category NOT in this
+// set is free forever, no gating.
+export const PREMIUM_CATEGORY_IDS = new Set<string>(['space'])
 
 const CATEGORY_EMOJI: Record<string, string> = {
   general: '🌍',
@@ -48,6 +57,7 @@ const CATEGORY_EMOJI: Record<string, string> = {
   tech: '💻',
   mythology: '🏛️',
   picture: '🖼️',
+  space: '🪐',
 }
 
 export const CATEGORIES = Object.keys(CATEGORY_LABELS).map((id) => ({
@@ -78,6 +88,7 @@ export interface EconomyProfile {
   nickname: string
   avatarConfig: { body: string; eyes: string; hat: string }
   coins: number
+  email?: string | null
   inventory: InventoryItem[]
   isPremium: boolean
   premiumExpiresAt: string | null
@@ -85,7 +96,7 @@ export interface EconomyProfile {
 
 export interface StoreItem {
   id: string
-  type: 'avatar' | 'sound_pack' | 'frame'
+  type: 'avatar' | 'sound_pack' | 'frame' | 'avatar_part' | 'categoryUnlock' | 'categoryExpansion'
   name: string
   description: string
   price: number
@@ -94,7 +105,7 @@ export interface StoreItem {
 }
 
 export interface StoreSection {
-  type: 'avatar' | 'sound_pack' | 'frame'
+  type: 'avatar' | 'sound_pack' | 'frame' | 'avatar_part' | 'categoryUnlock' | 'categoryExpansion'
   title: string
   description: string
   items: StoreItem[]

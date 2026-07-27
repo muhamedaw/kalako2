@@ -24,7 +24,10 @@ export default function I18nProvider({ children }: Props) {
 
   const setLang = useCallback((l: Lang) => {
     setLangState(l)
-    try { localStorage.setItem(STORAGE_KEY, l) } catch { /* ignore */ }
+    try {
+      localStorage.setItem(STORAGE_KEY, l)
+      localStorage.setItem('kalako_language', l)
+    } catch { /* ignore */ }
     document.documentElement.lang = l
     document.documentElement.dir = allLangs[l].dir
   }, [])

@@ -7,6 +7,9 @@ const rooms = new Map<string, RoomState>()
 // playerId -> roomCode, so a reconnecting socket can find its room without scanning everything.
 const playerIndex = new Map<string, string>()
 
+export const MAX_DISPLAYS_PER_ROOM = 3
+export const TOURNAMENT_TOTAL_GAMES = 3
+
 export function getRoom(code: string): RoomState | undefined {
   return rooms.get(code.toUpperCase())
 }
@@ -58,6 +61,10 @@ export function createRoom(
     history: [],
     createdAt: Date.now(),
     correctGuessCounts: new Map(),
+    displays: new Map(),
+    tournament: settings.tournamentMode
+      ? { gameIndex: 1, totalGames: TOURNAMENT_TOTAL_GAMES, cumulativeScores: new Map() }
+      : null,
   }
 
   rooms.set(code, room)
@@ -119,4 +126,43 @@ export function reassignHost(room: RoomState): Player | undefined {
   room.hostId = next.id
   next.isHost = true
   return next
+}
+
+/** Returns 'ok', or 'full' if the room already has MAX_DISPLAYS_PER_ROOM watchers. Never
+ * counted toward playerCount or the round-count recommendation — displays are pure spectators. */
+export function addDisplay(room: RoomState, socketId: string): 'ok' | 'full' {
+  if (room.displays.size >= MAX_DISPLAYS_PER_ROOM) return 'full'
+  room.displays.set(socketId, { socketId })
+  return 'ok'
+}
+
+export function removeDisplay(room: RoomState, socketId: string) {
+  room.displays.delete(socketId)
+}
+
+/** Resets a room's per-game state (scores, round, history, current question) for the next
+ * game in a tournament series, keeping the same code/players/settings. Folds the just-finished
+ * game's scores into the tournament's cumulative total before zeroing them for the next game. */
+export function resetRoomForNextTournamentGame(room: RoomState) {
+  if (!room.tournament) return
+  for (const player of room.players.values()) {
+    const prevCumulative = room.tournament.cumulativeScores.get(player.id) ?? 0
+    room.tournament.cumulativeScores.set(player.id, prevCumulative + player.score)
+    player.score = 0
+  }
+  room.tournament.gameIndex += 1
+  room.round = 0
+  room.phase = 'LOBBY'
+  room.isTiebreakerRound = false
+  room.tiebreakerAttempt = 0
+  room.categoryOptions = []
+  room.currentQuestion = null
+  room.answers.clear()
+  room.votes.clear()
+  room.voteSlots.clear()
+  room.history = []
+  room.correctGuessCounts.clear()
+  room.doublePointsRound = room.settings.doublePointsRoundEnabled
+    ? crypto.randomInt(1, room.settings.roundsCount + 1)
+    : null
 }

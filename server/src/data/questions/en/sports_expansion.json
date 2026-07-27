@@ -1,0 +1,7 @@
+[
+  { "id": "sports_exp_001", "category": "sports", "text": "How many players are on a standard volleyball team on the court at once?", "answer": "Six", "ageRating": "family" },
+  { "id": "sports_exp_002", "category": "sports", "text": "In which sport would you perform a 'slam dunk'?", "answer": "Basketball", "ageRating": "family" },
+  { "id": "sports_exp_003", "category": "sports", "text": "What is the maximum score possible in a single frame of ten-pin bowling?", "answer": "Thirty", "ageRating": "family" },
+  { "id": "sports_exp_004", "category": "sports", "text": "Which country invented the sport of badminton in its modern form?", "answer": "England", "ageRating": "family" },
+  { "id": "sports_exp_005", "category": "sports", "text": "How long is an Olympic swimming pool in meters?", "answer": "Fifty meters", "ageRating": "family" }
+]

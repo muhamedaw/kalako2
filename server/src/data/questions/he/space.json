@@ -1,0 +1,10 @@
+[
+  { "id": "space_001", "category": "space", "text": "איזה כוכב לכת מכונה הכוכב האדום?", "answer": "מאדים", "ageRating": "family" },
+  { "id": "space_002", "category": "space", "text": "מה שם הגלקסיה שבה נמצאת מערכת השמש שלנו?", "answer": "שביל החלב", "ageRating": "family" },
+  { "id": "space_003", "category": "space", "text": "מי היה האדם הראשון שהלך על הירח?", "answer": "ניל ארמסטרונג", "ageRating": "family" },
+  { "id": "space_004", "category": "space", "text": "איזה כוח שומר על כוכבי הלכת במסלול סביב השמש?", "answer": "כוח הכבידה", "ageRating": "family" },
+  { "id": "space_005", "category": "space", "text": "לאיזה כוכב לכת יש את מערכת הטבעות הבולטת ביותר?", "answer": "שבתאי", "ageRating": "family" },
+  { "id": "space_006", "category": "space", "text": "איך קוראים אסטרונומים לכוכב שמבהיק פתאום בעוצמה ואז דועך?", "answer": "נובה", "ageRating": "family" },
+  { "id": "space_007", "category": "space", "text": "מהו הכוכב הקרוב ביותר לכדור הארץ?", "answer": "השמש", "ageRating": "family" },
+  { "id": "space_008", "category": "space", "text": "מה שם הרובר של נאס\"א שנחת על מאדים ב-2021?", "answer": "פרסיוורנס", "ageRating": "family" }
+]

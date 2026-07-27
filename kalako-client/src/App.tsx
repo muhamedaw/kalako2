@@ -1,4 +1,4 @@
-import { useEffect, useRef, lazy, Suspense } from 'react'
+import { useEffect, useState, lazy, Suspense } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import AnimatedBackground from '@/components/ui/AnimatedBackground'
 import I18nProvider from '@/i18n/I18nProvider'
@@ -6,12 +6,15 @@ import ReconnectingOverlay from '@/components/screens/ReconnectingOverlay'
 import BottomNav from '@/components/navigation/BottomNav'
 import Toast from '@/components/ui/Toast'
 import SettingsPanel from '@/components/SettingsPanel'
+import PurchaseEmailGate from '@/components/PurchaseEmailGate'
 import SettingsGearButton from '@/components/SettingsGearButton'
 import DocumentTitleManager from '@/components/DocumentTitleManager'
+import AuthScreen from '@/components/screens/AuthScreen'
 import WelcomeScreen from '@/components/screens/WelcomeScreen'
 import { useGameStore } from '@/store/gameStore'
 import { useNavigationStore } from '@/store/navigationStore'
 import { useTranslation } from '@/i18n/context'
+import SplashScreen from '@/components/brand/SplashScreen'
 
 // Only WelcomeScreen (the default/first-paint view) is eagerly bundled — everything
 // else lazy-loads on navigation so the initial JS payload (and mobile LCP) stays
@@ -25,6 +28,7 @@ const VoteScreen = lazy(() => import('@/components/screens/VoteScreen'))
 const RoundResults = lazy(() => import('@/components/screens/RoundResults'))
 const GameOver = lazy(() => import('@/components/screens/GameOver'))
 const DevAssetPreview = lazy(() => import('@/components/screens/DevAssetPreview'))
+const AdminDashboard = lazy(() => import('@/components/screens/AdminDashboard'))
 const HowToPlayPage = lazy(() => import('@/components/screens/HowToPlayPage'))
 const AboutCreditsScreen = lazy(() => import('@/components/screens/AboutCreditsScreen'))
 const LegalPage = lazy(() => import('@/components/screens/LegalPage'))
@@ -33,6 +37,8 @@ const NotificationsScreen = lazy(() => import('@/components/screens/Notification
 const ProfileScreen = lazy(() => import('@/components/screens/ProfileScreen'))
 const StoreScreen = lazy(() => import('@/components/screens/StoreScreen'))
 const PremiumScreen = lazy(() => import('@/components/screens/PremiumScreen'))
+const RecoverAccountScreen = lazy(() => import('@/components/screens/RecoverAccountScreen'))
+const DisplayScreen = lazy(() => import('@/components/screens/DisplayScreen'))
 
 // Screens where the bottom tab bar is shown. Everything else (active game
 // rounds, create/join forms, results, dev tools) hides it so it never
@@ -74,9 +80,9 @@ function JsonLdScript() {
 }
 
 function App() {
-  const { screen, connect, setScreen } = useGameStore()
+  const { screen, connect, setScreen, isConnected, isDisplayMode, updateCreateRoomDraft } = useGameStore()
   const toggleSettingsPanel = useNavigationStore((s) => s.toggleSettingsPanel)
-  const createDefaultPrivateRef = useRef(false)
+  const [initialLoading, setInitialLoading] = useState(true)
 
   useEffect(() => {
     connect()
@@ -89,6 +95,11 @@ function App() {
     window.addEventListener('pageshow', handlePageShow)
 
     const params = new URLSearchParams(window.location.search)
+    const displayCode = params.get('display')
+    if (displayCode) {
+      useGameStore.getState().joinAsDisplay(displayCode.toUpperCase())
+      window.history.replaceState({}, '', window.location.pathname)
+    }
     const joinCode = params.get('join')
     if (joinCode) {
       useGameStore.setState({ pendingJoinCode: joinCode.toUpperCase() })
@@ -100,24 +111,73 @@ function App() {
       setScreen('dev_asset_preview')
       window.history.replaceState({}, '', window.location.pathname)
     }
+    const admin = params.get('admin')
+    if (admin === 'true') {
+      setScreen('admin_dashboard')
+      window.history.replaceState({}, '', window.location.pathname)
+    }
 
     return () => window.removeEventListener('pageshow', handlePageShow)
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Transition out of splash once socket connects. Deliberately does NOT wait on
+  // `profile` — nothing calls loadProfile() until ProfileScreen/StoreScreen mount,
+  // which a fresh visitor can only reach through this screen, so requiring
+  // profile !== null here deadlocked every first-time visitor on the splash forever.
+  // The 4s fallback covers the case the socket never connects at all (server down),
+  // so a connectivity failure still shows the guest/login choice instead of a bare spinner.
+  useEffect(() => {
+    if (screen === 'auth' && isConnected) {
+      const timer = setTimeout(() => setInitialLoading(false), 800)
+      return () => clearTimeout(timer)
+    }
+    if (screen !== 'auth') {
+      setInitialLoading(false)
+    }
+  }, [screen, isConnected])
+
+  useEffect(() => {
+    const fallback = setTimeout(() => setInitialLoading(false), 4000)
+    return () => clearTimeout(fallback)
+  }, [])
+
+  // A "Watch on TV" connection is never a normal app session — no auth gate, no bottom nav,
+  // no settings, just the spectator view for whatever phase the room is currently in.
+  if (isDisplayMode) {
+    return (
+      <I18nProvider>
+        <Suspense fallback={null}>
+          <DisplayScreen />
+        </Suspense>
+      </I18nProvider>
+    )
+  }
 
   const showBottomNav = BOTTOM_NAV_SCREENS.has(screen)
   const showSettingsGear = screen === 'welcome'
 
   const handleStartCreate = (isPrivate: boolean) => {
-    createDefaultPrivateRef.current = isPrivate
+    updateCreateRoomDraft({ isPrivate })
     setScreen('create')
+  }
+
+  const handleContinueAsGuest = () => {
+    setInitialLoading(false)
+    setScreen('welcome')
   }
 
   const renderScreen = () => {
     switch (screen) {
+      case 'auth':
+        return initialLoading
+          ? <SplashScreen key="splash" className="fixed inset-0 w-full h-full" />
+          : <AuthScreen key="auth" onContinueAsGuest={handleContinueAsGuest} />
+      case 'recover':
+        return <RecoverAccountScreen key="recover" onDone={handleContinueAsGuest} />
       case 'welcome':
         return <WelcomeScreen key="welcome" onStartCreate={handleStartCreate} />
       case 'create':
-        return <CreateRoom key="create" initialIsPrivate={createDefaultPrivateRef.current} />
+        return <CreateRoom key="create" />
       case 'join':
         return <JoinRoom key="join" />
       case 'lobby':
@@ -154,6 +214,8 @@ function App() {
         return <LegalPage key="legal_refund" kind="refund" />
       case 'dev_asset_preview':
         return <DevAssetPreview key="dev" />
+      case 'admin_dashboard':
+        return <AdminDashboard key="admin" />
       default:
         return <WelcomeScreen key="welcome" onStartCreate={handleStartCreate} />
     }
@@ -163,7 +225,7 @@ function App() {
     <I18nProvider>
       <JsonLdScript />
       <DocumentTitleManager />
-        {screen === 'welcome' && <AnimatedBackground />}
+        {(screen === 'welcome' || screen === 'auth') && <AnimatedBackground />}
         {showSettingsGear && (
           <SettingsGearButton onClick={toggleSettingsPanel} />
         )}
@@ -195,6 +257,7 @@ function App() {
         <SettingsPanel />
         <ReconnectingOverlay />
         <Toast />
+        <PurchaseEmailGate />
     </I18nProvider>
   )
 }

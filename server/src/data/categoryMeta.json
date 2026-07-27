@@ -1,0 +1,67 @@
+{
+  "general": {
+    "ar": "عامة",
+    "en": "General",
+    "he": "כללי"
+  },
+  "science": {
+    "ar": "علوم",
+    "en": "Science",
+    "he": "מדע"
+  },
+  "history": {
+    "ar": "تاريخ",
+    "en": "History",
+    "he": "היסטוריה"
+  },
+  "geography": {
+    "ar": "جغرافيا",
+    "en": "Geography",
+    "he": "גיאוגרפיה"
+  },
+  "sports": {
+    "ar": "رياضة",
+    "en": "Sports",
+    "he": "ספורט"
+  },
+  "movies": {
+    "ar": "أفلام",
+    "en": "Movies",
+    "he": "סרטים"
+  },
+  "celebrities": {
+    "ar": "مشاهير",
+    "en": "Celebrities",
+    "he": "סלבריטאים"
+  },
+  "cooking": {
+    "ar": "طبخ",
+    "en": "Cooking",
+    "he": "בישול"
+  },
+  "music": {
+    "ar": "موسيقى",
+    "en": "Music",
+    "he": "מוזיקה"
+  },
+  "tech": {
+    "ar": "تكنولوجيا",
+    "en": "Technology",
+    "he": "טכנולוגיה"
+  },
+  "mythology": {
+    "ar": "أساطير",
+    "en": "Mythology",
+    "he": "מיתולוגיה"
+  },
+  "picture": {
+    "ar": "جولة الصور",
+    "en": "Picture Round",
+    "he": "סיבוב תמונות"
+  },
+  "space": {
+    "ar": "الفضاء والفلك",
+    "en": "Space & Astronomy",
+    "he": "חלל ואסטרונומיה"
+  }
+}

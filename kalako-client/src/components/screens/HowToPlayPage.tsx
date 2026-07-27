@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { useTranslation } from '@/i18n/context'
+import { useGameStore } from '@/store/gameStore'
 
 const stagger = {
   animate: { transition: { staggerChildren: 0.12 } },
@@ -13,6 +14,7 @@ const stepIn = {
 const STEP_ICONS = ['🏠', '📂', '✍️', '🗳️', '🏆']
 
 export default function HowToPlayPage() {
+  const setScreen = useGameStore((s) => s.setScreen)
   const t = useTranslation()
 
   const steps = [
@@ -26,6 +28,12 @@ export default function HowToPlayPage() {
   return (
     <div className="flex flex-col items-center min-h-dvh px-4 py-20">
       <div className="w-full max-w-md flex flex-col gap-6">
+        <button
+          onClick={() => setScreen('welcome')}
+          className="text-white/60 text-sm self-start mb-2 hover:text-white/90 transition-colors cursor-pointer"
+        >
+          ← {t.back}
+        </button>
         {/* Header */}
         <div className="text-center">
           <h1

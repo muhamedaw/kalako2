@@ -5,6 +5,7 @@ import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js'
 import { useTranslation } from '@/i18n/context'
 import { useGameStore } from '@/store/gameStore'
 import { useToastStore } from '@/store/toastStore'
+import { usePurchaseEmailGateStore } from '@/store/purchaseEmailGateStore'
 import { ComposedAvatar } from '@/components/avatarParts'
 import { DEFAULT_AVATAR } from '@/components/avatarParts/types'
 import type { AvatarConfig } from '@/components/avatarParts/types'
@@ -76,6 +77,7 @@ export default function StoreScreen() {
   const t = useTranslation()
   const { catalog, catalogLoading, loadCatalog, buyItem, profile, createPayPalOrder, capturePayPalOrder } = useGameStore()
   const showToast = useToastStore((s) => s.show)
+  const requestPurchase = usePurchaseEmailGateStore((s) => s.requestPurchase)
   const [activeTier, setActiveTier] = useState<string | null>(null)
   const [processingTier, setProcessingTier] = useState<string | null>(null)
 
@@ -89,17 +91,19 @@ export default function StoreScreen() {
     }
   }, [profile])
 
-  const handleBuy = async (itemId: string) => {
-    const res = await buyItem(itemId)
-    if (res.success) {
-      showToast(t.storePurchaseSuccess, 'success')
-    } else if (res.error === 'insufficient_funds') {
-      showToast(t.storeInsufficientFunds, 'error')
-    } else if (res.error === 'timeout') {
-      showToast(t.requestTimeout, 'error')
-    }
-    // Other error codes (already_owned, invalid_item, rate_limited) are edge cases the UI
-    // shouldn't normally allow a click into — fail silently rather than invent new copy.
+  const handleBuy = (itemId: string) => {
+    requestPurchase(Boolean(profile?.email), async () => {
+      const res = await buyItem(itemId)
+      if (res.success) {
+        showToast(t.storePurchaseSuccess, 'success')
+      } else if (res.error === 'insufficient_funds') {
+        showToast(t.storeInsufficientFunds, 'error')
+      } else if (res.error === 'timeout') {
+        showToast(t.requestTimeout, 'error')
+      }
+      // Other error codes (already_owned, invalid_item, rate_limited) are edge cases the UI
+      // shouldn't normally allow a click into — fail silently rather than invent new copy.
+    })
   }
 
   const handlePremiumLock = () => {
@@ -195,8 +199,8 @@ export default function StoreScreen() {
       <div key={tier.tierId}>
         <motion.div
           whileTap={!isActive ? { scale: 0.97 } : undefined}
-          onClick={() => !isActive && !processingTier && setActiveTier(tier.tierId)}
-          onKeyDown={(e) => { if (!isActive && !processingTier && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); setActiveTier(tier.tierId); } }}
+          onClick={() => !isActive && !processingTier && requestPurchase(Boolean(profile?.email), () => setActiveTier(tier.tierId))}
+          onKeyDown={(e) => { if (!isActive && !processingTier && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); requestPurchase(Boolean(profile?.email), () => setActiveTier(tier.tierId)); } }}
           role="button"
           tabIndex={0}
           className={`rounded-xl border-4 border-[#0A0A0A] p-4 flex flex-col items-center gap-2 cursor-pointer transition-all ${

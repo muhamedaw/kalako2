@@ -1,0 +1,7 @@
+[
+  { "id": "sports_exp_001", "category": "sports", "text": "כמה שחקנים יש בקבוצת כדורעף אחת על המגרש בו זמנית?", "answer": "שישה", "ageRating": "family" },
+  { "id": "sports_exp_002", "category": "sports", "text": "באיזה ענף ספורט מבצעים 'סלאם דאנק'?", "answer": "כדורסל", "ageRating": "family" },
+  { "id": "sports_exp_003", "category": "sports", "text": "מהו הניקוד המרבי האפשרי במסגרת אחת בבאולינג?", "answer": "שלושים", "ageRating": "family" },
+  { "id": "sports_exp_004", "category": "sports", "text": "איזו מדינה המציאה את ענף הבדמינטון בצורתו המודרנית?", "answer": "אנגליה", "ageRating": "family" },
+  { "id": "sports_exp_005", "category": "sports", "text": "מה אורכה של בריכת שחייה אולימפית במטרים?", "answer": "חמישים מטר", "ageRating": "family" }
+]

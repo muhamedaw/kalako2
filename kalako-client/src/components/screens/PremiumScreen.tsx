@@ -1,12 +1,15 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Star, Crown, ArrowLeft, ArrowRight, Loader } from 'lucide-react'
 import GlassCard from '@/components/ui/GlassCard'
 import Button from '@/components/ui/Button'
 import PremiumBadge from '@/components/ui/PremiumBadge'
 import { useGameStore } from '@/store/gameStore'
+import { getDeviceId } from '@/lib/deviceId'
+import { getSocket } from '@/lib/socket'
 import { useTranslation } from '@/i18n/context'
 import { useToastStore } from '@/store/toastStore'
+import { usePurchaseEmailGateStore } from '@/store/purchaseEmailGateStore'
 
 const FEATURES = [
   { key: 'premiumFeature1', icon: '🎯' },
@@ -24,32 +27,68 @@ export default function PremiumScreen() {
     loadPremiumStatus,
     createPremiumSubscription,
     cancelPremiumSubscription,
+    profile,
   } = useGameStore()
   const t = useTranslation()
   const BackIcon = t.dir === 'rtl' ? ArrowRight : ArrowLeft
   const showToast = useToastStore((s) => s.show)
+  const requestPurchase = usePurchaseEmailGateStore((s) => s.requestPurchase)
   const [plan, setPlan] = useState<'monthly' | 'yearly'>('yearly')
   const [subscribing, setSubscribing] = useState(false)
   const [cancelling, setCancelling] = useState(false)
   const [subscribeError, setSubscribeError] = useState(false)
+  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const popupRef = useRef<Window | null>(null)
 
   useEffect(() => {
     loadPremiumStatus()
-  }, [loadPremiumStatus])
+    if (!profile) useGameStore.getState().loadProfile()
+    return () => {
+      if (pollRef.current) clearInterval(pollRef.current)
+      if (popupRef.current) popupRef.current.close()
+    }
+  }, [loadPremiumStatus]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleSubscribe = async () => {
-    setSubscribing(true)
-    setSubscribeError(false)
-    const res = await createPremiumSubscription(plan)
-    setSubscribing(false)
-    if (res.error === 'timeout') {
-      setSubscribeError(true)
-      showToast(t.requestTimeout, 'error')
-      return
-    }
-    if (res.approvalUrl) {
-      window.open(res.approvalUrl, '_blank')
-    }
+  // After opening PayPal popup, poll get_premium_status until activation
+  // or the popup closes (handles both user-approval and auto-detect paths).
+  const startPolling = () => {
+    if (pollRef.current) clearInterval(pollRef.current)
+    pollRef.current = setInterval(() => {
+      const socket = getSocket()
+      socket.emit('get_premium_status', { deviceId: getDeviceId() }, (res: any) => {
+        if (res?.isPremium) {
+          if (pollRef.current) clearInterval(pollRef.current)
+          pollRef.current = null
+          useGameStore.setState({ isPremium: true })
+          showToast(t.premiumSubscribeSuccess || 'Premium activated!', 'success')
+        }
+      })
+    }, 3000)
+    // Stop polling after 2 minutes
+    setTimeout(() => {
+      if (pollRef.current) {
+        clearInterval(pollRef.current)
+        pollRef.current = null
+      }
+    }, 120_000)
+  }
+
+  const handleSubscribe = () => {
+    requestPurchase(Boolean(profile?.email), async () => {
+      setSubscribing(true)
+      setSubscribeError(false)
+      const res = await createPremiumSubscription(plan)
+      setSubscribing(false)
+      if (res.error === 'timeout') {
+        setSubscribeError(true)
+        showToast(t.requestTimeout, 'error')
+        return
+      }
+      if (res.approvalUrl) {
+        popupRef.current = window.open(res.approvalUrl, '_blank')
+        startPolling()
+      }
+    })
   }
 
   const handleCancel = async () => {

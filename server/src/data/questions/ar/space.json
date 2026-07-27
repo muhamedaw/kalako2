@@ -1,0 +1,10 @@
+[
+  { "id": "space_001", "category": "space", "text": "أي كوكب يُعرف بالكوكب الأحمر؟", "answer": "المريخ", "ageRating": "family" },
+  { "id": "space_002", "category": "space", "text": "ما اسم المجرة التي يقع فيها نظامنا الشمسي؟", "answer": "درب التبانة", "ageRating": "family" },
+  { "id": "space_003", "category": "space", "text": "من هو أول إنسان مشى على سطح القمر؟", "answer": "نيل أرمسترونغ", "ageRating": "family" },
+  { "id": "space_004", "category": "space", "text": "ما القوة التي تبقي الكواكب في مدارها حول الشمس؟", "answer": "الجاذبية", "ageRating": "family" },
+  { "id": "space_005", "category": "space", "text": "أي كوكب يمتلك أبرز نظام حلقات؟", "answer": "زحل", "ageRating": "family" },
+  { "id": "space_006", "category": "space", "text": "ماذا يسمي الفلكيون النجم الذي يزداد سطوعه فجأة ثم يخفت؟", "answer": "المستعر", "ageRating": "family" },
+  { "id": "space_007", "category": "space", "text": "ما هو أقرب نجم إلى الأرض؟", "answer": "الشمس", "ageRating": "family" },
+  { "id": "space_008", "category": "space", "text": "ما اسم مركبة ناسا التي هبطت على المريخ عام 2021؟", "answer": "مثابرة", "ageRating": "family" }
+]

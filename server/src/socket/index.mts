@@ -1,31 +1,37 @@
 import type { Server, Socket } from 'socket.io'
 import { config } from '../config.mts'
-import { allCategories } from '../game/questionBank.mts'
+import { allCategories, getCategoryTotalCounts } from '../game/questionBank.mts'
 import { makeQrCodeDataUrl } from '../game/qrcode.mts'
 import {
   addPlayer,
+  addDisplay,
   connectedPlayers,
   createRoom,
   destroyRoom,
   getRoom,
   getRoomByPlayerId,
   reassignHost,
+  removeDisplay,
   removePlayer,
+  MAX_DISPLAYS_PER_ROOM,
 } from '../game/roomManager.mts'
 import {
   beginAnswering,
   maybeAllAnswered,
   maybeAllVoted,
   publicRoomView,
+  startNextTournamentGame,
   startRound,
 } from '../game/stateMachine.mts'
 import type { Language, RoomSettings, RoomState } from '../game/types.mts'
 import { isSameAnswer } from '../game/textNormalize.mts'
+import { filterAccessibleCategories } from '../game/categoryAccess.mts'
 import { registerEconomyHandlers } from './economy.mts'
 import { registerPaymentHandlers } from './payments.mts'
 import { registerPremiumHandlers } from './premium.mts'
 import { registerRecoveryHandlers } from './recovery.mts'
 import { registerDebugHandlers } from './debug.mts'
+import { registerAdminHandlers } from './admin.mts'
 import { getDb } from '../db/index.mts'
 import { isRateLimited } from './rateLimit.mts'
 import { asObject, asString } from './validate.mts'
@@ -44,6 +50,7 @@ interface CreateRoomPayload {
   blindVotingEnabled?: boolean
   language?: string
   deviceId?: string
+  tournamentMode?: boolean
 }
 
 interface JoinRoomPayload {
@@ -55,7 +62,7 @@ interface JoinRoomPayload {
 
 type Ack<T> = (response: T) => void
 
-function validateSettings(payload: CreateRoomPayload): RoomSettings | { error: string } {
+function validateSettings(payload: CreateRoomPayload, deviceId: string | null): RoomSettings | { error: string } {
   const answerTimeSeconds = Number(payload.answerTimeSeconds)
   const roundsCount = Number(payload.roundsCount)
   if (!Number.isInteger(answerTimeSeconds) || answerTimeSeconds < 5 || answerTimeSeconds > 300) {
@@ -64,9 +71,13 @@ function validateSettings(payload: CreateRoomPayload): RoomSettings | { error: s
   if (!Number.isInteger(roundsCount) || roundsCount < 1 || roundsCount > 20) {
     return { error: 'roundsCount يجب أن يكون بين 1 و20' }
   }
-  const allowedCategories = Array.isArray(payload.allowedCategories)
+  const requestedCategories = Array.isArray(payload.allowedCategories)
     ? payload.allowedCategories.filter((c) => allCategories.includes(c))
     : []
+  // Premium categories (see categoryAccess.mts) are silently dropped here if the requesting
+  // device hasn't unlocked them — same "silently drop what doesn't apply" pattern as the
+  // unknown-category-id filter above, not a hard error.
+  const allowedCategories = filterAccessibleCategories(requestedCategories, deviceId)
 
   return {
     isPrivate: Boolean(payload.isPrivate),
@@ -77,6 +88,7 @@ function validateSettings(payload: CreateRoomPayload): RoomSettings | { error: s
     doublePointsRoundEnabled: Boolean(payload.doublePointsRoundEnabled),
     blindVotingEnabled: Boolean(payload.blindVotingEnabled),
     language: SUPPORTED_LANGUAGES.includes(payload.language as Language) ? (payload.language as Language) : 'ar',
+    tournamentMode: Boolean(payload.tournamentMode),
   }
 }
 
@@ -96,11 +108,11 @@ export function registerSocketHandlers(io: Server) {
     safeOn(socket, 'create_room', async (_payload: unknown, ack?: Ack<any>) => {
       if (isRateLimited(`create_room:${socket.id}`, 5, 60_000)) return ack?.({ error: 'rate_limited' })
       const payload = asObject<CreateRoomPayload>(_payload)
-      const settings = validateSettings(payload)
+      const deviceId = asString(payload.deviceId) || null
+      const settings = validateSettings(payload, deviceId)
       if ('error' in settings) return ack?.({ error: settings.error })
 
       const name = (asString(payload.playerName) || '').trim().slice(0, 24) || 'المضيف'
-      const deviceId = asString(payload.deviceId) || null
       const { room, host } = createRoom(settings, name, deviceId)
       host.socketId = socket.id
       socket.data.playerId = host.id
@@ -185,6 +197,98 @@ export function registerSocketHandlers(io: Server) {
       ack?.({ ok: true })
     })
 
+    // Advisory only — never auto-applied. Host taps "Use recommended" (or picks any custom
+    // value) and this just updates the stored setting for the NEXT round to read; a round
+    // already in progress in a non-LOBBY phase keeps its already-decided-per-round behavior.
+    safeOn(socket, 'update_room_settings', (_payload: unknown, ack?: Ack<any>) => {
+      if (isRateLimited(`update_room_settings:${socket.id}`, 10, 10_000)) return ack?.({ error: 'rate_limited' })
+      const payload = asObject<{ roundsCount?: number }>(_payload)
+      const room = currentRoom(socket)
+      if (!room) return ack?.({ error: 'الغرفة غير موجودة — أعد الاتصال' })
+      if (room.phase !== 'LOBBY') return ack?.({ error: 'اللعبة بدأت بالفعل' })
+      if (!requireHost(room, socket)) return ack?.({ error: 'المضيف فقط يقدر يغيّر الإعدادات' })
+
+      if (payload.roundsCount !== undefined) {
+        const roundsCount = Number(payload.roundsCount)
+        if (!Number.isInteger(roundsCount) || roundsCount < 1 || roundsCount > 20) {
+          return ack?.({ error: 'roundsCount يجب أن يكون بين 1 و20' })
+        }
+        room.settings.roundsCount = roundsCount
+      }
+
+      io.to(room.code).emit('phase_changed', { phase: room.phase, room: publicRoomView(room) })
+      ack?.({ ok: true })
+    })
+
+    // "Watch on TV" — a pure spectator connection. Never becomes a Player: doesn't count
+    // toward playerCount, the round-count recommendation, start_game's min-player check, or
+    // appear in the player list. Joins the same socket.io room so it receives every broadcast
+    // (phase_changed, results, etc.) exactly like a player would, for free.
+    safeOn(socket, 'join_display', (_payload: unknown, ack?: Ack<any>) => {
+      if (isRateLimited(`join_display:${socket.id}`, 10, 60_000)) return ack?.({ error: 'rate_limited' })
+      const payload = asObject<{ roomCode?: string }>(_payload)
+      const code = (asString(payload.roomCode) || '').trim().toUpperCase()
+      const room = getRoom(code)
+      if (!room) return ack?.({ error: 'الغرفة غير موجودة' })
+
+      const result = addDisplay(room, socket.id)
+      if (result === 'full') return ack?.({ error: `الحد الأقصى ${MAX_DISPLAYS_PER_ROOM} شاشات عرض لكل غرفة` })
+
+      socket.data.displayRoomCode = room.code
+      socket.join(room.code)
+      io.to(room.code).emit('phase_changed', { phase: room.phase, room: publicRoomView(room) })
+      ack?.({ ok: true, room: publicRoomView(room) })
+    })
+
+    safeOn(socket, 'get_category_completion', (_payload: unknown, ack?: Ack<any>) => {
+      const payload = asObject<{ deviceId?: string }>(_payload)
+      const deviceId = asString(payload.deviceId)
+      if (!deviceId) return ack?.({ error: 'deviceId required' })
+
+      try {
+        const db = getDb()
+        const totals = getCategoryTotalCounts()
+        const rows = db.exec(
+          `SELECT category, COUNT(*) FROM player_seen_questions WHERE device_id = ? GROUP BY category`,
+          [deviceId]
+        )
+        const seenByCategory = new Map<string, number>()
+        if (rows.length > 0) {
+          for (const [category, count] of rows[0].values) {
+            seenByCategory.set(category as string, Number(count))
+          }
+        }
+
+        const completion = Object.entries(totals).map(([category, totalCount]) => {
+          const seenCount = Math.min(seenByCategory.get(category) ?? 0, totalCount)
+          return {
+            category,
+            seenCount,
+            totalCount,
+            percentage: totalCount > 0 ? Math.round((seenCount / totalCount) * 100) : 0,
+          }
+        })
+
+        ack?.(completion)
+      } catch (err) {
+        console.error('[kalak] get_category_completion failed:', err)
+        ack?.({ error: 'completion_failed' })
+      }
+    })
+
+    safeOn(socket, 'start_next_tournament_game', (ack?: Ack<any>) => {
+      if (isRateLimited(`start_next_tournament_game:${socket.id}`, 5, 10_000)) return ack?.({ error: 'rate_limited' })
+      const room = currentRoom(socket)
+      if (!room) return ack?.({ error: 'الغرفة غير موجودة — أعد الاتصال' })
+      if (room.phase !== 'GAME_OVER') return ack?.({ error: 'اللعبة لم تنتهِ بعد' })
+      if (!requireHost(room, socket)) return ack?.({ error: 'المضيف فقط يقدر يبدأ الجولة التالية' })
+      if (!room.tournament || room.tournament.gameIndex >= room.tournament.totalGames) {
+        return ack?.({ error: 'لا توجد جولة بطولة تالية' })
+      }
+      startNextTournamentGame(io, room)
+      ack?.({ ok: true })
+    })
+
     safeOn(socket, 'pick_category', (_payload: unknown) => {
       if (isRateLimited(`pick_category:${socket.id}`, 10, 10_000)) return
       const payload = asObject<{ category?: string }>(_payload)
@@ -250,6 +354,7 @@ export function registerSocketHandlers(io: Server) {
     registerPremiumHandlers(io, socket)
     registerRecoveryHandlers(io, socket)
     registerDebugHandlers(io, socket)
+    registerAdminHandlers(io, socket)
 
     // Test-only fault injection to verify safeOn's crash resilience end-to-end against a
     // real server. Never active unless explicitly enabled — absent from .env/.env.example,
@@ -266,6 +371,16 @@ export function registerSocketHandlers(io: Server) {
 }
 
 function handleDisconnect(io: Server, socket: Socket) {
+  const displayRoomCode = socket.data.displayRoomCode as string | undefined
+  if (displayRoomCode) {
+    const displayRoom = getRoom(displayRoomCode)
+    if (displayRoom) {
+      removeDisplay(displayRoom, socket.id)
+      io.to(displayRoom.code).emit('phase_changed', { phase: displayRoom.phase, room: publicRoomView(displayRoom) })
+    }
+    socket.data.displayRoomCode = undefined
+  }
+
   const playerId = socket.data.playerId as string | undefined
   if (!playerId) return
   const room = getRoomByPlayerId(playerId)
