@@ -22,110 +22,113 @@ export default function AuthScreen({ onContinueAsGuest }: Props) {
   ]
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-dvh px-6 py-8 gap-6">
-      {/* Heading — stays above the card */}
-      <motion.h1
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="text-3xl font-black text-center relative z-[1]"
-        style={{
-          fontFamily: 'var(--font-heading)',
-          color: '#FF6B35',
-          textShadow: '0 0 24px rgba(255,107,53,0.5), 4px 4px 0 rgba(10,10,10,0.85)',
-        }}
-      >
-        {t.authTitle}
-      </motion.h1>
-
-      {/* Card wrapper — icon peeks over the top edge */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2, duration: 0.4 }}
-        className="relative w-full max-w-sm"
-      >
-        {/* Icon badge — complete watermark centered behind the card */}
-        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 -z-10 pointer-events-none">
-          <div className="w-80 h-80 drop-shadow-[0_0_80px_rgba(255,107,53,0.5)]">
-            <LogoSquare />
-          </div>
+    <div className="relative min-h-dvh overflow-hidden">
+      {/* Full-viewport background icon layer — complete, uncropped, behind everything */}
+      <div className="absolute inset-0 flex items-center justify-center -z-10 pointer-events-none">
+        <div className="w-[min(600px,90vw)] h-[min(600px,90vw)]" style={{ opacity: 0.12 }}>
+          <LogoSquare />
         </div>
+      </div>
 
-        <GlassCard className="flex flex-col gap-4 pt-10" style={{ background: 'rgba(58,33,67,0.45)' }}>
-          <Button
-            variant="primary"
-            size="md"
-            fullWidth
-            style={{ borderWidth: '3px', boxShadow: '4px 4px 0 #0A0A0A' }}
-            onClick={onContinueAsGuest}
-          >
-            {t.authGuestButton}
-          </Button>
-          <p className="text-xs text-white/50 text-center -mt-1">
-            {t.authGuestDescription}
-          </p>
+      {/* Content layer — above background */}
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-dvh px-6 py-8 gap-6">
+        {/* Heading */}
+        <motion.h1
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="text-3xl font-black text-center"
+          style={{
+            fontFamily: 'var(--font-heading)',
+            color: '#FF6B35',
+            textShadow: '0 0 24px rgba(255,107,53,0.5), 4px 4px 0 rgba(10,10,10,0.85)',
+          }}
+        >
+          {t.authTitle}
+        </motion.h1>
 
-          <div className="flex items-center gap-3">
-            <div className="flex-1 h-px bg-white/10" />
-            <span className="text-[11px] text-white/30 font-medium">{t.authOrDivider}</span>
-            <div className="flex-1 h-px bg-white/10" />
-          </div>
+        {/* Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.4 }}
+          className="relative w-full max-w-sm"
+        >
+          <GlassCard className="flex flex-col gap-4 pt-10">
+            <Button
+              variant="primary"
+              size="md"
+              fullWidth
+              style={{ borderWidth: '3px', boxShadow: '4px 4px 0 #0A0A0A' }}
+              onClick={onContinueAsGuest}
+            >
+              {t.authGuestButton}
+            </Button>
+            <p className="text-xs text-white/50 text-center -mt-1">
+              {t.authGuestDescription}
+            </p>
 
-          <Button
-            variant="secondary"
-            size="md"
-            fullWidth
-            onClick={() => setScreen('recover')}
-          >
-            {t.authLoginButton}
-          </Button>
-          <p className="text-xs text-white/50 text-center -mt-1">
-            {t.authLoginDescription}
-          </p>
-        </GlassCard>
-      </motion.div>
+            <div className="flex items-center gap-3">
+              <div className="flex-1 h-px bg-white/10" />
+              <span className="text-[11px] text-white/30 font-medium">{t.authOrDivider}</span>
+              <div className="flex-1 h-px bg-white/10" />
+            </div>
 
-      {/* Wordmark — below the card */}
-      <motion.p
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.35, duration: 0.3 }}
-        className="text-2xl font-black text-center tracking-widest relative z-[1]"
-        style={{
-          fontFamily: 'var(--font-heading)',
-          color: '#FF8C42',
-          textShadow: '0 0 24px rgba(255,107,53,0.6), 3px 3px 0 rgba(10,10,10,0.9)',
-        }}
-      >
-        {t.logoSubtitle}
-      </motion.p>
+            <Button
+              variant="secondary"
+              size="md"
+              fullWidth
+              onClick={() => setScreen('recover')}
+            >
+              {t.authLoginButton}
+            </Button>
+            <p className="text-xs text-white/50 text-center -mt-1">
+              {t.authLoginDescription}
+            </p>
+          </GlassCard>
+        </motion.div>
 
-      {/* Language switcher */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5 }}
-        className="flex items-center gap-3"
-      >
-        {LANGUAGES.map((lng) => (
-          <button
-            key={lng.code}
-            onClick={() => {
-              t.setLang(lng.code)
-              useGameStore.getState().setLanguage(lng.code)
-            }}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-              language === lng.code
-                ? 'bg-[#C6FF3D] text-[#0A0A0A]'
-                : 'bg-white/10 text-white/50 hover:text-white'
-            }`}
-            style={{ fontFamily: 'var(--font-heading)' }}
-          >
-            {lng.label}
-          </button>
-        ))}
-      </motion.div>
+        {/* Wordmark — below the card */}
+        <motion.p
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.35, duration: 0.3 }}
+          className="text-2xl font-black text-center tracking-widest"
+          style={{
+            fontFamily: 'var(--font-heading)',
+            color: '#FF8C42',
+            textShadow: '0 0 24px rgba(255,107,53,0.6), 3px 3px 0 rgba(10,10,10,0.9)',
+          }}
+        >
+          {t.logoSubtitle}
+        </motion.p>
+
+        {/* Language switcher */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="flex items-center gap-3"
+        >
+          {LANGUAGES.map((lng) => (
+            <button
+              key={lng.code}
+              onClick={() => {
+                t.setLang(lng.code)
+                useGameStore.getState().setLanguage(lng.code)
+              }}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                language === lng.code
+                  ? 'bg-[#C6FF3D] text-[#0A0A0A]'
+                  : 'bg-white/10 text-white/50 hover:text-white'
+              }`}
+              style={{ fontFamily: 'var(--font-heading)' }}
+            >
+              {lng.label}
+            </button>
+          ))}
+        </motion.div>
+      </div>
     </div>
   )
 }
