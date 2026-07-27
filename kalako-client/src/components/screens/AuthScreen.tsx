@@ -46,7 +46,7 @@ export default function AuthScreen({ onContinueAsGuest }: Props) {
         className="relative w-full max-w-sm"
       >
         {/* Icon badge — overlapping the card's top edge */}
-        <div className="absolute left-1/2 -translate-x-1/2 -top-16 z-10">
+        <div className="absolute left-1/2 -translate-x-1/2 -top-16 z-10 pointer-events-none">
           <div className="w-24 h-24 drop-shadow-[0_4px_24px_rgba(255,107,53,0.4)]">
             <LogoSquare />
           </div>
