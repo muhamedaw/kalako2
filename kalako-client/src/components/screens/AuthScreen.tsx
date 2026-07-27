@@ -45,14 +45,14 @@ export default function AuthScreen({ onContinueAsGuest }: Props) {
         transition={{ delay: 0.2, duration: 0.4 }}
         className="relative w-full max-w-sm"
       >
-        {/* Icon badge — watermark behind the card, visible through semi-transparent bg */}
-        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 -z-10 pointer-events-none">
-          <div className="w-80 h-80 opacity-70 drop-shadow-[0_0_80px_rgba(255,107,53,0.35)]">
+        {/* Icon badge — watermark behind the card, clearly visible through transparent bg */}
+        <div className="absolute left-1/2 -translate-x-1/2 top-0 -z-10 pointer-events-none">
+          <div className="w-72 h-72 drop-shadow-[0_0_80px_rgba(255,107,53,0.5)]">
             <LogoSquare />
           </div>
         </div>
 
-        <GlassCard className="flex flex-col gap-4 pt-10" style={{ background: 'rgba(58,33,67,0.7)' }}>
+        <GlassCard className="flex flex-col gap-4 pt-10" style={{ background: 'rgba(58,33,67,0.45)' }}>
           <Button
             variant="primary"
             size="md"
@@ -85,6 +85,21 @@ export default function AuthScreen({ onContinueAsGuest }: Props) {
           </p>
         </GlassCard>
       </motion.div>
+
+      {/* Wordmark — below the card */}
+      <motion.p
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.35, duration: 0.3 }}
+        className="text-2xl font-black text-center tracking-widest relative z-[1]"
+        style={{
+          fontFamily: 'var(--font-heading)',
+          color: '#FF8C42',
+          textShadow: '0 0 24px rgba(255,107,53,0.6), 3px 3px 0 rgba(10,10,10,0.9)',
+        }}
+      >
+        {t.logoSubtitle}
+      </motion.p>
 
       {/* Language switcher */}
       <motion.div
