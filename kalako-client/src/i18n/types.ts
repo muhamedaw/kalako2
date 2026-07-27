@@ -42,6 +42,8 @@ export interface Translations {
 
   // Create Room
   createRoomTitle: string
+  createRoomNameLabel: string
+  createRoomNamePlaceholder: string
   back: string
   yourName: string
   yourNamePlaceholder: string
@@ -124,6 +126,19 @@ export interface Translations {
   displayJoinFailed: string
   displayFull: string
   displaySpectatorBadge: string
+  reactionsPickerAria: string
+
+  suggestQuestionFormTitle: string
+  suggestQuestionCategoryLabel: string
+  suggestQuestionQuestionLabel: string
+  suggestQuestionAnswerLabel: string
+  suggestQuestionSubmitButton: string
+  suggestQuestionThankYou: string
+
+  swapQuestionButtonLabel: string
+  freezeRoundButtonLabel: string
+  freezeRoundUsedTooltip: string
+  freezeRoundSuccessToast: string
 
   // Category Pick
   categoryPickTitle: string
@@ -302,6 +317,15 @@ export interface Translations {
   storePaymentCancelled: string
   storeCoinsPurchaseSuccess: string
   storeCancelButton: string
+  storeGiftPremiumButton: string
+  giftCodeGeneratedMessage: string
+  redeemCodeLabel: string
+  redeemCodeButton: string
+  redeemSuccessMessage: string
+  redeemInvalidCodeError: string
+  giftToFriendButton: string
+  giftRecipientTagLabel: string
+  giftSuccessMessage: string
 
   // Hall of Fame
   hallOfFameTitle: string
@@ -311,6 +335,7 @@ export interface Translations {
 
   // Notifications
   notificationsCoinsEarned: string
+  notificationsGiftReceived: string
   notificationsEmpty: string
 
   // Profile
@@ -323,6 +348,8 @@ export interface Translations {
   profileEditAria: string
   profileSaveAria: string
   profileCancelAria: string
+  profilePlayerTagLabel: string
+  profileCopyTagButton: string
 
   // Settings
   settingsCloseAria: string
