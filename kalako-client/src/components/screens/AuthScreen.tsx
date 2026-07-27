@@ -45,14 +45,14 @@ export default function AuthScreen({ onContinueAsGuest }: Props) {
         transition={{ delay: 0.2, duration: 0.4 }}
         className="relative w-full max-w-sm"
       >
-        {/* Icon badge — large, centered behind the card, edges visible around it */}
+        {/* Icon badge — watermark behind the card, visible through semi-transparent bg */}
         <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 -z-10 pointer-events-none">
-          <div className="w-72 h-72 opacity-40 drop-shadow-[0_0_60px_rgba(255,107,53,0.25)]">
+          <div className="w-80 h-80 opacity-70 drop-shadow-[0_0_80px_rgba(255,107,53,0.35)]">
             <LogoSquare />
           </div>
         </div>
 
-        <GlassCard className="flex flex-col gap-4 pt-10">
+        <GlassCard className="flex flex-col gap-4 pt-10" style={{ background: 'rgba(58,33,67,0.7)' }}>
           <Button
             variant="primary"
             size="md"
