@@ -1,5 +1,7 @@
 import type { Server, Socket } from 'socket.io'
+import type { Database } from 'sql.js'
 import { getDb, persistToDisk } from '../db/index.mts'
+import { randomPlayerTag } from '../game/playerTag.mts'
 import { isRateLimited } from './rateLimit.mts'
 import { asString } from './validate.mts'
 import { safeOn } from './wrapHandler.mts'
@@ -112,14 +114,24 @@ function parseAvatarConfig(raw: string): Record<string, unknown> {
   return JSON.parse(DEFAULT_AVATAR_CONFIG)
 }
 
+function generateUniquePlayerTag(db: Database): string {
+  for (let attempt = 0; attempt < 20; attempt++) {
+    const tag = randomPlayerTag()
+    const existing = db.exec(`SELECT 1 FROM players WHERE player_tag = ?`, [tag])
+    if (existing.length === 0 || existing[0].values.length === 0) return tag
+  }
+  throw new Error('Failed to generate a unique player tag after 20 attempts')
+}
+
 export function ensureProfileRow(deviceId: string, defaultNickname: string) {
   const db = getDb()
   const existing = db.exec(`SELECT device_id FROM players WHERE device_id = ?`, [deviceId])
   if (existing.length === 0 || existing[0].values.length === 0) {
-    db.run(`INSERT INTO players (device_id, nickname, avatar_id, coins) VALUES (?, ?, ?, 0)`, [
+    db.run(`INSERT INTO players (device_id, nickname, avatar_id, coins, player_tag) VALUES (?, ?, ?, 0, ?)`, [
       deviceId,
       defaultNickname.trim().slice(0, 24) || 'Player',
       DEFAULT_AVATAR_CONFIG,
+      generateUniquePlayerTag(db),
     ])
     persistToDisk()
   }
@@ -151,14 +163,20 @@ export function registerEconomyHandlers(io: Server, socket: Socket) {
       ensureProfileRow(deviceId, asString(payload?.nickname) || 'Player')
 
       const db = getDb()
-      const row = db.exec(`SELECT device_id, nickname, avatar_id, coins, email FROM players WHERE device_id = ?`, [deviceId])
+      const row = db.exec(`SELECT device_id, nickname, avatar_id, coins, email, player_tag FROM players WHERE device_id = ?`, [deviceId])
       const profile = row[0].values[0]
       const invRows = db.exec(`SELECT item_id FROM inventory WHERE device_id = ?`, [deviceId])
       const inventory = invRows.length > 0
         ? invRows[0].values.map((r: any) => ({ itemId: r[0] as string, equipped: false }))
         : []
 
-      const premiumRows = db.exec(`SELECT status, expires_at FROM premium_subscriptions WHERE device_id = ? AND status = 'active'`, [deviceId])
+      // ORDER BY expires_at DESC: a device can now have more than one 'active' row (a real
+      // PayPal subscription plus a gift-code extension, see socket/gifts.mts's
+      // redeem_gift_code) — always surface whichever grants premium for longest.
+      const premiumRows = db.exec(
+        `SELECT status, expires_at FROM premium_subscriptions WHERE device_id = ? AND status = 'active' ORDER BY expires_at DESC LIMIT 1`,
+        [deviceId]
+      )
       const isPremium = premiumRows.length > 0 && premiumRows[0].values.length > 0
       const premiumExpiresAt = isPremium ? (premiumRows[0].values[0][1] as string | null) ?? null : null
 
@@ -168,6 +186,7 @@ export function registerEconomyHandlers(io: Server, socket: Socket) {
         avatarConfig: parseAvatarConfig(profile[2] as string),
         coins: Number(profile[3]),
         email: (profile[4] as string | null) ?? null,
+        playerTag: (profile[5] as string | null) ?? null,
         isPremium,
         premiumExpiresAt,
         inventory,
@@ -250,6 +269,57 @@ export function registerEconomyHandlers(io: Server, socket: Socket) {
       ack?.({ success: true, coins: newCoins, inventory })
     } catch {
       ack?.({ error: 'purchase_failed' })
+    }
+  })
+
+  // Buys a cosmetic item FOR another player, identified by their public player_tag — the
+  // purchaser pays, the recipient's inventory is credited, never the purchaser's own.
+  safeOn(socket, 'gift_item_to_tag', (_payload: unknown, ack?: (res: unknown) => void) => {
+    const payload = _payload as { deviceId?: string; itemId?: string; recipientPlayerTag?: string } | undefined
+    const deviceId = asString(payload?.deviceId)
+    const itemId = asString(payload?.itemId)
+    const recipientTag = (asString(payload?.recipientPlayerTag) || '').trim().toUpperCase()
+    if (!deviceId || !itemId || !recipientTag) {
+      return ack?.({ error: 'deviceId, itemId and recipientPlayerTag are required' })
+    }
+    if (isRateLimited(`gift_item_to_tag:${deviceId}`, 10, 10_000)) return ack?.({ error: 'rate_limited' })
+
+    const item = CATALOG_BY_ID.get(itemId)
+    if (!item) return ack?.({ error: 'invalid_item' })
+
+    ensureProfileRow(deviceId, 'Player')
+    const db = getDb()
+
+    try {
+      const recipientRow = db.exec(`SELECT device_id FROM players WHERE player_tag = ?`, [recipientTag])
+      if (recipientRow.length === 0 || recipientRow[0].values.length === 0) {
+        return ack?.({ error: 'recipient_tag_not_found' })
+      }
+      const recipientDeviceId = recipientRow[0].values[0][0] as string
+      if (recipientDeviceId === deviceId) return ack?.({ error: 'cannot_gift_to_self' })
+
+      const ownedResult = db.exec(`SELECT 1 FROM inventory WHERE device_id = ? AND item_id = ?`, [recipientDeviceId, itemId])
+      if (ownedResult.length > 0 && ownedResult[0].values.length > 0) {
+        return ack?.({ error: 'recipient_already_owns_item' })
+      }
+
+      const coinsRow = db.exec(`SELECT coins FROM players WHERE device_id = ?`, [deviceId])
+      const coins = Number(coinsRow[0].values[0][0])
+      if (coins < item.price) return ack?.({ error: 'insufficient_funds' })
+
+      db.run(`INSERT INTO inventory (device_id, item_id) VALUES (?, ?)`, [recipientDeviceId, itemId])
+      db.run(`UPDATE players SET coins = coins - ? WHERE device_id = ?`, [item.price, deviceId])
+      db.run(`INSERT INTO notifications (device_id, type, payload_json) VALUES (?, 'gift_received', ?)`, [
+        recipientDeviceId,
+        JSON.stringify({ itemId, itemName: item.name }),
+      ])
+      persistToDisk()
+
+      const newCoinsRow = db.exec(`SELECT coins FROM players WHERE device_id = ?`, [deviceId])
+      ack?.({ success: true, coins: Number(newCoinsRow[0].values[0][0]) })
+    } catch (err) {
+      console.error('[kalak] gift_item_to_tag failed:', err)
+      ack?.({ error: 'gift_failed' })
     }
   })
 

@@ -296,6 +296,7 @@ const ar: Translations = {
   redeemInvalidCodeError: 'هذا الكود غير موجود أو تم استخدامه.',
   giftToFriendButton: 'هدية لصديق',
   giftRecipientTagLabel: 'علامة الصديق',
+  giftItemSelectPlaceholder: 'اختر عنصر لإهدائه...',
   giftSuccessMessage: 'تم إرسال الهدية! 🎁',
   hallOfFameTitle: 'قاعة المشاهير',
   hallOfFameSubtitle: 'أضحك كذبة خدعت أكبر عدد — من تصويت المجتمع.',

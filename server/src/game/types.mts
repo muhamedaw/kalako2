@@ -87,6 +87,7 @@ export interface RoundRecord {
 
 export interface RoomState {
   code: string
+  roomName: string
   hostId: string
   settings: RoomSettings
   players: Map<string, Player>
@@ -103,6 +104,15 @@ export interface RoomState {
   voteSlots: Map<string, string>
   answerTimer: NodeJS.Timeout | null
   voteTimer: NodeJS.Timeout | null
+  /** Absolute epoch-ms deadline for the current ANSWERING phase, or null outside it. Lets
+   * freeze_round extend the remaining time correctly instead of re-adding a flat +10s on
+   * top of however much of the original window was already spent. */
+  answerDeadline: number | null
+  /** Host's one-time reroll for the current round (swap_question) — reset every round. */
+  questionSwapped: boolean
+  /** playerId -> used their one freeze_round for this game. Reset per game (see
+   * resetRoomForNextTournamentGame), never persisted — a fresh room always starts empty. */
+  freezesUsed: Set<string>
   history: RoundRecord[]
   createdAt: number
   /** playerId -> count of rounds this game where they voted CORRECT. Drives the "+5 coins per round guessed correctly" formula at game end. */

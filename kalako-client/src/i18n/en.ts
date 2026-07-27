@@ -297,6 +297,7 @@ const en: Translations = {
   redeemInvalidCodeError: "That code doesn't exist or was already used.",
   giftToFriendButton: 'Gift to a Friend',
   giftRecipientTagLabel: "Friend's Tag",
+  giftItemSelectPlaceholder: 'Choose an item to gift...',
   giftSuccessMessage: 'Gift sent! 🎁',
   hallOfFameTitle: 'Hall of Fame',
   hallOfFameSubtitle: 'The funniest lies that fooled the most people — voted by the community.',

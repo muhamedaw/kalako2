@@ -22,7 +22,8 @@ export function getRoomByPlayerId(playerId: string): RoomState | undefined {
 export function createRoom(
   settings: RoomSettings,
   hostName: string,
-  deviceId: string | null = null
+  deviceId: string | null = null,
+  roomName: string = ''
 ): { room: RoomState; host: Player } {
   let code = generateRoomCode()
   while (rooms.has(code)) code = generateRoomCode()
@@ -41,6 +42,7 @@ export function createRoom(
 
   const room: RoomState = {
     code,
+    roomName: roomName.trim().slice(0, 30) || `${hostName}'s Room`,
     hostId: host.id,
     settings,
     players: new Map([[host.id, host]]),
@@ -58,6 +60,9 @@ export function createRoom(
     voteSlots: new Map(),
     answerTimer: null,
     voteTimer: null,
+    answerDeadline: null,
+    questionSwapped: false,
+    freezesUsed: new Set(),
     history: [],
     createdAt: Date.now(),
     correctGuessCounts: new Map(),
@@ -162,6 +167,9 @@ export function resetRoomForNextTournamentGame(room: RoomState) {
   room.voteSlots.clear()
   room.history = []
   room.correctGuessCounts.clear()
+  room.freezesUsed.clear()
+  room.questionSwapped = false
+  room.answerDeadline = null
   room.doublePointsRound = room.settings.doublePointsRoundEnabled
     ? crypto.randomInt(1, room.settings.roundsCount + 1)
     : null

@@ -134,3 +134,39 @@ CREATE TABLE IF NOT EXISTS player_seen_questions (
 );
 
 CREATE INDEX IF NOT EXISTS idx_seen_questions_device_category ON player_seen_questions(device_id, category);
+
+-- Player-submitted question suggestions, moderated via the admin dashboard
+-- (admin_list_suggestions / admin_approve_suggestion / admin_reject_suggestion).
+CREATE TABLE IF NOT EXISTS suggested_questions (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  device_id TEXT NOT NULL,
+  category TEXT NOT NULL,
+  question_text TEXT NOT NULL,
+  correct_answer TEXT NOT NULL,
+  language TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'pending',
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_suggested_questions_status ON suggested_questions(status);
+CREATE INDEX IF NOT EXISTS idx_suggested_questions_device ON suggested_questions(device_id);
+
+-- Redemption codes for one-time-purchased gifts (currently only type='premium_month', from
+-- the "Gift Premium" PayPal item — see socket/gifts.mts). Not used by gift_item_to_tag, which
+-- applies its effect immediately with no code involved.
+CREATE TABLE IF NOT EXISTS gift_codes (
+  code TEXT PRIMARY KEY,
+  type TEXT NOT NULL,
+  item_id TEXT,
+  purchased_by_device TEXT NOT NULL,
+  redeemed_by_device TEXT,
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+  redeemed_at TEXT
+);
+
+CREATE INDEX IF NOT EXISTS idx_gift_codes_purchased_by ON gift_codes(purchased_by_device);
+
+-- players.player_tag is added via a guarded ALTER TABLE in db/index.mts, same pattern as
+-- players.email (see comment above recovery_codes). Its UNIQUE index is also created there
+-- (not here) — schema.sql runs as one batch BEFORE migrations add the column, so an index on
+-- a not-yet-existing column would abort this entire batch on every fresh/older database.

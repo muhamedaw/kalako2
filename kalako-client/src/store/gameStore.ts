@@ -28,6 +28,7 @@ export interface Room {
     doublePointsRoundEnabled: boolean
     blindVotingEnabled: boolean
     tournamentMode?: boolean
+    roomName?: string
   }
   players: Player[]
   displayCount?: number
@@ -36,6 +37,7 @@ export interface Room {
 
 export interface CreateRoomDraft {
   playerName: string
+  roomName: string
   isPrivate: boolean
   answerTimeSeconds: string
   roundsCount: string
@@ -48,6 +50,7 @@ export interface CreateRoomDraft {
 
 const DEFAULT_CREATE_ROOM_DRAFT: CreateRoomDraft = {
   playerName: '',
+  roomName: '',
   isPrivate: false,
   answerTimeSeconds: '45',
   roundsCount: '5',
@@ -120,6 +123,12 @@ export interface GameState {
   votedCount: number
   answerNeedsRevision: { questionId: string } | null
 
+  // Reactions
+  activeReactions: { emoji: string; playerId: string; id: number }[]
+  reactionsEnabled: boolean
+  freezeUsedThisRound: boolean
+  isHost: boolean
+
   // Premium
   isPremium: boolean
   premiumExpiresAt: string | null
@@ -144,6 +153,7 @@ export interface GameActions {
   connect: () => void
   disconnect: () => void
   createRoom: (name: string, settings: {
+    roomName?: string
     isPrivate: boolean
     answerTimeSeconds: number
     roundsCount: number
@@ -195,6 +205,23 @@ export interface GameActions {
   // request/confirmAccountRecovery above, which restore an old profile onto a new device).
   linkRecoveryEmail: (email: string) => Promise<{ success: boolean; error?: string }>
   confirmLinkRecoveryEmail: (email: string, code: string) => Promise<{ success: boolean; reason?: string }>
+
+  // In-game reactions
+  sendReaction: (emoji: string) => void
+  clearReactions: () => void
+
+  // Swap question (host only)
+  swapQuestion: () => void
+
+  // Freeze round (once per round)
+  freezeRound: () => void
+
+  // Suggest a question
+  suggestQuestion: (payload: { category: string; question: string; answer: string }) => void
+
+  // Gifting
+  redeemGiftCode: (code: string) => Promise<{ success?: boolean; error?: string }>
+  giftItemToTag: (recipientTag: string, itemId: string) => Promise<{ success?: boolean; error?: string }>
 
   // Connection resilience
   forceReconnect: () => void
@@ -267,6 +294,10 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
   isDoublePointsRound: false,
   wasDoublePoints: false,
   answerNeedsRevision: null,
+  activeReactions: [],
+  reactionsEnabled: false,
+  freezeUsedThisRound: false,
+  isHost: false,
   isPremium: false,
   premiumExpiresAt: null,
   profile: null,
@@ -382,6 +413,20 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
       set({ votedCount: data.votedCount, totalPlayers: data.totalPlayers })
     })
 
+    let reactionIdCounter = 0
+    socket.on('reaction_received', (data: { emoji: string; playerId: string }) => {
+      const id = ++reactionIdCounter
+      set((s) => ({
+        activeReactions: [...s.activeReactions, { ...data, id }],
+      }))
+      // Auto-fade after 2.5s
+      setTimeout(() => {
+        set((s) => ({
+          activeReactions: s.activeReactions.filter((r) => r.id !== id),
+        }))
+      }, 2500)
+    })
+
     socket.on('your_answer_slot', (data: { slotId: string }) => {
       set({ mySlotId: data.slotId })
     })
@@ -395,7 +440,7 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
       const room = data.room as Room
 
       if (phase === 'LOBBY') {
-        set({ screen: 'lobby', room, submittedAnswer: false, submittedVote: false })
+        set({ screen: 'lobby', room, submittedAnswer: false, submittedVote: false, isHost: room.hostId === get().playerId, activeReactions: [], reactionsEnabled: false })
       } else if (phase === 'CATEGORY_PICK') {
         set({
           screen: 'category_pick',
@@ -410,26 +455,49 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
           answeredCount: 0,
           totalPlayers: 0,
           votedCount: 0,
+          isHost: room.hostId === get().playerId,
+          activeReactions: [],
+          reactionsEnabled: false,
         })
       } else if (phase === 'ANSWERING') {
-        set({
-          screen: 'answering',
-          room,
-          questionText: data.question?.text || null,
-          questionCategory: data.question?.category || null,
-          questionImageUrl: data.question?.imageUrl || null,
-          questionSourceAttribution: data.question?.sourceAttribution || null,
-          timeSeconds: data.timeSeconds || room.settings.answerTimeSeconds,
-          submittedAnswer: false,
-          submittedVote: false,
-          voteSlots: [],
-          mySlotId: null,
-          roundResults: null,
-          answeredCount: 0,
-          totalPlayers: 0,
-          votedCount: 0,
-          isDoublePointsRound: Boolean(data.isDoublePointsRound),
-        })
+        if (get().screen === 'answering') {
+          // Mid-round update: swap question or freeze — only touch fields the server
+          // included so submit-outcome flags (submittedAnswer etc.) aren't reset.
+          set({
+            room,
+            questionText: data.question?.text ?? get().questionText,
+            questionCategory: data.question?.category ?? get().questionCategory,
+            questionImageUrl: data.question?.imageUrl ?? get().questionImageUrl,
+            questionSourceAttribution: data.question?.sourceAttribution ?? get().questionSourceAttribution,
+            timeSeconds: data.timeSeconds ?? get().timeSeconds,
+            freezeUsedThisRound: data.freezeUsedThisRound ?? get().freezeUsedThisRound,
+            isHost: room.hostId === get().playerId,
+          })
+        } else {
+          // First entry to ANSWERING — full state reset
+          set({
+            screen: 'answering',
+            room,
+            questionText: data.question?.text || null,
+            questionCategory: data.question?.category || null,
+            questionImageUrl: data.question?.imageUrl || null,
+            questionSourceAttribution: data.question?.sourceAttribution || null,
+            timeSeconds: data.timeSeconds || room.settings.answerTimeSeconds,
+            submittedAnswer: false,
+            submittedVote: false,
+            voteSlots: [],
+            mySlotId: null,
+            roundResults: null,
+            answeredCount: 0,
+            totalPlayers: 0,
+            votedCount: 0,
+            isDoublePointsRound: Boolean(data.isDoublePointsRound),
+            freezeUsedThisRound: false,
+            isHost: room.hostId === get().playerId,
+            activeReactions: [],
+            reactionsEnabled: true,
+          })
+        }
       } else if (phase === 'VOTING') {
         set({
           screen: 'voting',
@@ -440,6 +508,9 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
           answeredCount: 0,
           totalPlayers: 0,
           votedCount: 0,
+          isHost: room.hostId === get().playerId,
+          activeReactions: [],
+          reactionsEnabled: false,
         })
       } else if (phase === 'RESULTS') {
         set({
@@ -462,10 +533,12 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
           tournamentResult: data.tournament || null,
           submittedAnswer: false,
           submittedVote: false,
+          activeReactions: [],
+          reactionsEnabled: false,
         })
       } else if (phase === 'LOBBY') {
         // Reached via start_next_tournament_game — back to Lobby for "Game N of 3".
-        set({ screen: 'lobby', room, tournamentResult: null })
+        set({ screen: 'lobby', room, tournamentResult: null, isHost: room.hostId === get().playerId, activeReactions: [], reactionsEnabled: false })
       }
     })
 
@@ -509,6 +582,7 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
     socket.emit('create_room', {
       playerName: name,
       language: get().language,
+      roomName: settings.roomName || undefined,
       isPrivate: settings.isPrivate,
       answerTimeSeconds: settings.answerTimeSeconds,
       roundsCount: settings.roundsCount,
@@ -622,6 +696,53 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
     const socket = getSocket()
     socket.emit('submit_vote', { slotId })
     set({ submittedVote: true })
+  },
+
+  sendReaction: (emoji) => {
+    const socket = getSocket()
+    socket.emit('send_reaction', { emoji })
+  },
+
+  clearReactions: () => set({ activeReactions: [], reactionsEnabled: false }),
+
+  swapQuestion: () => {
+    const socket = getSocket()
+    socket.emit('swap_question')
+  },
+
+  freezeRound: () => {
+    const socket = getSocket()
+    socket.emit('freeze_round')
+  },
+
+  suggestQuestion: (payload) => {
+    const socket = getSocket()
+    socket.emit('suggest_question', {
+      category: payload.category,
+      question: payload.question,
+      answer: payload.answer,
+      deviceId: getDeviceId(),
+    })
+  },
+
+  redeemGiftCode: (code) => {
+    return withTimeout(new Promise<{ success?: boolean; error?: string }>((resolve) => {
+      const socket = getSocket()
+      socket.emit('redeem_gift_code', { deviceId: getDeviceId(), code }, (res: any) => {
+        if (res?.success) get().loadProfile()
+        resolve(res || { error: 'no_response' })
+      })
+    })).catch(() => ({ error: 'timeout' }))
+  },
+
+  giftItemToTag: (recipientTag, itemId) => {
+    return withTimeout(new Promise<{ success?: boolean; error?: string }>((resolve) => {
+      const socket = getSocket()
+      socket.emit('gift_item_to_tag', { deviceId: getDeviceId(), recipientTag, itemId }, (res: any) => {
+        if (res?.success) get().loadProfile()
+        resolve(res || { error: 'no_response' })
+      })
+    })).catch(() => ({ error: 'timeout' }))
   },
 
   leaveRoom: () => {

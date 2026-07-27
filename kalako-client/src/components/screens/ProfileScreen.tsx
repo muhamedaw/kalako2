@@ -105,6 +105,27 @@ export default function ProfileScreen() {
         </span>
       </GlassCard>
 
+      {profile?.playerTag && (
+        <GlassCard className="flex flex-row items-center justify-between">
+          <span className="text-white/60 text-sm font-medium" style={{ fontFamily: 'var(--font-body)' }}>
+            {t.profilePlayerTagLabel}
+          </span>
+          <div className="flex items-center gap-2">
+            <code className="text-sm font-mono font-bold text-primary select-all">{profile.playerTag}</code>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(profile.playerTag!)
+                showToast(t.profileCopyTagButton, 'success')
+              }}
+              className="text-[10px] font-bold text-white/50 hover:text-white cursor-pointer"
+              aria-label={t.profileCopyTagButton}
+            >
+              {t.profileCopyTagButton}
+            </button>
+          </div>
+        </GlassCard>
+      )}
+
       <div className="grid grid-cols-3 gap-2">
         {(['body', 'eyes', 'hat'] as const).map((part) => (
           <button

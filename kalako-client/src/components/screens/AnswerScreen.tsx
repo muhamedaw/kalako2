@@ -6,6 +6,7 @@ import Input from '@/components/ui/Input'
 import ProgressRing from '@/components/ui/ProgressRing'
 import ArcadeModal from '@/components/ui/ArcadeModal'
 import PictureRoundImage from '@/components/ui/PictureRoundImage'
+import ReactionsPicker from '@/components/ui/ReactionsPicker'
 import { useGameStore } from '@/store/gameStore'
 import { useSFX } from '@/components/brand/useSFX'
 import { useTranslation } from '@/i18n/context'
@@ -26,6 +27,10 @@ export default function AnswerScreen() {
     isDoublePointsRound,
     answerNeedsRevision,
     clearAnswerNeedsRevision,
+    isHost,
+    freezeUsedThisRound,
+    swapQuestion,
+    freezeRound,
   } = useGameStore()
   const t = useTranslation()
 
@@ -127,6 +132,29 @@ export default function AnswerScreen() {
             )}
           </div>
         </GlassCard>
+
+        <ReactionsPicker />
+
+        <div className="flex gap-2 w-full max-w-sm justify-center">
+          {isHost && (
+            <button
+              onClick={swapQuestion}
+              className="text-xs font-bold px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-white/60 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+              aria-label={t.swapQuestionButtonLabel}
+            >
+              {t.swapQuestionButtonLabel}
+            </button>
+          )}
+          {!freezeUsedThisRound && (
+            <button
+              onClick={freezeRound}
+              className="text-xs font-bold px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-white/60 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+              aria-label={t.freezeRoundButtonLabel}
+            >
+              {t.freezeRoundButtonLabel}
+            </button>
+          )}
+        </div>
 
         {!submittedAnswer ? (
           <motion.div

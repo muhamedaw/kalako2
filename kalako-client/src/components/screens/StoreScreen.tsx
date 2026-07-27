@@ -1,64 +1,45 @@
 import { useEffect, useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
-import { Coins, Loader, X, Lock } from 'lucide-react'
+import { Coins, Loader, X, Lock, Gift, Sparkles } from 'lucide-react'
 import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js'
 import { useTranslation } from '@/i18n/context'
 import { useGameStore } from '@/store/gameStore'
 import { useToastStore } from '@/store/toastStore'
 import { usePurchaseEmailGateStore } from '@/store/purchaseEmailGateStore'
 import { ComposedAvatar } from '@/components/avatarParts'
-import { DEFAULT_AVATAR } from '@/components/avatarParts/types'
-import type { AvatarConfig } from '@/components/avatarParts/types'
-import type { Translations } from '@/i18n/types'
+import { DEFAULT_AVATAR, FREE_EYES, PREMIUM_EYES, FREE_HATS, PREMIUM_HATS } from '@/components/avatarParts/types'
+import type { EyesId, HatId } from '@/components/avatarParts/types'
 import GlassCard from '@/components/ui/GlassCard'
 
-function getStoreItemName(id: string, t: Translations): string {
-  const map: Record<string, keyof Translations> = {
-    eyes_5: 'storeItemEyesHeart',
-    eyes_6: 'storeItemEyesStar',
-    eyes_7: 'storeItemEyesFire',
-    eyes_8: 'storeItemEyesSpiral',
-    premium_eyes_1: 'storeItemEyesGalaxy',
-    hat_crown: 'storeItemHatCrown',
-    hat_tophat: 'storeItemHatTophat',
-    hat_wizard: 'storeItemHatWizard',
-    hat_propeller: 'storeItemHatPropeller',
-    hat_sombrero: 'storeItemHatSombrero',
-    hat_viking: 'storeItemHatViking',
-    premium_hat_1: 'storeItemHatHalo',
-    premium_frame_1: 'storeItemFrameDiamond',
+// Every store item's identity, price, and description come from get_store_catalog — the
+// server is the single source of truth. This file must never hardcode an item id: a
+// hardcoded id silently drifts out of sync with the real catalog (see the eyes_5/hat_crown
+// bug this replaced — those ids never matched what purchase_item actually sells).
+function isKnownEyesId(id: string): id is EyesId {
+  return (FREE_EYES as string[]).includes(id) || (PREMIUM_EYES as string[]).includes(id)
+}
+function isKnownHatId(id: string): id is HatId {
+  return (FREE_HATS as string[]).includes(id) || (PREMIUM_HATS as string[]).includes(id)
+}
+
+// The avatar-rendering system's EyesId/HatId sets predate the server's current avatar_part
+// catalog ids (e.g. eyes_premium_05, hat_premium_07) — no visual asset exists for those yet.
+// Purchases still work correctly (server tracks ownership regardless), this only affects the
+// small preview icon shown while browsing: falls back to a neutral placeholder instead of
+// guessing or crashing.
+function AvatarPartPreview({ previewId }: { previewId: string }) {
+  if (isKnownEyesId(previewId)) {
+    return <ComposedAvatar {...DEFAULT_AVATAR} eyes={previewId} size={56} />
   }
-  const key = map[id]
-  return key ? (t[key] as string) || id : id
+  if (isKnownHatId(previewId)) {
+    return <ComposedAvatar {...DEFAULT_AVATAR} hat={previewId} size={56} />
+  }
+  return (
+    <div className="w-14 h-14 flex items-center justify-center">
+      <Sparkles size={28} className="text-white/40" />
+    </div>
+  )
 }
-
-interface SectionItem {
-  id: string
-  type: 'eyes' | 'hat'
-  name: string
-  price: number
-  previewEyes?: string
-  previewHat?: string
-}
-
-const EYES_ITEMS: SectionItem[] = [
-  { id: 'eyes_5', type: 'eyes', name: 'Heart Eyes', price: 150, previewEyes: 'eyes_5' },
-  { id: 'eyes_6', type: 'eyes', name: 'Star Eyes', price: 150, previewEyes: 'eyes_6' },
-  { id: 'eyes_7', type: 'eyes', name: 'Fire Eyes', price: 200, previewEyes: 'eyes_7' },
-  { id: 'eyes_8', type: 'eyes', name: 'Spiral Eyes', price: 200, previewEyes: 'eyes_8' },
-  { id: 'premium_eyes_1', type: 'eyes', name: 'Galaxy Eyes', price: 0, previewEyes: 'eyes_5' },
-]
-
-const HATS_ITEMS: SectionItem[] = [
-  { id: 'hat_crown', type: 'hat', name: 'Crown', price: 250, previewHat: 'hat_crown' },
-  { id: 'hat_tophat', type: 'hat', name: 'Top Hat', price: 200, previewHat: 'hat_tophat' },
-  { id: 'hat_wizard', type: 'hat', name: 'Wizard Hat', price: 250, previewHat: 'hat_wizard' },
-  { id: 'hat_propeller', type: 'hat', name: 'Propeller Beanie', price: 150, previewHat: 'hat_propeller' },
-  { id: 'hat_sombrero', type: 'hat', name: 'Sombrero', price: 300, previewHat: 'hat_sombrero' },
-  { id: 'hat_viking', type: 'hat', name: 'Viking Helmet', price: 350, previewHat: 'hat_viking' },
-  { id: 'premium_hat_1', type: 'hat', name: 'Halo', price: 0, previewHat: 'hat_crown' },
-  { id: 'premium_frame_1', type: 'hat', name: 'Diamond Frame', price: 0, previewHat: 'hat_crown' },
-]
 
 interface CoinTier {
   tierId: string
@@ -113,56 +94,39 @@ export default function StoreScreen() {
     }, 1500)
   }
 
-  const isOwned = (itemId: string) => profile?.inventory?.some((i) => i.itemId === itemId)
+  const [giftCode, setGiftCode] = useState('')
+  const [friendTag, setFriendTag] = useState('')
+  const [giftItemId, setGiftItemId] = useState('')
+  const [gifting, setGifting] = useState(false)
 
-  function renderItemCard(item: SectionItem) {
-    const owned = isOwned(item.id)
-    const locked = item.id.startsWith('premium_')
-    const previewCfg: AvatarConfig = {
-      body: DEFAULT_AVATAR.body,
-      eyes: (item.previewEyes || DEFAULT_AVATAR.eyes) as any,
-      hat: (item.previewHat || DEFAULT_AVATAR.hat) as any,
+  const handleRedeemCode = async () => {
+    if (!giftCode.trim()) return
+    setGifting(true)
+    const res = await useGameStore.getState().redeemGiftCode(giftCode.trim())
+    setGifting(false)
+    if (res.success) {
+      setGiftCode('')
+      showToast(t.redeemSuccessMessage, 'success')
+    } else {
+      showToast(t.redeemInvalidCodeError, 'error')
     }
-    return (
-      <motion.div
-        key={item.id}
-        whileTap={{ scale: 0.97 }}
-        className={`rounded-xl border-4 border-[#0A0A0A] p-3 flex flex-col items-center gap-2 ${owned ? 'bg-[#C6FF3D]/15' : 'bg-white/5'}`}
-      >
-        <div className="w-14 h-14">
-          <ComposedAvatar {...previewCfg} size={56} />
-        </div>
-        <span className="text-xs font-bold text-white text-center leading-tight" style={{ fontFamily: 'var(--font-heading)' }}>
-          {getStoreItemName(item.id, t)}
-        </span>
-        {owned ? (
-          <span className="text-[11px] font-bold text-[#C6FF3D]" style={{ fontFamily: 'var(--font-heading)' }}>
-            {t.storeOwnedLabel}
-          </span>
-        ) : locked ? (
-          <button
-            onClick={handlePremiumLock}
-            className="w-full py-1.5 rounded-lg bg-white/5 border-2 border-[#C6FF3D]/30 text-[11px] font-bold text-[#C6FF3D]/70 hover:bg-[#C6FF3D]/10 transition-all cursor-pointer flex items-center justify-center gap-1"
-            style={{ fontFamily: 'var(--font-heading)' }}
-          >
-            <Lock size={10} />
-            {t.premiumLockedBadge}
-          </button>
-        ) : (
-          <button
-            onClick={() => handleBuy(item.id)}
-            className="w-full py-1.5 rounded-lg bg-[#FF6B35] border-2 border-[#0A0A0A] text-[11px] font-bold text-[#0A0A0A] shadow-[2px_2px_0_#0A0A0A] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all cursor-pointer"
-            style={{ fontFamily: 'var(--font-heading)' }}
-          >
-            <span className="flex items-center justify-center gap-1">
-              <Coins size={12} strokeWidth={2.5} />
-              {item.price}
-            </span>
-          </button>
-        )}
-      </motion.div>
-    )
   }
+
+  const handleGiftItemToTag = async () => {
+    if (!friendTag.trim() || !giftItemId.trim()) return
+    setGifting(true)
+    const res = await useGameStore.getState().giftItemToTag(friendTag.trim(), giftItemId.trim())
+    setGifting(false)
+    if (res.success) {
+      setFriendTag('')
+      setGiftItemId('')
+      showToast(t.giftSuccessMessage, 'success')
+    } else {
+      showToast(res.error || t.requestTimeout, 'error')
+    }
+  }
+
+  const isOwned = (itemId: string) => profile?.inventory?.some((i) => i.itemId === itemId)
 
   const handleCreateOrder = useCallback(async (tierId: string) => {
     setProcessingTier(tierId)
@@ -303,31 +267,7 @@ export default function StoreScreen() {
             </div>
           </GlassCard>
 
-          <GlassCard key="eyes-section">
-            <h2 className="text-lg font-bold text-white mb-1" style={{ fontFamily: 'var(--font-heading)' }}>
-              {t.storePremiumEyesTitle}
-            </h2>
-            <p className="text-white/50 text-xs mb-4" style={{ fontFamily: 'var(--font-body)' }}>
-              {t.storePremiumEyesDesc}
-            </p>
-            <div className="grid grid-cols-2 gap-3">
-              {EYES_ITEMS.map(renderItemCard)}
-            </div>
-          </GlassCard>
-
-          <GlassCard key="hats-section">
-            <h2 className="text-lg font-bold text-white mb-1" style={{ fontFamily: 'var(--font-heading)' }}>
-              {t.storePremiumHatsTitle}
-            </h2>
-            <p className="text-white/50 text-xs mb-4" style={{ fontFamily: 'var(--font-body)' }}>
-              {t.storePremiumHatsDesc}
-            </p>
-            <div className="grid grid-cols-2 gap-3">
-              {HATS_ITEMS.map(renderItemCard)}
-            </div>
-          </GlassCard>
-
-          {catalog.filter((s) => s.type === 'sound_pack' || s.type === 'frame' || s.type === 'categoryUnlock' || s.type === 'categoryExpansion').map((section) => (
+          {catalog.filter((s) => s.type === 'sound_pack' || s.type === 'frame' || s.type === 'categoryUnlock' || s.type === 'categoryExpansion' || s.type === 'avatar_part').map((section) => (
             <GlassCard key={section.type}>
               <h2 className="text-lg font-bold text-white mb-1" style={{ fontFamily: 'var(--font-heading)' }}>
                 {section.title}
@@ -345,9 +285,15 @@ export default function StoreScreen() {
                       whileTap={{ scale: 0.97 }}
                       className={`rounded-xl border-4 border-[#0A0A0A] p-3 flex flex-col items-center gap-2 ${owned ? 'bg-[#C6FF3D]/15' : 'bg-white/5'}`}
                     >
-                      <div className="text-3xl">
-                        {section.type === 'frame' ? '🖼️' : section.type === 'sound_pack' ? '🔊' : section.type === 'categoryUnlock' ? '🔓' : '📦'}
-                      </div>
+                      {section.type === 'avatar_part' ? (
+                        <div className="w-14 h-14">
+                          <AvatarPartPreview previewId={item.previewId} />
+                        </div>
+                      ) : (
+                        <div className="text-3xl">
+                          {section.type === 'frame' ? '🖼️' : section.type === 'sound_pack' ? '🔊' : section.type === 'categoryUnlock' ? '🔓' : '📦'}
+                        </div>
+                      )}
                       <span className="text-xs font-bold text-white text-center leading-tight" style={{ fontFamily: 'var(--font-heading)' }}>
                         {item.name}
                       </span>
@@ -382,6 +328,63 @@ export default function StoreScreen() {
               </div>
             </GlassCard>
           ))}
+
+          <GlassCard key="gift-section">
+            <h2 className="text-lg font-bold text-white mb-1 flex items-center gap-2" style={{ fontFamily: 'var(--font-heading)' }}>
+              <Gift size={18} />
+              {t.storeGiftPremiumButton}
+            </h2>
+            <div className="flex flex-col gap-3 mt-3">
+              <div className="flex flex-col gap-2">
+                <p className="text-xs font-medium text-white/50">{t.redeemCodeLabel}</p>
+                <div className="flex gap-2">
+                  <input
+                    value={giftCode}
+                    onChange={(e) => setGiftCode(e.target.value)}
+                    placeholder={t.redeemCodeLabel}
+                    className="flex-1 px-3 py-2 rounded-lg bg-white/10 border border-white/10 text-white text-xs placeholder:text-white/30 focus:outline-none focus:border-primary/50"
+                  />
+                  <button
+                    onClick={handleRedeemCode}
+                    disabled={!giftCode.trim() || gifting}
+                    className="px-4 py-2 rounded-lg bg-[#FF6B35] border-2 border-[#0A0A0A] text-xs font-bold text-[#0A0A0A] shadow-[2px_2px_0_#0A0A0A] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all cursor-pointer disabled:opacity-50"
+                    style={{ fontFamily: 'var(--font-heading)' }}
+                  >
+                    {t.redeemCodeButton}
+                  </button>
+                </div>
+              </div>
+              <div className="border-t border-white/10 pt-3 flex flex-col gap-2">
+                <p className="text-xs font-medium text-white/50">{t.giftToFriendButton}</p>
+                <input
+                  value={friendTag}
+                  onChange={(e) => setFriendTag(e.target.value)}
+                  placeholder={t.giftRecipientTagLabel}
+                  className="w-full px-3 py-2 rounded-lg bg-white/10 border border-white/10 text-white text-xs placeholder:text-white/30 focus:outline-none focus:border-primary/50"
+                />
+                <select
+                  value={giftItemId}
+                  onChange={(e) => setGiftItemId(e.target.value)}
+                  className="w-full px-3 py-2 rounded-lg bg-white/10 border border-white/10 text-white text-xs focus:outline-none focus:border-primary/50"
+                >
+                  <option value="" disabled>{t.giftItemSelectPlaceholder}</option>
+                  {catalog.flatMap((section) => section.items).map((item) => (
+                    <option key={item.id} value={item.id} className="bg-[#241528]">
+                      {item.name} — {item.price} 🪙
+                    </option>
+                  ))}
+                </select>
+                <button
+                  onClick={handleGiftItemToTag}
+                  disabled={!friendTag.trim() || !giftItemId.trim() || gifting}
+                  className="w-full py-2 rounded-lg bg-[#FF6B35] border-2 border-[#0A0A0A] text-xs font-bold text-[#0A0A0A] shadow-[2px_2px_0_#0A0A0A] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all cursor-pointer disabled:opacity-50"
+                  style={{ fontFamily: 'var(--font-heading)' }}
+                >
+                  {t.giftToFriendButton}
+                </button>
+              </div>
+            </div>
+          </GlassCard>
         </>
       )}
     </div>

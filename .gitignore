@@ -35,6 +35,7 @@ coverage/
 .coverage
 test-*.png
 screenshot-*.png
+scan/
 
 # SQLite data files
 *.sqlite

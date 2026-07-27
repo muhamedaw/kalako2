@@ -325,6 +325,7 @@ export interface Translations {
   redeemInvalidCodeError: string
   giftToFriendButton: string
   giftRecipientTagLabel: string
+  giftItemSelectPlaceholder: string
   giftSuccessMessage: string
 
   // Hall of Fame

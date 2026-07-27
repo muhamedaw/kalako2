@@ -86,6 +86,7 @@ export interface InventoryItem {
 export interface EconomyProfile {
   deviceId: string
   nickname: string
+  playerTag?: string
   avatarConfig: { body: string; eyes: string; hat: string }
   coins: number
   email?: string | null

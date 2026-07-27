@@ -17,11 +17,13 @@ import {
 } from '../game/roomManager.mts'
 import {
   beginAnswering,
+  extendAnsweringTimer,
   maybeAllAnswered,
   maybeAllVoted,
   publicRoomView,
   startNextTournamentGame,
   startRound,
+  swapQuestion,
 } from '../game/stateMachine.mts'
 import type { Language, RoomSettings, RoomState } from '../game/types.mts'
 import { isSameAnswer } from '../game/textNormalize.mts'
@@ -32,6 +34,9 @@ import { registerPremiumHandlers } from './premium.mts'
 import { registerRecoveryHandlers } from './recovery.mts'
 import { registerDebugHandlers } from './debug.mts'
 import { registerAdminHandlers } from './admin.mts'
+import { registerReactionHandlers } from './reactions.mts'
+import { registerSuggestionHandlers } from './suggestions.mts'
+import { registerGiftHandlers } from './gifts.mts'
 import { getDb } from '../db/index.mts'
 import { isRateLimited } from './rateLimit.mts'
 import { asObject, asString } from './validate.mts'
@@ -41,6 +46,7 @@ const SUPPORTED_LANGUAGES: Language[] = ['ar', 'en', 'he']
 
 interface CreateRoomPayload {
   playerName?: string
+  roomName?: string
   isPrivate?: boolean
   answerTimeSeconds?: number
   roundsCount?: number
@@ -113,7 +119,12 @@ export function registerSocketHandlers(io: Server) {
       if ('error' in settings) return ack?.({ error: settings.error })
 
       const name = (asString(payload.playerName) || '').trim().slice(0, 24) || 'المضيف'
-      const { room, host } = createRoom(settings, name, deviceId)
+      // Reuses the exact same trim+cap sanitization style as playerName above — no dedicated
+      // helper exists in this codebase for name-like fields (see the other 3 call sites: join_room,
+      // economy.mts's ensureProfileRow/update_profile), so this follows the established pattern
+      // rather than introducing a one-off abstraction just for this field.
+      const roomName = (asString(payload.roomName) || '').trim().slice(0, 30)
+      const { room, host } = createRoom(settings, name, deviceId, roomName)
       host.socketId = socket.id
       socket.data.playerId = host.id
       socket.join(room.code)
@@ -300,6 +311,35 @@ export function registerSocketHandlers(io: Server) {
       beginAnswering(io, room, category)
     })
 
+    // Host-only, once per round, and only while the question is up for grabs (ANSWERING).
+    // Never touches answerTimer/answerDeadline — the countdown already running is unaffected.
+    safeOn(socket, 'swap_question', (ack?: Ack<any>) => {
+      if (isRateLimited(`swap_question:${socket.id}`, 5, 10_000)) return ack?.({ success: false, error: 'rate_limited' })
+      const room = currentRoom(socket)
+      if (!room) return ack?.({ success: false, error: 'room_not_found' })
+      if (!requireHost(room, socket)) return ack?.({ success: false, error: 'host_only' })
+      if (room.phase !== 'ANSWERING') return ack?.({ success: false, error: 'not_answering_phase' })
+      if (room.questionSwapped) return ack?.({ success: false, error: 'already_used' })
+      const swapped = swapQuestion(io, room)
+      ack?.({ success: swapped })
+    })
+
+    // Each player, once per game: extends the current ANSWERING round's remaining time by
+    // 10s. Tracked on the room itself (freezesUsed), not persisted — resets whenever a fresh
+    // game starts (createRoom / resetRoomForNextTournamentGame).
+    safeOn(socket, 'freeze_round', (ack?: Ack<any>) => {
+      if (isRateLimited(`freeze_round:${socket.id}`, 5, 10_000)) return ack?.({ success: false, error: 'rate_limited' })
+      const room = currentRoom(socket)
+      const playerId = socket.data.playerId as string | undefined
+      if (!room || !playerId) return ack?.({ success: false, error: 'room_not_found' })
+      if (room.phase !== 'ANSWERING') return ack?.({ success: false, error: 'not_answering_phase' })
+      if (room.freezesUsed.has(playerId)) return ack?.({ success: false, reason: 'already_used' })
+
+      room.freezesUsed.add(playerId)
+      const extended = extendAnsweringTimer(io, room, 10)
+      ack?.({ success: extended })
+    })
+
     safeOn(socket, 'submit_answer', (_payload: unknown, ack?: Ack<any>) => {
       if (isRateLimited(`submit_answer:${socket.id}`, 15, 10_000)) return ack?.({ ok: false, error: 'rate_limited' })
       const payload = asObject<{ text?: string; forceSubmit?: boolean }>(_payload)
@@ -355,6 +395,9 @@ export function registerSocketHandlers(io: Server) {
     registerRecoveryHandlers(io, socket)
     registerDebugHandlers(io, socket)
     registerAdminHandlers(io, socket)
+    registerReactionHandlers(io, socket)
+    registerSuggestionHandlers(io, socket)
+    registerGiftHandlers(io, socket)
 
     // Test-only fault injection to verify safeOn's crash resilience end-to-end against a
     // real server. Never active unless explicitly enabled — absent from .env/.env.example,

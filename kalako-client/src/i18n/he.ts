@@ -297,6 +297,7 @@ const he: Translations = {
   redeemInvalidCodeError: 'הקוד הזה לא קיים או כבר נפדה.',
   giftToFriendButton: 'מתנה לחבר',
   giftRecipientTagLabel: 'תג של חבר',
+  giftItemSelectPlaceholder: 'בחר פריט למתנה...',
   giftSuccessMessage: 'המתנה נשלחה! 🎁',
   hallOfFameTitle: 'היכל התהילה',
   hallOfFameSubtitle: 'השקרים הכי מצחיקים שהכי הרבה אנשים נפלו בהם — בהצבעת הקהילה.',

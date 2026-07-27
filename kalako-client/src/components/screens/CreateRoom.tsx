@@ -27,7 +27,7 @@ export default function CreateRoom() {
   // the two places this intentionally clears: the explicit Back button below, and a
   // successful create_room ack in gameStore.ts.
   const {
-    playerName, isPrivate, answerTimeSeconds: answerTime, roundsCount: roundCount,
+    playerName, roomName, isPrivate, answerTimeSeconds: answerTime, roundsCount: roundCount,
     selectedCategories, scoreMultiplierEnabled, isBlindVote, ageRating, tournamentMode,
   } = createRoomDraft
 
@@ -42,6 +42,7 @@ export default function CreateRoom() {
   const handleCreate = () => {
     if (!playerName.trim()) return
     createRoom(playerName.trim(), {
+      roomName: roomName.trim() || undefined,
       isPrivate,
       answerTimeSeconds: Number(answerTime),
       roundsCount: Number(roundCount),
@@ -98,6 +99,16 @@ export default function CreateRoom() {
               value={playerName}
               onChange={(e) => updateCreateRoomDraft({ playerName: e.target.value })}
               maxLength={20}
+            />
+          </motion.div>
+
+          <motion.div variants={itemIn}>
+            <Input
+              label={t.createRoomNameLabel}
+              placeholder={t.createRoomNamePlaceholder}
+              value={roomName}
+              onChange={(e) => updateCreateRoomDraft({ roomName: e.target.value })}
+              maxLength={30}
             />
           </motion.div>
 

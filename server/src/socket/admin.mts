@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url'
 import type { Server, Socket } from 'socket.io'
 import { config } from '../config.mts'
 import { reloadQuestionBank, allCategories } from '../game/questionBank.mts'
+import { getDb, persistToDisk } from '../db/index.mts'
 import { isRateLimited } from './rateLimit.mts'
 import { asObject, asString } from './validate.mts'
 import { safeOn } from './wrapHandler.mts'
@@ -335,6 +336,102 @@ export function registerAdminHandlers(io: Server, socket: Socket) {
     } catch (err) {
       console.error('[kalak] admin_delete_question failed:', err)
       ack?.({ error: 'delete_question_failed' })
+    }
+  })
+
+  // ─── Question-suggestion moderation (Feature 3) ───
+  safeOn(socket, 'admin_list_suggestions', (_payload: unknown, ack?: Ack) => {
+    const payload = asObject<{ sessionToken?: string; status?: string }>(_payload)
+    if (!isValidSession(asString(payload.sessionToken))) return ack?.({ error: 'unauthorized' })
+
+    const status = asString(payload.status)
+    try {
+      const db = getDb()
+      const rows = status
+        ? db.exec(
+            `SELECT id, device_id, category, question_text, correct_answer, language, status, created_at FROM suggested_questions WHERE status = ? ORDER BY created_at DESC`,
+            [status]
+          )
+        : db.exec(
+            `SELECT id, device_id, category, question_text, correct_answer, language, status, created_at FROM suggested_questions ORDER BY created_at DESC`
+          )
+      const suggestions = rows.length > 0
+        ? rows[0].values.map((r: any) => ({
+            id: Number(r[0]),
+            deviceId: r[1] as string,
+            category: r[2] as string,
+            questionText: r[3] as string,
+            correctAnswer: r[4] as string,
+            language: r[5] as string,
+            status: r[6] as string,
+            createdAt: r[7] as string,
+          }))
+        : []
+      ack?.(suggestions)
+    } catch (err) {
+      console.error('[kalak] admin_list_suggestions failed:', err)
+      ack?.({ error: 'list_failed' })
+    }
+  })
+
+  safeOn(socket, 'admin_approve_suggestion', (_payload: unknown, ack?: Ack) => {
+    const payload = asObject<{ sessionToken?: string; id?: number }>(_payload)
+    if (!isValidSession(asString(payload.sessionToken))) return ack?.({ error: 'unauthorized' })
+
+    const id = Number(payload.id)
+    if (!Number.isInteger(id)) return ack?.({ error: 'A valid suggestion id is required' })
+
+    try {
+      const db = getDb()
+      const rows = db.exec(
+        `SELECT category, question_text, correct_answer, language, status FROM suggested_questions WHERE id = ?`,
+        [id]
+      )
+      if (rows.length === 0 || rows[0].values.length === 0) return ack?.({ error: 'Suggestion not found' })
+      const [category, questionText, correctAnswer, language, status] = rows[0].values[0] as [string, string, string, string, string]
+      if (status !== 'pending') return ack?.({ error: 'Suggestion already reviewed' })
+      if (!allCategories.includes(category) || !LANGUAGES.includes(language as Lang)) {
+        return ack?.({ error: 'Suggestion has an unknown category or language, cannot approve' })
+      }
+
+      const questions = readCategoryFile(category, language as Lang)
+      const newQuestion: StoredQuestion = {
+        id: `${category}_suggested_${crypto.randomBytes(4).toString('hex')}`,
+        category,
+        text: questionText,
+        answer: correctAnswer,
+        ageRating: 'family',
+      }
+      questions.push(newQuestion)
+      writeCategoryFile(category, language as Lang, questions)
+      reloadQuestionBank()
+
+      db.run(`UPDATE suggested_questions SET status = 'approved' WHERE id = ?`, [id])
+      persistToDisk()
+      ack?.({ success: true, question: newQuestion })
+    } catch (err) {
+      console.error('[kalak] admin_approve_suggestion failed:', err)
+      ack?.({ error: 'approve_failed' })
+    }
+  })
+
+  safeOn(socket, 'admin_reject_suggestion', (_payload: unknown, ack?: Ack) => {
+    const payload = asObject<{ sessionToken?: string; id?: number }>(_payload)
+    if (!isValidSession(asString(payload.sessionToken))) return ack?.({ error: 'unauthorized' })
+
+    const id = Number(payload.id)
+    if (!Number.isInteger(id)) return ack?.({ error: 'A valid suggestion id is required' })
+
+    try {
+      const db = getDb()
+      const rows = db.exec(`SELECT status FROM suggested_questions WHERE id = ?`, [id])
+      if (rows.length === 0 || rows[0].values.length === 0) return ack?.({ error: 'Suggestion not found' })
+      db.run(`UPDATE suggested_questions SET status = 'rejected' WHERE id = ?`, [id])
+      persistToDisk()
+      ack?.({ success: true })
+    } catch (err) {
+      console.error('[kalak] admin_reject_suggestion failed:', err)
+      ack?.({ error: 'reject_failed' })
     }
   })
 }

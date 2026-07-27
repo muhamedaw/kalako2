@@ -68,8 +68,8 @@ export default function Lobby() {
     <div className="flex flex-col items-center min-h-dvh px-4 py-6 gap-5 pt-16">
       <div className="w-full max-w-sm flex flex-col gap-5">
         <div className="flex items-center justify-between">
-          <h1 className="text-xl font-black text-gradient" style={{ fontFamily: 'var(--font-heading)' }}>
-            {t.lobbyTitle}
+          <h1 className="text-xl font-black text-gradient truncate me-2" style={{ fontFamily: 'var(--font-heading)' }}>
+            {room.settings.roomName || t.lobbyTitle}
           </h1>
           <Badge variant="secondary">
             {room.settings.isPrivate ? t.privateBadge : t.publicBadge}

@@ -38,6 +38,7 @@ function emitRoom(io: Server, room: RoomState, event: string, payload: unknown) 
 export function publicRoomView(room: RoomState) {
   return {
     code: room.code,
+    roomName: room.roomName,
     hostId: room.hostId,
     phase: room.phase,
     round: room.round,
@@ -61,6 +62,7 @@ function clearTimers(room: RoomState) {
   if (room.voteTimer) clearTimeout(room.voteTimer)
   room.answerTimer = null
   room.voteTimer = null
+  room.answerDeadline = null
 }
 
 export function startRound(io: Server, room: RoomState) {
@@ -98,6 +100,7 @@ export function beginAnswering(io: Server, room: RoomState, category: string) {
   room.answers.clear()
   room.votes.clear()
   room.voteSlots.clear()
+  room.questionSwapped = false
 
   const timeSeconds = room.isTiebreakerRound ? config.tiebreakerTimeSeconds : room.settings.answerTimeSeconds
 
@@ -115,7 +118,45 @@ export function beginAnswering(io: Server, room: RoomState, category: string) {
   })
 
   clearTimers(room)
+  room.answerDeadline = Date.now() + timeSeconds * 1000
   room.answerTimer = setTimeout(() => transitionToVoting(io, room), timeSeconds * 1000)
+}
+
+/** Host's one-time reroll for the current round — swaps to a different random question in
+ * the SAME category, excluding the current one. Deliberately does not touch answerTimer/
+ * answerDeadline: the countdown keeps running exactly as it was, only the question changes. */
+export function swapQuestion(io: Server, room: RoomState): boolean {
+  if (room.phase !== 'ANSWERING' || !room.currentQuestion || room.questionSwapped) return false
+
+  const category = room.currentQuestion.category
+  const includeExpansion = connectedPlayers(room).some((p) => hasExpansionAccess(p.deviceId, category))
+  const newQuestion = pickQuestion(category, room.settings.familyMode, room.settings.language, includeExpansion, room.currentQuestion.id)
+  room.currentQuestion = newQuestion
+  room.questionSwapped = true
+  recordSeenQuestions(room, category, newQuestion.id)
+
+  emitRoom(io, room, 'question_swapped', {
+    question: {
+      category: newQuestion.category,
+      text: newQuestion.text,
+      ...(newQuestion.imageUrl && { imageUrl: newQuestion.imageUrl }),
+      ...(newQuestion.sourceAttribution && { sourceAttribution: newQuestion.sourceAttribution }),
+    },
+  })
+  return true
+}
+
+/** One-time-per-player timer extension (freeze_round). Adds to the REMAINING time correctly
+ * (via the absolute answerDeadline) rather than naively adding +10s to a fresh setTimeout,
+ * which would double-count however much of the original window was already spent. */
+export function extendAnsweringTimer(io: Server, room: RoomState, extraSeconds: number): boolean {
+  if (room.phase !== 'ANSWERING' || !room.answerTimer || room.answerDeadline === null) return false
+  clearTimeout(room.answerTimer)
+  room.answerDeadline += extraSeconds * 1000
+  const remainingMs = Math.max(room.answerDeadline - Date.now(), 0)
+  room.answerTimer = setTimeout(() => transitionToVoting(io, room), remainingMs)
+  emitRoom(io, room, 'timer_extended', { extraSeconds, newDeadline: room.answerDeadline })
+  return true
 }
 
 export function maybeAllAnswered(io: Server, room: RoomState) {

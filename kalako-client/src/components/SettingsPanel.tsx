@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { X, Globe, Info, HelpCircle, Shield, FileText, RotateCcw, Crown } from 'lucide-react'
+import { useState } from 'react'
+import { X, Globe, Info, HelpCircle, Shield, FileText, RotateCcw, Crown, Lightbulb } from 'lucide-react'
 import { useNavigationStore } from '@/store/navigationStore'
 import { useGameStore } from '@/store/gameStore'
 import { useTranslation } from '@/i18n/context'
@@ -16,8 +17,25 @@ const LANG_OPTIONS: { lang: Lang; label: string }[] = [
 export default function SettingsPanel() {
   const { isSettingsPanelOpen, toggleSettingsPanel } = useNavigationStore()
   const setScreen = useGameStore((s) => s.setScreen)
+  const suggestQuestion = useGameStore((s) => s.suggestQuestion)
   const t = useTranslation()
   const { setLang, currentLang, navAbout, navHowToPlay, navLegalPrivacy, navLegalTerms, navLegalRefund, settingsTitle, settingsLegalLabel } = t
+
+  const [suggestOpen, setSuggestOpen] = useState(false)
+  const [suggestCategory, setSuggestCategory] = useState('')
+  const [suggestQuestionText, setSuggestQuestionText] = useState('')
+  const [suggestAnswer, setSuggestAnswer] = useState('')
+  const [suggestSubmitted, setSuggestSubmitted] = useState(false)
+
+  const handleSuggestSubmit = () => {
+    if (!suggestCategory.trim() || !suggestQuestionText.trim() || !suggestAnswer.trim()) return
+    suggestQuestion({ category: suggestCategory.trim(), question: suggestQuestionText.trim(), answer: suggestAnswer.trim() })
+    setSuggestSubmitted(true)
+    setSuggestCategory('')
+    setSuggestQuestionText('')
+    setSuggestAnswer('')
+    setTimeout(() => setSuggestSubmitted(false), 3000)
+  }
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (e.key === 'Escape') toggleSettingsPanel()
@@ -125,6 +143,52 @@ export default function SettingsPanel() {
                   <Crown size={16} />
                   {t.navPremium}
                 </button>
+                <button
+                  onClick={() => setSuggestOpen(!suggestOpen)}
+                  className="flex items-center gap-2.5 px-2 py-2.5 rounded-lg text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors cursor-pointer text-start"
+                >
+                  <Lightbulb size={16} />
+                  {t.suggestQuestionFormTitle}
+                </button>
+                {suggestOpen && (
+                  <div className="flex flex-col gap-2 px-2 py-2">
+                    {suggestSubmitted ? (
+                      <p className="text-xs text-success font-medium">{t.suggestQuestionThankYou}</p>
+                    ) : (
+                      <>
+                        <input
+                          value={suggestCategory}
+                          onChange={(e) => setSuggestCategory(e.target.value)}
+                          placeholder={t.suggestQuestionCategoryLabel}
+                          className="w-full px-3 py-2 rounded-lg bg-white/10 border border-white/10 text-white text-xs placeholder:text-white/30 focus:outline-none focus:border-primary/50"
+                          maxLength={30}
+                        />
+                        <textarea
+                          value={suggestQuestionText}
+                          onChange={(e) => setSuggestQuestionText(e.target.value)}
+                          placeholder={t.suggestQuestionQuestionLabel}
+                          className="w-full px-3 py-2 rounded-lg bg-white/10 border border-white/10 text-white text-xs placeholder:text-white/30 focus:outline-none focus:border-primary/50 resize-none"
+                          rows={2}
+                          maxLength={200}
+                        />
+                        <input
+                          value={suggestAnswer}
+                          onChange={(e) => setSuggestAnswer(e.target.value)}
+                          placeholder={t.suggestQuestionAnswerLabel}
+                          className="w-full px-3 py-2 rounded-lg bg-white/10 border border-white/10 text-white text-xs placeholder:text-white/30 focus:outline-none focus:border-primary/50"
+                          maxLength={140}
+                        />
+                        <button
+                          onClick={handleSuggestSubmit}
+                          disabled={!suggestCategory.trim() || !suggestQuestionText.trim() || !suggestAnswer.trim()}
+                          className="w-full px-3 py-2 rounded-lg bg-[#FF6B35] text-[#0A0A0A] text-xs font-bold hover:opacity-90 transition-opacity cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {t.suggestQuestionSubmitButton}
+                        </button>
+                      </>
+                    )}
+                  </div>
+                )}
               </div>
 
               <div className="flex flex-col gap-1 pt-2 border-t border-white/10">

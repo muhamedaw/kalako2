@@ -83,7 +83,7 @@ function resolveLanguage(language: Language): Language {
   return bank.get(language)?.size ? language : 'ar'
 }
 
-export function pickQuestion(category: string, familyMode: boolean, language: Language = 'ar', includeExpansion = false): Question {
+export function pickQuestion(category: string, familyMode: boolean, language: Language = 'ar', includeExpansion = false, excludeId?: string): Question {
   const lang = resolveLanguage(language)
   const langBank = bank.get(lang)!
   const basePool = langBank.get(category) ?? langBank.get(allCategories[0])!
@@ -91,7 +91,12 @@ export function pickQuestion(category: string, familyMode: boolean, language: La
   const pool = expansionPool.length > 0 ? [...basePool, ...expansionPool] : basePool
   const eligible = familyMode ? pool.filter((q) => q.ageRating === 'family') : pool
   const source = eligible.length > 0 ? eligible : pool
-  return source[Math.floor(Math.random() * source.length)]
+  // Reroll support (swap_question): exclude the current question, but never let an empty
+  // result win — a single-question category must still return that same question rather
+  // than crash, matching this function's existing "never return nothing" contract.
+  const filtered = excludeId ? source.filter((q) => q.id !== excludeId) : source
+  const finalSource = filtered.length > 0 ? filtered : source
+  return finalSource[Math.floor(Math.random() * finalSource.length)]
 }
 
 export function pickCategories(allowed: string[], count: number): string[] {
