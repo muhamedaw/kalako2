@@ -115,10 +115,15 @@ export interface Translations {
   categoryUnlockSectionTitle: string
   categoryExpansionSectionTitle: string
   categoryLocked: string
+  storeCategoryUnlockName: string
+  storeCategoryUnlockDesc: string
+  storeCategoryExpansionName: string
+  storeCategoryExpansionDesc: string
 
   displayScreenWaiting: string
   displayJoinFailed: string
   displayFull: string
+  displaySpectatorBadge: string
 
   // Category Pick
   categoryPickTitle: string

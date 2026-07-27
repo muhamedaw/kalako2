@@ -106,10 +106,15 @@ const en: Translations = {
   categoryUnlockSectionTitle: 'Category Unlocks',
   categoryExpansionSectionTitle: 'Category Expansions',
   categoryLocked: 'Locked — unlock in the Store',
+  storeCategoryUnlockName: 'Unlock {{categoryName}}',
+  storeCategoryUnlockDesc: 'Permanent access to {{categoryName}} — play it forever, no coins needed.',
+  storeCategoryExpansionName: '+100 {{categoryName}} Questions',
+  storeCategoryExpansionDesc: 'More questions, more lies, more chaos.',
 
   displayScreenWaiting: 'Waiting for the game to start...',
   displayJoinFailed: 'Could not join as a display — check the code and try again.',
   displayFull: 'This room already has the maximum number of watching screens.',
+  displaySpectatorBadge: 'Watching',
 
   categoryPickTitle: 'Pick a Category',
   pickCategoryHost: 'Choose a category for this round',

@@ -106,10 +106,15 @@ const he: Translations = {
   categoryUnlockSectionTitle: 'פתיחת קטגוריות',
   categoryExpansionSectionTitle: 'הרחבות קטגוריה',
   categoryLocked: 'נעול — פתחו בחנות',
+  storeCategoryUnlockName: 'פתיחת {{categoryName}}',
+  storeCategoryUnlockDesc: 'גישה קבועה ל-{{categoryName}} — לשחק לתמיד, בלי מטבעות.',
+  storeCategoryExpansionName: '+100 שאלות {{categoryName}}',
+  storeCategoryExpansionDesc: 'עוד שאלות, עוד שקרים, עוד בלגן.',
 
   displayScreenWaiting: 'ממתין לתחילת המשחק...',
   displayJoinFailed: 'לא ניתן להצטרף כמסך צפייה — בדקו את הקוד ונסו שוב.',
   displayFull: 'לחדר הזה כבר יש את המספר המרבי של מסכי צפייה.',
+  displaySpectatorBadge: 'צופה',
 
   categoryPickTitle: 'בחר קטגוריה',
   pickCategoryHost: 'בחר קטגוריה לסיבוב זה',

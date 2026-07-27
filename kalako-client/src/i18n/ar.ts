@@ -106,10 +106,15 @@ const ar: Translations = {
   categoryUnlockSectionTitle: 'فتح الفئات',
   categoryExpansionSectionTitle: 'توسعات الفئات',
   categoryLocked: 'مقفلة — افتحها من المتجر',
+  storeCategoryUnlockName: 'فتح {{categoryName}}',
+  storeCategoryUnlockDesc: 'وصول دائم لـ {{categoryName}} — العب للأبد بدون عملات.',
+  storeCategoryExpansionName: '+100 سؤال {{categoryName}}',
+  storeCategoryExpansionDesc: 'أسئلة أكثر، كذبات أكثر، فوضى أكبر.',
 
   displayScreenWaiting: 'بانتظار بدء اللعبة...',
   displayJoinFailed: 'تعذر الانضمام كشاشة عرض — تحقق من الكود وحاول مرة أخرى.',
   displayFull: 'هذه الغرفة وصلت للحد الأقصى من شاشات العرض.',
+  displaySpectatorBadge: 'يُشاهد',
 
   categoryPickTitle: 'اختر التصنيف',
   pickCategoryHost: 'اختر تصنيفاً لهذه الجولة',

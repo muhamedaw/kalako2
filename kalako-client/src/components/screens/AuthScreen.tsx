@@ -45,9 +45,9 @@ export default function AuthScreen({ onContinueAsGuest }: Props) {
         transition={{ delay: 0.2, duration: 0.4 }}
         className="relative w-full max-w-sm"
       >
-        {/* Icon badge — peeking behind the card's top edge, never over content */}
-        <div className="absolute left-1/2 -translate-x-1/2 -top-6 -z-10 pointer-events-none">
-          <div className="w-12 h-12 drop-shadow-[0_4px_24px_rgba(255,107,53,0.4)]">
+        {/* Icon badge — large, centered behind the card, edges visible around it */}
+        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 -z-10 pointer-events-none">
+          <div className="w-72 h-72 opacity-40 drop-shadow-[0_0_60px_rgba(255,107,53,0.25)]">
             <LogoSquare />
           </div>
         </div>
@@ -85,21 +85,6 @@ export default function AuthScreen({ onContinueAsGuest }: Props) {
           </p>
         </GlassCard>
       </motion.div>
-
-      {/* Wordmark — below the card */}
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.35 }}
-        className="text-lg font-black text-center tracking-wide"
-        style={{
-          fontFamily: 'var(--font-heading)',
-          color: '#FF6B35',
-          textShadow: '0 0 16px rgba(255,107,53,0.35), 2px 2px 0 rgba(10,10,10,0.8)',
-        }}
-      >
-        {t.logoSubtitle}
-      </motion.p>
 
       {/* Language switcher */}
       <motion.div

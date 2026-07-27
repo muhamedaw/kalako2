@@ -33,6 +33,7 @@ export default function LogoSquare({ width, height, className }: Props) {
       <g filter="url(#glowGold)">
         <text x={256} y={340} textAnchor="middle" fontFamily="Cairo, Tajawal, 'Noto Sans Arabic', system-ui, sans-serif" fontWeight={900} fontSize={280} fill="url(#gradLimeCoral)">؟</text>
       </g>
+      <text x={256} y={446} textAnchor="middle" fontFamily="Cairo, Tajawal, 'Noto Sans Arabic', system-ui, sans-serif" fontWeight={900} fontSize={56} fill="#FFFFFF" filter="url(#glowGold)" letterSpacing="-1">{t.logoSubtitle}</text>
       <g filter="url(#glowLime)">
         <circle cx={86} cy={102} r={9} fill={COLORS.accentLime} />
       </g>
