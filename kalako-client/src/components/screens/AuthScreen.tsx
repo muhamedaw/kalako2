@@ -45,9 +45,9 @@ export default function AuthScreen({ onContinueAsGuest }: Props) {
         transition={{ delay: 0.2, duration: 0.4 }}
         className="relative w-full max-w-sm"
       >
-        {/* Icon badge — watermark behind the card, clearly visible through transparent bg */}
-        <div className="absolute left-1/2 -translate-x-1/2 top-0 -z-10 pointer-events-none">
-          <div className="w-72 h-72 drop-shadow-[0_0_80px_rgba(255,107,53,0.5)]">
+        {/* Icon badge — complete watermark centered behind the card */}
+        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 -z-10 pointer-events-none">
+          <div className="w-80 h-80 drop-shadow-[0_0_80px_rgba(255,107,53,0.5)]">
             <LogoSquare />
           </div>
         </div>
