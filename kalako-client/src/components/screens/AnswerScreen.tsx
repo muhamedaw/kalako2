@@ -143,7 +143,7 @@ export default function AnswerScreen() {
               maxLength={140}
             />
             <div className="text-xs text-white/30 text-left" dir="ltr">
-              {answer.length}/140
+              {t.charCount.replace('{{count}}', String(answer.length))}
             </div>
             <Button
               variant="primary"

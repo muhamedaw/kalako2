@@ -5,17 +5,17 @@ import { useTranslation } from '@/i18n/context'
 import { useGameStore } from '@/store/gameStore'
 import GlassCard from '@/components/ui/GlassCard'
 
-function relativeTime(dateStr: string): string {
+function relativeTime(dateStr: string, t: any): string {
   const now = Date.now()
   const date = new Date(dateStr + 'Z').getTime()
   const diff = now - date
   const mins = Math.floor(diff / 60000)
-  if (mins < 1) return 'just now'
-  if (mins < 60) return `${mins}m ago`
+  if (mins < 1) return t.relativeTimeJustNow
+  if (mins < 60) return t.relativeTimeMinutesAgo.replace('{{mins}}', String(mins))
   const hours = Math.floor(mins / 60)
-  if (hours < 24) return `${hours}h ago`
+  if (hours < 24) return t.relativeTimeHoursAgo.replace('{{hours}}', String(hours))
   const days = Math.floor(hours / 24)
-  return `${days}d ago`
+  return t.relativeTimeDaysAgo.replace('{{days}}', String(days))
 }
 
 function getNotifText(notif: { type: string; payload: { amount: number } }, t: any): string {
@@ -97,7 +97,7 @@ export default function NotificationsScreen() {
                       {getNotifText(notif as any, t)}
                     </p>
                     <p className="text-[11px] text-white/50 mt-0.5" style={{ fontFamily: 'var(--font-body)' }}>
-                      {relativeTime(notif.createdAt)}
+                      {relativeTime(notif.createdAt, t)}
                     </p>
                   </div>
                   {!notif.read && (

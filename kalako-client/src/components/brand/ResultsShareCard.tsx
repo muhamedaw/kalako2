@@ -120,7 +120,7 @@ export default function ResultsShareCard({ playerName, score, rank, totalPlayers
     ctx.fillStyle = COLORS.secondary
     ctx.font = 'bold 12px Cairo, Tajawal, sans-serif'
     ctx.textAlign = 'right'
-    ctx.fillText('kalako.app', 540, 290)
+    ctx.fillText(t.brandLabel, 540, 290)
     ctx.shadowBlur = 0
 
     const url = canvas.toDataURL('image/png')

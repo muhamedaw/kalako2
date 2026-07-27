@@ -86,6 +86,31 @@ const he: Translations = {
   timeFormat: '{{seconds}}שנ',
   roundsFormat: '{{count}} סיבובים',
 
+  lobbyRecommendedRounds: 'מומלץ: {{count}} סיבובים עבור {{players}} שחקנים',
+  lobbyUseRecommended: 'השתמש במומלץ',
+  lobbyWatchOnTv: 'צפה בטלוויזיה',
+  lobbyDisplayCount: '{{count}} צופים',
+  lobbyDisplayCountOne: 'צופה אחד',
+
+  tournamentModeLabel: 'טורניר (הטוב מ-3 משחקים)',
+  tournamentModeDesc: 'אותו חדר משחק 3 משחקים ברצף עם טבלה מצטברת',
+  tournamentGameLabel: 'משחק {{current}} מתוך {{total}}',
+  tournamentStandingsTitle: 'טבלת הטורניר',
+  tournamentPlayNextGame: 'שחק משחק {{next}} מתוך {{total}}',
+  tournamentOverallWinner: 'המנצח הכולל',
+  tournamentFinalStandings: 'טבלת הטורניר הסופית',
+
+  categoryCompletionTitle: 'התקדמות קטגוריות',
+  categoryCompletionSeen: '{{seen}}/{{total}} נצפו',
+
+  categoryUnlockSectionTitle: 'פתיחת קטגוריות',
+  categoryExpansionSectionTitle: 'הרחבות קטגוריה',
+  categoryLocked: 'נעול — פתחו בחנות',
+
+  displayScreenWaiting: 'ממתין לתחילת המשחק...',
+  displayJoinFailed: 'לא ניתן להצטרף כמסך צפייה — בדקו את הקוד ונסו שוב.',
+  displayFull: 'לחדר הזה כבר יש את המספר המרבי של מסכי צפייה.',
+
   categoryPickTitle: 'בחר קטגוריה',
   pickCategoryHost: 'בחר קטגוריה לסיבוב זה',
   pickCategoryWaiting: 'ממתינים למארח שיבחר קטגוריה...',
@@ -380,6 +405,7 @@ const he: Translations = {
   premiumUpsellNudge: 'זה פריבילגיית פרימיום — שווה הצצה?',
   premiumMonthlyPrice: '$2.99/חודש',
   premiumYearlyPrice: '$19.99/שנה',
+  premiumSubscribeSuccess: 'פרימיום הופעל! ברוכים הבאים למועדון.',
 
   // Auth / Login-choice screen
   authTitle: 'ברוכים הבאים לקלאקו',
@@ -388,6 +414,116 @@ const he: Translations = {
   authGuestDescription: 'קפצו פנימה בלי חשבון — בלי התחייבויות.',
   authLoginDescription: 'שמרו את ההתקדמות, הסטטיסטיקות והרכישות שלכם.',
   authOrDivider: 'או',
+
+  authRecoverTitle: 'שחזור החשבון שלך',
+  authRecoverEmailLabel: 'כתובת אימייל',
+  authRecoverEmailPlaceholder: 'you@example.com',
+  authRecoverSendCodeButton: 'שלח קוד',
+  authRecoverCodeSentNotice: 'אם האימייל הזה מקושר לחשבון, הקוד בדרך.',
+  authRecoverCodeLabel: 'קוד בן 6 ספרות',
+  authRecoverCodePlaceholder: '000000',
+  authRecoverVerifyButton: 'אמת ושחזר',
+  authRecoverBackButton: 'חזרה',
+  authRecoverEmailNotConfigured: 'שחזור חשבון עדיין לא זמין — נסו שוב בקרוב.',
+  authRecoverInvalidCode: 'הקוד שגוי או שפג תוקפו.',
+  authRecoverSuccess: 'החשבון שוחזר! ברוכים השבים.',
+
+  // Avatar part display names (bodies 1-4)
+  avatarBody01: 'שזיף תפוח',
+  avatarBody02: 'אלמוג חמוד',
+  avatarBody03: 'לימון קשיח',
+  avatarBody04: 'קרמי חולם',
+
+  // Avatar part display names (bodies 5-14)
+  avatarBody05: 'נענע מצחיקה',
+  avatarBody06: 'לבנדר שר',
+  avatarBody07: 'אפרסק מחייך',
+  avatarBody08: 'טורקיז נוגע',
+  avatarBody09: 'ורוד נמוג',
+  avatarBody10: 'ענבר דוחף',
+  avatarBody11: 'מרווה קורצת',
+  avatarBody12: 'ורד מתנגש',
+  avatarBody13: 'תכלת מציירת',
+  avatarBody14: 'חום קופץ',
+
+  // Avatar part display names (eyes 1-8)
+  avatarEyes01: 'מצמוץ עגול',
+  avatarEyes02: 'פליאה רחבה',
+  avatarEyes03: 'שטיפת עייפה',
+  avatarEyes04: 'ברק גדול',
+  avatarEyes05: 'עיני לב',
+  avatarEyes06: 'עיני כוכב',
+  avatarEyes07: 'עיני אש',
+  avatarEyes08: 'עיני ספירלה',
+
+  // Avatar part display names (eyes 9-18)
+  avatarEyes09: 'כוכב מביט',
+  avatarEyes10: 'חולם מטפטף',
+  avatarEyes11: 'פיקסל מתגנב',
+  avatarEyes12: 'ירח מציץ',
+  avatarEyes13: 'מבזיק מהבהב',
+  avatarEyes14: 'ניאון עוצם',
+  avatarEyes15: 'קוסמי נועץ מבט',
+  avatarEyes16: 'ג\'לי נוצץ',
+  avatarEyes17: 'אדים זורמים',
+  avatarEyes18: 'ניצוץ ממריא',
+
+  // Avatar part display names (hats — original free+premium hats)
+  avatarHatNone: 'בלי כובע',
+  avatarHatParty: 'כובע מסיבה',
+  avatarHatCap: 'כובע מצחיה',
+  avatarHatHeadband: 'רצועת ראש',
+  avatarHatCrown: 'כתר',
+  avatarHatTophat: 'כובע גבוה',
+  avatarHatWizard: 'כובע קוסם',
+  avatarHatPropeller: 'כובע מדחף',
+  avatarHatSombrero: 'סומבררו',
+  avatarHatViking: 'כובע ויקינגי',
+
+  // Avatar part display names (hats — new free hats)
+  avatarHatBeret: 'בֵּרֵט קטן',
+  avatarHatCowboy: 'קאובוי חמוד',
+  avatarHatHood: 'ברדס חמים',
+  avatarHatBandana: 'בנדנה של חבר\'ה',
+  avatarHatHelmet: 'בטיחות קודם!',
+  avatarHatFez: 'תרבוש חבר',
+  avatarHatFlower: 'כתר פרחים',
+  avatarHatAntenna: 'הגברת אות',
+  avatarHatCrownFlower: 'כתר עלי כותרת',
+  avatarHatHeadwrap: 'כיסוי ראש כוכב',
+
+  // Profile
+  profileInventoryEmpty: 'אין כלום פה עדיין — בדקו בחנות!',
+  profileTabBody: 'גוף',
+  profileTabEyes: 'עיניים',
+  profileTabHat: 'כובע',
+
+  // Relative timestamps
+  relativeTimeJustNow: 'לפני רגע',
+  relativeTimeMinutesAgo: 'לפני {{mins}} דק',
+  relativeTimeHoursAgo: 'לפני {{hours}} שע',
+  relativeTimeDaysAgo: 'לפני {{days}} ימ',
+
+  // Store section titles (premium eyes/hats)
+  storePremiumEyesTitle: 'עיניים פרימיום',
+  storePremiumEyesDesc: 'עיניים מביעות שמבליטות את האווטאר שלכם.',
+  storePremiumHatsTitle: 'כובעים פרימיום',
+  storePremiumHatsDesc: 'השלימו את המראה עם כובע אלגנטי.',
+
+  // Store item display names
+  storeItemEyesHeart: 'עיניים לבבות',
+  storeItemEyesStar: 'עיניים כוכבים',
+  storeItemEyesFire: 'עיניים בוערות',
+  storeItemEyesSpiral: 'עיניים ספירלה',
+  storeItemEyesGalaxy: 'עיניים גלקסיה',
+  storeItemHatCrown: 'כתר',
+  storeItemHatTophat: 'כובע גבוה',
+  storeItemHatWizard: 'כובע קוסם',
+  storeItemHatPropeller: 'כובע מדחף',
+  storeItemHatSombrero: 'סומבררו',
+  storeItemHatViking: 'כובע ויקינגי',
+  storeItemHatHalo: 'הילה',
+  storeItemFrameDiamond: 'מסגרת יהלום',
 }
 
 export default he

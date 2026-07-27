@@ -8,7 +8,28 @@ import { useToastStore } from '@/store/toastStore'
 import { ComposedAvatar } from '@/components/avatarParts'
 import { DEFAULT_AVATAR } from '@/components/avatarParts/types'
 import type { AvatarConfig } from '@/components/avatarParts/types'
+import type { Translations } from '@/i18n/types'
 import GlassCard from '@/components/ui/GlassCard'
+
+function getStoreItemName(id: string, t: Translations): string {
+  const map: Record<string, keyof Translations> = {
+    eyes_5: 'storeItemEyesHeart',
+    eyes_6: 'storeItemEyesStar',
+    eyes_7: 'storeItemEyesFire',
+    eyes_8: 'storeItemEyesSpiral',
+    premium_eyes_1: 'storeItemEyesGalaxy',
+    hat_crown: 'storeItemHatCrown',
+    hat_tophat: 'storeItemHatTophat',
+    hat_wizard: 'storeItemHatWizard',
+    hat_propeller: 'storeItemHatPropeller',
+    hat_sombrero: 'storeItemHatSombrero',
+    hat_viking: 'storeItemHatViking',
+    premium_hat_1: 'storeItemHatHalo',
+    premium_frame_1: 'storeItemFrameDiamond',
+  }
+  const key = map[id]
+  return key ? (t[key] as string) || id : id
+}
 
 interface SectionItem {
   id: string
@@ -108,7 +129,7 @@ export default function StoreScreen() {
           <ComposedAvatar {...previewCfg} size={56} />
         </div>
         <span className="text-xs font-bold text-white text-center leading-tight" style={{ fontFamily: 'var(--font-heading)' }}>
-          {item.name}
+          {getStoreItemName(item.id, t)}
         </span>
         {owned ? (
           <span className="text-[11px] font-bold text-[#C6FF3D]" style={{ fontFamily: 'var(--font-heading)' }}>
@@ -280,10 +301,10 @@ export default function StoreScreen() {
 
           <GlassCard key="eyes-section">
             <h2 className="text-lg font-bold text-white mb-1" style={{ fontFamily: 'var(--font-heading)' }}>
-              Premium Eyes
+              {t.storePremiumEyesTitle}
             </h2>
             <p className="text-white/50 text-xs mb-4" style={{ fontFamily: 'var(--font-body)' }}>
-              Expressive eyes to make your avatar pop.
+              {t.storePremiumEyesDesc}
             </p>
             <div className="grid grid-cols-2 gap-3">
               {EYES_ITEMS.map(renderItemCard)}
@@ -292,23 +313,23 @@ export default function StoreScreen() {
 
           <GlassCard key="hats-section">
             <h2 className="text-lg font-bold text-white mb-1" style={{ fontFamily: 'var(--font-heading)' }}>
-              Premium Hats
+              {t.storePremiumHatsTitle}
             </h2>
             <p className="text-white/50 text-xs mb-4" style={{ fontFamily: 'var(--font-body)' }}>
-              Top off your look with a stylish lid.
+              {t.storePremiumHatsDesc}
             </p>
             <div className="grid grid-cols-2 gap-3">
               {HATS_ITEMS.map(renderItemCard)}
             </div>
           </GlassCard>
 
-          {catalog.filter((s) => s.type === 'sound_pack' || s.type === 'frame').map((section) => (
+          {catalog.filter((s) => s.type === 'sound_pack' || s.type === 'frame' || s.type === 'categoryUnlock' || s.type === 'categoryExpansion').map((section) => (
             <GlassCard key={section.type}>
               <h2 className="text-lg font-bold text-white mb-1" style={{ fontFamily: 'var(--font-heading)' }}>
                 {section.title}
               </h2>
               <p className="text-white/50 text-xs mb-4" style={{ fontFamily: 'var(--font-body)' }}>
-                {section.type === 'sound_pack' ? 'Win sounds and glorious victory vibes.' : 'Deck out your share cards.'}
+                {section.description}
               </p>
               <div className="grid grid-cols-2 gap-3">
                 {section.items.map((item) => {
@@ -320,7 +341,9 @@ export default function StoreScreen() {
                       whileTap={{ scale: 0.97 }}
                       className={`rounded-xl border-4 border-[#0A0A0A] p-3 flex flex-col items-center gap-2 ${owned ? 'bg-[#C6FF3D]/15' : 'bg-white/5'}`}
                     >
-                      <div className="text-3xl">{section.type === 'frame' ? '🖼️' : '🔊'}</div>
+                      <div className="text-3xl">
+                        {section.type === 'frame' ? '🖼️' : section.type === 'sound_pack' ? '🔊' : section.type === 'categoryUnlock' ? '🔓' : '📦'}
+                      </div>
                       <span className="text-xs font-bold text-white text-center leading-tight" style={{ fontFamily: 'var(--font-heading)' }}>
                         {item.name}
                       </span>

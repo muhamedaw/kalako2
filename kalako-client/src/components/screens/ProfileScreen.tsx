@@ -1,17 +1,23 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Pencil, Check, X, Coins } from 'lucide-react'
+import { Pencil, Check, X, Coins, Lock, Crown } from 'lucide-react'
 import { useTranslation } from '@/i18n/context'
 import { useGameStore } from '@/store/gameStore'
+import { useToastStore } from '@/store/toastStore'
 import { ComposedAvatar } from '@/components/avatarParts'
-import { DEFAULT_AVATAR, FREE_BODIES, FREE_EYES, FREE_HATS, BODY_NAMES } from '@/components/avatarParts/types'
-import type { BodyId, AvatarConfig } from '@/components/avatarParts/types'
-import { parseAvatarConfig } from '@/lib/avatarUtils'
+import { DEFAULT_AVATAR, FREE_BODIES, FREE_EYES, FREE_HATS, PREMIUM_EYES, PREMIUM_HATS } from '@/components/avatarParts/types'
+import type { AvatarConfig } from '@/components/avatarParts/types'
+import { parseAvatarConfig, getAvatarPartName } from '@/lib/avatarUtils'
 import GlassCard from '@/components/ui/GlassCard'
+import { getCategoryLabel, getCategoryEmoji } from '@/types'
+
+const ALL_EYES = [...FREE_EYES, ...PREMIUM_EYES]
+const ALL_HATS = [...FREE_HATS, ...PREMIUM_HATS]
 
 export default function ProfileScreen() {
   const t = useTranslation()
-  const { profile, loadProfile, updateProfileNickname, updateProfileAvatar } = useGameStore()
+  const { profile, loadProfile, updateProfileNickname, updateProfileAvatar, isPremium, setScreen, categoryCompletion, getCategoryCompletion } = useGameStore()
+  const showToast = useToastStore((s) => s.show)
   const [editing, setEditing] = useState(false)
   const [nickname, setNickname] = useState('')
   const [avatarConfig, setAvatarConfig] = useState<AvatarConfig>(DEFAULT_AVATAR)
@@ -19,7 +25,8 @@ export default function ProfileScreen() {
 
   useEffect(() => {
     loadProfile()
-  }, [loadProfile])
+    getCategoryCompletion()
+  }, [loadProfile, getCategoryCompletion])
 
   useEffect(() => {
     if (profile) {
@@ -108,7 +115,7 @@ export default function ProfileScreen() {
             }`}
             style={{ fontFamily: 'var(--font-heading)' }}
           >
-            {part === 'body' ? 'Body' : part === 'eyes' ? 'Eyes' : 'Hat'}
+            {part === 'body' ? t.profileTabBody : part === 'eyes' ? t.profileTabEyes : t.profileTabHat}
           </button>
         ))}
       </div>
@@ -119,26 +126,47 @@ export default function ProfileScreen() {
           animate={{ opacity: 1, y: 0 }}
           className="grid grid-cols-3 sm:grid-cols-4 gap-2"
         >
-          {(pickMode === 'body' ? FREE_BODIES : pickMode === 'eyes' ? FREE_EYES : FREE_HATS).map((id) => {
+          {(pickMode === 'body' ? FREE_BODIES : pickMode === 'eyes' ? ALL_EYES : ALL_HATS).map((id) => {
             const isActive = avatarConfig[pickMode] === id
             const previewCfg = { ...avatarConfig, [pickMode]: id }
+
+            const isPremiumPart = pickMode === 'eyes'
+              ? (PREMIUM_EYES as readonly string[]).includes(id)
+              : pickMode === 'hat'
+                ? (PREMIUM_HATS as readonly string[]).includes(id)
+                : false
+
+            const owned = isPremiumPart ? !!profile?.inventory?.find((i) => i.itemId === id) : true
+            const locked = isPremiumPart && !owned && !isPremium
+
             return (
               <button
                 key={id}
                 onClick={() => {
+                  if (locked) {
+                    showToast(t.premiumUpsellNudge, 'info')
+                    setTimeout(() => setScreen('premium'), 1200)
+                    return
+                  }
                   setAvatarConfig(previewCfg)
                   updateProfileAvatar(previewCfg)
                   setPickMode(null)
                 }}
-                className={`flex flex-col items-center gap-1 p-2 rounded-xl border-4 border-[#0A0A0A] shadow-[2px_2px_0_#0A0A0A] transition-all cursor-pointer ${
-                  isActive ? 'bg-[#C6FF3D]/20 border-[#C6FF3D]' : 'bg-white/5'
+                className={`flex flex-col items-center gap-1 p-2 rounded-xl border-4 border-[#0A0A0A] shadow-[2px_2px_0_#0A0A0A] transition-all cursor-pointer relative ${
+                  isActive ? 'bg-[#C6FF3D]/20 border-[#C6FF3D]' : locked ? 'bg-white/5 opacity-60' : 'bg-white/5'
                 }`}
               >
+                {locked && (
+                  <div className="absolute -top-1.5 -end-1.5 z-10 w-5 h-5 rounded-full bg-[#FF6B35] border-2 border-[#0A0A0A] flex items-center justify-center shadow-sm">
+                    <Crown size={10} className="text-[#0A0A0A]" strokeWidth={2.5} />
+                  </div>
+                )}
                 <div className="w-12 h-12">
                   <ComposedAvatar {...previewCfg} size={48} />
                 </div>
-                <span className="text-[9px] text-white/60 text-center leading-tight" style={{ fontFamily: 'var(--font-body)' }}>
-                  {pickMode === 'body' ? BODY_NAMES[id as BodyId] : id.replace(/^(hat_|eyes_)/, '').replace('_', ' ')}
+                <span className="text-[9px] text-white/60 text-center leading-tight flex items-center gap-1" style={{ fontFamily: 'var(--font-body)' }}>
+                  {locked && <Lock size={8} className="text-[#FF6B35]" strokeWidth={2.5} />}
+                  {getAvatarPartName(id, t)}
                 </span>
               </button>
             )
@@ -152,7 +180,7 @@ export default function ProfileScreen() {
         </h3>
         {(!profile?.inventory || profile.inventory.length === 0) ? (
           <p className="text-white/50 text-sm text-center py-4" style={{ fontFamily: 'var(--font-body)' }}>
-            {t.comingSoonSubtitle}
+            {t.profileInventoryEmpty}
           </p>
         ) : (
           <div className="flex flex-wrap gap-2">
@@ -164,6 +192,31 @@ export default function ProfileScreen() {
           </div>
         )}
       </GlassCard>
+
+      {categoryCompletion.length > 0 && (
+        <GlassCard>
+          <h3 className="text-sm font-bold text-white/80 mb-3" style={{ fontFamily: 'var(--font-heading)' }}>
+            {t.categoryCompletionTitle}
+          </h3>
+          <div className="flex flex-col gap-2.5">
+            {categoryCompletion.map((c) => (
+              <div key={c.category} className="flex flex-col gap-1">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-white/70 font-medium">
+                    {getCategoryEmoji(c.category)} {getCategoryLabel(c.category, t.lang)}
+                  </span>
+                  <span className="text-white/40">
+                    {c.percentage}% · {t.categoryCompletionSeen.replace('{{seen}}', String(c.seenCount)).replace('{{total}}', String(c.totalCount))}
+                  </span>
+                </div>
+                <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
+                  <div className="h-full bg-[#C6FF3D] rounded-full transition-all" style={{ width: `${c.percentage}%` }} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </GlassCard>
+      )}
     </div>
   )
 }

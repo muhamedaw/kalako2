@@ -86,6 +86,31 @@ const ar: Translations = {
   timeFormat: '{{seconds}}ث وقت',
   roundsFormat: '{{count}} جولات',
 
+  lobbyRecommendedRounds: 'موصى به: {{count}} جولات لعدد {{players}} لاعبين',
+  lobbyUseRecommended: 'استخدم الموصى به',
+  lobbyWatchOnTv: 'شاهد على التلفاز',
+  lobbyDisplayCount: '{{count}} يشاهدون',
+  lobbyDisplayCountOne: 'يشاهد شخص واحد',
+
+  tournamentModeLabel: 'بطولة (أفضل من 3 مباريات)',
+  tournamentModeDesc: 'نفس الغرفة تلعب 3 مباريات متتالية مع نتيجة تراكمية',
+  tournamentGameLabel: 'المباراة {{current}} من {{total}}',
+  tournamentStandingsTitle: 'ترتيب البطولة',
+  tournamentPlayNextGame: 'العب المباراة {{next}} من {{total}}',
+  tournamentOverallWinner: 'الفائز الإجمالي',
+  tournamentFinalStandings: 'الترتيب النهائي للبطولة',
+
+  categoryCompletionTitle: 'تقدم الفئات',
+  categoryCompletionSeen: '{{seen}}/{{total}} شوهد',
+
+  categoryUnlockSectionTitle: 'فتح الفئات',
+  categoryExpansionSectionTitle: 'توسعات الفئات',
+  categoryLocked: 'مقفلة — افتحها من المتجر',
+
+  displayScreenWaiting: 'بانتظار بدء اللعبة...',
+  displayJoinFailed: 'تعذر الانضمام كشاشة عرض — تحقق من الكود وحاول مرة أخرى.',
+  displayFull: 'هذه الغرفة وصلت للحد الأقصى من شاشات العرض.',
+
   categoryPickTitle: 'اختر التصنيف',
   pickCategoryHost: 'اختر تصنيفاً لهذه الجولة',
   pickCategoryWaiting: 'بانتظار المضيف لاختيار التصنيف...',
@@ -380,6 +405,7 @@ const ar: Translations = {
   premiumUpsellNudge: 'هذه من مميزات بريميوم — تستاهل نظرة؟',
   premiumMonthlyPrice: '$2.99/شهرياً',
   premiumYearlyPrice: '$19.99/سنوياً',
+  premiumSubscribeSuccess: 'تم تفعيل بريميوم! مرحباً بك في النادي.',
 
   // Auth / Login-choice screen
   authTitle: 'مرحباً بك في كلاكو',
@@ -388,6 +414,116 @@ const ar: Translations = {
   authGuestDescription: 'ادخل بدون حساب — بدون التزامات.',
   authLoginDescription: 'احفظ تقدمك وإحصائياتك ومشترياتك.',
   authOrDivider: 'أو',
+
+  authRecoverTitle: 'استرجاع حسابك',
+  authRecoverEmailLabel: 'البريد الإلكتروني',
+  authRecoverEmailPlaceholder: 'you@example.com',
+  authRecoverSendCodeButton: 'إرسال الكود',
+  authRecoverCodeSentNotice: 'إذا كان هذا البريد مرتبط بحساب، الكود بالطريق.',
+  authRecoverCodeLabel: 'كود من 6 أرقام',
+  authRecoverCodePlaceholder: '000000',
+  authRecoverVerifyButton: 'تحقق واسترجع',
+  authRecoverBackButton: 'رجوع',
+  authRecoverEmailNotConfigured: 'استرجاع الحساب مو متاح حاليًا — جرب لاحقًا.',
+  authRecoverInvalidCode: 'الكود غلط أو منتهي الصلاحية.',
+  authRecoverSuccess: 'تم استرجاع حسابك! أهلاً بعودتك.',
+
+  // Avatar part display names (bodies 1-4)
+  avatarBody01: 'برقوق منتفخ',
+  avatarBody02: 'مرجان لطيف',
+  avatarBody03: 'ليمون صلب',
+  avatarBody04: 'كريمي يحلم',
+
+  // Avatar part display names (bodies 5-14)
+  avatarBody05: 'نعناع مضحك',
+  avatarBody06: 'لافندر يغني',
+  avatarBody07: 'خوخ مبتسم',
+  avatarBody08: 'أزرق يلمس',
+  avatarBody09: 'وردي منسدل',
+  avatarBody10: 'كهرماني يدفع',
+  avatarBody11: 'ساج يغمز',
+  avatarBody12: 'وردي يرتطم',
+  avatarBody13: 'سماوي يرسم',
+  avatarBody14: 'بني يقفز',
+
+  // Avatar part display names (eyes 1-8)
+  avatarEyes01: 'رمش مستدير',
+  avatarEyes02: 'عجب عريض',
+  avatarEyes03: 'حدة نعسان',
+  avatarEyes04: 'بريق كبير',
+  avatarEyes05: 'عيون قلب',
+  avatarEyes06: 'عيون نجمة',
+  avatarEyes07: 'عيون نار',
+  avatarEyes08: 'عيون حلزونية',
+
+  // Avatar part display names (eyes 9-18)
+  avatarEyes09: 'نجمة تنظر',
+  avatarEyes10: 'حالم يقطر',
+  avatarEyes11: 'بكسل يتسلل',
+  avatarEyes12: 'قمر يختلس',
+  avatarEyes13: 'فقاعي يرمش',
+  avatarEyes14: 'نيون يغمض',
+  avatarEyes15: 'كوني يحدّق',
+  avatarEyes16: 'هلام يلمع',
+  avatarEyes17: 'بخار يسري',
+  avatarEyes18: 'شرارة تنطلق',
+
+  // Avatar part display names (hats — original free+premium hats)
+  avatarHatNone: 'بدون قبعة',
+  avatarHatParty: 'قبعة حفلة',
+  avatarHatCap: 'كاب',
+  avatarHatHeadband: 'شريط رأس',
+  avatarHatCrown: 'تاج',
+  avatarHatTophat: 'قبعة عالية',
+  avatarHatWizard: 'قبعة ساحر',
+  avatarHatPropeller: 'قبعة مروحة',
+  avatarHatSombrero: 'سومبريرو',
+  avatarHatViking: 'خوذة فايكنغ',
+
+  // Avatar part display names (hats — new free hats)
+  avatarHatBeret: 'بريه صغير',
+  avatarHatCowboy: 'كابوي كيوت',
+  avatarHatHood: 'كابوشون دافئ',
+  avatarHatBandana: 'باندانا صاحبي',
+  avatarHatHelmet: 'السلامة أولاً!',
+  avatarHatFez: 'فيز صاحبي',
+  avatarHatFlower: 'تاج زهرة',
+  avatarHatAntenna: 'تعزيز إشارة',
+  avatarHatCrownFlower: 'تاج بتلات',
+  avatarHatHeadwrap: 'لفاف نجم',
+
+  // Profile
+  profileInventoryEmpty: 'ما في شي هنا — افتح المتجر!',
+  profileTabBody: 'الجسم',
+  profileTabEyes: 'العيون',
+  profileTabHat: 'القبعة',
+
+  // Relative timestamps
+  relativeTimeJustNow: 'الآن',
+  relativeTimeMinutesAgo: 'منذ {{mins}} د',
+  relativeTimeHoursAgo: 'منذ {{hours}} س',
+  relativeTimeDaysAgo: 'منذ {{days}} ي',
+
+  // Store section titles (premium eyes/hats)
+  storePremiumEyesTitle: 'عيون بريميوم',
+  storePremiumEyesDesc: 'عيون تعبيرية تخلي أفاتارك يبرز.',
+  storePremiumHatsTitle: 'قبعات بريميوم',
+  storePremiumHatsDesc: 'أكمل مظهرك بقبعة أنيقة.',
+
+  // Store item display names
+  storeItemEyesHeart: 'عيون قلوب',
+  storeItemEyesStar: 'عيون نجوم',
+  storeItemEyesFire: 'عيون نارية',
+  storeItemEyesSpiral: 'عيون حلزونية',
+  storeItemEyesGalaxy: 'عيون مجرة',
+  storeItemHatCrown: 'تاج',
+  storeItemHatTophat: 'قبعة عالية',
+  storeItemHatWizard: 'قبعة ساحر',
+  storeItemHatPropeller: 'قبعة مروحة',
+  storeItemHatSombrero: 'سومبريرو',
+  storeItemHatViking: 'خوذة فايكنغ',
+  storeItemHatHalo: 'هالة',
+  storeItemFrameDiamond: 'إطار ماسي',
 }
 
 export default ar

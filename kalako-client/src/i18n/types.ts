@@ -95,6 +95,31 @@ export interface Translations {
   timeFormat: string
   roundsFormat: string
 
+  lobbyRecommendedRounds: string
+  lobbyUseRecommended: string
+  lobbyWatchOnTv: string
+  lobbyDisplayCount: string
+  lobbyDisplayCountOne: string
+
+  tournamentModeLabel: string
+  tournamentModeDesc: string
+  tournamentGameLabel: string
+  tournamentStandingsTitle: string
+  tournamentPlayNextGame: string
+  tournamentOverallWinner: string
+  tournamentFinalStandings: string
+
+  categoryCompletionTitle: string
+  categoryCompletionSeen: string
+
+  categoryUnlockSectionTitle: string
+  categoryExpansionSectionTitle: string
+  categoryLocked: string
+
+  displayScreenWaiting: string
+  displayJoinFailed: string
+  displayFull: string
+
   // Category Pick
   categoryPickTitle: string
   pickCategoryHost: string
@@ -338,6 +363,9 @@ export interface Translations {
   premiumMonthlyPrice: string
   premiumYearlyPrice: string
 
+  // Premium
+  premiumSubscribeSuccess: string
+
   // Auth / Login-choice screen
   authTitle: string
   authGuestButton: string
@@ -345,4 +373,115 @@ export interface Translations {
   authGuestDescription: string
   authLoginDescription: string
   authOrDivider: string
+
+  // Account recovery screen (email -> code -> restore)
+  authRecoverTitle: string
+  authRecoverEmailLabel: string
+  authRecoverEmailPlaceholder: string
+  authRecoverSendCodeButton: string
+  authRecoverCodeSentNotice: string
+  authRecoverCodeLabel: string
+  authRecoverCodePlaceholder: string
+  authRecoverVerifyButton: string
+  authRecoverBackButton: string
+  authRecoverEmailNotConfigured: string
+  authRecoverInvalidCode: string
+  authRecoverSuccess: string
+
+  // Avatar part display names (bodies 1-4)
+  avatarBody01: string
+  avatarBody02: string
+  avatarBody03: string
+  avatarBody04: string
+
+  // Avatar part display names (bodies 5-14)
+  avatarBody05: string
+  avatarBody06: string
+  avatarBody07: string
+  avatarBody08: string
+  avatarBody09: string
+  avatarBody10: string
+  avatarBody11: string
+  avatarBody12: string
+  avatarBody13: string
+  avatarBody14: string
+
+  // Avatar part display names (eyes 1-8)
+  avatarEyes01: string
+  avatarEyes02: string
+  avatarEyes03: string
+  avatarEyes04: string
+  avatarEyes05: string
+  avatarEyes06: string
+  avatarEyes07: string
+  avatarEyes08: string
+
+  // Avatar part display names (eyes 9-18)
+  avatarEyes09: string
+  avatarEyes10: string
+  avatarEyes11: string
+  avatarEyes12: string
+  avatarEyes13: string
+  avatarEyes14: string
+  avatarEyes15: string
+  avatarEyes16: string
+  avatarEyes17: string
+  avatarEyes18: string
+
+  // Avatar part display names (hats — original free+premium hats)
+  avatarHatNone: string
+  avatarHatParty: string
+  avatarHatCap: string
+  avatarHatHeadband: string
+  avatarHatCrown: string
+  avatarHatTophat: string
+  avatarHatWizard: string
+  avatarHatPropeller: string
+  avatarHatSombrero: string
+  avatarHatViking: string
+
+  // Avatar part display names (hats — new free hats)
+  avatarHatBeret: string
+  avatarHatCowboy: string
+  avatarHatHood: string
+  avatarHatBandana: string
+  avatarHatHelmet: string
+  avatarHatFez: string
+  avatarHatFlower: string
+  avatarHatAntenna: string
+  avatarHatCrownFlower: string
+  avatarHatHeadwrap: string
+
+  // Profile
+  profileInventoryEmpty: string
+  profileTabBody: string
+  profileTabEyes: string
+  profileTabHat: string
+
+  // Relative timestamps
+  relativeTimeJustNow: string
+  relativeTimeMinutesAgo: string
+  relativeTimeHoursAgo: string
+  relativeTimeDaysAgo: string
+
+  // Store section titles (premium eyes/hats)
+  storePremiumEyesTitle: string
+  storePremiumEyesDesc: string
+  storePremiumHatsTitle: string
+  storePremiumHatsDesc: string
+
+  // Store item display names
+  storeItemEyesHeart: string
+  storeItemEyesStar: string
+  storeItemEyesFire: string
+  storeItemEyesSpiral: string
+  storeItemEyesGalaxy: string
+  storeItemHatCrown: string
+  storeItemHatTophat: string
+  storeItemHatWizard: string
+  storeItemHatPropeller: string
+  storeItemHatSombrero: string
+  storeItemHatViking: string
+  storeItemHatHalo: string
+  storeItemFrameDiamond: string
 }

@@ -86,6 +86,31 @@ const en: Translations = {
   timeFormat: '{{seconds}}s time',
   roundsFormat: '{{count}} rounds',
 
+  lobbyRecommendedRounds: 'Recommended: {{count}} rounds for {{players}} players',
+  lobbyUseRecommended: 'Use recommended',
+  lobbyWatchOnTv: 'Watch on TV',
+  lobbyDisplayCount: '{{count}} watching',
+  lobbyDisplayCountOne: '1 watching',
+
+  tournamentModeLabel: 'Tournament (best of 3 games)',
+  tournamentModeDesc: 'Same room plays 3 games in a row with cumulative standings',
+  tournamentGameLabel: 'Game {{current}} of {{total}}',
+  tournamentStandingsTitle: 'Tournament Standings',
+  tournamentPlayNextGame: 'Play Game {{next}} of {{total}}',
+  tournamentOverallWinner: 'Overall Winner',
+  tournamentFinalStandings: 'Final Tournament Standings',
+
+  categoryCompletionTitle: 'Category Progress',
+  categoryCompletionSeen: '{{seen}}/{{total}} seen',
+
+  categoryUnlockSectionTitle: 'Category Unlocks',
+  categoryExpansionSectionTitle: 'Category Expansions',
+  categoryLocked: 'Locked — unlock in the Store',
+
+  displayScreenWaiting: 'Waiting for the game to start...',
+  displayJoinFailed: 'Could not join as a display — check the code and try again.',
+  displayFull: 'This room already has the maximum number of watching screens.',
+
   categoryPickTitle: 'Pick a Category',
   pickCategoryHost: 'Choose a category for this round',
   pickCategoryWaiting: 'Waiting for host to pick a category...',
@@ -380,8 +405,7 @@ The operator is committed to resolving genuine issues fairly. While refunds are 
   premiumUpsellNudge: 'That one\'s a Premium perk — worth a look?',
   premiumMonthlyPrice: '$2.99/mo',
   premiumYearlyPrice: '$19.99/yr',
-  premiumLockedBadge: 'Premium',
-  premiumUpsellNudge: "That one's a Premium perk — worth a look?",
+  premiumSubscribeSuccess: 'Premium activated! Welcome to the club.',
 
   // Auth / Login-choice screen
   authTitle: 'Welcome to Kalako',
@@ -390,6 +414,116 @@ The operator is committed to resolving genuine issues fairly. While refunds are 
   authGuestDescription: 'Jump in without an account — no strings attached.',
   authLoginDescription: 'Save your progress, stats, and purchases.',
   authOrDivider: 'or',
+
+  authRecoverTitle: 'Recover Your Account',
+  authRecoverEmailLabel: 'Email address',
+  authRecoverEmailPlaceholder: 'you@example.com',
+  authRecoverSendCodeButton: 'Send Code',
+  authRecoverCodeSentNotice: 'If that email is linked to an account, a code is on its way.',
+  authRecoverCodeLabel: '6-digit code',
+  authRecoverCodePlaceholder: '000000',
+  authRecoverVerifyButton: 'Verify & Restore',
+  authRecoverBackButton: 'Back',
+  authRecoverEmailNotConfigured: 'Account recovery isn\'t available yet — check back soon.',
+  authRecoverInvalidCode: 'That code is invalid or expired.',
+  authRecoverSuccess: 'Account restored! Welcome back.',
+
+  // Avatar part display names (bodies 1-4)
+  avatarBody01: 'Plum Puff',
+  avatarBody02: 'Coral Cutie',
+  avatarBody03: 'Lime Chunk',
+  avatarBody04: 'Cream Dream',
+
+  // Avatar part display names (bodies 5-14)
+  avatarBody05: 'Mint Munch',
+  avatarBody06: 'Lilac Bop',
+  avatarBody07: 'Peach Smirk',
+  avatarBody08: 'Teal Boop',
+  avatarBody09: 'Blush Plop',
+  avatarBody10: 'Amber Nudge',
+  avatarBody11: 'Sage Wink',
+  avatarBody12: 'Rose Bump',
+  avatarBody13: 'Sky Doodle',
+  avatarBody14: 'Cocoa Bounce',
+
+  // Avatar part display names (eyes 1-8)
+  avatarEyes01: 'Round Blink',
+  avatarEyes02: 'Wide Wonder',
+  avatarEyes03: 'Sleepy Squint',
+  avatarEyes04: 'Big Sparkle',
+  avatarEyes05: 'Heart Eyes',
+  avatarEyes06: 'Star Eyes',
+  avatarEyes07: 'Fire Eyes',
+  avatarEyes08: 'Spiral Eyes',
+
+  // Avatar part display names (eyes 9-18)
+  avatarEyes09: 'Star Gaze',
+  avatarEyes10: 'Dreamy Drop',
+  avatarEyes11: 'Pixel Peep',
+  avatarEyes12: 'Moon Peek',
+  avatarEyes13: 'Fizzy Blink',
+  avatarEyes14: 'Neon Squint',
+  avatarEyes15: 'Cosmic Stare',
+  avatarEyes16: 'Jelly Glint',
+  avatarEyes17: 'Vapor Drift',
+  avatarEyes18: 'Spark Dart',
+
+  // Avatar part display names (hats — original free+premium hats)
+  avatarHatNone: 'No Hat',
+  avatarHatParty: 'Party Hat',
+  avatarHatCap: 'Cap',
+  avatarHatHeadband: 'Headband',
+  avatarHatCrown: 'Crown',
+  avatarHatTophat: 'Top Hat',
+  avatarHatWizard: 'Wizard Hat',
+  avatarHatPropeller: 'Propeller Beanie',
+  avatarHatSombrero: 'Sombrero',
+  avatarHatViking: 'Viking Helmet',
+
+  // Avatar part display names (hats — new free hats)
+  avatarHatBeret: 'Beret Babe',
+  avatarHatCowboy: 'Cowboy Cutie',
+  avatarHatHood: 'Cozy Hood',
+  avatarHatBandana: 'Bandana Buddy',
+  avatarHatHelmet: 'Safety first!',
+  avatarHatFez: 'Fez Fella',
+  avatarHatFlower: 'Bloom Top',
+  avatarHatAntenna: 'Signal Boost',
+  avatarHatCrownFlower: 'Petal Crown',
+  avatarHatHeadwrap: 'Wrap Star',
+
+  // Profile
+  profileInventoryEmpty: 'Nothing here yet — check the Store!',
+  profileTabBody: 'Body',
+  profileTabEyes: 'Eyes',
+  profileTabHat: 'Hat',
+
+  // Relative timestamps
+  relativeTimeJustNow: 'just now',
+  relativeTimeMinutesAgo: '{{mins}}m ago',
+  relativeTimeHoursAgo: '{{hours}}h ago',
+  relativeTimeDaysAgo: '{{days}}d ago',
+
+  // Store section titles (premium eyes/hats)
+  storePremiumEyesTitle: 'Premium Eyes',
+  storePremiumEyesDesc: 'Expressive eyes to make your avatar pop.',
+  storePremiumHatsTitle: 'Premium Hats',
+  storePremiumHatsDesc: 'Top off your look with a stylish lid.',
+
+  // Store item display names
+  storeItemEyesHeart: 'Heart Eyes',
+  storeItemEyesStar: 'Star Eyes',
+  storeItemEyesFire: 'Fire Eyes',
+  storeItemEyesSpiral: 'Spiral Eyes',
+  storeItemEyesGalaxy: 'Galaxy Eyes',
+  storeItemHatCrown: 'Crown',
+  storeItemHatTophat: 'Top Hat',
+  storeItemHatWizard: 'Wizard Hat',
+  storeItemHatPropeller: 'Propeller Beanie',
+  storeItemHatSombrero: 'Sombrero',
+  storeItemHatViking: 'Viking Helmet',
+  storeItemHatHalo: 'Halo',
+  storeItemFrameDiamond: 'Diamond Frame',
 }
 
 export default en

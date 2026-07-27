@@ -1,6 +1,7 @@
 import type { AvatarConfig } from '@/components/avatarParts/types'
 import { FREE_BODIES, FREE_EYES, FREE_HATS } from '@/components/avatarParts/types'
 import { DEFAULT_AVATAR } from '@/components/avatarParts/types'
+import type { Translations } from '@/i18n/types'
 
 export function getAvatarConfig(index: number): AvatarConfig {
   return {
@@ -17,4 +18,24 @@ export function parseAvatarConfig(raw: unknown): AvatarConfig {
   if (typeof obj.eyes !== 'string') return DEFAULT_AVATAR
   if (typeof obj.hat !== 'string') return DEFAULT_AVATAR
   return { body: obj.body as AvatarConfig['body'], eyes: obj.eyes as AvatarConfig['eyes'], hat: obj.hat as AvatarConfig['hat'] }
+}
+
+export function getAvatarPartName(id: string, t: Translations): string {
+  if (id.startsWith('body_')) {
+    const num = id.split('_')[1]
+    const key = `avatarBody${num.padStart(2, '0')}` as keyof Translations
+    return (t[key] as string) || id
+  }
+  if (id.startsWith('eyes_')) {
+    const num = id.split('_')[1]
+    const key = `avatarEyes${num.padStart(2, '0')}` as keyof Translations
+    return (t[key] as string) || id
+  }
+  if (id.startsWith('hat_')) {
+    const hatName = id.replace('hat_', '')
+    const pascal = hatName.charAt(0).toUpperCase() + hatName.slice(1)
+    const key = `avatarHat${pascal}` as keyof Translations
+    return (t[key] as string) || id
+  }
+  return id
 }

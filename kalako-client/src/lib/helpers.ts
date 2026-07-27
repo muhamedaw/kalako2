@@ -12,7 +12,7 @@ export async function captureScreenshot(elementId: string) {
       style: { direction: 'rtl' },
     })
     const link = document.createElement('a')
-    link.download = `كلاكو-نتيجة-${Date.now()}.png`
+    link.download = `kalako-${Date.now()}.png`
     link.href = dataUrl
     link.click()
   } catch {
