@@ -87,6 +87,16 @@ function writeCategoryFile(categoryId: string, language: Lang, questions: Stored
  * render as a broken image to real players mid-game. HEAD first (cheap), falls back to a
  * ranged GET since some CDNs don't implement HEAD. */
 async function validateImageUrl(url: string): Promise<{ ok: true } | { ok: false; reason: string }> {
+  // Admin dashboard's "upload from computer" feature sends a client-compressed
+  // data: URI directly (no object-storage service configured for this project) —
+  // it's self-contained, so just sanity-check the format/size instead of an HTTP HEAD.
+  if (url.startsWith('data:image/')) {
+    if (url.length > 2_000_000) {
+      return { ok: false, reason: 'Image is too large even after compression — try a smaller image' }
+    }
+    return { ok: true }
+  }
+
   let parsed: URL
   try {
     parsed = new URL(url)
@@ -94,7 +104,7 @@ async function validateImageUrl(url: string): Promise<{ ok: true } | { ok: false
     return { ok: false, reason: 'Not a valid URL' }
   }
   if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
-    return { ok: false, reason: 'URL must be http(s)' }
+    return { ok: false, reason: 'URL must be http(s), or an uploaded image' }
   }
 
   const checkContentType = (res: Response) => {

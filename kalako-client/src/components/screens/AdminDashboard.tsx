@@ -244,11 +244,11 @@ export default function AdminDashboard() {
                   onClick={() => setSelectedCategory(c.id)}
                   className={`border-b cursor-pointer hover:bg-gray-50 ${selectedCategory === c.id ? 'bg-blue-50' : ''}`}
                 >
-                  <td className="py-1 pr-4 font-mono">{c.id}</td>
+                  <td className="py-1 pr-4 font-mono text-gray-900">{c.id}</td>
                   <td className="py-1 pr-4 text-gray-600">{c.displayNames.en} / {c.displayNames.ar} / {c.displayNames.he}</td>
-                  <td className="py-1 pr-4">{c.counts.ar}</td>
-                  <td className="py-1 pr-4">{c.counts.en}</td>
-                  <td className="py-1 pr-4">{c.counts.he}</td>
+                  <td className="py-1 pr-4 text-gray-800">{c.counts.ar}</td>
+                  <td className="py-1 pr-4 text-gray-800">{c.counts.en}</td>
+                  <td className="py-1 pr-4 text-gray-800">{c.counts.he}</td>
                 </tr>
               ))}
             </tbody>
@@ -256,10 +256,10 @@ export default function AdminDashboard() {
         </div>
 
         <form onSubmit={handleAddCategory} className="flex flex-wrap gap-2 pt-2 border-t">
-          <input value={newCatId} onChange={(e) => setNewCatId(e.target.value)} placeholder="id (e.g. animals)" className="border rounded px-2 py-1 text-sm w-40" />
-          <input value={newCatEn} onChange={(e) => setNewCatEn(e.target.value)} placeholder="English name" className="border rounded px-2 py-1 text-sm w-36" />
-          <input value={newCatAr} onChange={(e) => setNewCatAr(e.target.value)} placeholder="Arabic name" className="border rounded px-2 py-1 text-sm w-36" />
-          <input value={newCatHe} onChange={(e) => setNewCatHe(e.target.value)} placeholder="Hebrew name" className="border rounded px-2 py-1 text-sm w-36" />
+          <input value={newCatId} onChange={(e) => setNewCatId(e.target.value)} placeholder="id (e.g. animals)" className="border rounded px-2 py-1 text-sm w-40 text-gray-900 placeholder:text-gray-400" />
+          <input value={newCatEn} onChange={(e) => setNewCatEn(e.target.value)} placeholder="English name" className="border rounded px-2 py-1 text-sm w-36 text-gray-900 placeholder:text-gray-400" />
+          <input value={newCatAr} onChange={(e) => setNewCatAr(e.target.value)} placeholder="Arabic name" className="border rounded px-2 py-1 text-sm w-36 text-gray-900 placeholder:text-gray-400" />
+          <input value={newCatHe} onChange={(e) => setNewCatHe(e.target.value)} placeholder="Hebrew name" className="border rounded px-2 py-1 text-sm w-36 text-gray-900 placeholder:text-gray-400" />
           <button type="submit" className="bg-gray-800 text-white rounded px-3 py-1 text-sm">Add category</button>
         </form>
       </section>
@@ -292,9 +292,9 @@ export default function AdminDashboard() {
                   <tr key={q.id} className="border-b align-top">
                     {editingId === q.id ? (
                       <>
-                        <td className="py-1 pr-4"><input value={editText} onChange={(e) => setEditText(e.target.value)} className="border rounded px-2 py-1 text-sm w-full" /></td>
-                        <td className="py-1 pr-4"><input value={editAnswer} onChange={(e) => setEditAnswer(e.target.value)} className="border rounded px-2 py-1 text-sm w-full" /></td>
-                        <td className="py-1 pr-4">{q.ageRating}</td>
+                        <td className="py-1 pr-4"><input value={editText} onChange={(e) => setEditText(e.target.value)} className="border rounded px-2 py-1 text-sm w-full text-gray-900" /></td>
+                        <td className="py-1 pr-4"><input value={editAnswer} onChange={(e) => setEditAnswer(e.target.value)} className="border rounded px-2 py-1 text-sm w-full text-gray-900" /></td>
+                        <td className="py-1 pr-4 text-gray-700">{q.ageRating}</td>
                         <td className="py-1 pr-4">{q.imageUrl && <img src={q.imageUrl} alt="" className="h-10 rounded" />}</td>
                         <td className="py-1 pr-4 whitespace-nowrap">
                           <button onClick={() => saveEdit(q)} className="text-green-700 mr-2">Save</button>
@@ -303,9 +303,9 @@ export default function AdminDashboard() {
                       </>
                     ) : (
                       <>
-                        <td className="py-1 pr-4 max-w-xs">{q.text}</td>
-                        <td className="py-1 pr-4">{q.answer}</td>
-                        <td className="py-1 pr-4">{q.ageRating}</td>
+                        <td className="py-1 pr-4 max-w-xs text-gray-900">{q.text}</td>
+                        <td className="py-1 pr-4 text-gray-900 font-medium">{q.answer}</td>
+                        <td className="py-1 pr-4 text-gray-700">{q.ageRating}</td>
                         <td className="py-1 pr-4">{q.imageUrl && <img src={q.imageUrl} alt="" className="h-10 rounded" />}</td>
                         <td className="py-1 pr-4 whitespace-nowrap">
                           <button onClick={() => startEdit(q)} className="text-blue-700 mr-2">Edit</button>
@@ -324,20 +324,60 @@ export default function AdminDashboard() {
 
           <form onSubmit={handleAddQuestion} className="pt-3 border-t space-y-2">
             <h3 className="text-sm font-medium text-gray-600">Add question ({selectedLanguage})</h3>
-            <textarea value={qText} onChange={(e) => setQText(e.target.value)} placeholder="Question text" className="w-full border rounded px-2 py-1 text-sm" rows={2} />
-            <input value={qAnswer} onChange={(e) => setQAnswer(e.target.value)} placeholder="Correct answer" className="w-full border rounded px-2 py-1 text-sm" />
+            <textarea value={qText} onChange={(e) => setQText(e.target.value)} placeholder="Question text" className="w-full border rounded px-2 py-1 text-sm text-gray-900 placeholder:text-gray-400" rows={2} />
+            <div>
+              <input value={qAnswer} onChange={(e) => setQAnswer(e.target.value)} placeholder="The one correct answer (exactly one — no lists, no alternatives)" className="w-full border rounded px-2 py-1 text-sm text-gray-900 placeholder:text-gray-400" />
+              <p className="text-xs text-gray-500 mt-0.5">Enter a single correct answer only. This is the one real answer players vote for — everyone else's answers in-game are bluffs.</p>
+            </div>
             <div className="flex flex-wrap gap-3 items-center">
-              <label className="text-sm flex items-center gap-1">
+              <label className="text-sm flex items-center gap-1 text-gray-700">
                 <input type="checkbox" checked={qAgeRating === 'adult'} onChange={(e) => setQAgeRating(e.target.checked ? 'adult' : 'family')} />
                 Adults only
               </label>
-              <input value={qImageUrl} onChange={(e) => setQImageUrl(e.target.value)} placeholder="Image URL (optional, picture-round)" className="border rounded px-2 py-1 text-sm flex-1 min-w-[16rem]" />
-              <input value={qAttribution} onChange={(e) => setQAttribution(e.target.value)} placeholder="Source attribution (optional)" className="border rounded px-2 py-1 text-sm flex-1 min-w-[12rem]" />
+              <input value={qImageUrl} onChange={(e) => setQImageUrl(e.target.value)} placeholder="Image URL (optional, picture-round)" className="border rounded px-2 py-1 text-sm flex-1 min-w-[16rem] text-gray-900 placeholder:text-gray-400" />
+              <input value={qAttribution} onChange={(e) => setQAttribution(e.target.value)} placeholder="Source attribution (optional)" className="border rounded px-2 py-1 text-sm flex-1 min-w-[12rem] text-gray-900 placeholder:text-gray-400" />
+            </div>
+            <div className="flex items-center gap-2">
+              <label className="text-xs text-gray-600 flex items-center gap-2 border rounded px-2 py-1 cursor-pointer hover:bg-gray-50">
+                <span>📁 Upload image from your computer</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0]
+                    if (!file) return
+                    if (file.size > 8 * 1024 * 1024) {
+                      notify('Image too large (max 8MB before compression)', 'error')
+                      return
+                    }
+                    const img = new Image()
+                    const reader = new FileReader()
+                    reader.onload = () => {
+                      img.onload = () => {
+                        const MAX_DIM = 1000
+                        const scale = Math.min(1, MAX_DIM / Math.max(img.width, img.height))
+                        const canvas = document.createElement('canvas')
+                        canvas.width = img.width * scale
+                        canvas.height = img.height * scale
+                        const ctx = canvas.getContext('2d')
+                        if (!ctx) return
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+                        setQImageUrl(canvas.toDataURL('image/jpeg', 0.82))
+                      }
+                      img.src = reader.result as string
+                    }
+                    reader.readAsDataURL(file)
+                  }}
+                />
+              </label>
+              <span className="text-xs text-gray-400">or paste an image URL above — either works</span>
             </div>
             {qImageUrl.trim() && (
               <div className="flex items-center gap-2">
                 <span className="text-xs text-gray-500">Preview:</span>
                 <img src={qImageUrl.trim()} alt="preview" className="h-16 rounded border" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+                <button type="button" onClick={() => setQImageUrl('')} className="text-xs text-red-600">Remove image</button>
               </div>
             )}
             <button type="submit" disabled={addingQuestion} className="bg-gray-800 text-white rounded px-3 py-1.5 text-sm disabled:opacity-50">
