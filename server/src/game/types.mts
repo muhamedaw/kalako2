@@ -54,6 +54,11 @@ export interface Question {
   category: string
   text: string
   answer: string
+  // Optional extra acceptable phrasings of the same correct answer (e.g. synonyms,
+  // alternate spellings). Only used to widen the "you typed the real answer as your
+  // bluff" detection (see isSameAnswer usage in socket/index.mts) — the voting slot
+  // shown to players always uses the single canonical `answer` string, never these.
+  alternateAnswers?: string[]
   ageRating: 'family' | 'adult'
   imageUrl?: string
   sourceAttribution?: string

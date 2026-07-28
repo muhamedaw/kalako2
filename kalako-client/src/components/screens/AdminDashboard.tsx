@@ -19,9 +19,49 @@ interface QuestionRow {
   category: string
   text: string
   answer: string
+  alternateAnswers?: string[]
   ageRating: 'family' | 'adult'
   imageUrl?: string
   sourceAttribution?: string
+}
+
+// Reusable "primary answer + optional alternate phrasings" chip-list editor. Some questions
+// genuinely have several acceptable ways to phrase the correct answer (e.g. "USA" / "United
+// States" / "America") — alternates widen the in-game "you typed the real answer as your
+// bluff" detection, they never appear as a separate voting slot (the game always shows the
+// single primary answer as the one real slot).
+function AlternateAnswersEditor({ values, onChange }: { values: string[]; onChange: (next: string[]) => void }) {
+  const [draft, setDraft] = useState('')
+  const add = () => {
+    const v = draft.trim()
+    if (!v) return
+    if (values.some((x) => x.toLowerCase() === v.toLowerCase())) { setDraft(''); return }
+    if (values.length >= 9) return
+    onChange([...values, v])
+    setDraft('')
+  }
+  return (
+    <div className="space-y-1">
+      <div className="flex flex-wrap gap-1.5">
+        {values.map((v, i) => (
+          <span key={i} className="inline-flex items-center gap-1 bg-blue-50 border border-blue-200 text-blue-900 text-xs rounded-full px-2 py-0.5">
+            {v}
+            <button type="button" onClick={() => onChange(values.filter((_, idx) => idx !== i))} className="text-blue-500 hover:text-blue-800">✕</button>
+          </span>
+        ))}
+      </div>
+      <div className="flex gap-1.5">
+        <input
+          value={draft}
+          onChange={(e) => setDraft(e.target.value)}
+          onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); add() } }}
+          placeholder="Add another acceptable phrasing (optional) — press Enter"
+          className="border rounded px-2 py-1 text-xs flex-1 min-w-[14rem] text-gray-900 placeholder:text-gray-400"
+        />
+        <button type="button" onClick={add} className="border rounded px-2 py-1 text-xs text-gray-700 hover:bg-gray-50">Add</button>
+      </div>
+    </div>
+  )
 }
 
 function ackCall<T = any>(event: string, payload: any): Promise<T> {
@@ -57,6 +97,7 @@ export default function AdminDashboard() {
 
   const [qText, setQText] = useState('')
   const [qAnswer, setQAnswer] = useState('')
+  const [qAlternateAnswers, setQAlternateAnswers] = useState<string[]>([])
   const [qAgeRating, setQAgeRating] = useState<'family' | 'adult'>('family')
   const [qImageUrl, setQImageUrl] = useState('')
   const [qAttribution, setQAttribution] = useState('')
@@ -65,6 +106,34 @@ export default function AdminDashboard() {
   const [editingId, setEditingId] = useState<string | null>(null)
   const [editText, setEditText] = useState('')
   const [editAnswer, setEditAnswer] = useState('')
+  const [editAlternateAnswers, setEditAlternateAnswers] = useState<string[]>([])
+  const [editAgeRating, setEditAgeRating] = useState<'family' | 'adult'>('family')
+  const [editImageUrl, setEditImageUrl] = useState('')
+  const [editAttribution, setEditAttribution] = useState('')
+
+  function readImageFileAsCompressedDataUrl(file: File, onDone: (dataUrl: string) => void, onError: (msg: string) => void) {
+    if (file.size > 8 * 1024 * 1024) {
+      onError('Image too large (max 8MB before compression)')
+      return
+    }
+    const img = new Image()
+    const reader = new FileReader()
+    reader.onload = () => {
+      img.onload = () => {
+        const MAX_DIM = 1000
+        const scale = Math.min(1, MAX_DIM / Math.max(img.width, img.height))
+        const canvas = document.createElement('canvas')
+        canvas.width = img.width * scale
+        canvas.height = img.height * scale
+        const ctx = canvas.getContext('2d')
+        if (!ctx) return
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+        onDone(canvas.toDataURL('image/jpeg', 0.82))
+      }
+      img.src = reader.result as string
+    }
+    reader.readAsDataURL(file)
+  }
 
   async function loadCategories(sessionToken: string) {
     setLoadingCategories(true)
@@ -134,13 +203,13 @@ export default function AdminDashboard() {
     setAddingQuestion(true)
     const res = await ackCall<{ success: boolean; question?: QuestionRow; error?: string }>('admin_add_question', {
       sessionToken: token, categoryId: selectedCategory, language: selectedLanguage,
-      questionText: qText.trim(), correctAnswer: qAnswer.trim(), ageRating: qAgeRating,
+      questionText: qText.trim(), correctAnswer: qAnswer.trim(), alternateAnswers: qAlternateAnswers, ageRating: qAgeRating,
       imageUrl: qImageUrl.trim() || undefined, sourceAttribution: qAttribution.trim() || undefined,
     })
     setAddingQuestion(false)
     if (res.success) {
       notify('Question added')
-      setQText(''); setQAnswer(''); setQImageUrl(''); setQAttribution(''); setQAgeRating('family')
+      setQText(''); setQAnswer(''); setQAlternateAnswers([]); setQImageUrl(''); setQAttribution(''); setQAgeRating('family')
       loadQuestions(token, selectedCategory, selectedLanguage)
       loadCategories(token)
     } else {
@@ -152,6 +221,10 @@ export default function AdminDashboard() {
     setEditingId(q.id)
     setEditText(q.text)
     setEditAnswer(q.answer)
+    setEditAlternateAnswers(q.alternateAnswers || [])
+    setEditAgeRating(q.ageRating)
+    setEditImageUrl(q.imageUrl || '')
+    setEditAttribution(q.sourceAttribution || '')
   }
 
   const cancelEdit = () => setEditingId(null)
@@ -160,7 +233,8 @@ export default function AdminDashboard() {
     if (!token || !selectedCategory) return
     const res = await ackCall<{ success: boolean; error?: string }>('admin_edit_question', {
       sessionToken: token, questionId: q.id, categoryId: selectedCategory, language: selectedLanguage,
-      questionText: editText.trim(), correctAnswer: editAnswer.trim(),
+      questionText: editText.trim(), correctAnswer: editAnswer.trim(), alternateAnswers: editAlternateAnswers, ageRating: editAgeRating,
+      imageUrl: editImageUrl.trim(), sourceAttribution: editAttribution.trim(),
     })
     if (res.success) {
       notify('Question updated')
@@ -293,9 +367,41 @@ export default function AdminDashboard() {
                     {editingId === q.id ? (
                       <>
                         <td className="py-1 pr-4"><input value={editText} onChange={(e) => setEditText(e.target.value)} className="border rounded px-2 py-1 text-sm w-full text-gray-900" /></td>
-                        <td className="py-1 pr-4"><input value={editAnswer} onChange={(e) => setEditAnswer(e.target.value)} className="border rounded px-2 py-1 text-sm w-full text-gray-900" /></td>
-                        <td className="py-1 pr-4 text-gray-700">{q.ageRating}</td>
-                        <td className="py-1 pr-4">{q.imageUrl && <img src={q.imageUrl} alt="" className="h-10 rounded" />}</td>
+                        <td className="py-1 pr-4 min-w-[16rem] space-y-1">
+                          <input value={editAnswer} onChange={(e) => setEditAnswer(e.target.value)} placeholder="Primary answer" className="border rounded px-2 py-1 text-sm w-full text-gray-900" />
+                          <AlternateAnswersEditor values={editAlternateAnswers} onChange={setEditAlternateAnswers} />
+                        </td>
+                        <td className="py-1 pr-4">
+                          <label className="text-xs flex items-center gap-1 text-gray-700 whitespace-nowrap">
+                            <input type="checkbox" checked={editAgeRating === 'adult'} onChange={(e) => setEditAgeRating(e.target.checked ? 'adult' : 'family')} />
+                            adult
+                          </label>
+                        </td>
+                        <td className="py-1 pr-4 min-w-[14rem]">
+                          <div className="flex items-center gap-2">
+                            {editImageUrl && <img src={editImageUrl} alt="" className="h-10 rounded border" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />}
+                            <input
+                              value={editImageUrl}
+                              onChange={(e) => setEditImageUrl(e.target.value)}
+                              placeholder="Image URL"
+                              className="border rounded px-2 py-1 text-xs w-32 text-gray-900 placeholder:text-gray-400"
+                            />
+                            <label className="text-xs text-gray-600 border rounded px-1.5 py-1 cursor-pointer hover:bg-gray-50 whitespace-nowrap">
+                              📁
+                              <input
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                onChange={(e) => {
+                                  const file = e.target.files?.[0]
+                                  if (!file) return
+                                  readImageFileAsCompressedDataUrl(file, setEditImageUrl, (msg) => notify(msg, 'error'))
+                                }}
+                              />
+                            </label>
+                            {editImageUrl && <button type="button" onClick={() => setEditImageUrl('')} className="text-xs text-red-600">✕</button>}
+                          </div>
+                        </td>
                         <td className="py-1 pr-4 whitespace-nowrap">
                           <button onClick={() => saveEdit(q)} className="text-green-700 mr-2">Save</button>
                           <button onClick={cancelEdit} className="text-gray-500">Cancel</button>
@@ -304,7 +410,12 @@ export default function AdminDashboard() {
                     ) : (
                       <>
                         <td className="py-1 pr-4 max-w-xs text-gray-900">{q.text}</td>
-                        <td className="py-1 pr-4 text-gray-900 font-medium">{q.answer}</td>
+                        <td className="py-1 pr-4 text-gray-900">
+                          <div className="font-medium">{q.answer}</div>
+                          {q.alternateAnswers && q.alternateAnswers.length > 0 && (
+                            <div className="text-xs text-gray-500 mt-0.5">also accepts: {q.alternateAnswers.join(', ')}</div>
+                          )}
+                        </td>
                         <td className="py-1 pr-4 text-gray-700">{q.ageRating}</td>
                         <td className="py-1 pr-4">{q.imageUrl && <img src={q.imageUrl} alt="" className="h-10 rounded" />}</td>
                         <td className="py-1 pr-4 whitespace-nowrap">
@@ -325,9 +436,15 @@ export default function AdminDashboard() {
           <form onSubmit={handleAddQuestion} className="pt-3 border-t space-y-2">
             <h3 className="text-sm font-medium text-gray-600">Add question ({selectedLanguage})</h3>
             <textarea value={qText} onChange={(e) => setQText(e.target.value)} placeholder="Question text" className="w-full border rounded px-2 py-1 text-sm text-gray-900 placeholder:text-gray-400" rows={2} />
-            <div>
-              <input value={qAnswer} onChange={(e) => setQAnswer(e.target.value)} placeholder="The one correct answer (exactly one — no lists, no alternatives)" className="w-full border rounded px-2 py-1 text-sm text-gray-900 placeholder:text-gray-400" />
-              <p className="text-xs text-gray-500 mt-0.5">Enter a single correct answer only. This is the one real answer players vote for — everyone else's answers in-game are bluffs.</p>
+            <div className="space-y-1">
+              <input value={qAnswer} onChange={(e) => setQAnswer(e.target.value)} placeholder="Primary correct answer" className="w-full border rounded px-2 py-1 text-sm text-gray-900 placeholder:text-gray-400" />
+              <p className="text-xs text-gray-500">
+                This exact text is the ONE real answer shown during voting — everyone else's submissions in-game are bluffs.
+                If the same answer has other acceptable phrasings (e.g. "USA" / "United States"), add them below so the
+                game also catches a player accidentally typing one of those as their bluff — they never show up as a
+                separate voting option, only the primary answer above does.
+              </p>
+              <AlternateAnswersEditor values={qAlternateAnswers} onChange={setQAlternateAnswers} />
             </div>
             <div className="flex flex-wrap gap-3 items-center">
               <label className="text-sm flex items-center gap-1 text-gray-700">
@@ -347,27 +464,7 @@ export default function AdminDashboard() {
                   onChange={(e) => {
                     const file = e.target.files?.[0]
                     if (!file) return
-                    if (file.size > 8 * 1024 * 1024) {
-                      notify('Image too large (max 8MB before compression)', 'error')
-                      return
-                    }
-                    const img = new Image()
-                    const reader = new FileReader()
-                    reader.onload = () => {
-                      img.onload = () => {
-                        const MAX_DIM = 1000
-                        const scale = Math.min(1, MAX_DIM / Math.max(img.width, img.height))
-                        const canvas = document.createElement('canvas')
-                        canvas.width = img.width * scale
-                        canvas.height = img.height * scale
-                        const ctx = canvas.getContext('2d')
-                        if (!ctx) return
-                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
-                        setQImageUrl(canvas.toDataURL('image/jpeg', 0.82))
-                      }
-                      img.src = reader.result as string
-                    }
-                    reader.readAsDataURL(file)
+                    readImageFileAsCompressedDataUrl(file, setQImageUrl, (msg) => notify(msg, 'error'))
                   }}
                 />
               </label>

@@ -15,13 +15,18 @@ type RawQuestion = {
   category: string
   text: string
   answer: string
+  alternateAnswers?: string[]
   ageRating?: 'family' | 'adult'
   imageUrl?: string
   sourceAttribution?: string
 }
 
 function toQuestion(q: RawQuestion): Question {
-  return { id: q.id, category: q.category, text: q.text, answer: q.answer, ageRating: q.ageRating ?? 'family', imageUrl: q.imageUrl, sourceAttribution: q.sourceAttribution }
+  return {
+    id: q.id, category: q.category, text: q.text, answer: q.answer,
+    alternateAnswers: q.alternateAnswers, ageRating: q.ageRating ?? 'family',
+    imageUrl: q.imageUrl, sourceAttribution: q.sourceAttribution,
+  }
 }
 
 // bank[language][category] -> questions

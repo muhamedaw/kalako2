@@ -58,9 +58,21 @@ interface StoredQuestion {
   category: string
   text: string
   answer: string
+  alternateAnswers?: string[]
   ageRating: 'family' | 'adult'
   imageUrl?: string
   sourceAttribution?: string
+}
+
+// Trims, drops empties/dupes, caps count so this can't be abused into a huge array.
+function sanitizeAlternateAnswers(raw: unknown, primaryAnswer: string): string[] | undefined {
+  if (!Array.isArray(raw)) return undefined
+  const cleaned = raw
+    .filter((v): v is string => typeof v === 'string')
+    .map((v) => v.trim())
+    .filter((v) => v.length > 0 && v.length <= 140 && v.toLowerCase() !== primaryAnswer.trim().toLowerCase())
+  const deduped = Array.from(new Set(cleaned))
+  return deduped.length > 0 ? deduped.slice(0, 9) : undefined
 }
 
 function categoryFilePath(categoryId: string, language: Lang): string {
@@ -223,7 +235,7 @@ export function registerAdminHandlers(io: Server, socket: Socket) {
   safeOn(socket, 'admin_add_question', async (_payload: unknown, ack?: Ack) => {
     const payload = asObject<{
       sessionToken?: string; categoryId?: string; language?: string
-      questionText?: string; correctAnswer?: string; ageRating?: string
+      questionText?: string; correctAnswer?: string; alternateAnswers?: unknown; ageRating?: string
       imageUrl?: string; sourceAttribution?: string
     }>(_payload)
     if (!isValidSession(asString(payload.sessionToken))) return ack?.({ error: 'unauthorized' })
@@ -232,6 +244,7 @@ export function registerAdminHandlers(io: Server, socket: Socket) {
     const language = asString(payload.language) as Lang | undefined
     const questionText = (asString(payload.questionText) || '').trim()
     const correctAnswer = (asString(payload.correctAnswer) || '').trim()
+    const alternateAnswers = sanitizeAlternateAnswers(payload.alternateAnswers, correctAnswer)
     const ageRating = asString(payload.ageRating) === 'adult' ? 'adult' : 'family'
     const imageUrl = asString(payload.imageUrl)?.trim() || undefined
     const sourceAttribution = asString(payload.sourceAttribution)?.trim() || undefined
@@ -258,6 +271,7 @@ export function registerAdminHandlers(io: Server, socket: Socket) {
         category: categoryId,
         text: questionText,
         answer: correctAnswer,
+        ...(alternateAnswers && { alternateAnswers }),
         ageRating,
         ...(imageUrl && { imageUrl }),
         ...(sourceAttribution && { sourceAttribution }),
@@ -275,7 +289,7 @@ export function registerAdminHandlers(io: Server, socket: Socket) {
   safeOn(socket, 'admin_edit_question', async (_payload: unknown, ack?: Ack) => {
     const payload = asObject<{
       sessionToken?: string; questionId?: string; categoryId?: string; language?: string
-      questionText?: string; correctAnswer?: string; ageRating?: string
+      questionText?: string; correctAnswer?: string; alternateAnswers?: unknown; ageRating?: string
       imageUrl?: string; sourceAttribution?: string
     }>(_payload)
     if (!isValidSession(asString(payload.sessionToken))) return ack?.({ error: 'unauthorized' })
@@ -303,11 +317,15 @@ export function registerAdminHandlers(io: Server, socket: Socket) {
       const correctAnswer = asString(payload.correctAnswer)?.trim()
       const ageRating = payload.ageRating !== undefined ? (asString(payload.ageRating) === 'adult' ? 'adult' : 'family') : existing.ageRating
       const sourceAttribution = asString(payload.sourceAttribution)?.trim()
+      const alternateAnswers = payload.alternateAnswers !== undefined
+        ? sanitizeAlternateAnswers(payload.alternateAnswers, correctAnswer || existing.answer)
+        : existing.alternateAnswers
 
       questions[index] = {
         ...existing,
         text: questionText || existing.text,
         answer: correctAnswer || existing.answer,
+        alternateAnswers,
         ageRating,
         ...(imageUrl !== undefined && { imageUrl: imageUrl || undefined }),
         ...(sourceAttribution !== undefined && { sourceAttribution: sourceAttribution || undefined }),

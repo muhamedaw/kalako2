@@ -349,7 +349,8 @@ export function registerSocketHandlers(io: Server) {
       const text = (asString(payload.text) || '').trim().slice(0, 140)
       if (!text) return ack?.({ ok: false })
 
-      if (!payload.forceSubmit && isSameAnswer(text, room.currentQuestion.answer)) {
+      const acceptedTruths = [room.currentQuestion.answer, ...(room.currentQuestion.alternateAnswers ?? [])]
+      if (!payload.forceSubmit && acceptedTruths.some((truth) => isSameAnswer(text, truth))) {
         socket.emit('answer_needs_revision', { questionId: room.currentQuestion.id })
         return ack?.({ ok: false, needsRevision: true })
       }

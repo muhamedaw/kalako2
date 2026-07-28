@@ -153,6 +153,77 @@ test('admin_add_category + admin_add_question: new category playable immediately
 // Image-URL validation tests (reject non-image, accept real image) live in
 // admin-images.test.mts — see the comment there for why they're split out.
 
+test('admin_add_question: alternateAnswers widen answer_needs_revision, but the voting slot still only shows the primary answer', { timeout: 15000 }, async (t) => {
+  const { httpServer, port } = await startServer()
+  t.after(() => httpServer.close())
+  const { client, token } = await authenticatedClient(`http://localhost:${port}`)
+  t.after(() => client.close())
+
+  const newCatId = `alttest_${crypto.randomBytes(3).toString('hex')}`
+  const questionsDir = path.join(process.cwd(), 'src', 'data', 'questions')
+  const categoryMetaPath = path.join(process.cwd(), 'src', 'data', 'categoryMeta.json')
+  t.after(() => {
+    for (const lang of ['ar', 'en', 'he']) {
+      const p = path.join(questionsDir, lang, `${newCatId}.json`)
+      if (fs.existsSync(p)) fs.unlinkSync(p)
+    }
+    try {
+      const meta = JSON.parse(fs.readFileSync(categoryMetaPath, 'utf-8'))
+      delete meta[newCatId]
+      fs.writeFileSync(categoryMetaPath, JSON.stringify(meta, null, 2), 'utf-8')
+    } catch { /* best-effort cleanup */ }
+  })
+
+  await ackCall(client, 'admin_add_category', {
+    sessionToken: token, id: newCatId, displayNames: { ar: 'اختبار', en: 'Alt Test', he: 'בדיקה' },
+  })
+  const addQRes = await ackCall(client, 'admin_add_question', {
+    sessionToken: token, categoryId: newCatId, language: 'en',
+    questionText: 'What is the capital of the alt-test country?',
+    correctAnswer: 'United States', alternateAnswers: ['USA', 'America'], ageRating: 'family',
+  })
+  assert.equal(addQRes.success, true)
+  assert.deepEqual(addQRes.question.alternateAnswers, ['USA', 'America'])
+
+  const host = ioClient(`http://localhost:${port}`, { transports: ['websocket'] })
+  const p2 = ioClient(`http://localhost:${port}`, { transports: ['websocket'] })
+  t.after(() => { host.close(); p2.close() })
+  await Promise.all([waitFor(host, 'connect'), waitFor(p2, 'connect')])
+
+  const created = await ackCall(host, 'create_room', {
+    playerName: 'Host', isPrivate: false, answerTimeSeconds: 30, roundsCount: 1,
+    allowedCategories: [newCatId], language: 'en',
+  })
+  await ackCall(p2, 'join_room', { roomCode: created.roomCode, playerName: 'P2' })
+
+  const catWaits = [waitFor(host, 'phase_changed'), waitFor(p2, 'phase_changed')]
+  host.emit('start_game')
+  const [catPick] = await Promise.all(catWaits)
+
+  const ansWaits = [waitFor(host, 'phase_changed'), waitFor(p2, 'phase_changed')]
+  host.emit('pick_category', { category: catPick.categoryOptions[0] })
+  await Promise.all(ansWaits)
+
+  // Submitting an alternate phrasing of the truth (not the primary "United States" string)
+  // must still be caught — this is the whole point of the feature.
+  const revisionPromise = waitFor(host, 'answer_needs_revision')
+  host.emit('submit_answer', { text: 'usa' }) // lowercase, exercises isSameAnswer normalization too
+  const revision = await revisionPromise
+  assert.ok(revision.questionId)
+
+  // A genuinely different bluff still submits normally.
+  const progressPromise = waitFor(host, 'answer_progress')
+  host.emit('submit_answer', { text: 'Canada' })
+  const progress = await progressPromise
+  assert.equal(progress.answeredCount, 1)
+
+  // The voting slot for the "real" answer must be the single primary string, never the
+  // alternates — confirm by reading the persisted file directly rather than trusting
+  // in-memory state, since that's what pickQuestion/stateMachine actually read from.
+  const stored = JSON.parse(fs.readFileSync(path.join(questionsDir, 'en', `${newCatId}.json`), 'utf-8'))
+  assert.equal(stored[0].answer, 'United States')
+})
+
 test('admin_edit_question: edits reflected in next room immediately, no restart needed', { timeout: 15000 }, async (t) => {
   const { httpServer, port } = await startServer()
   t.after(() => httpServer.close())
