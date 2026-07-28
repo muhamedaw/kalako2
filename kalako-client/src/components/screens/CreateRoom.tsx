@@ -7,7 +7,7 @@ import BlindVote from '@/components/brand/icons/BlindVote'
 import FamilyAdults from '@/components/brand/icons/FamilyAdults'
 import { useGameStore } from '@/store/gameStore'
 import { useTranslation } from '@/i18n/context'
-import { CATEGORIES, PREMIUM_CATEGORY_IDS, getCategoryLabel } from '@/types'
+import { CATEGORIES, PREMIUM_CATEGORY_IDS, getCategoryLabel, getCategoryEmoji } from '@/types'
 
 const stagger = {
   animate: { transition: { staggerChildren: 0.05 } },
@@ -19,7 +19,7 @@ const itemIn = {
 }
 
 export default function CreateRoom() {
-  const { createRoom, setScreen, profile, isPremium, createRoomDraft, updateCreateRoomDraft, resetCreateRoomDraft } = useGameStore()
+  const { createRoom, setScreen, profile, isPremium, createRoomDraft, updateCreateRoomDraft, resetCreateRoomDraft, serverCategories } = useGameStore()
   const t = useTranslation()
   // Draft lives in the shared store (not local useState) so it survives a detour to
   // Store/Premium (e.g. tapping a locked category) and back — the component remounts on
@@ -33,6 +33,17 @@ export default function CreateRoom() {
 
   const ownsCategory = (id: string) =>
     isPremium || (profile?.inventory ?? []).some((i) => i.itemId === `category_unlock_${id}`)
+
+  // Prefer the live server list (reflects categories added via the admin dashboard, which
+  // the static CATEGORIES array never did) — fall back to the static list only until the
+  // first get_categories fetch resolves (e.g. a very slow connection right after load).
+  const availableCategories = serverCategories.length > 0
+    ? serverCategories.map((c) => ({
+        id: c.id,
+        label: c.displayNames[t.lang] || getCategoryLabel(c.id, t.lang),
+        emoji: getCategoryEmoji(c.id),
+      }))
+    : CATEGORIES
 
   const handleBack = () => {
     resetCreateRoomDraft()
@@ -151,7 +162,7 @@ export default function CreateRoom() {
           <motion.div variants={itemIn} className="flex flex-col gap-2">
             <span className="text-sm font-medium text-white/60">{t.categories}</span>
             <ChipGroup
-              items={CATEGORIES.map((c) => {
+              items={availableCategories.map((c) => {
                 const locked = PREMIUM_CATEGORY_IDS.has(c.id) && !ownsCategory(c.id)
                 return {
                   id: c.id,

@@ -139,6 +139,11 @@ export interface GameState {
   hallOfFame: HallOfFameEntry[]
   notifications: NotificationItem[]
   unreadCount: number
+  // Live category list from the server (id + display names) — fetched once per connection.
+  // Replaces relying solely on the static CATEGORIES/CATEGORY_LABELS in types.ts, which never
+  // reflected a category added live via the admin dashboard. Empty until the first fetch
+  // resolves; CreateRoom falls back to the static list until then.
+  serverCategories: { id: string; displayNames: { ar: string; en: string; he: string } }[]
   catalogLoading: boolean
   hallOfFameLoading: boolean
   notificationsLoading: boolean
@@ -305,6 +310,7 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
   hallOfFame: [],
   notifications: [],
   unreadCount: 0,
+  serverCategories: [],
   catalogLoading: false,
   hallOfFameLoading: false,
   notificationsLoading: false,
@@ -332,6 +338,10 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
 
       socket.emit('get_unread_count', { deviceId: getDeviceId() }, (res: any) => {
         if (res?.count !== undefined) set({ unreadCount: res.count })
+      })
+
+      socket.emit('get_categories', {}, (res: any) => {
+        if (Array.isArray(res)) set({ serverCategories: res })
       })
 
       const saved = loadSession()

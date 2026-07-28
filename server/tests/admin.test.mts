@@ -150,6 +150,47 @@ test('admin_add_category + admin_add_question: new category playable immediately
   assert.equal(listed[0].text, 'What is the admin test question?')
 })
 
+test('get_categories: public, no session token needed, immediately includes a category added via admin_add_category', { timeout: 15000 }, async (t) => {
+  const { httpServer, port } = await startServer()
+  t.after(() => httpServer.close())
+  const { client, token } = await authenticatedClient(`http://localhost:${port}`)
+  t.after(() => client.close())
+
+  const newCatId = `pubcat_${crypto.randomBytes(3).toString('hex')}`
+  const categoryMetaPath = path.join(process.cwd(), 'src', 'data', 'categoryMeta.json')
+  const questionsDir = path.join(process.cwd(), 'src', 'data', 'questions')
+  t.after(() => {
+    for (const lang of ['ar', 'en', 'he']) {
+      const p = path.join(questionsDir, lang, `${newCatId}.json`)
+      if (fs.existsSync(p)) fs.unlinkSync(p)
+    }
+    try {
+      const meta = JSON.parse(fs.readFileSync(categoryMetaPath, 'utf-8'))
+      delete meta[newCatId]
+      fs.writeFileSync(categoryMetaPath, JSON.stringify(meta, null, 2), 'utf-8')
+    } catch { /* best-effort cleanup */ }
+  })
+
+  // A plain, unauthenticated client — this is the whole point of the endpoint.
+  const publicClient = ioClient(`http://localhost:${port}`, { transports: ['websocket'] })
+  t.after(() => publicClient.close())
+  await waitFor(publicClient, 'connect')
+
+  const before = await ackCall(publicClient, 'get_categories', {})
+  assert.ok(Array.isArray(before))
+  assert.ok(!before.some((c: any) => c.id === newCatId))
+
+  const addCatRes = await ackCall(client, 'admin_add_category', {
+    sessionToken: token, id: newCatId, displayNames: { ar: 'فئة عامة الاختبار', en: 'Public Test Category', he: 'קטגוריית בדיקה' },
+  })
+  assert.equal(addCatRes.success, true)
+
+  const after = await ackCall(publicClient, 'get_categories', {})
+  const found = after.find((c: any) => c.id === newCatId)
+  assert.ok(found, 'newly-added category must appear in the PUBLIC list immediately, no restart, no auth')
+  assert.equal(found.displayNames.en, 'Public Test Category')
+})
+
 // Image-URL validation tests (reject non-image, accept real image) live in
 // admin-images.test.mts — see the comment there for why they're split out.
 

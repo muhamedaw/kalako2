@@ -33,7 +33,7 @@ import { registerPaymentHandlers } from './payments.mts'
 import { registerPremiumHandlers } from './premium.mts'
 import { registerRecoveryHandlers } from './recovery.mts'
 import { registerDebugHandlers } from './debug.mts'
-import { registerAdminHandlers } from './admin.mts'
+import { registerAdminHandlers, readCategoryMeta } from './admin.mts'
 import { registerReactionHandlers } from './reactions.mts'
 import { registerSuggestionHandlers } from './suggestions.mts'
 import { registerGiftHandlers } from './gifts.mts'
@@ -249,6 +249,20 @@ export function registerSocketHandlers(io: Server) {
       socket.join(room.code)
       io.to(room.code).emit('phase_changed', { phase: room.phase, room: publicRoomView(room) })
       ack?.({ ok: true, room: publicRoomView(room) })
+    })
+
+    // Public (no auth needed — this is just category metadata, nothing sensitive), unlike
+    // admin_list_categories. Exists because CreateRoom's category picker used to render a
+    // hardcoded frontend list that never reflected categories added live via the admin
+    // dashboard — the fix is the client fetching this instead of importing a static array.
+    safeOn(socket, 'get_categories', (_payload: unknown, ack?: Ack<any>) => {
+      try {
+        const meta = readCategoryMeta()
+        ack?.(allCategories.map((id) => ({ id, displayNames: meta[id] || { ar: id, en: id, he: id } })))
+      } catch (err) {
+        console.error('[kalak] get_categories failed:', err)
+        ack?.({ error: 'list_failed' })
+      }
     })
 
     safeOn(socket, 'get_category_completion', (_payload: unknown, ack?: Ack<any>) => {

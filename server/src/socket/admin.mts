@@ -40,7 +40,10 @@ function isValidSession(token: string | undefined): boolean {
 // category; it does NOT retroactively relabel the live client's hardcoded CATEGORY_LABELS
 // (kalako-client/src/types.ts) — a category added here plays immediately using its raw id
 // as the label until someone also updates that client-side map. Documented, not silently magic.
-function readCategoryMeta(): Record<string, { ar: string; en: string; he: string }> {
+// Exported so index.mts's public (non-admin) get_categories event can reuse the exact same
+// category-metadata source — see that event for why: this used to be admin-only, which meant
+// a category added here never actually appeared in a real player's room-creation screen.
+export function readCategoryMeta(): Record<string, { ar: string; en: string; he: string }> {
   try {
     return JSON.parse(fs.readFileSync(categoryMetaPath, 'utf-8'))
   } catch {
