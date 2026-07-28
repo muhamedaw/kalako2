@@ -289,6 +289,7 @@ const en: Translations = {
   storePaymentCancelled: 'Payment cancelled — no coins charged.',
   storeCoinsPurchaseSuccess: '{{coins}} coins added! 🎉',
   storeCancelButton: 'Cancel',
+  storePaymentUnavailable: 'Payment system not configured yet.',
   storeGiftPremiumButton: 'Gift Premium',
   giftCodeGeneratedMessage: 'Gift code ready — share it with a friend!',
   redeemCodeLabel: 'Redeem Code',
@@ -514,6 +515,10 @@ The operator is committed to resolving genuine issues fairly. While refunds are 
   avatarEyes16: 'Jelly Glint',
   avatarEyes17: 'Vapor Drift',
   avatarEyes18: 'Spark Dart',
+  avatarEyesPremium05: 'Twinkle Burst',
+  avatarEyesPremium06: 'Lovestruck',
+  avatarEyesPremium07: 'Hypno Gaze',
+  avatarEyesPremium08: 'Sly Wink',
 
   // Avatar part display names (hats — original free+premium hats)
   avatarHatNone: 'No Hat',
@@ -538,6 +543,10 @@ The operator is committed to resolving genuine issues fairly. While refunds are 
   avatarHatAntenna: 'Signal Boost',
   avatarHatCrownFlower: 'Petal Crown',
   avatarHatHeadwrap: 'Wrap Star',
+  avatarHatPremium07: 'Halo Vibes',
+  avatarHatPremium08: 'Beat Drop',
+  avatarHatPremium09: 'Bunny Bop',
+  avatarHatPremium10: 'Star Burst',
 
   // Profile
   profileInventoryEmpty: 'Nothing here yet — check the Store!',

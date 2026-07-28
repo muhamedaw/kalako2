@@ -117,8 +117,8 @@ test('update_profile: a custom avatarConfig persists and round-trips through get
   const initial = await ackCall(client, 'get_or_create_profile', { deviceId, nickname: 'Stylish' })
   assert.ok(initial.avatarConfig && typeof initial.avatarConfig === 'object')
 
-  // hat_04 is one of the Task-3 catalog additions — also exercises that the new ids validate.
-  const customConfig = { body: 'body_3', eyes: 'eyes_5', hat: 'hat_04' }
+  // hat_beret is one of the newer free hat additions — also exercises that the new ids validate.
+  const customConfig = { body: 'body_3', eyes: 'eyes_5', hat: 'hat_beret' }
   const updated = await ackCall(client, 'update_profile', { deviceId, avatarConfig: customConfig })
   assert.deepEqual(updated.avatarConfig, customConfig)
 

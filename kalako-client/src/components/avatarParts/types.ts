@@ -2,17 +2,19 @@ export type BodyId = 'body_1' | 'body_2' | 'body_3' | 'body_4'
   | 'body_5' | 'body_6' | 'body_7' | 'body_8' | 'body_9' | 'body_10' | 'body_11' | 'body_12' | 'body_13' | 'body_14'
 export type EyesId = 'eyes_1' | 'eyes_2' | 'eyes_3' | 'eyes_4' | 'eyes_5' | 'eyes_6' | 'eyes_7' | 'eyes_8'
   | 'eyes_9' | 'eyes_10' | 'eyes_11' | 'eyes_12' | 'eyes_13' | 'eyes_14' | 'eyes_15' | 'eyes_16' | 'eyes_17' | 'eyes_18'
+  | 'eyes_premium_05' | 'eyes_premium_06' | 'eyes_premium_07' | 'eyes_premium_08'
 export type HatId = 'hat_none' | 'hat_party' | 'hat_cap' | 'hat_headband' | 'hat_crown' | 'hat_tophat' | 'hat_wizard' | 'hat_propeller' | 'hat_sombrero' | 'hat_viking'
   | 'hat_beret' | 'hat_cowboy' | 'hat_hood' | 'hat_bandana' | 'hat_helmet' | 'hat_fez' | 'hat_flower' | 'hat_antenna' | 'hat_crown_flower' | 'hat_headwrap'
+  | 'hat_premium_07' | 'hat_premium_08' | 'hat_premium_09' | 'hat_premium_10'
 
 // The 10 new bodies (body_5-14), 10 new eyes (eyes_9-18), and 10 new hats below are
 // all FREE — no coin gating, no premium lock. Only the original eyes_5-8/hat_crown-etc.
 // set stay premium (see PREMIUM_EYES/PREMIUM_HATS).
 export const FREE_BODIES: BodyId[] = ['body_1', 'body_2', 'body_3', 'body_4', 'body_5', 'body_6', 'body_7', 'body_8', 'body_9', 'body_10', 'body_11', 'body_12', 'body_13', 'body_14']
 export const FREE_EYES: EyesId[] = ['eyes_1', 'eyes_2', 'eyes_3', 'eyes_4', 'eyes_9', 'eyes_10', 'eyes_11', 'eyes_12', 'eyes_13', 'eyes_14', 'eyes_15', 'eyes_16', 'eyes_17', 'eyes_18']
-export const PREMIUM_EYES: EyesId[] = ['eyes_5', 'eyes_6', 'eyes_7', 'eyes_8']
+export const PREMIUM_EYES: EyesId[] = ['eyes_5', 'eyes_6', 'eyes_7', 'eyes_8', 'eyes_premium_05', 'eyes_premium_06', 'eyes_premium_07', 'eyes_premium_08']
 export const FREE_HATS: HatId[] = ['hat_none', 'hat_party', 'hat_cap', 'hat_headband', 'hat_beret', 'hat_cowboy', 'hat_hood', 'hat_bandana', 'hat_helmet', 'hat_fez', 'hat_flower', 'hat_antenna', 'hat_crown_flower', 'hat_headwrap']
-export const PREMIUM_HATS: HatId[] = ['hat_crown', 'hat_tophat', 'hat_wizard', 'hat_propeller', 'hat_sombrero', 'hat_viking']
+export const PREMIUM_HATS: HatId[] = ['hat_crown', 'hat_tophat', 'hat_wizard', 'hat_propeller', 'hat_sombrero', 'hat_viking', 'hat_premium_07', 'hat_premium_08', 'hat_premium_09', 'hat_premium_10']
 
 export interface AvatarConfig {
   body: BodyId
@@ -82,6 +84,10 @@ export const EYES_NAMES: Record<EyesId, string> = {
   eyes_16: 'Jelly Glint',
   eyes_17: 'Vapor Drift',
   eyes_18: 'Spark Dart',
+  eyes_premium_05: 'Twinkle Burst',
+  eyes_premium_06: 'Lovestruck',
+  eyes_premium_07: 'Hypno Gaze',
+  eyes_premium_08: 'Sly Wink',
 }
 
 export const HAT_NAMES: Record<HatId, string> = {
@@ -105,4 +111,8 @@ export const HAT_NAMES: Record<HatId, string> = {
   hat_antenna: 'Signal Boost',
   hat_crown_flower: 'Petal Crown',
   hat_headwrap: 'Wrap Star',
+  hat_premium_07: 'Halo Vibes',
+  hat_premium_08: 'Beat Drop',
+  hat_premium_09: 'Bunny Bop',
+  hat_premium_10: 'Star Burst',
 }

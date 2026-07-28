@@ -32,6 +32,10 @@ import Eyes15 from './eyes/Eyes15'
 import Eyes16 from './eyes/Eyes16'
 import Eyes17 from './eyes/Eyes17'
 import Eyes18 from './eyes/Eyes18'
+import EyesPremium05 from './eyes/EyesPremium05'
+import EyesPremium06 from './eyes/EyesPremium06'
+import EyesPremium07 from './eyes/EyesPremium07'
+import EyesPremium08 from './eyes/EyesPremium08'
 import HatNone from './hats/HatNone'
 import HatParty from './hats/HatParty'
 import HatCap from './hats/HatCap'
@@ -52,6 +56,10 @@ import HatFlower from './hats/HatFlower'
 import HatAntenna from './hats/HatAntenna'
 import HatCrownFlower from './hats/HatCrownFlower'
 import HatHeadwrap from './hats/HatHeadwrap'
+import HatPremium07 from './hats/HatPremium07'
+import HatPremium08 from './hats/HatPremium08'
+import HatPremium09 from './hats/HatPremium09'
+import HatPremium10 from './hats/HatPremium10'
 
 const BODY_MAP: Record<BodyId, ComponentType<{ size?: number; className?: string }>> = {
   body_1: Body1,
@@ -89,6 +97,10 @@ const EYES_MAP: Record<EyesId, ComponentType<{ size?: number; className?: string
   eyes_16: Eyes16,
   eyes_17: Eyes17,
   eyes_18: Eyes18,
+  eyes_premium_05: EyesPremium05,
+  eyes_premium_06: EyesPremium06,
+  eyes_premium_07: EyesPremium07,
+  eyes_premium_08: EyesPremium08,
 }
 
 const HAT_MAP: Record<HatId, ComponentType<{ size?: number; className?: string }>> = {
@@ -112,6 +124,10 @@ const HAT_MAP: Record<HatId, ComponentType<{ size?: number; className?: string }
   hat_antenna: HatAntenna,
   hat_crown_flower: HatCrownFlower,
   hat_headwrap: HatHeadwrap,
+  hat_premium_07: HatPremium07,
+  hat_premium_08: HatPremium08,
+  hat_premium_09: HatPremium09,
+  hat_premium_10: HatPremium10,
 }
 
 interface Props {

@@ -288,6 +288,7 @@ const ar: Translations = {
   storePaymentCancelled: 'تم إلغاء الدفع — لم تُخصم أي عملات.',
   storeCoinsPurchaseSuccess: 'تمت إضافة {{coins}} عملة! 🎉',
   storeCancelButton: 'إلغاء',
+  storePaymentUnavailable: 'نظام الدفع غير مُهيأ بعد.',
   storeGiftPremiumButton: 'هدية بريميوم',
   giftCodeGeneratedMessage: 'كود الهدية جاهز — شاركه مع صديق!',
   redeemCodeLabel: 'استخدم الكود',
@@ -513,6 +514,10 @@ const ar: Translations = {
   avatarEyes16: 'هلام يلمع',
   avatarEyes17: 'بخار يسري',
   avatarEyes18: 'شرارة تنطلق',
+  avatarEyesPremium05: 'وميض النجوم',
+  avatarEyesPremium06: 'عيون العشق',
+  avatarEyesPremium07: 'نظرة التنويم',
+  avatarEyesPremium08: 'غمزة ماكرة',
 
   // Avatar part display names (hats — original free+premium hats)
   avatarHatNone: 'بدون قبعة',
@@ -537,6 +542,10 @@ const ar: Translations = {
   avatarHatAntenna: 'تعزيز إشارة',
   avatarHatCrownFlower: 'تاج بتلات',
   avatarHatHeadwrap: 'لفاف نجم',
+  avatarHatPremium07: 'هالة ذهبية',
+  avatarHatPremium08: 'سماعات الإيقاع',
+  avatarHatPremium09: 'أذنا الأرنب',
+  avatarHatPremium10: 'تاج النجوم',
 
   // Profile
   profileInventoryEmpty: 'ما في شي هنا — افتح المتجر!',

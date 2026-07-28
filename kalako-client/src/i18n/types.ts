@@ -317,6 +317,7 @@ export interface Translations {
   storePaymentCancelled: string
   storeCoinsPurchaseSuccess: string
   storeCancelButton: string
+  storePaymentUnavailable: string
   storeGiftPremiumButton: string
   giftCodeGeneratedMessage: string
   redeemCodeLabel: string
@@ -476,6 +477,10 @@ export interface Translations {
   avatarEyes16: string
   avatarEyes17: string
   avatarEyes18: string
+  avatarEyesPremium05: string
+  avatarEyesPremium06: string
+  avatarEyesPremium07: string
+  avatarEyesPremium08: string
 
   // Avatar part display names (hats — original free+premium hats)
   avatarHatNone: string
@@ -500,6 +505,10 @@ export interface Translations {
   avatarHatAntenna: string
   avatarHatCrownFlower: string
   avatarHatHeadwrap: string
+  avatarHatPremium07: string
+  avatarHatPremium08: string
+  avatarHatPremium09: string
+  avatarHatPremium10: string
 
   // Profile
   profileInventoryEmpty: string

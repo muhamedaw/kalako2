@@ -289,6 +289,7 @@ const he: Translations = {
   storePaymentCancelled: 'התשלום בוטל — לא חויבו מטבעות.',
   storeCoinsPurchaseSuccess: '{{coins}} מטבעות נוספו! 🎉',
   storeCancelButton: 'בטל',
+  storePaymentUnavailable: 'מערכת התשלומים עדיין לא מוגדרת.',
   storeGiftPremiumButton: 'מתנת פרימיום',
   giftCodeGeneratedMessage: 'קוד המתנה מוכן — שתף עם חבר!',
   redeemCodeLabel: 'פדות קוד',
@@ -514,6 +515,10 @@ const he: Translations = {
   avatarEyes16: 'ג\'לי נוצץ',
   avatarEyes17: 'אדים זורמים',
   avatarEyes18: 'ניצוץ ממריא',
+  avatarEyesPremium05: 'נצנוץ כוכבים',
+  avatarEyesPremium06: 'עיני אהבה',
+  avatarEyesPremium07: 'מבט מהפנט',
+  avatarEyesPremium08: 'קריצה ערמומית',
 
   // Avatar part display names (hats — original free+premium hats)
   avatarHatNone: 'בלי כובע',
@@ -538,6 +543,10 @@ const he: Translations = {
   avatarHatAntenna: 'הגברת אות',
   avatarHatCrownFlower: 'כתר עלי כותרת',
   avatarHatHeadwrap: 'כיסוי ראש כוכב',
+  avatarHatPremium07: 'הילה זהובה',
+  avatarHatPremium08: 'אוזניות קצב',
+  avatarHatPremium09: 'אוזני ארנב',
+  avatarHatPremium10: 'כתר כוכבים',
 
   // Profile
   profileInventoryEmpty: 'אין כלום פה עדיין — בדקו בחנות!',

@@ -26,14 +26,24 @@ export function getAvatarPartName(id: string, t: Translations): string {
     const key = `avatarBody${num.padStart(2, '0')}` as keyof Translations
     return (t[key] as string) || id
   }
+  if (id.startsWith('eyes_premium_')) {
+    const num = id.split('_')[2]
+    const key = `avatarEyesPremium${num.padStart(2, '0')}` as keyof Translations
+    return (t[key] as string) || id
+  }
   if (id.startsWith('eyes_')) {
     const num = id.split('_')[1]
     const key = `avatarEyes${num.padStart(2, '0')}` as keyof Translations
     return (t[key] as string) || id
   }
+  if (id.startsWith('hat_premium_')) {
+    const num = id.split('_')[2]
+    const key = `avatarHatPremium${num.padStart(2, '0')}` as keyof Translations
+    return (t[key] as string) || id
+  }
   if (id.startsWith('hat_')) {
     const hatName = id.replace('hat_', '')
-    const pascal = hatName.charAt(0).toUpperCase() + hatName.slice(1)
+    const pascal = hatName.split('_').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')
     const key = `avatarHat${pascal}` as keyof Translations
     return (t[key] as string) || id
   }

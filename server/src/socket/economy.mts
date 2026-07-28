@@ -15,14 +15,13 @@ interface CatalogItem {
   previewId: string
 }
 
-// Avatar-part ID whitelist for update_profile validation. Includes the client's pre-existing
-// (non-zero-padded) ids so current player profiles keep validating, plus the Task-3 additions
-// below (zero-padded, distinct strings — deliberately a separate ID namespace, coordinated
-// with the client team who own the SVGs/wiring for these exact ids).
-const FREE_BODY_IDS = new Set(['body_1', 'body_2', 'body_3', 'body_4', 'body_05', 'body_06', 'body_07', 'body_08'])
-const FREE_EYES_IDS = new Set(['eyes_1', 'eyes_2', 'eyes_3', 'eyes_4', 'eyes_05', 'eyes_06', 'eyes_07', 'eyes_08'])
+// Avatar-part ID whitelist for update_profile validation. Must match the exact IDs used
+// client-side in avatarParts/types.ts (FREE_BODIES, FREE_EYES, PREMIUM_EYES, FREE_HATS,
+// PREMIUM_HATS). Non-zero-padded — body_5 not body_05, hat_beret not hat_04, etc.
+const FREE_BODY_IDS = new Set(['body_1', 'body_2', 'body_3', 'body_4', 'body_5', 'body_6', 'body_7', 'body_8', 'body_9', 'body_10', 'body_11', 'body_12', 'body_13', 'body_14'])
+const FREE_EYES_IDS = new Set(['eyes_1', 'eyes_2', 'eyes_3', 'eyes_4', 'eyes_9', 'eyes_10', 'eyes_11', 'eyes_12', 'eyes_13', 'eyes_14', 'eyes_15', 'eyes_16', 'eyes_17', 'eyes_18'])
 const PREMIUM_EYES_IDS = new Set(['eyes_5', 'eyes_6', 'eyes_7', 'eyes_8', 'eyes_premium_05', 'eyes_premium_06', 'eyes_premium_07', 'eyes_premium_08'])
-const FREE_HAT_IDS = new Set(['hat_none', 'hat_party', 'hat_cap', 'hat_headband', 'hat_04', 'hat_05', 'hat_06', 'hat_07'])
+const FREE_HAT_IDS = new Set(['hat_none', 'hat_party', 'hat_cap', 'hat_headband', 'hat_beret', 'hat_cowboy', 'hat_hood', 'hat_bandana', 'hat_helmet', 'hat_fez', 'hat_flower', 'hat_antenna', 'hat_crown_flower', 'hat_headwrap'])
 const PREMIUM_HAT_IDS = new Set(['hat_crown', 'hat_tophat', 'hat_wizard', 'hat_propeller', 'hat_sombrero', 'hat_viking', 'hat_premium_07', 'hat_premium_08', 'hat_premium_09', 'hat_premium_10'])
 
 function isValidAvatarConfig(cfg: Record<string, unknown>): boolean {
@@ -66,14 +65,14 @@ const STORE_CATALOG: { type: string; title: string; description: string; items: 
     title: 'Premium Avatar Parts',
     description: 'Exclusive eyes and hats for your avatar',
     items: [
-      { id: 'eyes_premium_05', type: 'avatar_part', name: 'Premium Eyes 05', description: 'Exclusive eyes style', price: 150, previewId: 'eyes_premium_05' },
-      { id: 'eyes_premium_06', type: 'avatar_part', name: 'Premium Eyes 06', description: 'Exclusive eyes style', price: 150, previewId: 'eyes_premium_06' },
-      { id: 'eyes_premium_07', type: 'avatar_part', name: 'Premium Eyes 07', description: 'Exclusive eyes style', price: 200, previewId: 'eyes_premium_07' },
-      { id: 'eyes_premium_08', type: 'avatar_part', name: 'Premium Eyes 08', description: 'Exclusive eyes style', price: 200, previewId: 'eyes_premium_08' },
-      { id: 'hat_premium_07', type: 'avatar_part', name: 'Premium Hat 07', description: 'Exclusive hat style', price: 250, previewId: 'hat_premium_07' },
-      { id: 'hat_premium_08', type: 'avatar_part', name: 'Premium Hat 08', description: 'Exclusive hat style', price: 200, previewId: 'hat_premium_08' },
-      { id: 'hat_premium_09', type: 'avatar_part', name: 'Premium Hat 09', description: 'Exclusive hat style', price: 250, previewId: 'hat_premium_09' },
-      { id: 'hat_premium_10', type: 'avatar_part', name: 'Premium Hat 10', description: 'Exclusive hat style', price: 150, previewId: 'hat_premium_10' },
+      { id: 'eyes_premium_05', type: 'avatar_part', name: 'Twinkle Burst', description: 'Exclusive sparkle-star eyes', price: 150, previewId: 'eyes_premium_05' },
+      { id: 'eyes_premium_06', type: 'avatar_part', name: 'Lovestruck', description: 'Exclusive heart-eyes look', price: 150, previewId: 'eyes_premium_06' },
+      { id: 'eyes_premium_07', type: 'avatar_part', name: 'Hypno Gaze', description: 'Exclusive hypnotic swirl eyes', price: 200, previewId: 'eyes_premium_07' },
+      { id: 'eyes_premium_08', type: 'avatar_part', name: 'Sly Wink', description: 'Exclusive one-eyed wink', price: 200, previewId: 'eyes_premium_08' },
+      { id: 'hat_premium_07', type: 'avatar_part', name: 'Halo Vibes', description: 'Exclusive golden halo', price: 250, previewId: 'hat_premium_07' },
+      { id: 'hat_premium_08', type: 'avatar_part', name: 'Beat Drop', description: 'Exclusive headphones', price: 200, previewId: 'hat_premium_08' },
+      { id: 'hat_premium_09', type: 'avatar_part', name: 'Bunny Bop', description: 'Exclusive bunny ears', price: 250, previewId: 'hat_premium_09' },
+      { id: 'hat_premium_10', type: 'avatar_part', name: 'Star Burst', description: 'Exclusive star cluster crown', price: 150, previewId: 'hat_premium_10' },
     ],
   },
   {

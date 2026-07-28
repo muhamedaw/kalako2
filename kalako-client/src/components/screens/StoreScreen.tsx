@@ -167,7 +167,7 @@ export default function StoreScreen() {
           onKeyDown={(e) => { if (!isActive && !processingTier && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); requestPurchase(Boolean(profile?.email), () => setActiveTier(tier.tierId)); } }}
           role="button"
           tabIndex={0}
-          className={`rounded-xl border-4 border-[#0A0A0A] p-4 flex flex-col items-center gap-2 cursor-pointer transition-all ${
+          className={`w-full rounded-xl border-4 border-[#0A0A0A] p-4 flex flex-col items-center gap-2 cursor-pointer transition-all ${
             isActive ? 'bg-[#FF6B35]/15 border-[#FF6B35]' : 'bg-white/5 hover:bg-white/10'
           }`}
           style={{ fontFamily: 'var(--font-heading)' }}
@@ -199,7 +199,7 @@ export default function StoreScreen() {
                   {t.storePaymentProcessing}
                 </span>
               </div>
-            ) : (
+            ) : import.meta.env.VITE_PAYPAL_CLIENT_ID ? (
               <>
                 <PayPalButtons
                   style={{ layout: 'vertical', color: 'gold', shape: 'rect', label: 'pay' }}
@@ -211,6 +211,20 @@ export default function StoreScreen() {
                     setActiveTier(null)
                   }}
                 />
+                <button
+                  onClick={() => setActiveTier(null)}
+                  className="w-full mt-2 py-2 rounded-lg bg-white/5 border-2 border-white/10 text-xs font-bold text-white/50 hover:text-white/80 transition-colors cursor-pointer flex items-center justify-center gap-1"
+                  style={{ fontFamily: 'var(--font-heading)' }}
+                >
+                  <X size={14} strokeWidth={2.5} />
+                  {t.storeCancelButton}
+                </button>
+              </>
+            ) : (
+              <>
+                <div className="text-sm text-white/50 text-center py-4" style={{ fontFamily: 'var(--font-body)' }}>
+                  {t.storePaymentUnavailable}
+                </div>
                 <button
                   onClick={() => setActiveTier(null)}
                   className="w-full mt-2 py-2 rounded-lg bg-white/5 border-2 border-white/10 text-xs font-bold text-white/50 hover:text-white/80 transition-colors cursor-pointer flex items-center justify-center gap-1"
